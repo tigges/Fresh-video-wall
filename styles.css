@@ -52,37 +52,12 @@ a {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
 }
 
-.brand-diamond {
-  width: 30px;
-  aspect-ratio: 1;
-  transform: rotate(45deg);
-  border: 2px solid var(--accent-2);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.22) inset,
-    0 0 14px rgba(255, 255, 255, 0.22);
-}
-
-.brand-text {
-  display: grid;
-  gap: 0.05rem;
-  letter-spacing: 0.08em;
-}
-
-.brand-eyebrow {
-  font-size: 0.7rem;
-  color: var(--muted);
-}
-
-.brand-name {
-  font-size: 1.16rem;
-  font-weight: 700;
-}
-
-.brand-highlight {
-  color: var(--text);
+.brand-logo {
+  width: clamp(130px, 17vw, 172px);
+  height: auto;
+  display: block;
 }
 
 .social-links {
@@ -190,10 +165,29 @@ a {
 
 .diamond-stage {
   position: relative;
-  width: min(420px, 90vw);
+  width: min(380px, 82vw);
   aspect-ratio: 1;
   justify-self: center;
-  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.12));
+  display: grid;
+  place-items: center;
+}
+
+.hero-proto {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  animation: djurbant-rotate 10s infinite alternate ease-in-out;
+  transform-origin: center center;
+}
+
+@keyframes djurbant-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-180deg);
+  }
 }
 
 .diamond {
@@ -272,6 +266,42 @@ a {
     opacity: 0;
     transform: translate(-50%, -50%) scale(1.08);
   }
+}
+
+.social-strip {
+  width: min(1150px, calc(100% - 2.2rem));
+  margin-inline: auto;
+  padding: 0.6rem 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.social-link {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #f1f1f1;
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.social-link svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+}
+
+.social-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.65);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 main {

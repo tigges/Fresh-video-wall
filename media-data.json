@@ -1,11 +1,23 @@
 {
-  "generatedAt": "2026-03-21T10:52:21Z",
+  "generatedAt": "2026-03-21T12:13:58Z",
   "strategy": {
-    "videos": "Sorted by YouTube viewCount desc, then publishedAt desc",
-    "audio": "Sorted by Mixcloud playCount desc, then publishedAt desc"
+    "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
+    "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus"
   },
   "videos": {
     "top3": [
+      {
+        "id": "uFJzPmG7zS8",
+        "title": "Set #434 - Bass House - DJ UrbanT",
+        "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
+        "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
+        "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
+        "viewCount": 154,
+        "publishedAt": "2026-03-15",
+        "baseViewCount": 4,
+        "featuredBonus": 150,
+        "isFeaturedRecent": true
+      },
       {
         "id": "8XF8FRusnWc",
         "title": "DJ UrbanT Live - Set #241 - Bass House - April 2024",
@@ -23,7 +35,9 @@
         "thumbnailUrl": "https://i.ytimg.com/vi/PPUISj_W6Kw/hqdefault.jpg",
         "viewCount": 148,
         "publishedAt": "2026-01-07"
-      },
+      }
+    ],
+    "rest": [
       {
         "id": "Jf7nPjlK2Bo",
         "title": "DJ UrbanT Live - Set #225 - Bass House - June 2023",
@@ -32,9 +46,7 @@
         "thumbnailUrl": "https://i.ytimg.com/vi/Jf7nPjlK2Bo/hqdefault.jpg",
         "viewCount": 95,
         "publishedAt": "2026-01-07"
-      }
-    ],
-    "rest": [
+      },
       {
         "id": "odAzUGdV_so",
         "title": "DJ UrbanT Live - Set #429 - Bass House - December 2025",
@@ -43,20 +55,23 @@
         "thumbnailUrl": "https://i.ytimg.com/vi/odAzUGdV_so/hqdefault.jpg",
         "viewCount": 9,
         "publishedAt": "2025-12-29"
-      },
-      {
-        "id": "uFJzPmG7zS8",
-        "title": "Set #434 - Bass House - DJ UrbanT",
-        "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
-        "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
-        "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
-        "viewCount": 4,
-        "publishedAt": "2026-03-15"
       }
     ]
   },
   "audio": {
     "top3": [
+      {
+        "key": "/urbant/urbant-live-209-new-bass-house-tech-set-20250523-082021/",
+        "title": "UrbanT Live! #315 - New Bass House & Tech Set",
+        "url": "https://www.mixcloud.com/urbant/urbant-live-209-new-bass-house-tech-set-20250523-082021/",
+        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-209-new-bass-house-tech-set-20250523-082021%2F",
+        "playCount": 161,
+        "favoriteCount": 1,
+        "publishedAt": "2025-05-23T15:27:35Z",
+        "basePlayCount": 11,
+        "featuredBonus": 150,
+        "isFeaturedRecent": true
+      },
       {
         "key": "/urbant/urbant-live-20210731-181823/",
         "title": "UrbanT Live! #209 - New Hot Saturday Night Bass House Set",
@@ -74,7 +89,9 @@
         "playCount": 67,
         "favoriteCount": 4,
         "publishedAt": "2021-09-21T21:14:37Z"
-      },
+      }
+    ],
+    "rest": [
       {
         "key": "/urbant/urbant-live-209-new-bass-house-tech-set-20220408-223554/",
         "title": "UrbanT Live! #212 - New Bass House & Tech Set",
@@ -83,9 +100,7 @@
         "playCount": 53,
         "favoriteCount": 4,
         "publishedAt": "2022-04-24T17:10:11Z"
-      }
-    ],
-    "rest": [
+      },
       {
         "key": "/urbant/urbant-live-20210629-184652/",
         "title": "UrbanT Live! #198 - Bass House Set",
@@ -121,15 +136,6 @@
         "playCount": 15,
         "favoriteCount": 3,
         "publishedAt": "2021-08-01T08:34:15Z"
-      },
-      {
-        "key": "/urbant/urbant-live-209-new-bass-house-tech-set-20250523-082021/",
-        "title": "UrbanT Live! #315 - New Bass House & Tech Set",
-        "url": "https://www.mixcloud.com/urbant/urbant-live-209-new-bass-house-tech-set-20250523-082021/",
-        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-209-new-bass-house-tech-set-20250523-082021%2F",
-        "playCount": 11,
-        "favoriteCount": 1,
-        "publishedAt": "2025-05-23T15:27:35Z"
       },
       {
         "key": "/urbant/urbant-live-20210711-190222/",

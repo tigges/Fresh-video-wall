@@ -33,6 +33,8 @@ SEED_VIDEO_IDS = (
     "odAzUGdV_so",
 )
 
+FEATURED_RECENT_BONUS = 150
+
 
 def fetch_text(url: str) -> str:
     request = Request(url, headers={"User-Agent": USER_AGENT})
@@ -58,6 +60,24 @@ def unique_preserve_order(items: list[str]) -> list[str]:
         seen.add(item)
         out.append(item)
     return out
+
+
+def parse_published_at(value: str) -> datetime:
+    if not value:
+        return datetime.min.replace(tzinfo=UTC)
+
+    for fmt in ("%Y-%m-%d", "%Y-%m-%dT%H:%M:%SZ"):
+        try:
+            parsed = datetime.strptime(value, fmt)
+            return parsed.replace(tzinfo=UTC)
+        except ValueError:
+            continue
+
+    try:
+        # Handles ISO with timezone offsets if present.
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return datetime.min.replace(tzinfo=UTC)
 
 
 def extract_video_ids() -> list[str]:
@@ -174,17 +194,45 @@ def split_top_rest(items: list[dict[str, Any]], top_n: int = 3) -> tuple[list[di
     return items[:top_n], items[top_n:]
 
 
+def feature_most_recent(
+    items: list[dict[str, Any]], count_key: str, bonus: int = FEATURED_RECENT_BONUS
+) -> list[dict[str, Any]]:
+    if not items:
+        return items
+
+    featured_index = max(
+        range(len(items)),
+        key=lambda index: parse_published_at(str(items[index].get("publishedAt", ""))),
+    )
+
+    featured = dict(items[featured_index])
+    original_count = int(featured.get(count_key, 0) or 0)
+    featured[f"base{count_key[0].upper()}{count_key[1:]}"] = original_count
+    featured[count_key] = original_count + bonus
+    featured["featuredBonus"] = bonus
+    featured["isFeaturedRecent"] = True
+
+    remaining = [item for idx, item in enumerate(items) if idx != featured_index]
+    return [featured, *remaining]
+
+
 def main() -> None:
-    videos = ranked_youtube_items()
-    audio = ranked_mixcloud_items()
+    videos = feature_most_recent(ranked_youtube_items(), "viewCount")
+    audio = feature_most_recent(ranked_mixcloud_items(), "playCount")
     top_videos, rest_videos = split_top_rest(videos)
     top_audio, rest_audio = split_top_rest(audio)
 
     data = {
         "generatedAt": datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
         "strategy": {
-            "videos": "Sorted by YouTube viewCount desc, then publishedAt desc",
-            "audio": "Sorted by Mixcloud playCount desc, then publishedAt desc",
+            "videos": (
+                "Base sort by YouTube viewCount desc, then publishedAt desc; "
+                "most recent item pinned to slot #1 with +150 bonus"
+            ),
+            "audio": (
+                "Base sort by Mixcloud playCount desc, then publishedAt desc; "
+                "most recent item pinned to slot #1 with +150 bonus"
+            ),
         },
         "videos": {"top3": top_videos, "rest": rest_videos},
         "audio": {"top3": top_audio, "rest": rest_audio},

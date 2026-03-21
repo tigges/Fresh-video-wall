@@ -17,6 +17,29 @@ function initHeaderVisibilityOnScroll() {
   siteHeader.classList.add("is-visible");
 }
 
+function initHeaderContentOffset() {
+  const siteHeader = document.querySelector(".site-header");
+  if (!siteHeader) {
+    return;
+  }
+
+  const applyOffset = () => {
+    const headerHeight = Math.ceil(siteHeader.getBoundingClientRect().height);
+    document.documentElement.style.setProperty("--header-offset", `${headerHeight}px`);
+  };
+
+  applyOffset();
+  window.addEventListener("resize", applyOffset, { passive: true });
+  window.addEventListener("orientationchange", applyOffset);
+
+  if ("ResizeObserver" in window) {
+    const headerResizeObserver = new ResizeObserver(applyOffset);
+    headerResizeObserver.observe(siteHeader);
+  }
+
+  document.fonts?.ready?.then(applyOffset).catch(() => {});
+}
+
 function formatCount(value) {
   if (typeof value !== "number" || Number.isNaN(value)) {
     return "";
@@ -323,5 +346,6 @@ async function hydrateMediaWalls() {
 
 applyHeroFontVariant();
 initHeaderVisibilityOnScroll();
+initHeaderContentOffset();
 bindHeroLiveCtaClick();
 hydrateMediaWalls();

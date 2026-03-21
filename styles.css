@@ -1,4 +1,5 @@
 :root {
+  --header-offset: 0px;
   --bg: #000;
   --bg-elev: #0c0c0c;
   --text: #f1f1f1;
@@ -112,6 +113,8 @@ body {
   background: #000;
   line-height: 1.5;
   overflow-x: hidden;
+  padding-top: var(--header-offset);
+  padding-top: calc(var(--header-offset) + env(safe-area-inset-top));
 }
 
 h1,

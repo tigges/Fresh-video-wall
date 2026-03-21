@@ -522,6 +522,76 @@ function createAudioCard(item) {
   return article;
 }
 
+function toProfileMixcloudEmbedSrc(src) {
+  if (typeof src !== "string" || !src) {
+    return "";
+  }
+  try {
+    const parsed = new URL(src);
+    parsed.searchParams.set("mini", "0");
+    parsed.searchParams.set("hide_cover", "0");
+    parsed.searchParams.set("light", "0");
+    parsed.searchParams.set("autoplay", "0");
+    return parsed.toString();
+  } catch {
+    return src;
+  }
+}
+
+function createMixcloudFeedCard(item) {
+  const article = document.createElement("article");
+  article.className = "mixcloud-feed-card";
+
+  const playerWrap = document.createElement("div");
+  playerWrap.className = "mixcloud-feed-player";
+
+  const iframe = document.createElement("iframe");
+  iframe.src = toProfileMixcloudEmbedSrc(item.embedUrl);
+  iframe.title = normalizeBrandTitle(item.title);
+  iframe.allow = "autoplay; clipboard-write";
+  iframe.loading = "lazy";
+  playerWrap.appendChild(iframe);
+
+  const meta = document.createElement("div");
+  meta.className = "mixcloud-feed-meta";
+
+  const title = document.createElement("h3");
+  title.textContent = normalizeBrandTitle(item.title);
+
+  const stats = document.createElement("p");
+  stats.className = "mixcloud-feed-stats";
+  const playsText = item.playCount ? `${formatCount(item.playCount)} plays` : "";
+  const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
+  stats.textContent = [playsText, dateText].filter(Boolean).join(" • ");
+
+  const openLink = document.createElement("a");
+  openLink.className = "btn btn-outline mixcloud-feed-link";
+  openLink.href = item.url;
+  openLink.target = "_blank";
+  openLink.rel = "noopener noreferrer";
+  openLink.textContent = "Open on Mixcloud";
+
+  meta.append(title, stats, openLink);
+  article.append(playerWrap, meta);
+  return article;
+}
+
+function renderMixcloudFeed(containerId, items) {
+  const container = document.getElementById(containerId);
+  if (!container) {
+    return;
+  }
+  container.innerHTML = "";
+  if (!items.length) {
+    const empty = document.createElement("p");
+    empty.className = "subpage-intro";
+    empty.textContent = "No Mixcloud items available right now.";
+    container.appendChild(empty);
+    return;
+  }
+  items.forEach((item) => container.appendChild(createMixcloudFeedCard(item)));
+}
+
 function renderGrid(containerId, items, cardFactory) {
   const container = document.getElementById(containerId);
   if (!container) {
@@ -586,6 +656,13 @@ async function hydrateMediaWalls() {
         "btn-outline",
         true,
       );
+      return;
+    }
+
+    if (page === "audio-mixcloud") {
+      const audioTop = data?.audio?.top3 ?? [];
+      const audioRest = data?.audio?.rest ?? [];
+      renderMixcloudFeed("audio-mixcloud-list", [...audioTop, ...audioRest]);
     }
   } catch {
     // Keep page usable if media-data fetch fails.

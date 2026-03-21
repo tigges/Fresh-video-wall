@@ -475,6 +475,10 @@ main {
 }
 
 .section-head h2 {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-left: 0.78rem;
   margin: 0;
   font-size: clamp(1.35rem, 2vw, 1.8rem);
   background: var(--accent-iridescent);
@@ -482,6 +486,19 @@ main {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+}
+
+.section-head h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 1.02em;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #75dcff 0%, #6f74ff 52%, #df8bff 100%);
+  box-shadow: 0 0 8px rgba(111, 116, 255, 0.35);
 }
 
 .section-head h1 {
@@ -532,6 +549,22 @@ main {
   margin: 0;
   font-size: 1rem;
   line-height: 1.25;
+}
+
+.genre-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: 0.48rem;
+  padding: 0.2rem 0.58rem;
+  border-radius: 999px;
+  border: 1px solid rgba(117, 220, 255, 0.28);
+  background: #111;
+  color: #88d8ff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
 }
 
 .tile-stats {

@@ -5,6 +5,7 @@ if (yearNode) {
 }
 
 const page = document.body.dataset.page;
+const GENRE_BADGE_LABEL = "\u{1F50A} Bass House";
 
 function formatCount(value) {
   if (typeof value !== "number" || Number.isNaN(value)) {
@@ -22,6 +23,13 @@ function formatDate(dateValue) {
     return dateValue;
   }
   return parsed.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+}
+
+function createGenreBadge() {
+  const badge = document.createElement("span");
+  badge.className = "genre-badge";
+  badge.textContent = GENRE_BADGE_LABEL;
+  return badge;
 }
 
 function createVideoCard(item) {
@@ -45,6 +53,7 @@ function createVideoCard(item) {
 
   const title = document.createElement("h3");
   title.textContent = item.title;
+  const badge = createGenreBadge();
 
   const stats = document.createElement("p");
   stats.className = "tile-stats";
@@ -52,7 +61,7 @@ function createVideoCard(item) {
   const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
   stats.textContent = [viewText, dateText].filter(Boolean).join(" • ");
 
-  meta.append(title, stats);
+  meta.append(title, badge, stats);
   article.append(wrap, meta);
   return article;
 }
@@ -75,6 +84,7 @@ function createAudioCard(item) {
 
   const title = document.createElement("h3");
   title.textContent = item.title;
+  const badge = createGenreBadge();
 
   const stats = document.createElement("p");
   stats.className = "tile-stats";
@@ -82,7 +92,7 @@ function createAudioCard(item) {
   const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
   stats.textContent = [playsText, dateText].filter(Boolean).join(" • ");
 
-  meta.append(title, stats);
+  meta.append(title, badge, stats);
   article.append(wrap, meta);
   return article;
 }

@@ -69,6 +69,21 @@ function normalizeBrandTitle(value) {
     .replace(new RegExp(token, "g"), "DJ UrbanT");
 }
 
+function extractSetLabel(title) {
+  if (typeof title !== "string") {
+    return "#000";
+  }
+  const setHashMatch = title.match(/#\s*(\d{1,4})\b/i);
+  if (setHashMatch?.[1]) {
+    return `#${setHashMatch[1]}`;
+  }
+  const setWordMatch = title.match(/\bset\s*#?\s*(\d{1,4})\b/i);
+  if (setWordMatch?.[1]) {
+    return `#${setWordMatch[1]}`;
+  }
+  return "#000";
+}
+
 function applyHeroFontVariant() {
   const fontParam = new URLSearchParams(window.location.search).get("heroFont");
   if (!fontParam) {
@@ -246,12 +261,16 @@ function createAudioCard(item) {
   const wrap = document.createElement("div");
   wrap.className = "embed-wrap embed-wrap-audio";
 
-  const iframe = document.createElement("iframe");
-  iframe.src = item.embedUrl;
   const normalizedTitle = normalizeBrandTitle(item.title);
-  iframe.title = normalizedTitle;
-  iframe.allow = "autoplay";
-  wrap.appendChild(iframe);
+  const setLabel = extractSetLabel(normalizedTitle);
+  const cover = document.createElement("a");
+  cover.className = "audio-set-cover";
+  cover.href = item.url;
+  cover.target = "_blank";
+  cover.rel = "noopener noreferrer";
+  cover.setAttribute("aria-label", `Open ${normalizedTitle} on Mixcloud`);
+  cover.textContent = setLabel;
+  wrap.appendChild(cover);
 
   const meta = document.createElement("div");
   meta.className = "media-meta";

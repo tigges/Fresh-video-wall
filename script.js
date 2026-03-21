@@ -335,6 +335,7 @@ function createAudioCard(item) {
   let mixcloudWidget = null;
   let widgetReadyPromise = null;
   let progressTimer = null;
+  let widgetIsReady = false;
 
   const setProgress = (value) => {
     const clamped = Math.min(1, Math.max(0, value));
@@ -343,6 +344,7 @@ function createAudioCard(item) {
 
   const setPlayingState = (isPlaying) => {
     cover.classList.toggle("is-playing", isPlaying);
+    cover.classList.remove("is-loading");
     playIcon.textContent = isPlaying ? "\u275A\u275A" : "\u25B6";
     cover.setAttribute("aria-label", `${isPlaying ? "Pause" : "Play"} ${normalizedTitle}`);
     if (!isPlaying && progressTimer) {
@@ -407,6 +409,8 @@ function createAudioCard(item) {
             return;
           }
           settled = true;
+          widgetIsReady = true;
+          cover.classList.remove("is-loading");
           resolve();
         };
         if (mixcloudWidget.ready && typeof mixcloudWidget.ready.then === "function") {
@@ -414,7 +418,7 @@ function createAudioCard(item) {
         } else if (mixcloudWidget.events?.ready?.on) {
           mixcloudWidget.events.ready.on(done);
         }
-        window.setTimeout(done, 1500);
+        window.setTimeout(done, 7000);
       });
 
       mixcloudWidget.events?.pause?.on(() => {
@@ -450,6 +454,7 @@ function createAudioCard(item) {
 
   const playAudio = async () => {
     try {
+      cover.classList.add("is-loading");
       await ensureWidgetReady();
       if (activeAudioController && activeAudioController !== controls) {
         activeAudioController.pause();
@@ -458,8 +463,25 @@ function createAudioCard(item) {
       mixcloudWidget.play();
       setPlayingState(true);
       startProgressLoop();
+      if (!widgetIsReady) {
+        let retries = 0;
+        const retryPlay = () => {
+          if (!mixcloudWidget || cover.classList.contains("is-playing") || retries >= 4) {
+            return;
+          }
+          retries += 1;
+          try {
+            mixcloudWidget.play();
+          } catch {
+            // Ignore retry errors and keep trying a few times.
+          }
+          window.setTimeout(retryPlay, 400);
+        };
+        window.setTimeout(retryPlay, 400);
+      }
     } catch {
       // If widget setup fails, keep current tile appearance unchanged.
+      cover.classList.remove("is-loading");
     }
   };
 
@@ -473,6 +495,10 @@ function createAudioCard(item) {
       return;
     }
     await playAudio();
+  });
+
+  ensureWidgetReady().catch(() => {
+    cover.classList.remove("is-loading");
   });
 
   const meta = document.createElement("div");

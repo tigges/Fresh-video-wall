@@ -673,7 +673,7 @@ body[data-page="home"] #music .section-cta {
   background: rgba(255, 255, 255, 0.04);
   border-radius: 10px;
   overflow: hidden;
-  padding: 12px;
+  padding: 0;
   box-shadow: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
@@ -707,7 +707,7 @@ body[data-page="home"] #music .section-cta {
   min-height: 0;
   aspect-ratio: auto;
   background: #000;
-  border-radius: 8px;
+  border-radius: 10px 10px 0 0;
   overflow: hidden;
 }
 
@@ -726,7 +726,8 @@ body[data-page="home"] #music .section-cta {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  padding: 12px 0 0;
+  gap: 6px;
+  padding: 12px;
 }
 
 .media-meta h3 {

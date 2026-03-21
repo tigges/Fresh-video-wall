@@ -246,7 +246,7 @@ a {
 .hero {
   position: relative;
   min-height: 410px;
-  padding: 0.6rem 0 1.9rem;
+  padding: 0.6rem 0 1.2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -312,7 +312,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
   top: 67%;
   transform: translateX(-50%);
   margin: 0;
-  font-size: clamp(0.82rem, 1.4vw, 1.12rem);
+  font-size: clamp(0.9rem, 1.55vw, 1.2rem);
   font-weight: 400;
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.7);
@@ -361,7 +361,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
 }
 
 .btn-live {
-  margin-top: 0.7rem;
+  margin-top: 0.5rem;
   background: linear-gradient(135deg, #00c6ff, #9b00ff);
   border-color: transparent;
   color: #fff;
@@ -612,6 +612,11 @@ main {
   margin-top: 1.3rem;
 }
 
+body[data-page="home"] #videos.media-section {
+  padding-top: 0.45rem;
+  margin-top: 0.55rem;
+}
+
 .section-head {
   display: flex;
   align-items: center;
@@ -852,8 +857,8 @@ body[data-page="home"] #music .section-cta {
   }
 
   .hero-tagline {
-    top: 71%;
-    font-size: clamp(0.68rem, 2.9vw, 0.9rem);
+    top: 72%;
+    font-size: clamp(0.8rem, 3.4vw, 1rem);
     letter-spacing: 0.04em;
   }
 

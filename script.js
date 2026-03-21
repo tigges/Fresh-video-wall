@@ -52,13 +52,7 @@ function createVideoCard(item) {
   const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
   stats.textContent = [viewText, dateText].filter(Boolean).join(" • ");
 
-  const link = document.createElement("a");
-  link.href = item.url;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-  link.textContent = "Watch on YouTube";
-
-  meta.append(title, stats, link);
+  meta.append(title, stats);
   article.append(wrap, meta);
   return article;
 }
@@ -88,13 +82,7 @@ function createAudioCard(item) {
   const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
   stats.textContent = [playsText, dateText].filter(Boolean).join(" • ");
 
-  const link = document.createElement("a");
-  link.href = item.url;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-  link.textContent = "Open on Mixcloud";
-
-  meta.append(title, stats, link);
+  meta.append(title, stats);
   article.append(wrap, meta);
   return article;
 }

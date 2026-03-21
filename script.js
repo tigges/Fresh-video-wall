@@ -7,6 +7,8 @@ if (yearNode) {
 
 const page = document.body.dataset.page;
 const GENRE_BADGE_LABEL = "\u{1F50A} Bass House";
+let mixcloudWidgetApiPromise = null;
+let activeAudioController = null;
 
 function initHeaderVisibilityOnScroll() {
   const siteHeader = document.querySelector(".site-header");
@@ -84,17 +86,47 @@ function extractSetLabel(title) {
   return "#000";
 }
 
-function withAutoplayMixcloudEmbedSrc(src) {
+function toInlineMixcloudEngineSrc(src) {
   if (typeof src !== "string" || !src) {
     return "";
   }
   try {
     const parsed = new URL(src);
-    parsed.searchParams.set("autoplay", "1");
+    parsed.searchParams.set("mini", "1");
+    parsed.searchParams.set("hide_cover", "1");
+    parsed.searchParams.set("autoplay", "0");
     return parsed.toString();
   } catch {
     return src;
   }
+}
+
+function loadMixcloudWidgetApi() {
+  if (window.Mixcloud?.PlayerWidget) {
+    return Promise.resolve(window.Mixcloud.PlayerWidget);
+  }
+  if (mixcloudWidgetApiPromise) {
+    return mixcloudWidgetApiPromise;
+  }
+
+  mixcloudWidgetApiPromise = new Promise((resolve, reject) => {
+    const existing = document.querySelector('script[data-mixcloud-widget-api="1"]');
+    if (existing) {
+      existing.addEventListener("load", () => resolve(window.Mixcloud?.PlayerWidget));
+      existing.addEventListener("error", reject);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://widget.mixcloud.com/media/js/widgetApi.js";
+    script.async = true;
+    script.dataset.mixcloudWidgetApi = "1";
+    script.addEventListener("load", () => resolve(window.Mixcloud?.PlayerWidget));
+    script.addEventListener("error", reject);
+    document.head.appendChild(script);
+  });
+
+  return mixcloudWidgetApiPromise;
 }
 
 function applyHeroFontVariant() {
@@ -290,24 +322,158 @@ function createAudioCard(item) {
   playIcon.setAttribute("aria-hidden", "true");
   playIcon.textContent = "\u25B6";
 
-  cover.append(setNumber, playIcon);
+  const progress = document.createElement("span");
+  progress.className = "audio-set-progress";
+  progress.setAttribute("aria-hidden", "true");
+  const progressFill = document.createElement("span");
+  progressFill.className = "audio-set-progress-fill";
+  progress.appendChild(progressFill);
+
+  cover.append(setNumber, playIcon, progress);
   wrap.appendChild(cover);
 
-  const startAudioPlayback = () => {
-    if (wrap.dataset.playing === "1") {
-      return;
-    }
-    wrap.dataset.playing = "1";
-    wrap.innerHTML = "";
-    const iframe = document.createElement("iframe");
-    iframe.src = withAutoplayMixcloudEmbedSrc(item.embedUrl);
-    iframe.title = normalizedTitle;
-    iframe.allow = "autoplay; clipboard-write";
-    iframe.loading = "lazy";
-    wrap.appendChild(iframe);
+  let mixcloudWidget = null;
+  let widgetReadyPromise = null;
+  let progressTimer = null;
+
+  const setProgress = (value) => {
+    const clamped = Math.min(1, Math.max(0, value));
+    progressFill.style.width = `${Math.round(clamped * 1000) / 10}%`;
   };
 
-  cover.addEventListener("click", startAudioPlayback);
+  const setPlayingState = (isPlaying) => {
+    cover.classList.toggle("is-playing", isPlaying);
+    playIcon.textContent = isPlaying ? "\u275A\u275A" : "\u25B6";
+    cover.setAttribute("aria-label", `${isPlaying ? "Pause" : "Play"} ${normalizedTitle}`);
+    if (!isPlaying && progressTimer) {
+      clearInterval(progressTimer);
+      progressTimer = null;
+    }
+  };
+
+  const startProgressLoop = () => {
+    if (progressTimer || !mixcloudWidget) {
+      return;
+    }
+    progressTimer = window.setInterval(() => {
+      if (!mixcloudWidget) {
+        return;
+      }
+      try {
+        mixcloudWidget.getPosition((position) => {
+          mixcloudWidget.getDuration((duration) => {
+            if (!duration) {
+              setProgress(0);
+              return;
+            }
+            setProgress(position / duration);
+          });
+        });
+      } catch {
+        // Ignore widget polling errors and keep UI responsive.
+      }
+    }, 450);
+  };
+
+  const ensureWidgetReady = async () => {
+    if (mixcloudWidget) {
+      return mixcloudWidget;
+    }
+    if (widgetReadyPromise) {
+      return widgetReadyPromise;
+    }
+
+    widgetReadyPromise = (async () => {
+      await loadMixcloudWidgetApi();
+      const frame = document.createElement("iframe");
+      frame.className = "audio-engine-frame";
+      frame.src = toInlineMixcloudEngineSrc(item.embedUrl);
+      frame.title = `${normalizedTitle} audio engine`;
+      frame.allow = "autoplay; clipboard-write";
+      frame.loading = "lazy";
+      frame.tabIndex = -1;
+      frame.setAttribute("aria-hidden", "true");
+      wrap.appendChild(frame);
+
+      mixcloudWidget = window.Mixcloud?.PlayerWidget?.(frame) ?? null;
+      if (!mixcloudWidget) {
+        throw new Error("Mixcloud widget API unavailable");
+      }
+
+      await new Promise((resolve) => {
+        let settled = false;
+        const done = () => {
+          if (settled) {
+            return;
+          }
+          settled = true;
+          resolve();
+        };
+        if (mixcloudWidget.ready && typeof mixcloudWidget.ready.then === "function") {
+          mixcloudWidget.ready.then(done).catch(done);
+        } else if (mixcloudWidget.events?.ready?.on) {
+          mixcloudWidget.events.ready.on(done);
+        }
+        window.setTimeout(done, 1500);
+      });
+
+      mixcloudWidget.events?.pause?.on(() => {
+        if (activeAudioController === controls) {
+          activeAudioController = null;
+        }
+        setPlayingState(false);
+      });
+      mixcloudWidget.events?.play?.on(() => {
+        setPlayingState(true);
+        startProgressLoop();
+      });
+      return mixcloudWidget;
+    })().catch((error) => {
+      widgetReadyPromise = null;
+      throw error;
+    });
+
+    return widgetReadyPromise;
+  };
+
+  const pauseAudio = () => {
+    if (!mixcloudWidget) {
+      setPlayingState(false);
+      return;
+    }
+    try {
+      mixcloudWidget.pause();
+    } catch {
+      setPlayingState(false);
+    }
+  };
+
+  const playAudio = async () => {
+    try {
+      await ensureWidgetReady();
+      if (activeAudioController && activeAudioController !== controls) {
+        activeAudioController.pause();
+      }
+      activeAudioController = controls;
+      mixcloudWidget.play();
+      setPlayingState(true);
+      startProgressLoop();
+    } catch {
+      // If widget setup fails, keep current tile appearance unchanged.
+    }
+  };
+
+  const controls = {
+    pause: pauseAudio,
+  };
+
+  cover.addEventListener("click", async () => {
+    if (cover.classList.contains("is-playing")) {
+      pauseAudio();
+      return;
+    }
+    await playAudio();
+  });
 
   const meta = document.createElement("div");
   meta.className = "media-meta";

@@ -758,7 +758,8 @@ body[data-page="home"] #music .section-cta {
   transition: filter 0.2s ease;
 }
 
-.audio-set-cover:hover {
+.audio-set-cover:hover,
+.audio-set-cover.is-playing {
   filter: brightness(1.08);
 }
 
@@ -788,6 +789,41 @@ body[data-page="home"] #music .section-cta {
   font-size: 15px;
   line-height: 1;
   text-shadow: 0 0 10px rgba(0, 198, 255, 0.26);
+}
+
+.audio-set-cover.is-playing .audio-set-play {
+  font-size: 12px;
+  letter-spacing: -0.08em;
+}
+
+.audio-set-progress {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+
+.audio-set-progress-fill {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #00c6ff, #9b00ff);
+  transition: width 0.22s linear;
+}
+
+.audio-engine-frame {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  border: 0;
 }
 
 .media-meta {

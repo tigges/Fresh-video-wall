@@ -839,7 +839,7 @@ body[data-page="home"] .section-head h2::after {
     padding-top: 1rem;
   }
 
-  .media-grid {
+  body:not([data-page="home"]) .media-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -891,7 +891,7 @@ body[data-page="home"] .section-head h2::after {
     flex: 1;
   }
 
-  .section-head {
+  body:not([data-page="home"]) .section-head {
     flex-direction: column;
     align-items: flex-start;
   }

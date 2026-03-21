@@ -82,7 +82,7 @@ function createGenreBadge() {
   return badge;
 }
 
-function createMoreMenuCard(label, href) {
+function createMoreMenuCard(label, href, buttonClass = "btn-outline", openInNewTab = false) {
   const article = document.createElement("article");
   article.className = "media-card media-card-more";
 
@@ -90,21 +90,31 @@ function createMoreMenuCard(label, href) {
   inner.className = "media-card-more-inner";
 
   const link = document.createElement("a");
-  link.className = "btn btn-outline media-card-more-link";
+  link.className = `btn ${buttonClass} media-card-more-link`;
   link.href = href;
   link.textContent = label;
+  if (openInNewTab) {
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+  }
 
   inner.append(link);
   article.append(inner);
   return article;
 }
 
-function appendHomeMoreTile(containerId, label, href) {
+function appendGridActionTile(
+  containerId,
+  label,
+  href,
+  buttonClass = "btn-outline",
+  openInNewTab = false,
+) {
   const container = document.getElementById(containerId);
   if (!container) {
     return;
   }
-  container.append(createMoreMenuCard(label, href));
+  container.append(createMoreMenuCard(label, href, buttonClass, openInNewTab));
 }
 
 function updateHeroLiveCta(data) {
@@ -263,8 +273,8 @@ async function hydrateMediaWalls() {
     if (page === "home") {
       renderGrid("videos-grid", data?.videos?.top3 ?? [], createVideoCard);
       renderGrid("audio-grid", data?.audio?.top3 ?? [], createAudioCard);
-      appendHomeMoreTile("videos-grid", "More Videos", "./videos.html");
-      appendHomeMoreTile("audio-grid", "More Audio", "./audio.html");
+      appendGridActionTile("videos-grid", "More Videos", "./videos.html");
+      appendGridActionTile("audio-grid", "More Audio", "./audio.html");
       updateHeroLiveCta(data);
       return;
     }
@@ -274,6 +284,13 @@ async function hydrateMediaWalls() {
         ? data.videos.rest
         : data?.videos?.top3 ?? [];
       renderGrid("videos-rest-grid", videos, createVideoCard);
+      appendGridActionTile(
+        "videos-rest-grid",
+        "Subscribe",
+        "https://m.youtube.com/@dj_urbant",
+        "btn-subscribe",
+        true,
+      );
       return;
     }
 
@@ -282,6 +299,13 @@ async function hydrateMediaWalls() {
         ? data.audio.rest
         : data?.audio?.top3 ?? [];
       renderGrid("audio-rest-grid", audio, createAudioCard);
+      appendGridActionTile(
+        "audio-rest-grid",
+        "Open Mixcloud",
+        "https://www.mixcloud.com/urbant/",
+        "btn-outline",
+        true,
+      );
     }
   } catch {
     // Keep page usable if media-data fetch fails.

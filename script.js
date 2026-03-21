@@ -29,7 +29,7 @@ function normalizeBrandTitle(value) {
   if (typeof value !== "string" || !value.trim()) {
     return "";
   }
-  const token = "__DJ_URBANT__";
+  const token = "__DJ_UrbanT_TOKEN__";
   return value
     .replace(/\bDJ\s*UrbanT\b/gi, token)
     .replace(/\burbant\b/gi, "DJ UrbanT")

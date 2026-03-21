@@ -7,29 +7,31 @@
   --accent-2: #8f8f8f;
   --accent-iridescent: linear-gradient(
     128deg,
-    #f3f5f8 0%,
-    #d7dde6 16%,
-    #aab6c8 34%,
-    #eceff4 50%,
-    #8b97ad 67%,
-    #cfd5df 83%,
-    #7b879f 100%
+    #f8fbff 0%,
+    #dce3ed 14%,
+    #8fdcff 27%,
+    #edf1f7 42%,
+    #8d9ab0 58%,
+    #e7ecf3 72%,
+    #ab92cf 86%,
+    #cfd6e1 100%
   );
   --accent-iridescent-soft: linear-gradient(
     128deg,
-    rgba(243, 245, 248, 0.3) 0%,
-    rgba(215, 221, 230, 0.25) 16%,
-    rgba(170, 182, 200, 0.25) 34%,
-    rgba(236, 239, 244, 0.26) 50%,
-    rgba(139, 151, 173, 0.27) 67%,
-    rgba(207, 213, 223, 0.25) 83%,
-    rgba(123, 135, 159, 0.24) 100%
+    rgba(248, 251, 255, 0.3) 0%,
+    rgba(220, 227, 237, 0.25) 14%,
+    rgba(143, 220, 255, 0.24) 27%,
+    rgba(237, 241, 247, 0.26) 42%,
+    rgba(141, 154, 176, 0.26) 58%,
+    rgba(231, 236, 243, 0.25) 72%,
+    rgba(171, 146, 207, 0.24) 86%,
+    rgba(207, 214, 225, 0.24) 100%
   );
-  --cta-gradient: linear-gradient(90deg, #8fa0b1 0%, #7685a0 50%, #675782 100%);
+  --cta-gradient: linear-gradient(90deg, #9db0c3 0%, #7488aa 50%, #665884 100%);
   --cta-glow:
-    0 0 0 1px rgba(143, 160, 177, 0.46),
-    0 0 14px rgba(143, 160, 177, 0.22),
-    0 0 20px rgba(103, 87, 130, 0.24);
+    0 0 0 1px rgba(157, 176, 195, 0.48),
+    0 0 12px rgba(116, 136, 170, 0.22),
+    0 0 18px rgba(102, 88, 132, 0.24);
   --card-border: rgba(255, 255, 255, 0.12);
   --shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
 }

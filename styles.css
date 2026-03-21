@@ -362,6 +362,8 @@ body[data-hero-font="russo"] .hero-overlay-title {
 
 .btn-live {
   margin-top: 0.5rem;
+  position: relative;
+  top: clamp(10px, 1.2vw, 16px);
   background: linear-gradient(135deg, #00c6ff, #9b00ff);
   border-color: transparent;
   color: #fff;
@@ -866,6 +868,7 @@ body[data-page="home"] #music .section-cta {
     font-size: 0.86rem;
     min-width: min(300px, calc(100vw - 1.4rem));
     padding-inline: 1.2rem;
+    top: 12px;
   }
 
   .bio-panel {

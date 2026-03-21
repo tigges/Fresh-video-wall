@@ -96,7 +96,7 @@ a {
 }
 
 .brand-logo {
-  width: clamp(165px, 21vw, 240px);
+  width: clamp(230px, 29vw, 336px);
   height: auto;
   display: block;
 }
@@ -209,6 +209,22 @@ a {
 .hero-overlay-title-alt {
   opacity: 0;
   animation-duration: 23s;
+}
+
+.hero-tagline {
+  position: absolute;
+  left: 50%;
+  top: 59%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: clamp(0.82rem, 1.4vw, 1.12rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  white-space: nowrap;
+  z-index: 4;
+  pointer-events: none;
 }
 
 @keyframes title-slide {
@@ -555,6 +571,12 @@ main {
   .hero-overlay-title {
     font-size: clamp(1.65rem, 9.1vw, 2.8rem);
     letter-spacing: -0.01em;
+  }
+
+  .hero-tagline {
+    top: 61%;
+    font-size: clamp(0.68rem, 2.9vw, 0.9rem);
+    letter-spacing: 0.04em;
   }
 
   .btn-live {

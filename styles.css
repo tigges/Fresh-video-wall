@@ -66,6 +66,14 @@
   src: url("./assets/fonts/Syne-Bold.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("./assets/fonts/Montserrat-Black.ttf") format("truetype");
+}
+
 *,
 *::before,
 *::after {
@@ -223,13 +231,13 @@ a {
 .hero-overlay-title {
   position: absolute;
   margin: 0;
-  font-family: "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   width: 100%;
   font-size: clamp(2.5rem, 8vw, 7.2rem);
   line-height: 1.02;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-weight: 700;
+  font-weight: 900;
   color: rgba(255, 255, 255, 0.97);
   text-shadow: 0 0 9px rgba(0, 0, 0, 0.18);
   text-align: center;

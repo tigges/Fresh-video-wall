@@ -45,17 +45,3 @@ In the same GitHub settings area, you can set:
    - `git clean -fd`
 
 This keeps production exactly aligned with the selected Git branch.
-
-## Automatic media wall refresh
-
-This repository also includes:
-
-- `.github/workflows/refresh-media-data.yml`
-
-It regenerates `media-data.json` from YouTube + Mixcloud and updates rankings
-automatically on a schedule.
-
-- cadence: every 6 hours (UTC) by default
-- trigger: scheduled run or manual workflow dispatch
-- commit behavior: only commits when meaningful ranking/content changes are
-  detected (it ignores timestamp-only changes)

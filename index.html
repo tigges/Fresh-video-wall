@@ -12,169 +12,210 @@
     <link rel="preconnect" href="https://www.mixcloud.com" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body data-page="home">
+  <body>
     <header class="site-header">
       <div class="brand">
-        <img
-          class="brand-logo"
-          src="./assets/images/djurbant-logo.svg"
-          alt="DJ UrbanT"
-        />
+        <div class="brand-diamond" aria-hidden="true"></div>
+        <div class="brand-text">
+          <span class="brand-eyebrow">DJ</span>
+          <span class="brand-name">URBAN<span class="brand-highlight">T</span></span>
+        </div>
       </div>
       <nav class="social-links" aria-label="Social links">
         <a
-          class="header-social-link"
+          class="pill pill-youtube"
           href="https://m.youtube.com/@dj_urbant"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="YouTube"
-        >
-          <svg viewBox="0 0 576 512" aria-hidden="true">
-            <path
-              d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"
-            />
-          </svg>
-        </a
+          >YouTube</a
         >
         <a
-          class="header-social-link"
+          class="pill pill-mixcloud"
           href="https://www.mixcloud.com/urbant/"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Mixcloud"
-        >
-          <svg viewBox="0 0 640 512" aria-hidden="true">
-            <path
-              d="M424.43 219.729C416.124 134.727 344.135 68 256.919 68c-72.266 0-136.224 46.516-159.205 114.074-54.545 8.029-96.63 54.822-96.63 111.582 0 62.298 50.668 112.966 113.243 112.966h289.614c52.329 0 94.969-42.362 94.969-94.693 0-45.131-32.118-83.063-74.48-92.2zm-20.489 144.53H114.327c-39.04 0-70.881-31.564-70.881-70.604s31.841-70.604 70.881-70.604c18.827 0 36.548 7.475 49.838 20.766 19.963 19.963 50.133-10.227 30.18-30.18-14.675-14.398-32.672-24.365-52.053-29.349 19.935-44.3 64.79-73.926 114.628-73.926 69.496 0 125.979 56.483 125.979 125.702 0 13.568-2.215 26.857-6.369 39.594-8.943 27.517 32.133 38.939 40.147 13.29 2.769-8.306 4.984-16.889 6.369-25.472 19.381 7.476 33.502 26.303 33.502 48.453 0 28.795-23.535 52.33-52.607 52.33zm235.069-52.33c0 44.024-12.737 86.386-37.102 122.657-4.153 6.092-10.798 9.414-17.72 9.414-16.317 0-27.127-18.826-17.443-32.949 19.381-29.349 29.903-63.682 29.903-99.122s-10.521-69.773-29.903-98.845c-15.655-22.831 19.361-47.24 35.163-23.534 24.366 35.993 37.102 78.356 37.102 122.379zm-70.88 0c0 31.565-9.137 62.021-26.857 88.325-4.153 6.091-10.798 9.136-17.72 9.136-17.201 0-27.022-18.979-17.443-32.948 13.013-19.104 19.658-41.255 19.658-64.513 0-22.981-6.645-45.408-19.658-64.512-15.761-22.986 19.008-47.095 35.163-23.535 17.719 26.026 26.857 56.483 26.857 88.047z"
-            />
-          </svg>
-        </a
+          >Mixcloud</a
         >
       </nav>
     </header>
 
     <section class="hero">
-      <div class="hero-overlay" aria-hidden="true">
-        <h2 class="hero-overlay-title">DJ UrbanT - Live</h2>
-        <h2 class="hero-overlay-title hero-overlay-title-alt">DJ UrbanT - Live</h2>
+      <div class="hero-copy">
+        <p class="hero-kicker">Fresh content drop</p>
+        <h1>Video + Audio Wall</h1>
+        <p>
+          A curated landing page inspired by DJUrbanT style: animated diamond
+          visuals, top 3 videos, and top 3 mixes in one place.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#videos">Top Videos</a>
+          <a class="btn btn-secondary" href="#music">Top Music</a>
+        </div>
       </div>
       <div class="diamond-stage" aria-hidden="true">
-        <img
-          class="hero-proto"
-          src="./assets/images/djurbant-proto-1.png"
-          alt=""
-        />
+        <div class="diamond diamond-lg"></div>
+        <div class="diamond diamond-md"></div>
+        <div class="diamond diamond-sm"></div>
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
       </div>
-      <a
-        class="btn btn-live"
-        href="https://m.youtube.com/@dj_urbant"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Join Live on YouTube</a
-      >
     </section>
 
     <main>
       <section id="videos" class="media-section">
         <div class="section-head">
-          <h2>Top Videos</h2>
-          <a class="btn btn-outline" href="./videos.html">More Videos</a>
+          <h2>Top 3 Videos</h2>
+          <a
+            class="btn btn-outline"
+            href="https://m.youtube.com/@dj_urbant"
+            target="_blank"
+            rel="noopener noreferrer"
+            >More Videos</a
+          >
         </div>
-        <div id="videos-grid" class="media-grid"></div>
+        <div class="media-grid">
+          <article class="media-card">
+            <div class="embed-wrap">
+              <iframe
+                src="https://www.youtube.com/embed/Jf7nPjlK2Bo"
+                title="DJ UrbanT video one"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="media-meta">
+              <h3>DJ UrbanT Feature Set #1</h3>
+              <a
+                href="https://www.youtube.com/watch?v=Jf7nPjlK2Bo"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Watch on YouTube</a
+              >
+            </div>
+          </article>
+
+          <article class="media-card">
+            <div class="embed-wrap">
+              <iframe
+                src="https://www.youtube.com/embed/8XF8FRusnWc"
+                title="DJ UrbanT video two"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="media-meta">
+              <h3>DJ UrbanT Feature Set #2</h3>
+              <a
+                href="https://www.youtube.com/watch?v=8XF8FRusnWc"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Watch on YouTube</a
+              >
+            </div>
+          </article>
+
+          <article class="media-card">
+            <div class="embed-wrap">
+              <iframe
+                src="https://www.youtube.com/embed/PPUISj_W6Kw"
+                title="DJ UrbanT video three"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="media-meta">
+              <h3>DJ UrbanT Feature Set #3</h3>
+              <a
+                href="https://www.youtube.com/watch?v=PPUISj_W6Kw"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Watch on YouTube</a
+              >
+            </div>
+          </article>
+        </div>
       </section>
 
       <section id="music" class="media-section">
         <div class="section-head">
-          <h2>Top Audio</h2>
-          <a class="btn btn-outline" href="./audio.html">More Audio</a>
+          <h2>Top 3 Music Mixes</h2>
+          <a
+            class="btn btn-outline"
+            href="https://www.mixcloud.com/urbant/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >More Music</a
+          >
         </div>
-        <div id="audio-grid" class="media-grid"></div>
+        <div class="media-grid">
+          <article class="media-card">
+            <div class="embed-wrap embed-wrap-audio">
+              <iframe
+                src="https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-209-new-bass-house-tech-set-20250523-082021%2F"
+                title="Urbant Mixcloud mix one"
+                allow="autoplay"
+              ></iframe>
+            </div>
+            <div class="media-meta">
+              <h3>Urbant Live 209 (2025)</h3>
+              <a
+                href="https://www.mixcloud.com/urbant/urbant-live-209-new-bass-house-tech-set-20250523-082021/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Open on Mixcloud</a
+              >
+            </div>
+          </article>
+
+          <article class="media-card">
+            <div class="embed-wrap embed-wrap-audio">
+              <iframe
+                src="https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-209-new-bass-house-tech-set-20220408-223554%2F"
+                title="Urbant Mixcloud mix two"
+                allow="autoplay"
+              ></iframe>
+            </div>
+            <div class="media-meta">
+              <h3>Urbant Live 209 (2022)</h3>
+              <a
+                href="https://www.mixcloud.com/urbant/urbant-live-209-new-bass-house-tech-set-20220408-223554/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Open on Mixcloud</a
+              >
+            </div>
+          </article>
+
+          <article class="media-card">
+            <div class="embed-wrap embed-wrap-audio">
+              <iframe
+                src="https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210731-181823%2F"
+                title="Urbant Mixcloud mix three"
+                allow="autoplay"
+              ></iframe>
+            </div>
+            <div class="media-meta">
+              <h3>Urbant Live (2021)</h3>
+              <a
+                href="https://www.mixcloud.com/urbant/urbant-live-20210731-181823/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Open on Mixcloud</a
+              >
+            </div>
+          </article>
+        </div>
       </section>
     </main>
 
-    <section class="social-strip" aria-label="DJ UrbanT social media">
-      <a
-        class="social-link"
-        href="https://twitter.com/DJUrbanT"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="X (Twitter)"
-      >
-        <svg viewBox="0 0 512 512" aria-hidden="true">
-          <path
-            d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"
-          />
-        </svg>
-      </a>
-      <a
-        class="social-link"
-        href="https://www.instagram.com/_urbant_/"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Instagram"
-      >
-        <svg viewBox="0 0 448 512" aria-hidden="true">
-          <path
-            d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"
-          />
-        </svg>
-      </a>
-      <a
-        class="social-link"
-        href="https://m.youtube.com/@dj_urbant"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="YouTube"
-      >
-        <svg viewBox="0 0 576 512" aria-hidden="true">
-          <path
-            d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"
-          />
-        </svg>
-      </a>
-      <a
-        class="social-link"
-        href="https://www.mixcloud.com/urbant/"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Mixcloud"
-      >
-        <svg viewBox="0 0 640 512" aria-hidden="true">
-          <path
-            d="M424.43 219.729C416.124 134.727 344.135 68 256.919 68c-72.266 0-136.224 46.516-159.205 114.074-54.545 8.029-96.63 54.822-96.63 111.582 0 62.298 50.668 112.966 113.243 112.966h289.614c52.329 0 94.969-42.362 94.969-94.693 0-45.131-32.118-83.063-74.48-92.2zm-20.489 144.53H114.327c-39.04 0-70.881-31.564-70.881-70.604s31.841-70.604 70.881-70.604c18.827 0 36.548 7.475 49.838 20.766 19.963 19.963 50.133-10.227 30.18-30.18-14.675-14.398-32.672-24.365-52.053-29.349 19.935-44.3 64.79-73.926 114.628-73.926 69.496 0 125.979 56.483 125.979 125.702 0 13.568-2.215 26.857-6.369 39.594-8.943 27.517 32.133 38.939 40.147 13.29 2.769-8.306 4.984-16.889 6.369-25.472 19.381 7.476 33.502 26.303 33.502 48.453 0 28.795-23.535 52.33-52.607 52.33zm235.069-52.33c0 44.024-12.737 86.386-37.102 122.657-4.153 6.092-10.798 9.414-17.72 9.414-16.317 0-27.127-18.826-17.443-32.949 19.381-29.349 29.903-63.682 29.903-99.122s-10.521-69.773-29.903-98.845c-15.655-22.831 19.361-47.24 35.163-23.534 24.366 35.993 37.102 78.356 37.102 122.379zm-70.88 0c0 31.565-9.137 62.021-26.857 88.325-4.153 6.091-10.798 9.136-17.72 9.136-17.201 0-27.022-18.979-17.443-32.948 13.013-19.104 19.658-41.255 19.658-64.513 0-22.981-6.645-45.408-19.658-64.512-15.761-22.986 19.008-47.095 35.163-23.535 17.719 26.026 26.857 56.483 26.857 88.047z"
-          />
-        </svg>
-      </a>
-      <a
-        class="social-link"
-        href="https://www.twitch.tv/djurbant"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Twitch"
-      >
-        <svg viewBox="0 0 512 512" aria-hidden="true">
-          <path
-            d="M391.17,103.47H352.54v109.7h38.63ZM285,103H246.37V212.75H285ZM120.83,0,24.31,91.42V420.58H140.14V512l96.53-91.42h77.25L487.69,256V0ZM449.07,237.75l-77.22,73.12H294.61l-67.6,64v-64H140.14V36.58H449.07Z"
-          />
-        </svg>
-      </a>
-      <a
-        class="social-link"
-        href="https://www.tiktok.com/@_urbant_"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="TikTok"
-      >
-        <svg viewBox="0 0 448 512" aria-hidden="true">
-          <path
-            d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"
-          />
-        </svg>
-      </a>
-    </section>
-
     <footer class="site-footer">
-      <p>DJ UrbanT &copy; <span id="year"></span>.</p>
+      <p>
+        DJ UrbanT Media Landing Page &copy; <span id="year"></span>. Built for
+        video + audio discovery.
+      </p>
     </footer>
 
     <script src="./script.js"></script>

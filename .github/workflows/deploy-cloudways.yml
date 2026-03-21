@@ -29,8 +29,6 @@ jobs:
             echo "DEPLOY_BRANCH=${{ inputs.branch }}" >> "$GITHUB_ENV"
           elif [ -n "${{ vars.CLOUDWAYS_DEPLOY_BRANCH }}" ]; then
             echo "DEPLOY_BRANCH=${{ vars.CLOUDWAYS_DEPLOY_BRANCH }}" >> "$GITHUB_ENV"
-          elif [ -n "${{ secrets.BRANCH }}" ]; then
-            echo "DEPLOY_BRANCH=${{ secrets.BRANCH }}" >> "$GITHUB_ENV"
           else
             echo "DEPLOY_BRANCH=main" >> "$GITHUB_ENV"
           fi

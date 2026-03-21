@@ -567,7 +567,19 @@ main {
 }
 
 .section-cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   margin-top: 0.95rem;
+}
+
+.btn-subscribe {
+  background: var(--cta-gradient);
+  border-color: transparent;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: var(--cta-glow);
 }
 
 .section-head h2 {
@@ -671,6 +683,19 @@ main {
   font-weight: 600;
   font-size: 1rem;
   line-height: 1.25;
+}
+
+.urbant-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.urbant-u,
+.urbant-t {
+  display: inline-block;
+  font-size: 1.16em;
+  line-height: 0.92;
+  transform: translateY(0.01em);
 }
 
 .media-meta-footer {

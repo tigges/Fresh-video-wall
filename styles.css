@@ -343,20 +343,20 @@ body[data-hero-font="russo"] .hero-overlay-title {
 
 .btn-live {
   margin-top: 0.7rem;
-  background: var(--cta-gradient);
+  background: linear-gradient(135deg, #00c6ff, #9b00ff);
   border-color: transparent;
   color: #fff;
   font-family: "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-weight: 700;
+  font-weight: 800;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
   text-transform: uppercase;
   font-size: 0.96rem;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.1em;
   padding-inline: 1.75rem;
   min-width: min(320px, calc(100vw - 2rem));
   white-space: nowrap;
-  box-shadow: var(--cta-glow);
+  box-shadow: 0 0 24px rgba(0, 198, 255, 0.4);
 }
 
 .btn-outline {
@@ -524,15 +524,15 @@ body[data-hero-font="russo"] .hero-overlay-title {
   display: flex;
   width: fit-content;
   margin-inline: auto;
-  background: var(--cta-gradient);
+  background: linear-gradient(135deg, #00c6ff, #9b00ff);
   border-color: transparent;
   color: #fff;
-  font-weight: 700;
+  font-weight: 800;
   border-radius: 15px;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.1em;
   font-size: 0.9rem;
-  box-shadow: var(--cta-glow);
+  box-shadow: 0 0 24px rgba(0, 198, 255, 0.4);
 }
 
 .social-link {

@@ -690,10 +690,10 @@ main {
   align-items: baseline;
 }
 
-.urbant-u,
-.urbant-t {
+.hero-overlay-title .urbant-u,
+.hero-overlay-title .urbant-t {
   display: inline-block;
-  font-size: 1.16em;
+  font-size: 1.32em;
   line-height: 0.92;
   transform: translateY(0.01em);
 }

@@ -36,47 +36,6 @@ function normalizeBrandTitle(value) {
     .replace(new RegExp(token, "g"), "DJ UrbanT");
 }
 
-function appendStyledUrbanTText(target, text) {
-  target.textContent = "";
-  if (typeof text !== "string" || !text) {
-    return;
-  }
-
-  const matcher = /UrbanT/g;
-  let lastIndex = 0;
-  let match = matcher.exec(text);
-
-  while (match) {
-    if (match.index > lastIndex) {
-      target.append(document.createTextNode(text.slice(lastIndex, match.index)));
-    }
-
-    const wordmark = document.createElement("span");
-    wordmark.className = "urbant-wordmark";
-
-    const urbanU = document.createElement("span");
-    urbanU.className = "urbant-u";
-    urbanU.textContent = "U";
-
-    const urbanRest = document.createElement("span");
-    urbanRest.textContent = "rban";
-
-    const urbanT = document.createElement("span");
-    urbanT.className = "urbant-t";
-    urbanT.textContent = "T";
-
-    wordmark.append(urbanU, urbanRest, urbanT);
-    target.append(wordmark);
-
-    lastIndex = match.index + match[0].length;
-    match = matcher.exec(text);
-  }
-
-  if (lastIndex < text.length) {
-    target.append(document.createTextNode(text.slice(lastIndex)));
-  }
-}
-
 function createGenreBadge() {
   const badge = document.createElement("span");
   badge.className = "genre-badge";
@@ -105,7 +64,7 @@ function createVideoCard(item) {
   meta.className = "media-meta";
 
   const title = document.createElement("h3");
-  appendStyledUrbanTText(title, normalizedTitle);
+  title.textContent = normalizedTitle;
   const badge = createGenreBadge();
 
   const stats = document.createElement("p");
@@ -140,7 +99,7 @@ function createAudioCard(item) {
   meta.className = "media-meta";
 
   const title = document.createElement("h3");
-  appendStyledUrbanTText(title, normalizedTitle);
+  title.textContent = normalizedTitle;
   const badge = createGenreBadge();
 
   const stats = document.createElement("p");

@@ -84,6 +84,19 @@ function extractSetLabel(title) {
   return "#000";
 }
 
+function withAutoplayMixcloudEmbedSrc(src) {
+  if (typeof src !== "string" || !src) {
+    return "";
+  }
+  try {
+    const parsed = new URL(src);
+    parsed.searchParams.set("autoplay", "1");
+    return parsed.toString();
+  } catch {
+    return src;
+  }
+}
+
 function applyHeroFontVariant() {
   const fontParam = new URLSearchParams(window.location.search).get("heroFont");
   if (!fontParam) {
@@ -263,27 +276,38 @@ function createAudioCard(item) {
 
   const normalizedTitle = normalizeBrandTitle(item.title);
   const setLabel = extractSetLabel(normalizedTitle);
-  const iframe = document.createElement("iframe");
-  iframe.src = item.embedUrl;
-  iframe.title = normalizedTitle;
-  iframe.allow = "autoplay";
-  wrap.appendChild(iframe);
-
-  const setOverlay = document.createElement("div");
-  setOverlay.className = "audio-set-overlay";
-  setOverlay.setAttribute("aria-hidden", "true");
-
-  const logo = document.createElement("img");
-  logo.className = "audio-set-overlay-logo";
-  logo.src = "./assets/images/djurbant-logo.svg";
-  logo.alt = "";
+  const cover = document.createElement("button");
+  cover.type = "button";
+  cover.className = "audio-set-cover";
+  cover.setAttribute("aria-label", `Play ${normalizedTitle}`);
 
   const setNumber = document.createElement("span");
-  setNumber.className = "audio-set-overlay-number";
+  setNumber.className = "audio-set-number";
   setNumber.textContent = setLabel;
 
-  setOverlay.append(logo, setNumber);
-  wrap.appendChild(setOverlay);
+  const playIcon = document.createElement("span");
+  playIcon.className = "audio-set-play";
+  playIcon.setAttribute("aria-hidden", "true");
+  playIcon.textContent = "\u25B6";
+
+  cover.append(setNumber, playIcon);
+  wrap.appendChild(cover);
+
+  const startAudioPlayback = () => {
+    if (wrap.dataset.playing === "1") {
+      return;
+    }
+    wrap.dataset.playing = "1";
+    wrap.innerHTML = "";
+    const iframe = document.createElement("iframe");
+    iframe.src = withAutoplayMixcloudEmbedSrc(item.embedUrl);
+    iframe.title = normalizedTitle;
+    iframe.allow = "autoplay; clipboard-write";
+    iframe.loading = "lazy";
+    wrap.appendChild(iframe);
+  };
+
+  cover.addEventListener("click", startAudioPlayback);
 
   const meta = document.createElement("div");
   meta.className = "media-meta";

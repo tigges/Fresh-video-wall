@@ -724,7 +724,7 @@ body[data-page="home"] #music .section-cta {
 
 .embed-wrap {
   position: relative;
-  flex: 0 0 58%;
+  flex: 0 0 55%;
   min-height: 0;
   aspect-ratio: auto;
   background: #000;
@@ -742,34 +742,52 @@ body[data-page="home"] #music .section-cta {
   aspect-ratio: 16/10;
 }
 
-.audio-set-overlay {
-  position: absolute;
-  inset: 0;
+.audio-set-cover {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
-  background: linear-gradient(135deg, rgba(10, 10, 10, 0.24), rgba(26, 10, 46, 0.16));
-  pointer-events: none;
+  position: relative;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0a0a0a, #1a0a2e);
+  transition: filter 0.2s ease;
 }
 
-.audio-set-overlay-logo {
-  width: min(150px, 62%);
-  height: auto;
-  opacity: 0.14;
-  filter: grayscale(1) brightness(1.35);
+.audio-set-cover:hover {
+  filter: brightness(1.08);
 }
 
-.audio-set-overlay-number {
+.audio-set-number {
   color: #00c6ff;
   font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 700;
-  font-size: clamp(2.1rem, 6.2vw, 4rem);
+  font-size: 64px;
   line-height: 1;
   letter-spacing: 0.02em;
-  opacity: 0.72;
   text-shadow: 0 0 14px rgba(0, 198, 255, 0.25);
+}
+
+.audio-set-play {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.46);
+  border: 1px solid rgba(0, 198, 255, 0.48);
+  color: #00c6ff;
+  font-size: 15px;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(0, 198, 255, 0.26);
 }
 
 .media-meta {
@@ -777,7 +795,7 @@ body[data-page="home"] #music .section-cta {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   padding: 12px;
 }
 
@@ -812,7 +830,7 @@ body[data-page="home"] #music .section-cta {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-top: 0.35rem;
+  margin-top: auto;
   min-height: 24px;
   white-space: nowrap;
 }

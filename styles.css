@@ -419,6 +419,50 @@ a {
   gap: 0.55rem;
 }
 
+.bio-section {
+  width: min(1150px, calc(100% - 2.2rem));
+  margin-inline: auto;
+  padding: 0.6rem 0 0.9rem;
+}
+
+.bio-panel {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(10, 10, 10, 0.72);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(5px);
+  padding: 1rem 1.1rem 1.2rem;
+}
+
+.bio-title {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.2rem);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--accent-iridescent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.bio-copy {
+  margin: 0.65rem 0 1rem;
+  max-width: 76ch;
+  color: rgba(241, 241, 241, 0.86);
+}
+
+.btn-book {
+  background: var(--accent-iridescent);
+  border-color: transparent;
+  color: #fff;
+  border-radius: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 22px rgba(127, 93, 255, 0.34);
+}
+
 .social-link {
   width: 44px;
   height: 44px;
@@ -636,6 +680,14 @@ main {
     font-size: 0.86rem;
     min-width: min(300px, calc(100vw - 1.4rem));
     padding-inline: 1.2rem;
+  }
+
+  .bio-panel {
+    padding: 0.95rem 0.9rem 1.05rem;
+  }
+
+  .btn-book {
+    width: 100%;
   }
 
   .site-header {

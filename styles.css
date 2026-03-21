@@ -765,7 +765,7 @@ body[data-page="home"] #music .section-cta {
 }
 
 .media-card {
-  height: 306px;
+  height: 260px;
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -980,7 +980,7 @@ body[data-page="home"] #music .section-cta {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-top: 4px;
+  margin-top: auto;
   min-height: 24px;
   white-space: nowrap;
 }

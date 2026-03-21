@@ -84,6 +84,14 @@
   src: url("./assets/fonts/RussoOne-Regular.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./assets/fonts/BarlowCondensed-Bold.ttf") format("truetype");
+}
+
 *,
 *::before,
 *::after {
@@ -628,6 +636,24 @@ main {
   color: transparent;
 }
 
+body[data-page="home"] .section-head h2 {
+  margin: 0;
+  padding-left: 12px;
+  border-left: 3px solid transparent;
+  border-image: linear-gradient(180deg, #00c6ff 0%, #9b00ff 100%) 1;
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #f4f7ff;
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+}
+
 .section-head h1,
 .section-head h2,
 .bio-title {
@@ -662,6 +688,11 @@ main {
   box-shadow: 0 0 8px rgba(111, 116, 255, 0.35);
 }
 
+body[data-page="home"] .section-head h2::before,
+body[data-page="home"] .section-head h2::after {
+  content: none;
+}
+
 .section-head h1 {
   margin: 0;
   display: inline-block;
@@ -677,7 +708,7 @@ main {
 .media-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 12px;
 }
 
 .media-card {

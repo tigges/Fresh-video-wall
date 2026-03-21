@@ -1,10 +1,10 @@
 :root {
-  --bg: #07070d;
-  --bg-elev: #10101c;
-  --text: #f2f4ff;
-  --muted: #a6aac9;
-  --accent: #ff3c93;
-  --accent-2: #24d4ff;
+  --bg: #000;
+  --bg-elev: #0c0c0c;
+  --text: #f1f1f1;
+  --muted: #afafaf;
+  --accent: #d8d8d8;
+  --accent-2: #8f8f8f;
   --card-border: rgba(255, 255, 255, 0.12);
   --shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
 }
@@ -25,10 +25,7 @@ body {
   min-height: 100vh;
   font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--text);
-  background:
-    radial-gradient(circle at 15% 10%, rgba(36, 212, 255, 0.25), transparent 34%),
-    radial-gradient(circle at 85% 5%, rgba(255, 60, 147, 0.2), transparent 30%),
-    linear-gradient(180deg, #080811 0%, #07070d 60%, #050509 100%);
+  background: #000;
   line-height: 1.5;
 }
 
@@ -64,8 +61,8 @@ a {
   transform: rotate(45deg);
   border: 2px solid var(--accent-2);
   box-shadow:
-    0 0 0 1px rgba(36, 212, 255, 0.15) inset,
-    0 0 18px rgba(36, 212, 255, 0.65);
+    0 0 0 1px rgba(255, 255, 255, 0.22) inset,
+    0 0 14px rgba(255, 255, 255, 0.22);
 }
 
 .brand-text {
@@ -85,7 +82,7 @@ a {
 }
 
 .brand-highlight {
-  color: var(--accent);
+  color: var(--text);
 }
 
 .social-links {
@@ -112,13 +109,13 @@ a {
 }
 
 .pill-youtube:hover {
-  border-color: rgba(255, 60, 147, 0.8);
-  box-shadow: 0 0 0 1px rgba(255, 60, 147, 0.25);
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
 }
 
 .pill-mixcloud:hover {
-  border-color: rgba(36, 212, 255, 0.8);
-  box-shadow: 0 0 0 1px rgba(36, 212, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
 }
 
 .hero {
@@ -131,7 +128,7 @@ a {
 
 .hero-kicker {
   margin: 0 0 0.7rem;
-  color: var(--accent-2);
+  color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.14em;
   font-size: 0.75rem;
@@ -176,12 +173,13 @@ a {
 }
 
 .btn-primary {
-  background: linear-gradient(130deg, var(--accent) 20%, #ff8c4b 100%);
-  color: #fff;
+  background: #f1f1f1;
+  color: #000;
 }
 
 .btn-secondary {
-  background: linear-gradient(130deg, #1389cf 10%, var(--accent-2) 100%);
+  background: #161616;
+  border-color: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
 
@@ -195,7 +193,7 @@ a {
   width: min(420px, 90vw);
   aspect-ratio: 1;
   justify-self: center;
-  filter: drop-shadow(0 0 45px rgba(36, 212, 255, 0.25));
+  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.12));
 }
 
 .diamond {
@@ -208,14 +206,14 @@ a {
 .diamond-lg {
   width: 72%;
   height: 72%;
-  border-color: rgba(36, 212, 255, 0.95);
+  border-color: rgba(255, 255, 255, 0.8);
   animation: spin-slow 14s linear infinite;
 }
 
 .diamond-md {
   width: 48%;
   height: 48%;
-  border-color: rgba(255, 60, 147, 0.9);
+  border-color: rgba(255, 255, 255, 0.55);
   animation: spin-reverse 11s linear infinite;
 }
 
@@ -232,7 +230,7 @@ a {
   width: 86%;
   aspect-ratio: 1;
   border-radius: 999px;
-  border: 1px solid rgba(36, 212, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   transform: translate(-50%, -50%);
 }
 
@@ -242,7 +240,7 @@ a {
 
 .ring-2 {
   width: 100%;
-  border-color: rgba(255, 60, 147, 0.2);
+  border-color: rgba(255, 255, 255, 0.1);
   animation: pulse-ring 4.2s ease-out infinite;
   animation-delay: 0.6s;
 }
@@ -306,7 +304,7 @@ main {
 
 .media-card {
   border: 1px solid var(--card-border);
-  background: linear-gradient(180deg, rgba(19, 19, 33, 0.9), rgba(10, 10, 19, 0.9));
+  background: #0a0a0a;
   border-radius: 0.95rem;
   overflow: hidden;
   box-shadow: var(--shadow);
@@ -342,7 +340,7 @@ main {
   margin-top: 0.55rem;
   display: inline-block;
   font-size: 0.9rem;
-  color: var(--accent-2);
+  color: #d8d8d8;
   text-decoration: none;
 }
 

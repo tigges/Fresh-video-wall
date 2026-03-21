@@ -433,6 +433,12 @@ main {
   line-height: 1.25;
 }
 
+.tile-stats {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
 .media-meta a {
   margin-top: 0.55rem;
   display: inline-block;

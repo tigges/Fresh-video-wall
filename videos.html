@@ -10,7 +10,7 @@
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
+  <body data-page="videos">
     <header class="site-header">
       <a class="brand" href="./index.html" aria-label="Back to home">
         <img
@@ -44,53 +44,11 @@
           >
         </div>
         <p class="subpage-intro">
-          Additional performances beyond the homepage top picks, pulled from DJ
-          UrbanT live streams on YouTube.
+          Ranked from fetched channel stats. These are the videos beyond the
+          homepage Top 3.
         </p>
 
-        <div class="subpage-grid">
-          <article class="media-card">
-            <div class="embed-wrap">
-              <iframe
-                src="https://www.youtube.com/embed/uFJzPmG7zS8"
-                title="Set 434 - Bass House - DJ UrbanT"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-              ></iframe>
-            </div>
-            <div class="media-meta">
-              <h3>Set #434 - Bass House</h3>
-              <a
-                href="https://www.youtube.com/watch?v=uFJzPmG7zS8"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Watch on YouTube</a
-              >
-            </div>
-          </article>
-
-          <article class="media-card">
-            <div class="embed-wrap">
-              <iframe
-                src="https://www.youtube.com/embed/odAzUGdV_so"
-                title="Set 429 - Bass House - DJ UrbanT"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-              ></iframe>
-            </div>
-            <div class="media-meta">
-              <h3>Set #429 - Bass House</h3>
-              <a
-                href="https://www.youtube.com/watch?v=odAzUGdV_so"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Watch on YouTube</a
-              >
-            </div>
-          </article>
-        </div>
+        <div id="videos-rest-grid" class="subpage-grid"></div>
       </section>
     </main>
 

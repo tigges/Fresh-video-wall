@@ -14,14 +14,7 @@ function initHeaderVisibilityOnScroll() {
     return;
   }
 
-  const revealThreshold = 80;
-  siteHeader.classList.remove("is-visible");
-
-  const syncHeaderVisibility = () => {
-    siteHeader.classList.toggle("is-visible", window.scrollY > revealThreshold);
-  };
-
-  window.addEventListener("scroll", syncHeaderVisibility, { passive: true });
+  siteHeader.classList.add("is-visible");
 }
 
 function formatCount(value) {

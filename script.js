@@ -522,6 +522,73 @@ function createAudioCard(item) {
   return article;
 }
 
+function toTopTileMixcloudEmbedSrc(src) {
+  if (typeof src !== "string" || !src) {
+    return "";
+  }
+  try {
+    const parsed = new URL(src);
+    parsed.protocol = "https:";
+    parsed.hostname = "player-widget.mixcloud.com";
+    parsed.pathname = "/widget/iframe/";
+    parsed.searchParams.set("hide_cover", "1");
+    parsed.searchParams.set("mini", "0");
+    parsed.searchParams.set("light", "0");
+    parsed.searchParams.set("autoplay", "0");
+    return parsed.toString();
+  } catch {
+    return src;
+  }
+}
+
+function createAudioTopTileCard(item) {
+  const article = document.createElement("article");
+  article.className = "media-card";
+
+  const wrap = document.createElement("div");
+  wrap.className = "embed-wrap embed-wrap-audio";
+
+  const normalizedTitle = normalizeBrandTitle(item.title);
+  const setLabel = extractSetLabel(normalizedTitle);
+
+  const iframe = document.createElement("iframe");
+  iframe.className = "audio-top-iframe";
+  iframe.src = toTopTileMixcloudEmbedSrc(item.embedUrl);
+  iframe.title = normalizedTitle;
+  iframe.allow = "encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share";
+  iframe.loading = "lazy";
+  wrap.appendChild(iframe);
+
+  const overlay = document.createElement("div");
+  overlay.className = "audio-top-overlay";
+  overlay.setAttribute("aria-hidden", "true");
+  const number = document.createElement("span");
+  number.className = "audio-top-overlay-number";
+  number.textContent = setLabel;
+  overlay.appendChild(number);
+  wrap.appendChild(overlay);
+
+  const meta = document.createElement("div");
+  meta.className = "media-meta";
+
+  const title = document.createElement("h3");
+  title.textContent = normalizedTitle;
+  const badge = createGenreBadge();
+
+  const stats = document.createElement("p");
+  stats.className = "tile-stats";
+  const playsText = item.playCount ? `${formatCount(item.playCount)} plays` : "";
+  const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
+  stats.textContent = [playsText, dateText].filter(Boolean).join(" • ");
+  const footer = document.createElement("div");
+  footer.className = "media-meta-footer";
+  footer.append(stats, badge);
+
+  meta.append(title, footer);
+  article.append(wrap, meta);
+  return article;
+}
+
 function toProfileMixcloudEmbedSrc(src) {
   if (typeof src !== "string" || !src) {
     return "";
@@ -622,7 +689,7 @@ async function hydrateMediaWalls() {
 
     if (page === "home") {
       renderGrid("videos-grid", data?.videos?.top3 ?? [], createVideoCard);
-      renderGrid("audio-grid", data?.audio?.top3 ?? [], createAudioCard);
+      renderGrid("audio-grid", data?.audio?.top3 ?? [], createAudioTopTileCard);
       appendGridActionTile("videos-grid", "More Videos", "./videos.html");
       updateHeroLiveCta(data);
       return;

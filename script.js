@@ -263,14 +263,27 @@ function createAudioCard(item) {
 
   const normalizedTitle = normalizeBrandTitle(item.title);
   const setLabel = extractSetLabel(normalizedTitle);
-  const cover = document.createElement("a");
-  cover.className = "audio-set-cover";
-  cover.href = item.url;
-  cover.target = "_blank";
-  cover.rel = "noopener noreferrer";
-  cover.setAttribute("aria-label", `Open ${normalizedTitle} on Mixcloud`);
-  cover.textContent = setLabel;
-  wrap.appendChild(cover);
+  const iframe = document.createElement("iframe");
+  iframe.src = item.embedUrl;
+  iframe.title = normalizedTitle;
+  iframe.allow = "autoplay";
+  wrap.appendChild(iframe);
+
+  const setOverlay = document.createElement("div");
+  setOverlay.className = "audio-set-overlay";
+  setOverlay.setAttribute("aria-hidden", "true");
+
+  const logo = document.createElement("img");
+  logo.className = "audio-set-overlay-logo";
+  logo.src = "./assets/images/djurbant-logo.svg";
+  logo.alt = "";
+
+  const setNumber = document.createElement("span");
+  setNumber.className = "audio-set-overlay-number";
+  setNumber.textContent = setLabel;
+
+  setOverlay.append(logo, setNumber);
+  wrap.appendChild(setOverlay);
 
   const meta = document.createElement("div");
   meta.className = "media-meta";

@@ -25,6 +25,17 @@ function formatDate(dateValue) {
   return parsed.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 }
 
+function normalizeBrandTitle(value) {
+  if (typeof value !== "string" || !value.trim()) {
+    return "";
+  }
+  const token = "__DJ_URBANT__";
+  return value
+    .replace(/\bDJ\s*UrbanT\b/gi, token)
+    .replace(/\burbant\b/gi, "DJ UrbanT")
+    .replace(new RegExp(token, "g"), "DJ UrbanT");
+}
+
 function createGenreBadge() {
   const badge = document.createElement("span");
   badge.className = "genre-badge";
@@ -41,7 +52,8 @@ function createVideoCard(item) {
 
   const iframe = document.createElement("iframe");
   iframe.src = item.embedUrl;
-  iframe.title = item.title;
+  const normalizedTitle = normalizeBrandTitle(item.title);
+  iframe.title = normalizedTitle;
   iframe.allow =
     "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
   iframe.referrerPolicy = "strict-origin-when-cross-origin";
@@ -52,7 +64,7 @@ function createVideoCard(item) {
   meta.className = "media-meta";
 
   const title = document.createElement("h3");
-  title.textContent = item.title;
+  title.textContent = normalizedTitle;
   const badge = createGenreBadge();
 
   const stats = document.createElement("p");
@@ -75,7 +87,8 @@ function createAudioCard(item) {
 
   const iframe = document.createElement("iframe");
   iframe.src = item.embedUrl;
-  iframe.title = item.title;
+  const normalizedTitle = normalizeBrandTitle(item.title);
+  iframe.title = normalizedTitle;
   iframe.allow = "autoplay";
   wrap.appendChild(iframe);
 
@@ -83,7 +96,7 @@ function createAudioCard(item) {
   meta.className = "media-meta";
 
   const title = document.createElement("h3");
-  title.textContent = item.title;
+  title.textContent = normalizedTitle;
   const badge = createGenreBadge();
 
   const stats = document.createElement("p");

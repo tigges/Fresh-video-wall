@@ -959,4 +959,27 @@ body[data-page="home"] .section-head h2::after {
     width: min(100%, 320px);
     justify-content: center;
   }
+
+  body[data-page="videos"] .subpage-grid,
+  body[data-page="audio"] .subpage-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  body[data-page="videos"] .subpage-grid::-webkit-scrollbar,
+  body[data-page="audio"] .subpage-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  body[data-page="videos"] .subpage-grid .media-card,
+  body[data-page="audio"] .subpage-grid .media-card {
+    flex: 0 0 75vw;
+    max-width: 280px;
+    scroll-snap-align: start;
+  }
 }

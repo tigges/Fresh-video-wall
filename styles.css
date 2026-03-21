@@ -743,15 +743,16 @@ main {
   width: fit-content;
   margin-top: 0;
   margin-left: auto;
-  padding: 0.2rem 0.58rem;
+  padding: 0.27rem 0.78rem;
   border-radius: 999px;
-  border: 1px solid rgba(170, 182, 200, 0.42);
-  background: #111;
-  color: #cfd7e4;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  border: 1px solid rgba(189, 201, 219, 0.58);
+  background: linear-gradient(135deg, #151821 0%, #111318 100%);
+  color: #eef3fb;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   line-height: 1.1;
+  box-shadow: 0 0 0 1px rgba(143, 160, 177, 0.16), 0 3px 10px rgba(0, 0, 0, 0.34);
 }
 
 .tile-stats {

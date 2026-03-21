@@ -82,6 +82,31 @@ function createGenreBadge() {
   return badge;
 }
 
+function createMoreMenuCard(label, href) {
+  const article = document.createElement("article");
+  article.className = "media-card media-card-more";
+
+  const inner = document.createElement("div");
+  inner.className = "media-card-more-inner";
+
+  const link = document.createElement("a");
+  link.className = "btn btn-outline media-card-more-link";
+  link.href = href;
+  link.textContent = label;
+
+  inner.append(link);
+  article.append(inner);
+  return article;
+}
+
+function appendHomeMoreTile(containerId, label, href) {
+  const container = document.getElementById(containerId);
+  if (!container) {
+    return;
+  }
+  container.append(createMoreMenuCard(label, href));
+}
+
 function updateHeroLiveCta(data) {
   const liveCta = document.querySelector(".btn-live");
   if (!liveCta) {
@@ -238,6 +263,8 @@ async function hydrateMediaWalls() {
     if (page === "home") {
       renderGrid("videos-grid", data?.videos?.top3 ?? [], createVideoCard);
       renderGrid("audio-grid", data?.audio?.top3 ?? [], createAudioCard);
+      appendHomeMoreTile("videos-grid", "More Videos", "./videos.html");
+      appendHomeMoreTile("audio-grid", "More Audio", "./audio.html");
       updateHeroLiveCta(data);
       return;
     }

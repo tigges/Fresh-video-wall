@@ -43,6 +43,7 @@ body {
   color: var(--text);
   background: #000;
   line-height: 1.5;
+  overflow-x: hidden;
 }
 
 a {
@@ -126,6 +127,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 3;
   mix-blend-mode: difference;
   pointer-events: none;
 }
@@ -134,19 +136,21 @@ a {
   position: absolute;
   margin: 0;
   font-family: "Clash Display", "Segoe UI", sans-serif;
-  font-size: clamp(2.8rem, 9vw, 7.2rem);
-  line-height: 0.9;
+  width: 100%;
+  font-size: clamp(2.9rem, 10.2vw, 8.2rem);
+  line-height: 0.94;
   text-transform: uppercase;
-  letter-spacing: 0.015em;
+  letter-spacing: -0.012em;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.82);
-  text-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  color: rgba(255, 255, 255, 0.94);
+  text-shadow: 0 0 9px rgba(0, 0, 0, 0.18);
   text-align: center;
+  white-space: nowrap;
   animation: title-slide 17s ease-in-out infinite alternate;
 }
 
 .hero-overlay-title-alt {
-  opacity: 0.42;
+  opacity: 0;
   animation-duration: 23s;
 }
 
@@ -200,6 +204,9 @@ a {
   text-transform: uppercase;
   font-size: 0.96rem;
   letter-spacing: 0.07em;
+  padding-inline: 1.75rem;
+  min-width: min(320px, calc(100vw - 2rem));
+  white-space: nowrap;
 }
 
 .btn-outline {
@@ -324,10 +331,11 @@ a {
 }
 
 .social-link {
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.36);
+  background-color: rgba(255, 255, 255, 0.04);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -337,15 +345,15 @@ a {
 }
 
 .social-link svg {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   fill: currentColor;
 }
 
 .social-link:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.65);
-  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.16);
 }
 
 .subpage-main {
@@ -484,7 +492,14 @@ main {
   }
 
   .hero-overlay-title {
-    font-size: clamp(1.8rem, 9.8vw, 3.2rem);
+    font-size: clamp(1.65rem, 9.1vw, 2.8rem);
+    letter-spacing: -0.01em;
+  }
+
+  .btn-live {
+    font-size: 0.86rem;
+    min-width: min(300px, calc(100vw - 1.4rem));
+    padding-inline: 1.2rem;
   }
 
   .site-header {

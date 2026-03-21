@@ -1,0 +1,80 @@
+name: Deploy to Cloudways
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to deploy"
+        required: false
+        default: "main"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudways-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve deployment values
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.branch }}" ]; then
+            echo "DEPLOY_BRANCH=${{ inputs.branch }}" >> "$GITHUB_ENV"
+          elif [ -n "${{ vars.CLOUDWAYS_DEPLOY_BRANCH }}" ]; then
+            echo "DEPLOY_BRANCH=${{ vars.CLOUDWAYS_DEPLOY_BRANCH }}" >> "$GITHUB_ENV"
+          else
+            echo "DEPLOY_BRANCH=main" >> "$GITHUB_ENV"
+          fi
+
+          if [ -n "${{ secrets.CLOUDWAYS_REPO_URL }}" ]; then
+            echo "REPO_URL=${{ secrets.CLOUDWAYS_REPO_URL }}" >> "$GITHUB_ENV"
+          else
+            echo "REPO_URL=https://github.com/${{ github.repository }}.git" >> "$GITHUB_ENV"
+          fi
+
+      - name: Deploy on Cloudways via SSH + git
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.CLOUDWAYS_HOST }}
+          username: ${{ secrets.CLOUDWAYS_SSH_USER }}
+          key: ${{ secrets.CLOUDWAYS_SSH_KEY }}
+          port: ${{ secrets.CLOUDWAYS_SSH_PORT || '22' }}
+          script: |
+            set -euo pipefail
+
+            APP_PATH="${{ secrets.CLOUDWAYS_APP_PATH }}"
+            REPO_URL="${{ env.REPO_URL }}"
+            BRANCH="${{ env.DEPLOY_BRANCH }}"
+
+            if [ -z "$APP_PATH" ]; then
+              echo "CLOUDWAYS_APP_PATH is required."
+              exit 1
+            fi
+
+            mkdir -p "$APP_PATH"
+            cd "$APP_PATH"
+
+            if [ ! -d ".git" ]; then
+              git init
+              git remote add origin "$REPO_URL"
+            fi
+
+            if ! git remote get-url origin >/dev/null 2>&1; then
+              git remote add origin "$REPO_URL"
+            fi
+
+            CURRENT_REMOTE="$(git remote get-url origin || true)"
+            if [ "$CURRENT_REMOTE" != "$REPO_URL" ]; then
+              git remote set-url origin "$REPO_URL"
+            fi
+
+            git fetch --prune origin "$BRANCH"
+            git checkout -B "$BRANCH" "origin/$BRANCH"
+            git reset --hard "origin/$BRANCH"
+            git clean -fd

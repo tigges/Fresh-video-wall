@@ -1,8 +1,16 @@
 {
-  "generatedAt": "2026-03-21T12:13:58Z",
+  "generatedAt": "2026-03-21T18:13:17Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
-    "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus"
+    "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
+    "youtubeLive": "Derived from @DJ_UrbanT/streams page; exposes current live video if present and latest stream URL fallback"
+  },
+  "youtubeLive": {
+    "isLive": false,
+    "liveVideoId": "",
+    "liveUrl": "",
+    "latestVideoId": "uFJzPmG7zS8",
+    "latestUrl": "https://www.youtube.com/watch?v=uFJzPmG7zS8"
   },
   "videos": {
     "top3": [
@@ -12,9 +20,9 @@
         "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
         "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
         "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
-        "viewCount": 154,
+        "viewCount": 174,
         "publishedAt": "2026-03-15",
-        "baseViewCount": 4,
+        "baseViewCount": 24,
         "featuredBonus": 150,
         "isFeaturedRecent": true
       },
@@ -24,7 +32,7 @@
         "url": "https://www.youtube.com/watch?v=8XF8FRusnWc",
         "embedUrl": "https://www.youtube.com/embed/8XF8FRusnWc",
         "thumbnailUrl": "https://i.ytimg.com/vi/8XF8FRusnWc/hqdefault.jpg",
-        "viewCount": 212,
+        "viewCount": 217,
         "publishedAt": "2026-01-07"
       },
       {
@@ -33,7 +41,7 @@
         "url": "https://www.youtube.com/watch?v=PPUISj_W6Kw",
         "embedUrl": "https://www.youtube.com/embed/PPUISj_W6Kw",
         "thumbnailUrl": "https://i.ytimg.com/vi/PPUISj_W6Kw/hqdefault.jpg",
-        "viewCount": 148,
+        "viewCount": 150,
         "publishedAt": "2026-01-07"
       }
     ],
@@ -44,7 +52,7 @@
         "url": "https://www.youtube.com/watch?v=Jf7nPjlK2Bo",
         "embedUrl": "https://www.youtube.com/embed/Jf7nPjlK2Bo",
         "thumbnailUrl": "https://i.ytimg.com/vi/Jf7nPjlK2Bo/hqdefault.jpg",
-        "viewCount": 95,
+        "viewCount": 97,
         "publishedAt": "2026-01-07"
       },
       {
@@ -53,7 +61,7 @@
         "url": "https://www.youtube.com/watch?v=odAzUGdV_so",
         "embedUrl": "https://www.youtube.com/embed/odAzUGdV_so",
         "thumbnailUrl": "https://i.ytimg.com/vi/odAzUGdV_so/hqdefault.jpg",
-        "viewCount": 9,
+        "viewCount": 11,
         "publishedAt": "2025-12-29"
       }
     ]
@@ -77,7 +85,7 @@
         "title": "UrbanT Live! #209 - New Hot Saturday Night Bass House Set",
         "url": "https://www.mixcloud.com/urbant/urbant-live-20210731-181823/",
         "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210731-181823%2F",
-        "playCount": 126,
+        "playCount": 127,
         "favoriteCount": 11,
         "publishedAt": "2021-08-01T08:35:50Z"
       },

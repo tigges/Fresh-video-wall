@@ -24,6 +24,7 @@ YOUTUBE_SOURCES = (
     "https://www.youtube.com/@DJ_UrbanT/videos",
     "https://www.youtube.com/@DJ_UrbanT/streams",
 )
+YOUTUBE_STREAMS_URL = "https://www.youtube.com/@DJ_UrbanT/streams"
 
 SEED_VIDEO_IDS = (
     "Jf7nPjlK2Bo",
@@ -90,6 +91,53 @@ def extract_video_ids() -> list[str]:
             continue
     ids.extend(SEED_VIDEO_IDS)
     return unique_preserve_order(ids)
+
+
+def detect_live_video_id(streams_html: str) -> str:
+    patterns = (
+        r'"videoId":"([A-Za-z0-9_-]{11})".{0,1200}?"BADGE_STYLE_TYPE_LIVE_NOW"',
+        r'"BADGE_STYLE_TYPE_LIVE_NOW".{0,1200}?"videoId":"([A-Za-z0-9_-]{11})"',
+    )
+    for pattern in patterns:
+        match = re.search(pattern, streams_html, flags=re.DOTALL)
+        if match:
+            return str(match.group(1))
+    return ""
+
+
+def youtube_live_state() -> dict[str, Any]:
+    try:
+        streams_html = fetch_text(YOUTUBE_STREAMS_URL)
+    except Exception:
+        return {
+            "isLive": False,
+            "liveVideoId": "",
+            "liveUrl": "",
+            "latestVideoId": "",
+            "latestUrl": "",
+        }
+
+    stream_ids = unique_preserve_order(
+        re.findall(r'"videoId":"([A-Za-z0-9_-]{11})"', streams_html)
+    )
+    latest_video_id = stream_ids[0] if stream_ids else ""
+
+    live_video_id = detect_live_video_id(streams_html)
+    is_live = bool(live_video_id)
+
+    if not live_video_id and "BADGE_STYLE_TYPE_LIVE_NOW" in streams_html:
+        # If YouTube markup changes and we still see a live badge token,
+        # fall back to first stream item so the CTA keeps working.
+        live_video_id = latest_video_id
+        is_live = bool(live_video_id)
+
+    return {
+        "isLive": is_live,
+        "liveVideoId": live_video_id,
+        "liveUrl": f"https://www.youtube.com/watch?v={live_video_id}" if live_video_id else "",
+        "latestVideoId": latest_video_id,
+        "latestUrl": f"https://www.youtube.com/watch?v={latest_video_id}" if latest_video_id else "",
+    }
 
 
 def youtube_video_item(video_id: str) -> dict[str, Any]:
@@ -219,6 +267,7 @@ def feature_most_recent(
 def main() -> None:
     videos = feature_most_recent(ranked_youtube_items(), "viewCount")
     audio = feature_most_recent(ranked_mixcloud_items(), "playCount")
+    youtube_live = youtube_live_state()
     top_videos, rest_videos = split_top_rest(videos)
     top_audio, rest_audio = split_top_rest(audio)
 
@@ -233,7 +282,12 @@ def main() -> None:
                 "Base sort by Mixcloud playCount desc, then publishedAt desc; "
                 "most recent item pinned to slot #1 with +150 bonus"
             ),
+            "youtubeLive": (
+                "Derived from @DJ_UrbanT/streams page; exposes current live video "
+                "if present and latest stream URL fallback"
+            ),
         },
+        "youtubeLive": youtube_live,
         "videos": {"top3": top_videos, "rest": rest_videos},
         "audio": {"top3": top_audio, "rest": rest_audio},
     }

@@ -1,4 +1,5 @@
 const yearNode = document.getElementById("year");
+const FALLBACK_YOUTUBE_URL = "https://m.youtube.com/@dj_urbant";
 
 if (yearNode) {
   yearNode.textContent = String(new Date().getFullYear());
@@ -41,6 +42,32 @@ function createGenreBadge() {
   badge.className = "genre-badge";
   badge.textContent = GENRE_BADGE_LABEL;
   return badge;
+}
+
+function updateHeroLiveCta(data) {
+  const liveCta = document.querySelector(".btn-live");
+  if (!liveCta) {
+    return;
+  }
+
+  const youtubeLive = data?.youtubeLive ?? {};
+  const latestUrl =
+    (typeof youtubeLive.latestUrl === "string" && youtubeLive.latestUrl) ||
+    data?.videos?.top3?.[0]?.url ||
+    FALLBACK_YOUTUBE_URL;
+
+  if (
+    youtubeLive?.isLive &&
+    typeof youtubeLive.liveUrl === "string" &&
+    youtubeLive.liveUrl
+  ) {
+    liveCta.textContent = "Watch Live on Now";
+    liveCta.href = youtubeLive.liveUrl;
+    return;
+  }
+
+  liveCta.textContent = "Watch Latest Live Video";
+  liveCta.href = latestUrl;
 }
 
 function createVideoCard(item) {
@@ -147,6 +174,7 @@ async function hydrateMediaWalls() {
     if (page === "home") {
       renderGrid("videos-grid", data?.videos?.top3 ?? [], createVideoCard);
       renderGrid("audio-grid", data?.audio?.top3 ?? [], createAudioCard);
+      updateHeroLiveCta(data);
       return;
     }
 

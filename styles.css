@@ -7,33 +7,29 @@
   --accent-2: #8f8f8f;
   --accent-iridescent: linear-gradient(
     128deg,
-    #f8fbff 0%,
-    #c2c9d8 12%,
-    #75dcff 23%,
-    #edf0f7 36%,
-    #6f74ff 52%,
-    #f5f7fb 67%,
-    #df8bff 79%,
-    #ff74d9 90%,
-    #c7ceda 100%
+    #f3f5f8 0%,
+    #d7dde6 16%,
+    #aab6c8 34%,
+    #eceff4 50%,
+    #8b97ad 67%,
+    #cfd5df 83%,
+    #7b879f 100%
   );
   --accent-iridescent-soft: linear-gradient(
     128deg,
-    rgba(248, 251, 255, 0.3) 0%,
-    rgba(194, 201, 216, 0.26) 12%,
-    rgba(117, 220, 255, 0.28) 23%,
-    rgba(237, 240, 247, 0.28) 36%,
-    rgba(111, 116, 255, 0.28) 52%,
-    rgba(245, 247, 251, 0.27) 67%,
-    rgba(223, 139, 255, 0.28) 79%,
-    rgba(255, 116, 217, 0.28) 90%,
-    rgba(199, 206, 218, 0.26) 100%
+    rgba(243, 245, 248, 0.3) 0%,
+    rgba(215, 221, 230, 0.25) 16%,
+    rgba(170, 182, 200, 0.25) 34%,
+    rgba(236, 239, 244, 0.26) 50%,
+    rgba(139, 151, 173, 0.27) 67%,
+    rgba(207, 213, 223, 0.25) 83%,
+    rgba(123, 135, 159, 0.24) 100%
   );
-  --cta-gradient: linear-gradient(90deg, #00c6ff 0%, #9b00ff 100%);
+  --cta-gradient: linear-gradient(90deg, #8fa0b1 0%, #7685a0 50%, #675782 100%);
   --cta-glow:
-    0 0 0 1px rgba(0, 198, 255, 0.42),
-    0 0 14px rgba(0, 198, 255, 0.24),
-    0 0 20px rgba(155, 0, 255, 0.28);
+    0 0 0 1px rgba(143, 160, 177, 0.46),
+    0 0 14px rgba(143, 160, 177, 0.22),
+    0 0 20px rgba(103, 87, 130, 0.24);
   --card-border: rgba(255, 255, 255, 0.12);
   --shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
 }
@@ -667,16 +663,25 @@ main {
   line-height: 1.25;
 }
 
+.media-meta-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.55rem;
+  margin-top: 0.52rem;
+}
+
 .genre-badge {
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  margin-top: 0.48rem;
+  margin-top: 0;
+  margin-left: auto;
   padding: 0.2rem 0.58rem;
   border-radius: 999px;
-  border: 1px solid rgba(117, 220, 255, 0.28);
+  border: 1px solid rgba(170, 182, 200, 0.42);
   background: #111;
-  color: #88d8ff;
+  color: #cfd7e4;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -684,7 +689,7 @@ main {
 }
 
 .tile-stats {
-  margin: 0.45rem 0 0;
+  margin: 0;
   color: var(--muted);
   font-size: 0.82rem;
 }

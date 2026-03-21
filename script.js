@@ -72,8 +72,11 @@ function createVideoCard(item) {
   const viewText = item.viewCount ? `${formatCount(item.viewCount)} views` : "";
   const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
   stats.textContent = [viewText, dateText].filter(Boolean).join(" • ");
+  const footer = document.createElement("div");
+  footer.className = "media-meta-footer";
+  footer.append(stats, badge);
 
-  meta.append(title, badge, stats);
+  meta.append(title, footer);
   article.append(wrap, meta);
   return article;
 }
@@ -104,8 +107,11 @@ function createAudioCard(item) {
   const playsText = item.playCount ? `${formatCount(item.playCount)} plays` : "";
   const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
   stats.textContent = [playsText, dateText].filter(Boolean).join(" • ");
+  const footer = document.createElement("div");
+  footer.className = "media-meta-footer";
+  footer.append(stats, badge);
 
-  meta.append(title, badge, stats);
+  meta.append(title, footer);
   article.append(wrap, meta);
   return article;
 }

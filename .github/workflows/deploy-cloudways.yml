@@ -71,7 +71,10 @@ jobs:
 
             mkdir -p "$APP_PATH"
             cd "$APP_PATH"
-            git config --global --add safe.directory "$APP_PATH"
+            REAL_APP_PATH="$(pwd -P)"
+            git config --global --add safe.directory "$APP_PATH" || true
+            git config --global --add safe.directory "$REAL_APP_PATH" || true
+            git config --global --add safe.directory "*" || true
 
             if [ ! -d ".git" ]; then
               git init

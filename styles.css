@@ -76,6 +76,14 @@
   src: url("./assets/fonts/Montserrat-Black.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Russo One";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./assets/fonts/RussoOne-Regular.ttf") format("truetype");
+}
+
 *,
 *::before,
 *::after {
@@ -245,6 +253,25 @@ a {
   text-align: center;
   white-space: nowrap;
   animation: title-slide 17s ease-in-out infinite alternate;
+}
+
+body[data-hero-font="current"] .hero-overlay-title {
+  font-family: "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+}
+
+body[data-hero-font="montserrat"] .hero-overlay-title {
+  font-family: "Montserrat", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 900;
+}
+
+body[data-hero-font="russo"] .hero-overlay-title {
+  font-family: "Russo One", "Montserrat", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.04em;
 }
 
 .hero-overlay-title-alt {

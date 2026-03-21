@@ -37,6 +37,44 @@ function normalizeBrandTitle(value) {
     .replace(new RegExp(token, "g"), "DJ UrbanT");
 }
 
+function applyHeroFontVariant() {
+  const fontParam = new URLSearchParams(window.location.search).get("heroFont");
+  if (!fontParam) {
+    return;
+  }
+  const normalized = fontParam.trim().toLowerCase();
+  if (!["current", "montserrat", "russo"].includes(normalized)) {
+    return;
+  }
+  document.body.dataset.heroFont = normalized;
+}
+
+function withAutoplayEmbedSrc(src) {
+  if (typeof src !== "string" || !src) {
+    return "";
+  }
+  try {
+    const parsed = new URL(src);
+    parsed.searchParams.set("autoplay", "1");
+    parsed.searchParams.set("playsinline", "1");
+    parsed.searchParams.set("rel", "0");
+    return parsed.toString();
+  } catch {
+    return src;
+  }
+}
+
+function playTopVideoTile() {
+  const topVideoFrame = document.querySelector("#videos-grid .embed-wrap iframe");
+  if (!topVideoFrame) {
+    return false;
+  }
+  const videosSection = document.getElementById("videos");
+  videosSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+  topVideoFrame.src = withAutoplayEmbedSrc(topVideoFrame.src);
+  return true;
+}
+
 function createGenreBadge() {
   const badge = document.createElement("span");
   badge.className = "genre-badge";
@@ -61,13 +99,39 @@ function updateHeroLiveCta(data) {
     typeof youtubeLive.liveUrl === "string" &&
     youtubeLive.liveUrl
   ) {
-    liveCta.textContent = "Watch Live on Now";
+    liveCta.textContent = "Join Live Now!";
     liveCta.href = youtubeLive.liveUrl;
+    liveCta.target = "_blank";
+    liveCta.rel = "noopener noreferrer";
+    liveCta.dataset.liveMode = "live";
     return;
   }
 
-  liveCta.textContent = "Watch Latest Live Video";
-  liveCta.href = latestUrl;
+  liveCta.textContent = "Watch Latest Video";
+  liveCta.href = "#videos";
+  liveCta.removeAttribute("target");
+  liveCta.removeAttribute("rel");
+  liveCta.dataset.liveMode = "latest";
+  liveCta.dataset.latestUrl = latestUrl;
+}
+
+function bindHeroLiveCtaClick() {
+  const liveCta = document.querySelector(".btn-live");
+  if (!liveCta || liveCta.dataset.boundClick === "1") {
+    return;
+  }
+  liveCta.dataset.boundClick = "1";
+  liveCta.addEventListener("click", (event) => {
+    if (liveCta.dataset.liveMode !== "latest") {
+      return;
+    }
+    event.preventDefault();
+    const started = playTopVideoTile();
+    if (!started) {
+      const fallbackUrl = liveCta.dataset.latestUrl || FALLBACK_YOUTUBE_URL;
+      window.location.href = fallbackUrl;
+    }
+  });
 }
 
 function createVideoCard(item) {
@@ -197,4 +261,6 @@ async function hydrateMediaWalls() {
   }
 }
 
+applyHeroFontVariant();
+bindHeroLiveCtaClick();
 hydrateMediaWalls();

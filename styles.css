@@ -128,7 +128,6 @@ a {
   color: inherit;
 }
 
-.site-header,
 .hero,
 .media-section,
 .site-footer {
@@ -137,11 +136,28 @@ a {
 }
 
 .site-header {
-  padding: 1.2rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  padding: 12px 24px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.site-header.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .brand {

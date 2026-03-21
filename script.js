@@ -8,6 +8,22 @@ if (yearNode) {
 const page = document.body.dataset.page;
 const GENRE_BADGE_LABEL = "\u{1F50A} Bass House";
 
+function initHeaderVisibilityOnScroll() {
+  const siteHeader = document.querySelector(".site-header");
+  if (!siteHeader) {
+    return;
+  }
+
+  const revealThreshold = 80;
+  siteHeader.classList.remove("is-visible");
+
+  const syncHeaderVisibility = () => {
+    siteHeader.classList.toggle("is-visible", window.scrollY > revealThreshold);
+  };
+
+  window.addEventListener("scroll", syncHeaderVisibility, { passive: true });
+}
+
 function formatCount(value) {
   if (typeof value !== "number" || Number.isNaN(value)) {
     return "";
@@ -313,5 +329,6 @@ async function hydrateMediaWalls() {
 }
 
 applyHeroFontVariant();
+initHeaderVisibilityOnScroll();
 bindHeroLiveCtaClick();
 hydrateMediaWalls();

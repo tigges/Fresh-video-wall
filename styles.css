@@ -126,20 +126,8 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  --scroll-pan: 0px;
-  transform: translate3d(var(--scroll-pan), 0, 0);
   mix-blend-mode: difference;
   pointer-events: none;
-}
-
-.hero-overlay::before {
-  content: "";
-  position: absolute;
-  width: min(980px, 100%);
-  height: clamp(120px, 20vw, 210px);
-  background: rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .hero-overlay-title {

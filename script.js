@@ -624,7 +624,6 @@ async function hydrateMediaWalls() {
       renderGrid("videos-grid", data?.videos?.top3 ?? [], createVideoCard);
       renderGrid("audio-grid", data?.audio?.top3 ?? [], createAudioCard);
       appendGridActionTile("videos-grid", "More Videos", "./videos.html");
-      appendGridActionTile("audio-grid", "More Audio", "./audio.html");
       updateHeroLiveCta(data);
       return;
     }

@@ -1128,9 +1128,13 @@ body[data-page="home"] #music .section-cta {
     display: flex;
   }
 
-  body[data-page="home"] #videos .section-cta,
-  body[data-page="home"] #music .section-cta {
+  body[data-page="home"] #videos .section-cta {
     display: none;
+  }
+
+  body[data-page="home"] #music .section-cta {
+    display: flex;
+    justify-content: center;
   }
 
   body[data-page="home"] #videos .section-cta .btn,

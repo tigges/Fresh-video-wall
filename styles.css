@@ -5,6 +5,22 @@
   --muted: #afafaf;
   --accent: #d8d8d8;
   --accent-2: #8f8f8f;
+  --accent-iridescent: linear-gradient(
+    125deg,
+    #00d4ff 0%,
+    #3e7bff 24%,
+    #7f5dff 48%,
+    #b449ff 71%,
+    #ff48c9 100%
+  );
+  --accent-iridescent-soft: linear-gradient(
+    125deg,
+    rgba(0, 212, 255, 0.28) 0%,
+    rgba(62, 123, 255, 0.28) 24%,
+    rgba(127, 93, 255, 0.28) 48%,
+    rgba(180, 73, 255, 0.28) 71%,
+    rgba(255, 72, 201, 0.28) 100%
+  );
   --card-border: rgba(255, 255, 255, 0.12);
   --shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
 }
@@ -88,26 +104,30 @@ a {
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  border: 1px solid var(--card-border);
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#080808, #080808) padding-box,
+    var(--accent-iridescent-soft) border-box;
   padding: 0.48rem 1rem;
   text-decoration: none;
   font-weight: 600;
   font-size: 0.9rem;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  color: #f7f8ff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 
 .pill:hover {
   transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(127, 93, 255, 0.26);
+  filter: brightness(1.06);
 }
 
 .pill-youtube:hover {
-  border-color: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.33);
 }
 
 .pill-mixcloud:hover {
-  border-color: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 1px rgba(255, 72, 201, 0.33);
 }
 
 .hero {
@@ -194,8 +214,8 @@ a {
 
 .btn-live {
   margin-top: 0.7rem;
-  background: #ff0000;
-  border-color: #ff0000;
+  background: var(--accent-iridescent);
+  border-color: transparent;
   color: #fff;
   font-family: "Montserrat", "Segoe UI", sans-serif;
   font-weight: 600;
@@ -207,11 +227,15 @@ a {
   padding-inline: 1.75rem;
   min-width: min(320px, calc(100vw - 2rem));
   white-space: nowrap;
+  box-shadow: 0 10px 22px rgba(127, 93, 255, 0.34);
 }
 
 .btn-outline {
-  border-color: var(--card-border);
-  color: var(--text);
+  border-color: transparent;
+  background:
+    linear-gradient(#080808, #080808) padding-box,
+    var(--accent-iridescent-soft) border-box;
+  color: #f2f4ff;
 }
 
 .diamond-stage {
@@ -334,8 +358,10 @@ a {
   width: 44px;
   height: 44px;
   border-radius: 999px;
-  border: 1.5px solid rgba(255, 255, 255, 0.36);
-  background-color: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(#0a0a0a, #0a0a0a) padding-box,
+    var(--accent-iridescent) border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -352,8 +378,8 @@ a {
 
 .social-link:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.95);
-  background-color: rgba(255, 255, 255, 0.16);
+  filter: brightness(1.09);
+  box-shadow: 0 0 14px rgba(127, 93, 255, 0.38);
 }
 
 .subpage-main {
@@ -394,11 +420,21 @@ main {
 .section-head h2 {
   margin: 0;
   font-size: clamp(1.35rem, 2vw, 1.8rem);
+  background: var(--accent-iridescent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .section-head h1 {
   margin: 0;
   font-size: clamp(1.6rem, 2.8vw, 2.3rem);
+  background: var(--accent-iridescent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .media-grid {
@@ -451,7 +487,11 @@ main {
   margin-top: 0.55rem;
   display: inline-block;
   font-size: 0.9rem;
-  color: #d8d8d8;
+  background: var(--accent-iridescent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
   text-decoration: none;
 }
 

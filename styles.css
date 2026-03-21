@@ -194,12 +194,12 @@ a {
   margin: 0;
   font-family: "Clash Display", "Segoe UI", sans-serif;
   width: 100%;
-  font-size: clamp(2.9rem, 10.2vw, 8.2rem);
-  line-height: 0.94;
+  font-size: clamp(2.5rem, 8vw, 7.2rem);
+  line-height: 1.02;
   text-transform: uppercase;
-  letter-spacing: -0.012em;
+  letter-spacing: 0;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.94);
+  color: rgba(255, 255, 255, 0.97);
   text-shadow: 0 0 9px rgba(0, 0, 0, 0.18);
   text-align: center;
   white-space: nowrap;
@@ -214,7 +214,7 @@ a {
 .hero-tagline {
   position: absolute;
   left: 50%;
-  top: 59%;
+  top: 65%;
   transform: translateX(-50%);
   margin: 0;
   font-size: clamp(0.82rem, 1.4vw, 1.12rem);
@@ -465,9 +465,13 @@ main {
 .section-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 1rem;
   margin-bottom: 1rem;
+}
+
+.section-cta {
+  margin-top: 0.95rem;
 }
 
 .section-head h2 {
@@ -570,11 +574,11 @@ main {
 
   .hero-overlay-title {
     font-size: clamp(1.65rem, 9.1vw, 2.8rem);
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
 
   .hero-tagline {
-    top: 61%;
+    top: 69%;
     font-size: clamp(0.68rem, 2.9vw, 0.9rem);
     letter-spacing: 0.04em;
   }

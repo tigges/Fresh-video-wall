@@ -8,7 +8,7 @@
       name="description"
       content="Offline-style MixCloud track detail page for DJ UrbanT with playback UI and comments."
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./mixcloud-offline.css" />
   </head>
   <body data-page="mixcloud-offline-track">
     <header class="site-header">
@@ -33,32 +33,41 @@
       </section>
 
       <section class="offline-track-player-shell">
-        <div class="offline-track-controls-row" aria-hidden="true">
-          <span class="offline-icon-btn">⏮</span>
-          <span class="offline-icon-btn">⟲30</span>
-          <span class="offline-icon-btn is-primary">⏯</span>
-          <span class="offline-icon-btn">30⟳</span>
-          <span class="offline-icon-btn">⏭</span>
+        <div class="offline-track-cover">
+          <img
+            class="offline-track-cover-logo"
+            src="./assets/images/djurbant-logo.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <span id="offline-track-set" class="offline-track-cover-set">#000</span>
         </div>
-        <div class="offline-track-progress" aria-hidden="true">
-          <span class="offline-track-progress-fill"></span>
-        </div>
-        <div class="offline-track-iframe-wrap">
-          <iframe
-            id="offline-track-iframe"
-            title="MixCloud track player"
-            loading="lazy"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen"
-          ></iframe>
-        </div>
-        <div class="offline-track-cta">
-          <a
-            id="offline-track-open-original"
-            class="btn btn-outline"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Open Original on MixCloud</a
+        <div class="offline-track-controls-row">
+          <button class="offline-icon-btn" data-offline-action="prev" aria-label="Previous">⏮</button>
+          <button class="offline-icon-btn" data-offline-action="rewind" aria-label="Rewind 30 seconds">⟲30</button>
+          <button
+            id="offline-track-toggle"
+            class="offline-icon-btn is-primary"
+            data-offline-action="toggle"
+            aria-label="Play"
           >
+            ▶
+          </button>
+          <button class="offline-icon-btn" data-offline-action="forward" aria-label="Forward 30 seconds">30⟳</button>
+          <button class="offline-icon-btn" data-offline-action="next" aria-label="Next">⏭</button>
+        </div>
+        <div class="offline-track-progress-wrap">
+          <span id="offline-track-current" class="offline-track-time">00:00</span>
+          <input
+            id="offline-track-progress"
+            class="offline-track-progress-input"
+            type="range"
+            min="0"
+            max="1000"
+            value="0"
+            aria-label="Playback progress"
+          />
+          <span id="offline-track-duration" class="offline-track-time">00:00</span>
         </div>
       </section>
 

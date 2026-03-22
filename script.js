@@ -716,9 +716,13 @@ function simpleSeedHash(value) {
   return hash;
 }
 
-function estimateDurationLabel(seedValue) {
+function estimateDurationSeconds(seedValue) {
   const hash = simpleSeedHash(seedValue);
-  const totalSeconds = 3600 + (hash % 4200);
+  return 3600 + (hash % 4200);
+}
+
+function estimateDurationLabel(seedValue) {
+  const totalSeconds = estimateDurationSeconds(seedValue);
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60)
     .toString()
@@ -727,6 +731,18 @@ function estimateDurationLabel(seedValue) {
     .toString()
     .padStart(2, "0");
   return `${hours}:${minutes}:${seconds}`;
+}
+
+function formatClockLabel(totalSeconds) {
+  const normalized = Math.max(0, Math.floor(totalSeconds));
+  const hours = Math.floor(normalized / 3600);
+  const minutes = Math.floor((normalized % 3600) / 60)
+    .toString()
+    .padStart(hours > 0 ? 2 : 1, "0");
+  const seconds = Math.floor(normalized % 60)
+    .toString()
+    .padStart(2, "0");
+  return hours > 0 ? `${hours}:${minutes}:${seconds}` : `${minutes}:${seconds}`;
 }
 
 function createOfflineWaveform(seedValue) {
@@ -831,14 +847,12 @@ function createOfflineCloudcastCard(item) {
   detailsLink.href = `./mixcloud-offline-track.html?track=${encodeTrackParam(item)}`;
   detailsLink.textContent = "Open Details";
 
-  const originalLink = document.createElement("a");
-  originalLink.className = "btn btn-outline";
-  originalLink.href = item.url || "https://www.mixcloud.com/urbant/";
-  originalLink.target = "_blank";
-  originalLink.rel = "noopener noreferrer";
-  originalLink.textContent = "Open Original";
+  const saveLink = document.createElement("a");
+  saveLink.className = "btn btn-outline";
+  saveLink.href = "./mixcloud-offline.html#saved";
+  saveLink.textContent = "Save Offline";
 
-  actions.append(detailsLink, originalLink);
+  actions.append(detailsLink, saveLink);
   body.append(title, byline, stats, actions);
   article.append(player, body);
   return article;
@@ -893,14 +907,9 @@ function renderOfflineTrackDetail(data) {
     metaNode.textContent = [plays, formatDate(selected.publishedAt), "Cloudcast"].filter(Boolean).join(" • ");
   }
 
-  const frameNode = document.getElementById("offline-track-iframe");
-  if (frameNode) {
-    frameNode.src = toProfileMixcloudEmbedSrc(selected.embedUrl);
-  }
-
-  const originalLinkNode = document.getElementById("offline-track-open-original");
-  if (originalLinkNode) {
-    originalLinkNode.href = selected.url || "https://www.mixcloud.com/urbant/";
+  const setNode = document.getElementById("offline-track-set");
+  if (setNode) {
+    setNode.textContent = extractSetLabel(normalizeBrandTitle(selected.title || ""));
   }
 
   const commentsNode = document.getElementById("offline-track-comments");
@@ -943,6 +952,122 @@ function renderOfflineTrackDetail(data) {
         relatedNode.appendChild(link);
       });
   }
+
+  const progressNode = document.getElementById("offline-track-progress");
+  const currentNode = document.getElementById("offline-track-current");
+  const durationNode = document.getElementById("offline-track-duration");
+  const toggleNode = document.getElementById("offline-track-toggle");
+  const actionNodes = document.querySelectorAll("[data-offline-action]");
+
+  if (!progressNode || !currentNode || !durationNode || !toggleNode || !actionNodes.length) {
+    return;
+  }
+  if (toggleNode.dataset.boundOffline === "1") {
+    return;
+  }
+  toggleNode.dataset.boundOffline = "1";
+
+  const selectedIdentity = getAudioTrackIdentity(selected);
+  const selectedIndex = allItems.findIndex((item) => getAudioTrackIdentity(item) === selectedIdentity);
+  const durationSeconds = estimateDurationSeconds(selectedIdentity);
+  let currentSeconds = 0;
+  let playing = false;
+  let tickTimer = null;
+
+  const refreshPlayerUi = () => {
+    const ratio = durationSeconds ? currentSeconds / durationSeconds : 0;
+    progressNode.value = String(Math.round(ratio * 1000));
+    currentNode.textContent = formatClockLabel(currentSeconds);
+    durationNode.textContent = formatClockLabel(durationSeconds);
+    toggleNode.textContent = playing ? "❚❚" : "▶";
+    toggleNode.setAttribute("aria-label", playing ? "Pause" : "Play");
+  };
+
+  const stopTimer = () => {
+    if (!tickTimer) {
+      return;
+    }
+    clearInterval(tickTimer);
+    tickTimer = null;
+  };
+
+  const startTimer = () => {
+    if (tickTimer) {
+      return;
+    }
+    tickTimer = window.setInterval(() => {
+      if (!playing) {
+        return;
+      }
+      currentSeconds = Math.min(durationSeconds, currentSeconds + 1);
+      if (currentSeconds >= durationSeconds) {
+        playing = false;
+        stopTimer();
+      }
+      refreshPlayerUi();
+    }, 1000);
+  };
+
+  const setPosition = (seconds) => {
+    currentSeconds = Math.max(0, Math.min(durationSeconds, seconds));
+    refreshPlayerUi();
+  };
+
+  const navigateRelative = (delta) => {
+    if (!allItems.length || selectedIndex < 0) {
+      return;
+    }
+    const nextIndex = Math.max(0, Math.min(allItems.length - 1, selectedIndex + delta));
+    const nextItem = allItems[nextIndex];
+    if (!nextItem) {
+      return;
+    }
+    window.location.href = `./mixcloud-offline-track.html?track=${encodeTrackParam(nextItem)}`;
+  };
+
+  actionNodes.forEach((node) => {
+    node.addEventListener("click", () => {
+      const action = node.getAttribute("data-offline-action");
+      if (!action) {
+        return;
+      }
+      if (action === "toggle") {
+        playing = !playing;
+        if (playing) {
+          startTimer();
+        } else {
+          stopTimer();
+        }
+        refreshPlayerUi();
+        return;
+      }
+      if (action === "rewind") {
+        setPosition(currentSeconds - 30);
+        return;
+      }
+      if (action === "forward") {
+        setPosition(currentSeconds + 30);
+        return;
+      }
+      if (action === "prev") {
+        navigateRelative(-1);
+        return;
+      }
+      if (action === "next") {
+        navigateRelative(1);
+      }
+    });
+  });
+
+  progressNode.addEventListener("input", () => {
+    const value = Number(progressNode.value);
+    if (!Number.isFinite(value)) {
+      return;
+    }
+    setPosition((value / 1000) * durationSeconds);
+  });
+
+  refreshPlayerUi();
 }
 
 function renderGrid(containerId, items, cardFactory) {

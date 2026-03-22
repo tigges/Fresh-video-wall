@@ -156,28 +156,24 @@ a {
   color: #fff;
 }
 
-.offline-mobile-icon-btn {
-  display: none;
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: #fff;
-  color: #2b3348;
-  text-decoration: none;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-}
-
-.offline-mobile-icon-btn.is-primary {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
-}
-
 .offline-mobile-top-actions {
   display: none;
+}
+
+.offline-mobile-header-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 92px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 16px rgba(14, 20, 33, 0.14);
+  text-decoration: none;
+  color: #3f2fb8;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.42rem 0.75rem;
 }
 
 .btn {
@@ -214,13 +210,15 @@ a {
   border-radius: 14px;
   overflow: hidden;
   border: 1px solid var(--border);
-  min-height: 230px;
+  height: clamp(180px, 26vw, 240px);
   background: linear-gradient(120deg, #1d2432, #111726);
 }
 
 .offline-cover img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 230px;
+  height: 100%;
   object-fit: cover;
   opacity: 1;
   display: block;
@@ -797,20 +795,16 @@ a {
   .offline-pill-btn {
     display: none;
   }
-  .offline-mobile-icon-btn {
-    display: inline-flex;
-  }
   .offline-mobile-top-actions {
     display: inline-flex;
     align-items: center;
     gap: 4px;
     flex-shrink: 0;
   }
-  .offline-mobile-icon-btn {
-    width: 30px;
-    height: 30px;
-    border-radius: 7px;
-    font-size: 0.9rem;
+  .offline-mobile-header-back {
+    min-width: 84px;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8rem;
   }
   .offline-wordmark {
     font-size: 1.04rem;
@@ -820,7 +814,7 @@ a {
     width: 18px;
     height: 18px;
   }
-  .offline-cover img {
+  .offline-cover {
     height: 180px;
   }
   .offline-cloudcast-card {

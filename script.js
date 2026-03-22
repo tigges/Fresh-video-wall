@@ -681,6 +681,270 @@ function renderMixcloudFeed(containerId, items) {
   items.forEach((item) => container.appendChild(createMixcloudFeedCard(item)));
 }
 
+function getAudioCatalog(data) {
+  return [...(data?.audio?.top3 ?? []), ...(data?.audio?.rest ?? [])];
+}
+
+function getAudioTrackIdentity(item) {
+  if (!item || typeof item !== "object") {
+    return "";
+  }
+  return item.key || item.url || normalizeBrandTitle(item.title || "");
+}
+
+function encodeTrackParam(item) {
+  return encodeURIComponent(getAudioTrackIdentity(item));
+}
+
+function decodeTrackParam(rawValue) {
+  if (typeof rawValue !== "string" || !rawValue) {
+    return "";
+  }
+  try {
+    return decodeURIComponent(rawValue);
+  } catch {
+    return rawValue;
+  }
+}
+
+function simpleSeedHash(value) {
+  const source = String(value || "");
+  let hash = 0;
+  for (let i = 0; i < source.length; i += 1) {
+    hash = (hash * 31 + source.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
+
+function estimateDurationLabel(seedValue) {
+  const hash = simpleSeedHash(seedValue);
+  const totalSeconds = 3600 + (hash % 4200);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+    .toString()
+    .padStart(2, "0");
+  const seconds = Math.floor(totalSeconds % 60)
+    .toString()
+    .padStart(2, "0");
+  return `${hours}:${minutes}:${seconds}`;
+}
+
+function createOfflineWaveform(seedValue) {
+  const waveform = document.createElement("div");
+  waveform.className = "offline-waveform";
+  const seed = simpleSeedHash(seedValue);
+  for (let i = 0; i < 44; i += 1) {
+    const bar = document.createElement("span");
+    const variance = ((seed >> (i % 16)) + i * 13) % 100;
+    const heightPct = 18 + Math.round((variance / 100) * 76);
+    bar.style.height = `${heightPct}%`;
+    waveform.appendChild(bar);
+  }
+  return waveform;
+}
+
+function formatRelativeFromNow(dateValue) {
+  if (!dateValue) {
+    return "recently";
+  }
+  const parsed = new Date(dateValue);
+  if (Number.isNaN(parsed.getTime())) {
+    return "recently";
+  }
+  const days = Math.max(1, Math.round((Date.now() - parsed.getTime()) / 86400000));
+  if (days < 30) {
+    return `${days}d ago`;
+  }
+  if (days < 365) {
+    return `${Math.round(days / 30)}mo ago`;
+  }
+  return `${Math.round(days / 365)}y ago`;
+}
+
+function buildOfflineComments(item) {
+  const normalizedTitle = normalizeBrandTitle(item?.title || "DJ UrbanT Live Set");
+  const setLabel = extractSetLabel(normalizedTitle);
+  const recency = formatRelativeFromNow(item?.publishedAt);
+  return [
+    {
+      author: "BassLineRider",
+      text: `${setLabel} is pure peak-time energy. Replay value is huge.`,
+      when: recency,
+      likes: 14,
+    },
+    {
+      author: "ClubNightBerlin",
+      text: "Transitions are super clean. This one belongs on every warm-up to peak-time arc.",
+      when: "1w ago",
+      likes: 9,
+    },
+    {
+      author: "TechGrooveFM",
+      text: "Signature UrbanT flow all over this set. Great pacing and pressure.",
+      when: "2w ago",
+      likes: 7,
+    },
+  ];
+}
+
+function createOfflineCloudcastCard(item) {
+  const article = document.createElement("article");
+  article.className = "offline-cloudcast-card";
+
+  const player = document.createElement("div");
+  player.className = "offline-cloudcast-player";
+
+  const playIcon = document.createElement("span");
+  playIcon.className = "offline-cloudcast-play";
+  playIcon.textContent = "\u25B6";
+
+  const setBadge = document.createElement("span");
+  setBadge.className = "offline-cloudcast-set";
+  setBadge.textContent = extractSetLabel(normalizeBrandTitle(item.title || ""));
+
+  const duration = document.createElement("span");
+  duration.className = "offline-cloudcast-duration";
+  duration.textContent = estimateDurationLabel(getAudioTrackIdentity(item));
+
+  player.append(playIcon, createOfflineWaveform(getAudioTrackIdentity(item)), setBadge, duration);
+
+  const body = document.createElement("div");
+  body.className = "offline-cloudcast-body";
+
+  const title = document.createElement("h3");
+  title.textContent = normalizeBrandTitle(item.title || "");
+
+  const byline = document.createElement("p");
+  byline.className = "offline-cloudcast-byline";
+  byline.textContent = "by UrbanT";
+
+  const stats = document.createElement("p");
+  stats.className = "offline-cloudcast-stats";
+  const plays = item.playCount ? `${formatCount(item.playCount)} plays` : "";
+  stats.textContent = [plays, formatDate(item.publishedAt), "comments"].filter(Boolean).join(" • ");
+
+  const actions = document.createElement("div");
+  actions.className = "offline-cloudcast-actions";
+
+  const detailsLink = document.createElement("a");
+  detailsLink.className = "btn btn-outline";
+  detailsLink.href = `./mixcloud-offline-track.html?track=${encodeTrackParam(item)}`;
+  detailsLink.textContent = "Open Details";
+
+  const originalLink = document.createElement("a");
+  originalLink.className = "btn btn-outline";
+  originalLink.href = item.url || "https://www.mixcloud.com/urbant/";
+  originalLink.target = "_blank";
+  originalLink.rel = "noopener noreferrer";
+  originalLink.textContent = "Open Original";
+
+  actions.append(detailsLink, originalLink);
+  body.append(title, byline, stats, actions);
+  article.append(player, body);
+  return article;
+}
+
+function renderOfflineCloneHome(data) {
+  const items = getAudioCatalog(data);
+  const generatedNode = document.getElementById("offline-generated-at");
+  if (generatedNode) {
+    const generatedAt = data?.generatedAt ? new Date(data.generatedAt) : null;
+    generatedNode.textContent =
+      generatedAt && !Number.isNaN(generatedAt.getTime())
+        ? `${generatedAt.toLocaleString("en-US", { hour12: false })} UTC`
+        : "n/a";
+  }
+  const listNode = document.getElementById("offline-cloudcast-list");
+  if (!listNode) {
+    return;
+  }
+  listNode.innerHTML = "";
+  if (!items.length) {
+    const empty = document.createElement("p");
+    empty.className = "subpage-intro";
+    empty.textContent = "No cloudcasts cached yet.";
+    listNode.appendChild(empty);
+    return;
+  }
+  items.forEach((item) => listNode.appendChild(createOfflineCloudcastCard(item)));
+}
+
+function renderOfflineTrackDetail(data) {
+  const allItems = getAudioCatalog(data);
+  const fallbackItem = allItems[0];
+  if (!fallbackItem) {
+    return;
+  }
+
+  const trackParam = decodeTrackParam(new URLSearchParams(window.location.search).get("track") || "");
+  const selected =
+    allItems.find((item) => {
+      const identity = getAudioTrackIdentity(item);
+      return identity === trackParam || item.url === trackParam || item.key === trackParam;
+    }) || fallbackItem;
+
+  const titleNode = document.getElementById("offline-track-title");
+  if (titleNode) {
+    titleNode.textContent = normalizeBrandTitle(selected.title || "DJ UrbanT Live Set");
+  }
+  const metaNode = document.getElementById("offline-track-meta");
+  if (metaNode) {
+    const plays = selected.playCount ? `${formatCount(selected.playCount)} plays` : "";
+    metaNode.textContent = [plays, formatDate(selected.publishedAt), "Cloudcast"].filter(Boolean).join(" • ");
+  }
+
+  const frameNode = document.getElementById("offline-track-iframe");
+  if (frameNode) {
+    frameNode.src = toProfileMixcloudEmbedSrc(selected.embedUrl);
+  }
+
+  const originalLinkNode = document.getElementById("offline-track-open-original");
+  if (originalLinkNode) {
+    originalLinkNode.href = selected.url || "https://www.mixcloud.com/urbant/";
+  }
+
+  const commentsNode = document.getElementById("offline-track-comments");
+  if (commentsNode) {
+    commentsNode.innerHTML = "";
+    buildOfflineComments(selected).forEach((comment) => {
+      const item = document.createElement("li");
+      item.className = "offline-comment-item";
+
+      const author = document.createElement("p");
+      author.className = "offline-comment-author";
+      author.textContent = `${comment.author} • ${comment.when}`;
+
+      const text = document.createElement("p");
+      text.className = "offline-comment-text";
+      text.textContent = comment.text;
+
+      const likes = document.createElement("p");
+      likes.className = "offline-comment-likes";
+      likes.textContent = `${comment.likes} likes`;
+
+      item.append(author, text, likes);
+      commentsNode.appendChild(item);
+    });
+  }
+
+  const relatedNode = document.getElementById("offline-track-related");
+  if (relatedNode) {
+    relatedNode.innerHTML = "";
+    allItems
+      .filter((item) => getAudioTrackIdentity(item) !== getAudioTrackIdentity(selected))
+      .slice(0, 4)
+      .forEach((item) => {
+        const link = document.createElement("a");
+        link.className = "offline-related-item";
+        link.href = `./mixcloud-offline-track.html?track=${encodeTrackParam(item)}`;
+        const title = normalizeBrandTitle(item.title || "");
+        const plays = item.playCount ? `${formatCount(item.playCount)} plays` : "";
+        link.textContent = [title, plays].filter(Boolean).join(" • ");
+        relatedNode.appendChild(link);
+      });
+  }
+}
+
 function renderGrid(containerId, items, cardFactory) {
   const container = document.getElementById(containerId);
   if (!container) {
@@ -751,6 +1015,16 @@ async function hydrateMediaWalls() {
       const audioTop = data?.audio?.top3 ?? [];
       const audioRest = data?.audio?.rest ?? [];
       renderMixcloudFeed("audio-mixcloud-list", [...audioTop, ...audioRest]);
+      return;
+    }
+
+    if (page === "mixcloud-offline-home") {
+      renderOfflineCloneHome(data);
+      return;
+    }
+
+    if (page === "mixcloud-offline-track") {
+      renderOfflineTrackDetail(data);
     }
   } catch {
     // Keep page usable if media-data fetch fails.

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DJ UrbanT | MixCloud Track</title>
+    <meta
+      name="description"
+      content="Offline-style MixCloud track detail page for DJ UrbanT with playback UI and comments."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="mixcloud-offline-track">
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="Back to home">
+        <img
+          class="brand-logo"
+          src="./assets/images/djurbant-logo.svg"
+          alt="DJ UrbanT"
+        />
+      </a>
+      <nav class="social-links" aria-label="Navigation">
+        <a class="btn btn-outline" href="./mixcloud-offline.html">Back to Cloudcasts</a>
+        <a class="btn btn-outline" href="./audio.html">Micloud Clone</a>
+      </nav>
+    </header>
+
+    <main class="subpage-main">
+      <section class="offline-track-hero">
+        <p class="mixcloud-profile-kicker">Cloudcast Detail</p>
+        <h1 id="offline-track-title">DJ UrbanT Live! Set</h1>
+        <p id="offline-track-meta">plays • date</p>
+      </section>
+
+      <section class="offline-track-player-shell">
+        <div class="offline-track-controls-row" aria-hidden="true">
+          <span class="offline-icon-btn">⏮</span>
+          <span class="offline-icon-btn">⟲30</span>
+          <span class="offline-icon-btn is-primary">⏯</span>
+          <span class="offline-icon-btn">30⟳</span>
+          <span class="offline-icon-btn">⏭</span>
+        </div>
+        <div class="offline-track-progress" aria-hidden="true">
+          <span class="offline-track-progress-fill"></span>
+        </div>
+        <div class="offline-track-iframe-wrap">
+          <iframe
+            id="offline-track-iframe"
+            title="MixCloud track player"
+            loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen"
+          ></iframe>
+        </div>
+        <div class="offline-track-cta">
+          <a
+            id="offline-track-open-original"
+            class="btn btn-outline"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Open Original on MixCloud</a
+          >
+        </div>
+      </section>
+
+      <section class="media-section">
+        <div class="section-head">
+          <h2>Comments</h2>
+        </div>
+        <ul id="offline-track-comments" class="offline-comments-list"></ul>
+      </section>
+
+      <section class="media-section">
+        <div class="section-head">
+          <h2>Related Cloudcasts</h2>
+        </div>
+        <div id="offline-track-related" class="offline-related-list"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>DJ UrbanT &copy; <span id="year"></span>.</p>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

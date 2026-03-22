@@ -1327,6 +1327,12 @@ body[data-page="home"] #music .section-cta {
     letter-spacing: 0.04em;
   }
 
+  .hero-tagline {
+    top: 61%;
+    font-size: clamp(0.68rem, 2.9vw, 0.9rem);
+    letter-spacing: 0.04em;
+  }
+
   .btn-live {
     font-size: 0.86rem;
     min-width: min(300px, calc(100vw - 1.4rem));

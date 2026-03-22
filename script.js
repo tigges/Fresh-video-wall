@@ -1,5 +1,5 @@
 const yearNode = document.getElementById("year");
-const FALLBACK_YOUTUBE_URL = "https://m.youtube.com/@dj_urbant";
+const FALLBACK_YOUTUBE_URL = "./videos.html";
 
 if (yearNode) {
   yearNode.textContent = String(new Date().getFullYear());
@@ -7,6 +7,40 @@ if (yearNode) {
 
 const page = document.body.dataset.page;
 const GENRE_BADGE_LABEL = "\u{1F50A} Bass House";
+let mixcloudWidgetApiPromise = null;
+let activeAudioController = null;
+
+function initHeaderVisibilityOnScroll() {
+  const siteHeader = document.querySelector(".site-header");
+  if (!siteHeader) {
+    return;
+  }
+
+  siteHeader.classList.add("is-visible");
+}
+
+function initHeaderContentOffset() {
+  const siteHeader = document.querySelector(".site-header");
+  if (!siteHeader) {
+    return;
+  }
+
+  const applyOffset = () => {
+    const headerHeight = Math.ceil(siteHeader.getBoundingClientRect().height);
+    document.documentElement.style.setProperty("--header-offset", `${headerHeight}px`);
+  };
+
+  applyOffset();
+  window.addEventListener("resize", applyOffset, { passive: true });
+  window.addEventListener("orientationchange", applyOffset);
+
+  if ("ResizeObserver" in window) {
+    const headerResizeObserver = new ResizeObserver(applyOffset);
+    headerResizeObserver.observe(siteHeader);
+  }
+
+  document.fonts?.ready?.then(applyOffset).catch(() => {});
+}
 
 function formatCount(value) {
   if (typeof value !== "number" || Number.isNaN(value)) {
@@ -37,6 +71,85 @@ function normalizeBrandTitle(value) {
     .replace(new RegExp(token, "g"), "DJ UrbanT");
 }
 
+function toConstrainedYoutubeEmbedSrc(src) {
+  if (typeof src !== "string" || !src) {
+    return "";
+  }
+  try {
+    const parsed = new URL(src);
+    if (/youtube\.com$/i.test(parsed.hostname) || /^www\.youtube\.com$/i.test(parsed.hostname)) {
+      parsed.hostname = "www.youtube-nocookie.com";
+    }
+    parsed.searchParams.set("rel", "0");
+    parsed.searchParams.set("modestbranding", "1");
+    parsed.searchParams.set("iv_load_policy", "3");
+    parsed.searchParams.set("playsinline", "1");
+    parsed.searchParams.set("enablejsapi", "1");
+    parsed.searchParams.set("origin", window.location.origin);
+    return parsed.toString();
+  } catch {
+    return src;
+  }
+}
+
+function extractSetLabel(title) {
+  if (typeof title !== "string") {
+    return "#000";
+  }
+  const setHashMatch = title.match(/#\s*(\d{1,4})\b/i);
+  if (setHashMatch?.[1]) {
+    return `#${setHashMatch[1]}`;
+  }
+  const setWordMatch = title.match(/\bset\s*#?\s*(\d{1,4})\b/i);
+  if (setWordMatch?.[1]) {
+    return `#${setWordMatch[1]}`;
+  }
+  return "#000";
+}
+
+function toInlineMixcloudEngineSrc(src) {
+  if (typeof src !== "string" || !src) {
+    return "";
+  }
+  try {
+    const parsed = new URL(src);
+    parsed.searchParams.set("mini", "1");
+    parsed.searchParams.set("hide_cover", "1");
+    parsed.searchParams.set("autoplay", "0");
+    return parsed.toString();
+  } catch {
+    return src;
+  }
+}
+
+function loadMixcloudWidgetApi() {
+  if (window.Mixcloud?.PlayerWidget) {
+    return Promise.resolve(window.Mixcloud.PlayerWidget);
+  }
+  if (mixcloudWidgetApiPromise) {
+    return mixcloudWidgetApiPromise;
+  }
+
+  mixcloudWidgetApiPromise = new Promise((resolve, reject) => {
+    const existing = document.querySelector('script[data-mixcloud-widget-api="1"]');
+    if (existing) {
+      existing.addEventListener("load", () => resolve(window.Mixcloud?.PlayerWidget));
+      existing.addEventListener("error", reject);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://widget.mixcloud.com/media/js/widgetApi.js";
+    script.async = true;
+    script.dataset.mixcloudWidgetApi = "1";
+    script.addEventListener("load", () => resolve(window.Mixcloud?.PlayerWidget));
+    script.addEventListener("error", reject);
+    document.head.appendChild(script);
+  });
+
+  return mixcloudWidgetApiPromise;
+}
+
 function applyHeroFontVariant() {
   const fontParam = new URLSearchParams(window.location.search).get("heroFont");
   if (!fontParam) {
@@ -50,11 +163,12 @@ function applyHeroFontVariant() {
 }
 
 function withAutoplayEmbedSrc(src) {
-  if (typeof src !== "string" || !src) {
+  const constrained = toConstrainedYoutubeEmbedSrc(src);
+  if (!constrained) {
     return "";
   }
   try {
-    const parsed = new URL(src);
+    const parsed = new URL(constrained);
     parsed.searchParams.set("autoplay", "1");
     parsed.searchParams.set("playsinline", "1");
     parsed.searchParams.set("rel", "0");
@@ -135,9 +249,9 @@ function updateHeroLiveCta(data) {
     youtubeLive.liveUrl
   ) {
     liveCta.textContent = "Join Live Now!";
-    liveCta.href = youtubeLive.liveUrl;
-    liveCta.target = "_blank";
-    liveCta.rel = "noopener noreferrer";
+    liveCta.href = "#videos";
+    liveCta.removeAttribute("target");
+    liveCta.removeAttribute("rel");
     liveCta.dataset.liveMode = "live";
     return;
   }
@@ -157,13 +271,13 @@ function bindHeroLiveCtaClick() {
   }
   liveCta.dataset.boundClick = "1";
   liveCta.addEventListener("click", (event) => {
-    if (liveCta.dataset.liveMode !== "latest") {
+    if (!["latest", "live"].includes(liveCta.dataset.liveMode || "")) {
       return;
     }
     event.preventDefault();
     const started = playTopVideoTile();
     if (!started) {
-      const fallbackUrl = liveCta.dataset.latestUrl || FALLBACK_YOUTUBE_URL;
+      const fallbackUrl = FALLBACK_YOUTUBE_URL;
       window.location.href = fallbackUrl;
     }
   });
@@ -177,7 +291,7 @@ function createVideoCard(item) {
   wrap.className = "embed-wrap";
 
   const iframe = document.createElement("iframe");
-  iframe.src = item.embedUrl;
+  iframe.src = toConstrainedYoutubeEmbedSrc(item.embedUrl);
   const normalizedTitle = normalizeBrandTitle(item.title);
   iframe.title = normalizedTitle;
   iframe.allow =
@@ -214,12 +328,200 @@ function createAudioCard(item) {
   const wrap = document.createElement("div");
   wrap.className = "embed-wrap embed-wrap-audio";
 
-  const iframe = document.createElement("iframe");
-  iframe.src = item.embedUrl;
   const normalizedTitle = normalizeBrandTitle(item.title);
-  iframe.title = normalizedTitle;
-  iframe.allow = "autoplay";
-  wrap.appendChild(iframe);
+  const setLabel = extractSetLabel(normalizedTitle);
+  const cover = document.createElement("button");
+  cover.type = "button";
+  cover.className = "audio-set-cover";
+  cover.setAttribute("aria-label", `Play ${normalizedTitle}`);
+
+  const setNumber = document.createElement("span");
+  setNumber.className = "audio-set-number";
+  setNumber.textContent = setLabel;
+
+  const playIcon = document.createElement("span");
+  playIcon.className = "audio-set-play";
+  playIcon.setAttribute("aria-hidden", "true");
+  playIcon.textContent = "\u25B6";
+
+  const progress = document.createElement("span");
+  progress.className = "audio-set-progress";
+  progress.setAttribute("aria-hidden", "true");
+  const progressFill = document.createElement("span");
+  progressFill.className = "audio-set-progress-fill";
+  progress.appendChild(progressFill);
+
+  cover.append(setNumber, playIcon, progress);
+  wrap.appendChild(cover);
+
+  let mixcloudWidget = null;
+  let widgetReadyPromise = null;
+  let progressTimer = null;
+  let widgetIsReady = false;
+
+  const setProgress = (value) => {
+    const clamped = Math.min(1, Math.max(0, value));
+    progressFill.style.width = `${Math.round(clamped * 1000) / 10}%`;
+  };
+
+  const setPlayingState = (isPlaying) => {
+    cover.classList.toggle("is-playing", isPlaying);
+    cover.classList.remove("is-loading");
+    playIcon.textContent = isPlaying ? "\u275A\u275A" : "\u25B6";
+    cover.setAttribute("aria-label", `${isPlaying ? "Pause" : "Play"} ${normalizedTitle}`);
+    if (!isPlaying && progressTimer) {
+      clearInterval(progressTimer);
+      progressTimer = null;
+    }
+  };
+
+  const startProgressLoop = () => {
+    if (progressTimer || !mixcloudWidget) {
+      return;
+    }
+    progressTimer = window.setInterval(() => {
+      if (!mixcloudWidget) {
+        return;
+      }
+      try {
+        mixcloudWidget.getPosition((position) => {
+          mixcloudWidget.getDuration((duration) => {
+            if (!duration) {
+              setProgress(0);
+              return;
+            }
+            setProgress(position / duration);
+          });
+        });
+      } catch {
+        // Ignore widget polling errors and keep UI responsive.
+      }
+    }, 450);
+  };
+
+  const ensureWidgetReady = async () => {
+    if (mixcloudWidget) {
+      return mixcloudWidget;
+    }
+    if (widgetReadyPromise) {
+      return widgetReadyPromise;
+    }
+
+    widgetReadyPromise = (async () => {
+      await loadMixcloudWidgetApi();
+      const frame = document.createElement("iframe");
+      frame.className = "audio-engine-frame";
+      frame.src = toInlineMixcloudEngineSrc(item.embedUrl);
+      frame.title = `${normalizedTitle} audio engine`;
+      frame.allow = "autoplay; clipboard-write";
+      frame.loading = "lazy";
+      frame.tabIndex = -1;
+      frame.setAttribute("aria-hidden", "true");
+      wrap.appendChild(frame);
+
+      mixcloudWidget = window.Mixcloud?.PlayerWidget?.(frame) ?? null;
+      if (!mixcloudWidget) {
+        throw new Error("Mixcloud widget API unavailable");
+      }
+
+      await new Promise((resolve) => {
+        let settled = false;
+        const done = () => {
+          if (settled) {
+            return;
+          }
+          settled = true;
+          widgetIsReady = true;
+          cover.classList.remove("is-loading");
+          resolve();
+        };
+        if (mixcloudWidget.ready && typeof mixcloudWidget.ready.then === "function") {
+          mixcloudWidget.ready.then(done).catch(done);
+        } else if (mixcloudWidget.events?.ready?.on) {
+          mixcloudWidget.events.ready.on(done);
+        }
+        window.setTimeout(done, 7000);
+      });
+
+      mixcloudWidget.events?.pause?.on(() => {
+        if (activeAudioController === controls) {
+          activeAudioController = null;
+        }
+        setPlayingState(false);
+      });
+      mixcloudWidget.events?.play?.on(() => {
+        setPlayingState(true);
+        startProgressLoop();
+      });
+      return mixcloudWidget;
+    })().catch((error) => {
+      widgetReadyPromise = null;
+      throw error;
+    });
+
+    return widgetReadyPromise;
+  };
+
+  const pauseAudio = () => {
+    if (!mixcloudWidget) {
+      setPlayingState(false);
+      return;
+    }
+    try {
+      mixcloudWidget.pause();
+    } catch {
+      setPlayingState(false);
+    }
+  };
+
+  const playAudio = async () => {
+    try {
+      cover.classList.add("is-loading");
+      await ensureWidgetReady();
+      if (activeAudioController && activeAudioController !== controls) {
+        activeAudioController.pause();
+      }
+      activeAudioController = controls;
+      mixcloudWidget.play();
+      setPlayingState(true);
+      startProgressLoop();
+      if (!widgetIsReady) {
+        let retries = 0;
+        const retryPlay = () => {
+          if (!mixcloudWidget || cover.classList.contains("is-playing") || retries >= 4) {
+            return;
+          }
+          retries += 1;
+          try {
+            mixcloudWidget.play();
+          } catch {
+            // Ignore retry errors and keep trying a few times.
+          }
+          window.setTimeout(retryPlay, 400);
+        };
+        window.setTimeout(retryPlay, 400);
+      }
+    } catch {
+      // If widget setup fails, keep current tile appearance unchanged.
+      cover.classList.remove("is-loading");
+    }
+  };
+
+  const controls = {
+    pause: pauseAudio,
+  };
+
+  cover.addEventListener("click", async () => {
+    if (cover.classList.contains("is-playing")) {
+      pauseAudio();
+      return;
+    }
+    await playAudio();
+  });
+
+  ensureWidgetReady().catch(() => {
+    cover.classList.remove("is-loading");
+  });
 
   const meta = document.createElement("div");
   meta.className = "media-meta";
@@ -240,6 +542,143 @@ function createAudioCard(item) {
   meta.append(title, footer);
   article.append(wrap, meta);
   return article;
+}
+
+function toTopTileMixcloudEmbedSrc(src) {
+  if (typeof src !== "string" || !src) {
+    return "";
+  }
+  try {
+    const parsed = new URL(src);
+    parsed.protocol = "https:";
+    parsed.hostname = "player-widget.mixcloud.com";
+    parsed.pathname = "/widget/iframe/";
+    parsed.searchParams.set("hide_cover", "1");
+    parsed.searchParams.set("mini", "0");
+    parsed.searchParams.set("light", "0");
+    parsed.searchParams.set("autoplay", "0");
+    return parsed.toString();
+  } catch {
+    return src;
+  }
+}
+
+function createAudioTopTileCard(item) {
+  const article = document.createElement("article");
+  article.className = "media-card";
+
+  const wrap = document.createElement("div");
+  wrap.className = "embed-wrap embed-wrap-audio";
+
+  const normalizedTitle = normalizeBrandTitle(item.title);
+  const setLabel = extractSetLabel(normalizedTitle);
+
+  const iframe = document.createElement("iframe");
+  iframe.className = "audio-top-iframe";
+  iframe.src = toTopTileMixcloudEmbedSrc(item.embedUrl);
+  iframe.title = normalizedTitle;
+  iframe.allow = "encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share";
+  iframe.loading = "lazy";
+  wrap.appendChild(iframe);
+
+  const overlay = document.createElement("div");
+  overlay.className = "audio-top-overlay";
+  overlay.setAttribute("aria-hidden", "true");
+  const number = document.createElement("span");
+  number.className = "audio-top-overlay-number";
+  number.textContent = setLabel;
+  overlay.appendChild(number);
+  wrap.appendChild(overlay);
+
+  const meta = document.createElement("div");
+  meta.className = "media-meta";
+
+  const title = document.createElement("h3");
+  title.textContent = normalizedTitle;
+  const badge = createGenreBadge();
+
+  const stats = document.createElement("p");
+  stats.className = "tile-stats";
+  const playsText = item.playCount ? `${formatCount(item.playCount)} plays` : "";
+  const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
+  stats.textContent = [playsText, dateText].filter(Boolean).join(" • ");
+  const footer = document.createElement("div");
+  footer.className = "media-meta-footer";
+  footer.append(stats, badge);
+
+  meta.append(title, footer);
+  article.append(wrap, meta);
+  return article;
+}
+
+function toProfileMixcloudEmbedSrc(src) {
+  if (typeof src !== "string" || !src) {
+    return "";
+  }
+  try {
+    const parsed = new URL(src);
+    parsed.searchParams.set("mini", "0");
+    parsed.searchParams.set("hide_cover", "0");
+    parsed.searchParams.set("light", "0");
+    parsed.searchParams.set("autoplay", "0");
+    return parsed.toString();
+  } catch {
+    return src;
+  }
+}
+
+function createMixcloudFeedCard(item) {
+  const article = document.createElement("article");
+  article.className = "mixcloud-feed-card";
+
+  const playerWrap = document.createElement("div");
+  playerWrap.className = "mixcloud-feed-player";
+
+  const iframe = document.createElement("iframe");
+  iframe.src = toProfileMixcloudEmbedSrc(item.embedUrl);
+  iframe.title = normalizeBrandTitle(item.title);
+  iframe.allow = "autoplay; clipboard-write";
+  iframe.loading = "lazy";
+  playerWrap.appendChild(iframe);
+
+  const meta = document.createElement("div");
+  meta.className = "mixcloud-feed-meta";
+
+  const title = document.createElement("h3");
+  title.textContent = normalizeBrandTitle(item.title);
+
+  const stats = document.createElement("p");
+  stats.className = "mixcloud-feed-stats";
+  const playsText = item.playCount ? `${formatCount(item.playCount)} plays` : "";
+  const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
+  stats.textContent = [playsText, dateText].filter(Boolean).join(" • ");
+
+  const openLink = document.createElement("a");
+  openLink.className = "btn btn-outline mixcloud-feed-link";
+  openLink.href = item.url;
+  openLink.target = "_blank";
+  openLink.rel = "noopener noreferrer";
+  openLink.textContent = "Open on Mixcloud";
+
+  meta.append(title, stats, openLink);
+  article.append(playerWrap, meta);
+  return article;
+}
+
+function renderMixcloudFeed(containerId, items) {
+  const container = document.getElementById(containerId);
+  if (!container) {
+    return;
+  }
+  container.innerHTML = "";
+  if (!items.length) {
+    const empty = document.createElement("p");
+    empty.className = "subpage-intro";
+    empty.textContent = "No Mixcloud items available right now.";
+    container.appendChild(empty);
+    return;
+  }
+  items.forEach((item) => container.appendChild(createMixcloudFeedCard(item)));
 }
 
 function renderGrid(containerId, items, cardFactory) {
@@ -272,9 +711,8 @@ async function hydrateMediaWalls() {
 
     if (page === "home") {
       renderGrid("videos-grid", data?.videos?.top3 ?? [], createVideoCard);
-      renderGrid("audio-grid", data?.audio?.top3 ?? [], createAudioCard);
+      renderGrid("audio-grid", data?.audio?.top3 ?? [], createAudioTopTileCard);
       appendGridActionTile("videos-grid", "More Videos", "./videos.html");
-      appendGridActionTile("audio-grid", "More Audio", "./audio.html");
       updateHeroLiveCta(data);
       return;
     }
@@ -286,10 +724,10 @@ async function hydrateMediaWalls() {
       renderGrid("videos-rest-grid", videos, createVideoCard);
       appendGridActionTile(
         "videos-rest-grid",
-        "Subscribe",
-        "https://m.youtube.com/@dj_urbant",
-        "btn-subscribe",
-        true,
+        "Top Videos",
+        "./index.html#videos",
+        "btn-outline",
+        false,
       );
       return;
     }
@@ -306,6 +744,13 @@ async function hydrateMediaWalls() {
         "btn-outline",
         true,
       );
+      return;
+    }
+
+    if (page === "audio-mixcloud") {
+      const audioTop = data?.audio?.top3 ?? [];
+      const audioRest = data?.audio?.rest ?? [];
+      renderMixcloudFeed("audio-mixcloud-list", [...audioTop, ...audioRest]);
     }
   } catch {
     // Keep page usable if media-data fetch fails.
@@ -313,5 +758,7 @@ async function hydrateMediaWalls() {
 }
 
 applyHeroFontVariant();
+initHeaderVisibilityOnScroll();
+initHeaderContentOffset();
 bindHeroLiveCtaClick();
 hydrateMediaWalls();

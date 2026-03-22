@@ -1,4 +1,5 @@
 :root {
+  --header-offset: 0px;
   --bg: #000;
   --bg-elev: #0c0c0c;
   --text: #f1f1f1;
@@ -112,6 +113,8 @@ body {
   background: #000;
   line-height: 1.5;
   overflow-x: hidden;
+  padding-top: var(--header-offset);
+  padding-top: calc(var(--header-offset) + env(safe-area-inset-top));
 }
 
 h1,
@@ -128,7 +131,6 @@ a {
   color: inherit;
 }
 
-.site-header,
 .hero,
 .media-section,
 .site-footer {
@@ -137,11 +139,28 @@ a {
 }
 
 .site-header {
-  padding: 1.2rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  padding: 12px 24px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.28s ease;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.site-header.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .brand {
@@ -293,7 +312,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
   top: 67%;
   transform: translateX(-50%);
   margin: 0;
-  font-size: clamp(0.82rem, 1.4vw, 1.12rem);
+  font-size: clamp(0.9rem, 1.55vw, 1.2rem);
   font-weight: 400;
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.7);
@@ -342,21 +361,23 @@ body[data-hero-font="russo"] .hero-overlay-title {
 }
 
 .btn-live {
-  margin-top: 0.7rem;
-  background: var(--cta-gradient);
+  margin-top: 1.1rem;
+  position: relative;
+  top: clamp(8px, 1vw, 12px);
+  background: linear-gradient(135deg, #00c6ff, #9b00ff);
   border-color: transparent;
   color: #fff;
   font-family: "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-weight: 700;
+  font-weight: 800;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
   text-transform: uppercase;
   font-size: 0.96rem;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.1em;
   padding-inline: 1.75rem;
   min-width: min(320px, calc(100vw - 2rem));
   white-space: nowrap;
-  box-shadow: var(--cta-glow);
+  box-shadow: 0 0 24px rgba(0, 198, 255, 0.4);
 }
 
 .btn-outline {
@@ -524,15 +545,15 @@ body[data-hero-font="russo"] .hero-overlay-title {
   display: flex;
   width: fit-content;
   margin-inline: auto;
-  background: var(--cta-gradient);
+  background: linear-gradient(135deg, #00c6ff, #9b00ff);
   border-color: transparent;
   color: #fff;
-  font-weight: 700;
+  font-weight: 800;
   border-radius: 15px;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.1em;
   font-size: 0.9rem;
-  box-shadow: var(--cta-glow);
+  box-shadow: 0 0 24px rgba(0, 198, 255, 0.4);
 }
 
 .social-link {
@@ -582,6 +603,84 @@ body[data-hero-font="russo"] .hero-overlay-title {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
+}
+
+.mixcloud-profile {
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(17, 17, 22, 0.94), rgba(9, 9, 12, 0.94));
+  padding: 1rem 1.1rem 1.15rem;
+  box-shadow: var(--shadow);
+}
+
+.mixcloud-profile-kicker {
+  margin: 0;
+  color: rgba(0, 198, 255, 0.86);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+}
+
+.mixcloud-profile h1 {
+  margin: 0.24rem 0 0.35rem;
+  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+}
+
+.mixcloud-profile p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.mixcloud-profile-actions {
+  margin-top: 0.85rem;
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.mixcloud-feed {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+}
+
+.mixcloud-feed-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(12, 12, 16, 0.84);
+  overflow: hidden;
+}
+
+.mixcloud-feed-player {
+  background: #090909;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mixcloud-feed-player iframe {
+  width: 100%;
+  height: 132px;
+  border: 0;
+  display: block;
+}
+
+.mixcloud-feed-meta {
+  padding: 0.75rem 0.85rem 0.85rem;
+}
+
+.mixcloud-feed-meta h3 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.mixcloud-feed-stats {
+  margin: 0.45rem 0 0.7rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.mixcloud-feed-link {
+  width: fit-content;
 }
 
 main {
@@ -666,14 +765,14 @@ body[data-page="home"] #music .section-cta {
 }
 
 .media-card {
-  height: 340px;
+  height: 320px;
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.04);
   border-radius: 10px;
   overflow: hidden;
-  padding: 12px;
+  padding: 0;
   box-shadow: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
@@ -703,11 +802,11 @@ body[data-page="home"] #music .section-cta {
 
 .embed-wrap {
   position: relative;
-  flex: 0 0 55%;
+  flex: 0 0 198px;
   min-height: 0;
   aspect-ratio: auto;
   background: #000;
-  border-radius: 8px;
+  border-radius: 10px 10px 0 0;
   overflow: hidden;
 }
 
@@ -721,12 +820,140 @@ body[data-page="home"] #music .section-cta {
   aspect-ratio: 16/10;
 }
 
+.audio-top-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.audio-top-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    180deg,
+    rgba(11, 24, 56, 0.52) 0%,
+    rgba(10, 20, 48, 0.38) 60%,
+    rgba(6, 12, 28, 0.12) 100%
+  );
+  pointer-events: none;
+}
+
+.audio-top-overlay-number {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0.04em 0.22em;
+  border-radius: 0.18em;
+  background: rgba(8, 18, 40, 0.48);
+  color: rgba(0, 198, 255, 0.9);
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 14px rgba(0, 198, 255, 0.35);
+}
+
+.audio-set-cover {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0a0a0a, #1a0a2e);
+  transition: filter 0.2s ease;
+  z-index: 2;
+}
+
+.audio-set-cover:hover,
+.audio-set-cover.is-playing {
+  filter: brightness(1.08);
+}
+
+.audio-set-cover.is-loading .audio-set-play {
+  opacity: 0.75;
+}
+
+.audio-set-number {
+  color: #00c6ff;
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 14px rgba(0, 198, 255, 0.25);
+}
+
+.audio-set-play {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.46);
+  border: 1px solid rgba(0, 198, 255, 0.48);
+  color: #00c6ff;
+  font-size: 15px;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(0, 198, 255, 0.26);
+}
+
+.audio-set-cover.is-playing .audio-set-play {
+  font-size: 12px;
+  letter-spacing: -0.08em;
+}
+
+.audio-set-progress {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+
+.audio-set-progress-fill {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #00c6ff, #9b00ff);
+  transition: width 0.22s linear;
+}
+
+.audio-engine-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.01;
+  pointer-events: none;
+  z-index: 1;
+  border: 0;
+}
+
 .media-meta {
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  padding: 12px 0 0;
+  gap: 4px;
+  padding: 12px;
 }
 
 .media-meta h3 {
@@ -832,8 +1059,8 @@ body[data-page="home"] #music .section-cta {
   }
 
   .hero-tagline {
-    top: 71%;
-    font-size: clamp(0.68rem, 2.9vw, 0.9rem);
+    top: 72%;
+    font-size: clamp(0.8rem, 3.4vw, 1rem);
     letter-spacing: 0.04em;
   }
 
@@ -945,9 +1172,13 @@ body[data-page="home"] #music .section-cta {
     display: flex;
   }
 
-  body[data-page="home"] #videos .section-cta,
-  body[data-page="home"] #music .section-cta {
+  body[data-page="home"] #videos .section-cta {
     display: none;
+  }
+
+  body[data-page="home"] #music .section-cta {
+    display: flex;
+    justify-content: center;
   }
 
   body[data-page="home"] #videos .section-cta .btn,

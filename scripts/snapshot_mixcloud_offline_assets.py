@@ -22,9 +22,13 @@ MAX_PRIMARY_ASSETS = 60
 MAX_SECONDARY_ASSETS = 80
 MAX_FILE_BYTES = 6 * 1024 * 1024
 TIMEOUT = 20
-UA = (
+UA_DESKTOP = (
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+)
+UA_MOBILE = (
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 "
+    "(KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
 )
 
 
@@ -74,8 +78,8 @@ class AssetCollector(HTMLParser):
             self.inline_styles.append(style_value)
 
 
-def http_get(url: str) -> bytes:
-    req = Request(url, headers={"User-Agent": UA})
+def http_get(url: str, user_agent: str) -> bytes:
+    req = Request(url, headers={"User-Agent": user_agent})
     ctx = ssl.create_default_context()
     with urlopen(req, timeout=TIMEOUT, context=ctx) as response:
         return response.read()
@@ -142,8 +146,8 @@ def extract_colors(css_blobs: Iterable[str], inline_styles: Iterable[str]) -> di
     return dict(color_counter.most_common(120))
 
 
-def download_asset(url: str, index: int) -> tuple[dict, str | None]:
-    req = Request(url, headers={"User-Agent": UA})
+def download_asset(url: str, index: int, user_agent: str, save_root: Path) -> tuple[dict, str | None]:
+    req = Request(url, headers={"User-Agent": user_agent})
     ctx = ssl.create_default_context()
     with urlopen(req, timeout=TIMEOUT, context=ctx) as response:
         content = response.read(MAX_FILE_BYTES + 1)
@@ -156,7 +160,7 @@ def download_asset(url: str, index: int) -> tuple[dict, str | None]:
     filename = safe_filename(url)
     if not filename.endswith(ext) and ext:
         filename = f"{Path(filename).stem}{ext}"
-    save_dir = OUT_DIR / folder
+    save_dir = save_root / folder
     save_dir.mkdir(parents=True, exist_ok=True)
     save_path = save_dir / f"{index:03d}-{filename}"
     save_path.write_bytes(content)
@@ -171,15 +175,16 @@ def download_asset(url: str, index: int) -> tuple[dict, str | None]:
     )
 
 
-def main() -> int:
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+def run_profile(profile_name: str, user_agent: str) -> dict:
+    target_out_dir = OUT_DIR / profile_name
+    target_out_dir.mkdir(parents=True, exist_ok=True)
     pages: list[dict] = []
     all_assets: list[str] = []
     style_assets: list[str] = []
     inline_styles: list[str] = []
 
     for target in TARGETS:
-        html = http_get(target).decode("utf-8", errors="ignore")
+        html = http_get(target, user_agent).decode("utf-8", errors="ignore")
         parser = AssetCollector(target)
         parser.feed(html)
         pages.append(
@@ -194,9 +199,9 @@ def main() -> int:
         all_assets.extend(sorted(parser.assets))
         style_assets.extend(sorted(parser.style_assets))
         inline_styles.extend(parser.inline_styles)
-        (OUT_DIR / "html").mkdir(parents=True, exist_ok=True)
+        (target_out_dir / "html").mkdir(parents=True, exist_ok=True)
         page_name = re.sub(r"[^a-z0-9]+", "-", urlparse(target).path.strip("/") or "home")
-        (OUT_DIR / "html" / f"{page_name}.html").write_text(html, encoding="utf-8")
+        (target_out_dir / "html" / f"{page_name}.html").write_text(html, encoding="utf-8")
 
     unique_assets = list(dict.fromkeys(all_assets))[:MAX_PRIMARY_ASSETS]
     downloaded: list[dict] = []
@@ -205,7 +210,7 @@ def main() -> int:
 
     for idx, asset_url in enumerate(unique_assets, start=1):
         try:
-            record, css_text = download_asset(asset_url, idx)
+            record, css_text = download_asset(asset_url, idx, user_agent, target_out_dir)
             downloaded.append(record)
             if css_text is not None:
                 css_blobs.append(css_text)
@@ -221,7 +226,7 @@ def main() -> int:
 
     for idx, asset_url in enumerate(secondary_candidates, start=len(downloaded) + 1):
         try:
-            record, css_text = download_asset(asset_url, idx)
+            record, css_text = download_asset(asset_url, idx, user_agent, target_out_dir)
             downloaded.append(record)
             if css_text is not None:
                 css_blobs.append(css_text)
@@ -232,6 +237,7 @@ def main() -> int:
     colors = extract_colors(css_blobs, inline_styles)
 
     manifest = {
+        "profile": profile_name,
         "generatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "targets": TARGETS,
         "pages": pages,
@@ -240,9 +246,25 @@ def main() -> int:
         "topColors": colors,
         "notes": "Use only assets you are allowed to host. Audio/video files are not downloaded by this snapshot script.",
     }
-    (OUT_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
-    print(f"Saved snapshot manifest: {OUT_DIR / 'manifest.json'}")
-    print(f"Assets downloaded: {sum(1 for entry in downloaded if 'savedAs' in entry)}")
+    (target_out_dir / "manifest.json").write_text(
+        json.dumps(manifest, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+    )
+    return {
+        "profile": profile_name,
+        "manifest": str((target_out_dir / "manifest.json").relative_to(ROOT)),
+        "assetCount": sum(1 for entry in downloaded if "savedAs" in entry),
+    }
+
+
+def main() -> int:
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    summaries = [
+        run_profile("desktop", UA_DESKTOP),
+        run_profile("mobile", UA_MOBILE),
+    ]
+    for summary in summaries:
+        print(f"Saved snapshot manifest ({summary['profile']}): {summary['manifest']}")
+        print(f"Assets downloaded ({summary['profile']}): {summary['assetCount']}")
     return 0
 
 

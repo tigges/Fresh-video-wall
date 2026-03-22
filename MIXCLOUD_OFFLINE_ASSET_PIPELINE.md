@@ -15,15 +15,18 @@ python3 scripts/snapshot_mixcloud_offline_assets.py
 
 Outputs:
 
-- `assets/mixcloud-clone/snapshot/html/*.html` (captured reference page html)
-- `assets/mixcloud-clone/snapshot/css/*` (captured css bundles)
-- `assets/mixcloud-clone/snapshot/fonts/*` (captured font files referenced by css)
-- `assets/mixcloud-clone/snapshot/manifest.json`:
+- `assets/mixcloud-clone/snapshot/desktop/*` (desktop profile snapshot)
+- `assets/mixcloud-clone/snapshot/mobile/*` (mobile profile snapshot)
+- each profile includes:
+  - `html/*.html` (captured reference page html)
+  - `css/*` (captured css bundles)
+  - `fonts/*` (captured font files referenced by css)
+  - `manifest.json`:
   - extracted font families
   - top color tokens
   - downloaded asset inventory
 
-Use this snapshot to tune `mixcloud-offline.css` toward a closer visual match.
+Use desktop + mobile snapshots to tune `mixcloud-offline.css` toward closer visual matches for both breakpoints.
 
 ## 2) Build offline audio source map
 

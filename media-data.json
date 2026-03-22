@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T07:10:25Z",
+  "generatedAt": "2026-03-22T13:14:58Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
     "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
@@ -73,10 +73,10 @@
         "title": "UrbanT Live! #315 - New Bass House & Tech Set",
         "url": "https://www.mixcloud.com/urbant/urbant-live-209-new-bass-house-tech-set-20250523-082021/",
         "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-209-new-bass-house-tech-set-20250523-082021%2F",
-        "playCount": 178,
+        "playCount": 181,
         "favoriteCount": 1,
         "publishedAt": "2025-05-23T15:27:35Z",
-        "basePlayCount": 28,
+        "basePlayCount": 31,
         "featuredBonus": 150,
         "isFeaturedRecent": true
       },
@@ -85,7 +85,7 @@
         "title": "UrbanT Live! #209 - New Hot Saturday Night Bass House Set",
         "url": "https://www.mixcloud.com/urbant/urbant-live-20210731-181823/",
         "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210731-181823%2F",
-        "playCount": 133,
+        "playCount": 137,
         "favoriteCount": 11,
         "publishedAt": "2021-08-01T08:35:50Z"
       },
@@ -94,7 +94,7 @@
         "title": "UrbanT Live! #211 - New Bass House & Tech Set",
         "url": "https://www.mixcloud.com/urbant/urbant-live-209-new-bass-house-tech-set-20210919-184953/",
         "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-209-new-bass-house-tech-set-20210919-184953%2F",
-        "playCount": 68,
+        "playCount": 69,
         "favoriteCount": 4,
         "publishedAt": "2021-09-21T21:14:37Z"
       }

@@ -1,0 +1,101 @@
+{
+  "generatedAt": "2026-03-22T01:43:28Z",
+  "strategy": "Map each cached MixCloud track identity to your own hosted audio source.",
+  "tracks": {
+    "/urbant/urbant-live-209-new-bass-house-tech-set-20250523-082021/": {
+      "title": "UrbanT Live! #315 - New Bass House & Tech Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210731-181823/": {
+      "title": "UrbanT Live! #209 - New Hot Saturday Night Bass House Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-209-new-bass-house-tech-set-20210919-184953/": {
+      "title": "UrbanT Live! #211 - New Bass House & Tech Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-209-new-bass-house-tech-set-20220408-223554/": {
+      "title": "UrbanT Live! #212 - New Bass House & Tech Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210629-184652/": {
+      "title": "UrbanT Live! #198 - Bass House Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210720-125734/": {
+      "title": "UrbanT Live! #206 - New Hot Bass House Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210730-190745/": {
+      "title": "UrbanT Live! #207 - New 4h Bass House Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210721-120823/": {
+      "title": "UrbanT Live! #208 - New Bass House Friday Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210711-190222/": {
+      "title": "UrbanT Live! #204 - Saturday Bass House Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210628-192950/": {
+      "title": "UrbanT Live! #197 - Monday Bass House Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210712-204019/": {
+      "title": "UrbanT Live! #205 - New Bass House Mix Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210709-202842/": {
+      "title": "UrbanT Live! #203 - New Bass House Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210702-140827/": {
+      "title": "UrbanT Live! #200 - New Friday Bass House Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210707-205505/": {
+      "title": "UrbanT Live! #202 - Bass House Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urban-spring-jump-vol2-haven-london/": {
+      "title": "UrbanT Live! #150 - Urban Spring Bass House Jump vol2 @Haven - London",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/easter-egg-monday-2021-haven-london/": {
+      "title": "UrbanT Live! #149 - Easter Egg Bass House Monday 2021 @Haven - London",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210630-220620/": {
+      "title": "UrbanT Live! #199 - New Raw Bass House Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210627-155014/": {
+      "title": "UrbanT Live! #196 - Sunday Bass House Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    },
+    "/urbant/urbant-live-20210704-182110/": {
+      "title": "UrbanT Live! #201 - New Mainstage House Set",
+      "audioUrl": "",
+      "notes": "Set a direct local URL or Dropbox direct-download URL (e.g. dl=1)."
+    }
+  }
+}

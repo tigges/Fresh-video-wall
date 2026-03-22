@@ -8,6 +8,7 @@ if (yearNode) {
 const page = document.body.dataset.page;
 const GENRE_BADGE_LABEL = "\u{1F50A} Bass House";
 let mixcloudWidgetApiPromise = null;
+let offlineAudioSourcesPromise = null;
 let activeAudioController = null;
 
 function initHeaderVisibilityOnScroll() {
@@ -148,6 +149,21 @@ function loadMixcloudWidgetApi() {
   });
 
   return mixcloudWidgetApiPromise;
+}
+
+function loadOfflineAudioSources() {
+  if (offlineAudioSourcesPromise) {
+    return offlineAudioSourcesPromise;
+  }
+  offlineAudioSourcesPromise = fetch("./offline-media/audio-sources.json", { cache: "no-store" })
+    .then((response) => {
+      if (!response.ok) {
+        return { tracks: {} };
+      }
+      return response.json();
+    })
+    .catch(() => ({ tracks: {} }));
+  return offlineAudioSourcesPromise;
 }
 
 function applyHeroFontVariant() {
@@ -906,7 +922,7 @@ function renderOfflineCloneHome(data) {
   items.forEach((item) => listNode.appendChild(createOfflineCloudcastCard(item)));
 }
 
-function renderOfflineTrackDetail(data) {
+async function renderOfflineTrackDetail(data) {
   const allItems = getAudioCatalog(data);
   const fallbackItem = allItems[0];
   if (!fallbackItem) {
@@ -934,6 +950,18 @@ function renderOfflineTrackDetail(data) {
   if (setNode) {
     setNode.textContent = extractSetLabel(normalizeBrandTitle(selected.title || ""));
   }
+
+  const selectedIdentity = getAudioTrackIdentity(selected);
+  const selectedIndex = allItems.findIndex((item) => getAudioTrackIdentity(item) === selectedIdentity);
+
+  const sourceMap = await loadOfflineAudioSources();
+  const sourceTracks = sourceMap?.tracks && typeof sourceMap.tracks === "object" ? sourceMap.tracks : {};
+  const configuredSource = sourceTracks[selectedIdentity];
+  const configuredAudioUrl =
+    configuredSource && typeof configuredSource.audioUrl === "string" ? configuredSource.audioUrl.trim() : "";
+
+  const statusNode = document.getElementById("offline-track-status");
+  const audioNode = document.getElementById("offline-track-audio");
 
   const commentsNode = document.getElementById("offline-track-comments");
   if (commentsNode) {
@@ -990,12 +1018,21 @@ function renderOfflineTrackDetail(data) {
   }
   toggleNode.dataset.boundOffline = "1";
 
-  const selectedIdentity = getAudioTrackIdentity(selected);
-  const selectedIndex = allItems.findIndex((item) => getAudioTrackIdentity(item) === selectedIdentity);
-  const durationSeconds = estimateDurationSeconds(selectedIdentity);
+  let durationSeconds = estimateDurationSeconds(selectedIdentity);
   let currentSeconds = 0;
   let playing = false;
   let tickTimer = null;
+  const hasConfiguredAudio = Boolean(configuredAudioUrl && audioNode);
+
+  if (statusNode) {
+    statusNode.textContent = hasConfiguredAudio
+      ? "Offline playback from configured local/Dropbox source"
+      : "Offline playback simulation (configure audio source to enable real playback)";
+  }
+
+  if (hasConfiguredAudio && audioNode) {
+    audioNode.src = configuredAudioUrl;
+  }
 
   const refreshPlayerUi = () => {
     const ratio = durationSeconds ? currentSeconds / durationSeconds : 0;
@@ -1048,6 +1085,23 @@ function renderOfflineTrackDetail(data) {
     window.location.href = `./mixcloud-offline-track.html?track=${encodeTrackParam(nextItem)}`;
   };
 
+  if (hasConfiguredAudio && audioNode) {
+    audioNode.addEventListener("loadedmetadata", () => {
+      if (Number.isFinite(audioNode.duration) && audioNode.duration > 0) {
+        durationSeconds = Math.round(audioNode.duration);
+      }
+      refreshPlayerUi();
+    });
+    audioNode.addEventListener("timeupdate", () => {
+      currentSeconds = audioNode.currentTime || 0;
+      refreshPlayerUi();
+    });
+    audioNode.addEventListener("ended", () => {
+      playing = false;
+      refreshPlayerUi();
+    });
+  }
+
   actionNodes.forEach((node) => {
     node.addEventListener("click", () => {
       const action = node.getAttribute("data-offline-action");
@@ -1055,6 +1109,17 @@ function renderOfflineTrackDetail(data) {
         return;
       }
       if (action === "toggle") {
+        if (hasConfiguredAudio && audioNode) {
+          if (audioNode.paused) {
+            audioNode.play().catch(() => {});
+            playing = true;
+          } else {
+            audioNode.pause();
+            playing = false;
+          }
+          refreshPlayerUi();
+          return;
+        }
         playing = !playing;
         if (playing) {
           startTimer();
@@ -1065,10 +1130,19 @@ function renderOfflineTrackDetail(data) {
         return;
       }
       if (action === "rewind") {
+        if (hasConfiguredAudio && audioNode) {
+          audioNode.currentTime = Math.max(0, (audioNode.currentTime || 0) - 30);
+          return;
+        }
         setPosition(currentSeconds - 30);
         return;
       }
       if (action === "forward") {
+        if (hasConfiguredAudio && audioNode) {
+          const max = Number.isFinite(audioNode.duration) ? audioNode.duration : durationSeconds;
+          audioNode.currentTime = Math.min(max, (audioNode.currentTime || 0) + 30);
+          return;
+        }
         setPosition(currentSeconds + 30);
         return;
       }
@@ -1085,6 +1159,11 @@ function renderOfflineTrackDetail(data) {
   progressNode.addEventListener("input", () => {
     const value = Number(progressNode.value);
     if (!Number.isFinite(value)) {
+      return;
+    }
+    if (hasConfiguredAudio && audioNode) {
+      const nextTime = (value / 1000) * durationSeconds;
+      audioNode.currentTime = Math.max(0, Math.min(durationSeconds, nextTime));
       return;
     }
     setPosition((value / 1000) * durationSeconds);
@@ -1172,7 +1251,7 @@ async function hydrateMediaWalls() {
     }
 
     if (page === "mixcloud-offline-track") {
-      renderOfflineTrackDetail(data);
+      await renderOfflineTrackDetail(data);
     }
   } catch {
     // Keep page usable if media-data fetch fails.

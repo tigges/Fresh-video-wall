@@ -1,0 +1,197 @@
+{
+  "generatedAt": "2026-03-22T01:43:29Z",
+  "targets": [
+    "https://www.mixcloud.com/urbant/"
+  ],
+  "pages": [
+    {
+      "url": "https://www.mixcloud.com/urbant/",
+      "htmlLength": 4007,
+      "assetCount": 1,
+      "styleCount": 1,
+      "imageCount": 0
+    }
+  ],
+  "downloadedAssets": [
+    {
+      "url": "https://www.mixcloud.com/assets/mix-DUqb01vy-8a991bfbd978b139f1f140bf62ab0b1a9626ae26-style.css",
+      "contentType": "text/css",
+      "savedAs": "assets/mixcloud-clone/snapshot/css/001-mix-DUqb01vy-8a991bfbd978b139f1f140bf62ab0b1a9626ae26-style.css",
+      "bytes": 196645
+    },
+    {
+      "url": "https://www.mixcloud.com/assets/mix-D8xHCTEw-open-sans-cyrillic-ext-wght-normal.woff2",
+      "contentType": "font/woff2",
+      "savedAs": "assets/mixcloud-clone/snapshot/fonts/002-mix-D8xHCTEw-open-sans-cyrillic-ext-wght-normal.woff2",
+      "bytes": 49268
+    },
+    {
+      "url": "https://www.mixcloud.com/assets/mix-BAf6-sld-open-sans-symbols-wght-normal.woff2",
+      "contentType": "font/woff2",
+      "savedAs": "assets/mixcloud-clone/snapshot/fonts/003-mix-BAf6-sld-open-sans-symbols-wght-normal.woff2",
+      "bytes": 26596
+    },
+    {
+      "url": "https://www.mixcloud.com/assets/mix-UygKeDyW-open-sans-vietnamese-wght-normal.woff2",
+      "contentType": "font/woff2",
+      "savedAs": "assets/mixcloud-clone/snapshot/fonts/004-mix-UygKeDyW-open-sans-vietnamese-wght-normal.woff2",
+      "bytes": 16496
+    },
+    {
+      "url": "https://www.mixcloud.com/assets/mix-BQjZ2nPP-open-sans-latin-wght-normal.woff2",
+      "contentType": "font/woff2",
+      "savedAs": "assets/mixcloud-clone/snapshot/fonts/005-mix-BQjZ2nPP-open-sans-latin-wght-normal.woff2",
+      "bytes": 48332
+    },
+    {
+      "url": "https://www.mixcloud.com/assets/mix-DPNHYqvY-open-sans-latin-ext-wght-normal.woff2",
+      "contentType": "font/woff2",
+      "savedAs": "assets/mixcloud-clone/snapshot/fonts/006-mix-DPNHYqvY-open-sans-latin-ext-wght-normal.woff2",
+      "bytes": 35156
+    },
+    {
+      "url": "https://www.mixcloud.com/assets/mix-bOs07Rf4-open-sans-cyrillic-wght-normal.woff2",
+      "contentType": "font/woff2",
+      "savedAs": "assets/mixcloud-clone/snapshot/fonts/007-mix-bOs07Rf4-open-sans-cyrillic-wght-normal.woff2",
+      "bytes": 26588
+    },
+    {
+      "url": "https://www.mixcloud.com/assets/mix-CjLIybot-dm-sans-latin-ext-wght-normal.woff2",
+      "contentType": "font/woff2",
+      "savedAs": "assets/mixcloud-clone/snapshot/fonts/008-mix-CjLIybot-dm-sans-latin-ext-wght-normal.woff2",
+      "bytes": 18208
+    },
+    {
+      "url": "https://www.mixcloud.com/assets/mix-Bm9CHu9r-open-sans-greek-ext-wght-normal.woff2",
+      "contentType": "font/woff2",
+      "savedAs": "assets/mixcloud-clone/snapshot/fonts/009-mix-Bm9CHu9r-open-sans-greek-ext-wght-normal.woff2",
+      "bytes": 4504
+    },
+    {
+      "url": "https://www.mixcloud.com/assets/mix-BjjtG49P-open-sans-hebrew-wght-normal.woff2",
+      "contentType": "font/woff2",
+      "savedAs": "assets/mixcloud-clone/snapshot/fonts/010-mix-BjjtG49P-open-sans-hebrew-wght-normal.woff2",
+      "bytes": 16920
+    },
+    {
+      "url": "https://www.mixcloud.com/assets/mix-RbQjuyZ0-dm-sans-latin-wght-normal.woff2",
+      "contentType": "font/woff2",
+      "savedAs": "assets/mixcloud-clone/snapshot/fonts/011-mix-RbQjuyZ0-dm-sans-latin-wght-normal.woff2",
+      "bytes": 36916
+    },
+    {
+      "url": "https://www.mixcloud.com/assets/mix-8neIfJ3r-open-sans-greek-wght-normal.woff2",
+      "contentType": "font/woff2",
+      "savedAs": "assets/mixcloud-clone/snapshot/fonts/012-mix-8neIfJ3r-open-sans-greek-wght-normal.woff2",
+      "bytes": 21332
+    },
+    {
+      "url": "https://www.mixcloud.com/assets/mix-CHNDR2rK-open-sans-math-wght-normal.woff2",
+      "contentType": "font/woff2",
+      "savedAs": "assets/mixcloud-clone/snapshot/fonts/013-mix-CHNDR2rK-open-sans-math-wght-normal.woff2",
+      "bytes": 52028
+    }
+  ],
+  "fontFamilies": [
+    "DM Sans Variable",
+    "Inter",
+    "Material Icons",
+    "Material Icons Round",
+    "Open Sans Variable",
+    "inherit",
+    "monospace",
+    "sans-serif",
+    "var(--type-font-body)",
+    "var(--type-font-code)",
+    "var(--type-font-heading)",
+    "var(--x1ad0sv6)",
+    "var(--x1hhytb)",
+    "var(--xl41scj)"
+  ],
+  "topColors": {
+    "#0000": 21,
+    "#fff": 21,
+    "#d2d3d7": 9,
+    "#61667a": 9,
+    "#000": 9,
+    "#171c2b": 7,
+    "#5000ff": 5,
+    "#0000000f": 5,
+    "#00000008": 5,
+    "#00000080": 4,
+    "#f4f4f5": 4,
+    "#ffffff1a": 4,
+    "#0000000d": 3,
+    "#2a3145": 3,
+    "#0000004d": 3,
+    "#0003": 3,
+    "#4100cc": 2,
+    "#f778eb": 2,
+    "#f555e5": 2,
+    "#f3f810": 2,
+    "#e4e807": 2,
+    "#e3faf0": 2,
+    "#f9fbb2": 2,
+    "#e2e3ff": 2,
+    "#fde1f7": 2,
+    "#d20442": 2,
+    "#ef054b": 2,
+    "#0cc281": 2,
+    "#0bad74": 2,
+    "#f7f7f7": 2,
+    "#22293c": 2,
+    "#ececee": 2,
+    "#f4f4f54d": 2,
+    "#f4f4f580": 2,
+    "#1da1f2": 2,
+    "#0c85d0": 2,
+    "#3360ff": 2,
+    "#0038ff": 2,
+    "#68f": 2,
+    "#ff8c00": 2,
+    "#5000ff80": 2,
+    "#61667a80": 2,
+    "#0006": 2,
+    "#0000000a": 2,
+    "#0a1e2c0d": 2,
+    "#0a1e2c0f": 2,
+    "#ffffff0d": 2,
+    "#eee": 2,
+    "#983af2": 2,
+    "#4800e6": 2,
+    "#8934da": 2,
+    "#000c": 1,
+    "#202124": 1,
+    "#e0e0e0": 1,
+    "#0000008a": 1,
+    "#0070f3": 1,
+    "#fcc": 1,
+    "#fffffffa": 1,
+    "#171c2bf2": 1,
+    "#dfdfdfbf": 1,
+    "#49596a0a": 1,
+    "#daddde": 1,
+    "#ebeef0": 1,
+    "#49596a1a": 1,
+    "#333": 1,
+    "#4ade80": 1,
+    "#666": 1,
+    "#999": 1,
+    "#f55": 1,
+    "#f87171": 1,
+    "#fdf5f5": 1,
+    "#fff6": 1,
+    "#0000001a": 1,
+    "#4fa6d31a": 1,
+    "#4fa6d340": 1,
+    "#00000014": 1,
+    "#4d5364": 1,
+    "#0009": 1,
+    "#020102": 1,
+    "#d661ef": 1,
+    "#4909f5": 1,
+    "#c157d7": 1,
+    "#4208dd": 1
+  },
+  "notes": "Use only assets you are allowed to host. Audio/video files are not downloaded by this snapshot script."
+}

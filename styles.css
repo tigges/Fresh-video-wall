@@ -520,17 +520,9 @@ body[data-hero-font="russo"] .hero-overlay-title {
 }
 
 .bio-title {
-  margin: 0 auto;
-  width: fit-content;
-  font-size: clamp(1.75rem, 4vw, 2.2rem);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-align: center;
-  background: var(--accent-iridescent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  margin: 0 0 0.7rem;
+  width: auto;
+  text-align: left;
 }
 
 .bio-copy {
@@ -1003,7 +995,8 @@ body[data-page="home"] #music .section-cta {
 }
 
 .section-head h1,
-.section-head h2 {
+.section-head h2,
+.bio-title {
   margin: 0;
   display: inline-flex;
   align-items: center;
@@ -1021,6 +1014,11 @@ body[data-page="home"] #music .section-cta {
   -webkit-background-clip: border-box;
   background-clip: border-box;
   -webkit-text-fill-color: currentColor;
+}
+
+.bio-title {
+  margin-bottom: 0.7rem;
+  justify-content: flex-start;
 }
 
 .section-head h1::after,

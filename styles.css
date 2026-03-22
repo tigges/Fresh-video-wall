@@ -673,6 +673,14 @@ body[data-hero-font="russo"] .hero-overlay-title {
   line-height: 1.3;
 }
 
+.mixcloud-feed-title-link {
+  text-decoration: none;
+}
+
+.mixcloud-feed-title-link:hover {
+  text-decoration: underline;
+}
+
 .mixcloud-feed-stats {
   margin: 0.45rem 0 0.7rem;
   color: var(--muted);

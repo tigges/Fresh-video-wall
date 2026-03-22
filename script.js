@@ -646,6 +646,7 @@ function toProfileMixcloudEmbedSrc(src) {
 function createMixcloudFeedCard(item) {
   const article = document.createElement("article");
   article.className = "mixcloud-feed-card";
+  const detailHref = `./mixcloud-offline-track.html?track=${encodeTrackParam(item)}`;
 
   const playerWrap = document.createElement("div");
   playerWrap.className = "mixcloud-feed-player";
@@ -661,7 +662,11 @@ function createMixcloudFeedCard(item) {
   meta.className = "mixcloud-feed-meta";
 
   const title = document.createElement("h3");
-  title.textContent = normalizeBrandTitle(item.title);
+  const titleLink = document.createElement("a");
+  titleLink.className = "mixcloud-feed-title-link";
+  titleLink.href = detailHref;
+  titleLink.textContent = normalizeBrandTitle(item.title);
+  title.appendChild(titleLink);
 
   const stats = document.createElement("p");
   stats.className = "mixcloud-feed-stats";
@@ -671,10 +676,8 @@ function createMixcloudFeedCard(item) {
 
   const openLink = document.createElement("a");
   openLink.className = "btn btn-outline mixcloud-feed-link";
-  openLink.href = item.url;
-  openLink.target = "_blank";
-  openLink.rel = "noopener noreferrer";
-  openLink.textContent = "Open on Mixcloud";
+  openLink.href = detailHref;
+  openLink.textContent = "Open Clone Track";
 
   meta.append(title, stats, openLink);
   article.append(playerWrap, meta);

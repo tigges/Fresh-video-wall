@@ -677,7 +677,7 @@ function createMixcloudFeedCard(item) {
   const openLink = document.createElement("a");
   openLink.className = "btn btn-outline mixcloud-feed-link";
   openLink.href = detailHref;
-  openLink.textContent = "Open Clone Track";
+  openLink.textContent = "Open Offline Track";
 
   meta.append(title, stats, openLink);
   article.append(playerWrap, meta);

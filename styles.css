@@ -643,9 +643,19 @@ body[data-hero-font="russo"] .hero-overlay-title {
   overflow: hidden;
 }
 
+.mixcloud-feed-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 0.75rem 0;
+}
+
 .mixcloud-feed-player {
   background: #090909;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .mixcloud-feed-player iframe {
@@ -655,8 +665,14 @@ body[data-hero-font="russo"] .hero-overlay-title {
   display: block;
 }
 
+.mixcloud-feed-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .mixcloud-feed-meta {
-  padding: 0.75rem 0.85rem 0.85rem;
+  padding: 0.62rem 0.85rem 0.85rem;
 }
 
 .mixcloud-feed-meta h3 {
@@ -681,6 +697,9 @@ body[data-hero-font="russo"] .hero-overlay-title {
 
 .mixcloud-feed-link {
   width: fit-content;
+  white-space: nowrap;
+  padding: 0.44rem 0.68rem;
+  font-size: 0.8rem;
 }
 
 .offline-clone-hero,

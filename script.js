@@ -647,6 +647,8 @@ function createMixcloudFeedCard(item) {
   const article = document.createElement("article");
   article.className = "mixcloud-feed-card";
   const detailHref = `./mixcloud-offline-track.html?track=${encodeTrackParam(item)}`;
+  const topRow = document.createElement("div");
+  topRow.className = "mixcloud-feed-top";
 
   const playerWrap = document.createElement("div");
   playerWrap.className = "mixcloud-feed-player";
@@ -657,6 +659,16 @@ function createMixcloudFeedCard(item) {
   iframe.allow = "autoplay; clipboard-write";
   iframe.loading = "lazy";
   playerWrap.appendChild(iframe);
+
+  const actionWrap = document.createElement("div");
+  actionWrap.className = "mixcloud-feed-action";
+
+  const openLink = document.createElement("a");
+  openLink.className = "btn btn-outline mixcloud-feed-link";
+  openLink.href = detailHref;
+  openLink.textContent = "Details";
+  actionWrap.appendChild(openLink);
+  topRow.append(playerWrap, actionWrap);
 
   const meta = document.createElement("div");
   meta.className = "mixcloud-feed-meta";
@@ -673,14 +685,8 @@ function createMixcloudFeedCard(item) {
   const playsText = item.playCount ? `${formatCount(item.playCount)} plays` : "";
   const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
   stats.textContent = [playsText, dateText].filter(Boolean).join(" • ");
-
-  const openLink = document.createElement("a");
-  openLink.className = "btn btn-outline mixcloud-feed-link";
-  openLink.href = detailHref;
-  openLink.textContent = "Open Offline Track";
-
-  meta.append(title, stats, openLink);
-  article.append(playerWrap, meta);
+  meta.append(title, stats);
+  article.append(topRow, meta);
   return article;
 }
 

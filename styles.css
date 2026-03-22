@@ -765,7 +765,7 @@ body[data-page="home"] #music .section-cta {
 }
 
 .media-card {
-  height: 260px;
+  height: 286px;
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -802,7 +802,7 @@ body[data-page="home"] #music .section-cta {
 
 .embed-wrap {
   position: relative;
-  flex: 0 0 50%;
+  flex: 0 0 153px;
   min-height: 0;
   aspect-ratio: auto;
   background: #000;

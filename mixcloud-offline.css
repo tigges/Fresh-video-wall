@@ -80,12 +80,22 @@ a {
 }
 
 .offline-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
   font-family: "Barlow Condensed", "Syne", sans-serif;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  font-size: 1.45rem;
+  letter-spacing: 0.04em;
+  font-size: 1.24rem;
   text-decoration: none;
   color: #12172b;
+}
+
+.offline-wordmark-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  display: block;
 }
 
 .offline-search-wrap {
@@ -188,14 +198,14 @@ a {
   width: 100%;
   height: 230px;
   object-fit: cover;
-  opacity: 0.48;
+  opacity: 1;
   display: block;
 }
 
 .offline-cover-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.26));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(8, 13, 24, 0.12));
 }
 
 .offline-layout {
@@ -423,8 +433,10 @@ a {
 }
 
 .offline-cloudcast-thumb-logo {
-  width: 86%;
-  opacity: 0.95;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
 }
 
 .offline-cloudcast-thumb-play {

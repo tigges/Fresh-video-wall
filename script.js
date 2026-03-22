@@ -838,7 +838,7 @@ function createOfflineCloudcastCard(item) {
 
   const thumbLogo = document.createElement("img");
   thumbLogo.className = "offline-cloudcast-thumb-logo";
-  thumbLogo.src = "./assets/images/djurbant-logo.svg";
+  thumbLogo.src = "./assets/mixcloud-clone/offline/urbant-profile-600x600.png";
   thumbLogo.alt = "";
 
   const playIcon = document.createElement("span");

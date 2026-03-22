@@ -660,15 +660,11 @@ function createMixcloudFeedCard(item) {
   iframe.loading = "lazy";
   playerWrap.appendChild(iframe);
 
-  const actionWrap = document.createElement("div");
-  actionWrap.className = "mixcloud-feed-action";
-
   const openLink = document.createElement("a");
   openLink.className = "btn btn-outline mixcloud-feed-link";
   openLink.href = detailHref;
   openLink.textContent = "Details";
-  actionWrap.appendChild(openLink);
-  topRow.append(playerWrap, actionWrap);
+  topRow.append(playerWrap);
 
   const meta = document.createElement("div");
   meta.className = "mixcloud-feed-meta";
@@ -686,7 +682,7 @@ function createMixcloudFeedCard(item) {
   const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
   stats.textContent = [playsText, dateText].filter(Boolean).join(" • ");
   meta.append(title, stats);
-  article.append(topRow, meta);
+  article.append(topRow, meta, openLink);
   return article;
 }
 

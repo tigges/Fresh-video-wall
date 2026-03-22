@@ -641,13 +641,10 @@ body[data-hero-font="russo"] .hero-overlay-title {
   border-radius: 12px;
   background: rgba(12, 12, 16, 0.84);
   overflow: hidden;
+  position: relative;
 }
 
 .mixcloud-feed-top {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 0.65rem;
   padding: 0.7rem 0.75rem 0;
 }
 
@@ -665,14 +662,8 @@ body[data-hero-font="russo"] .hero-overlay-title {
   display: block;
 }
 
-.mixcloud-feed-action {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
 .mixcloud-feed-meta {
-  padding: 0.62rem 0.85rem 0.85rem;
+  padding: 0.62rem 0.85rem 2.8rem;
 }
 
 .mixcloud-feed-meta h3 {
@@ -696,10 +687,13 @@ body[data-hero-font="russo"] .hero-overlay-title {
 }
 
 .mixcloud-feed-link {
-  width: fit-content;
+  width: auto;
   white-space: nowrap;
   padding: 0.44rem 0.68rem;
   font-size: 0.8rem;
+  position: absolute;
+  right: 0.85rem;
+  bottom: 0.85rem;
 }
 
 .offline-clone-hero,

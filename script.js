@@ -1,5 +1,5 @@
 const yearNode = document.getElementById("year");
-const FALLBACK_YOUTUBE_URL = "https://m.youtube.com/@dj_urbant";
+const FALLBACK_YOUTUBE_URL = "./videos.html";
 
 if (yearNode) {
   yearNode.textContent = String(new Date().getFullYear());
@@ -69,6 +69,27 @@ function normalizeBrandTitle(value) {
     .replace(/\bDJ\s*UrbanT\b/gi, token)
     .replace(/\burbant\b/gi, "DJ UrbanT")
     .replace(new RegExp(token, "g"), "DJ UrbanT");
+}
+
+function toConstrainedYoutubeEmbedSrc(src) {
+  if (typeof src !== "string" || !src) {
+    return "";
+  }
+  try {
+    const parsed = new URL(src);
+    if (/youtube\.com$/i.test(parsed.hostname) || /^www\.youtube\.com$/i.test(parsed.hostname)) {
+      parsed.hostname = "www.youtube-nocookie.com";
+    }
+    parsed.searchParams.set("rel", "0");
+    parsed.searchParams.set("modestbranding", "1");
+    parsed.searchParams.set("iv_load_policy", "3");
+    parsed.searchParams.set("playsinline", "1");
+    parsed.searchParams.set("enablejsapi", "1");
+    parsed.searchParams.set("origin", window.location.origin);
+    return parsed.toString();
+  } catch {
+    return src;
+  }
 }
 
 function extractSetLabel(title) {
@@ -142,11 +163,12 @@ function applyHeroFontVariant() {
 }
 
 function withAutoplayEmbedSrc(src) {
-  if (typeof src !== "string" || !src) {
+  const constrained = toConstrainedYoutubeEmbedSrc(src);
+  if (!constrained) {
     return "";
   }
   try {
-    const parsed = new URL(src);
+    const parsed = new URL(constrained);
     parsed.searchParams.set("autoplay", "1");
     parsed.searchParams.set("playsinline", "1");
     parsed.searchParams.set("rel", "0");
@@ -227,9 +249,9 @@ function updateHeroLiveCta(data) {
     youtubeLive.liveUrl
   ) {
     liveCta.textContent = "Join Live Now!";
-    liveCta.href = youtubeLive.liveUrl;
-    liveCta.target = "_blank";
-    liveCta.rel = "noopener noreferrer";
+    liveCta.href = "#videos";
+    liveCta.removeAttribute("target");
+    liveCta.removeAttribute("rel");
     liveCta.dataset.liveMode = "live";
     return;
   }
@@ -249,13 +271,13 @@ function bindHeroLiveCtaClick() {
   }
   liveCta.dataset.boundClick = "1";
   liveCta.addEventListener("click", (event) => {
-    if (liveCta.dataset.liveMode !== "latest") {
+    if (!["latest", "live"].includes(liveCta.dataset.liveMode || "")) {
       return;
     }
     event.preventDefault();
     const started = playTopVideoTile();
     if (!started) {
-      const fallbackUrl = liveCta.dataset.latestUrl || FALLBACK_YOUTUBE_URL;
+      const fallbackUrl = FALLBACK_YOUTUBE_URL;
       window.location.href = fallbackUrl;
     }
   });
@@ -269,7 +291,7 @@ function createVideoCard(item) {
   wrap.className = "embed-wrap";
 
   const iframe = document.createElement("iframe");
-  iframe.src = item.embedUrl;
+  iframe.src = toConstrainedYoutubeEmbedSrc(item.embedUrl);
   const normalizedTitle = normalizeBrandTitle(item.title);
   iframe.title = normalizedTitle;
   iframe.allow =
@@ -702,10 +724,10 @@ async function hydrateMediaWalls() {
       renderGrid("videos-rest-grid", videos, createVideoCard);
       appendGridActionTile(
         "videos-rest-grid",
-        "Subscribe",
-        "https://m.youtube.com/@dj_urbant",
-        "btn-subscribe",
-        true,
+        "Top Videos",
+        "./index.html#videos",
+        "btn-outline",
+        false,
       );
       return;
     }

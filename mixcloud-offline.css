@@ -231,7 +231,7 @@ a {
 }
 
 .offline-layout {
-  margin-top: -88px;
+  margin-top: 0.85rem;
   display: grid;
   grid-template-columns: 250px minmax(0, 1fr);
   gap: 18px;

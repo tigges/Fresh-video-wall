@@ -659,11 +659,6 @@ function createMixcloudFeedCard(item) {
   iframe.allow = "autoplay; clipboard-write";
   iframe.loading = "lazy";
   playerWrap.appendChild(iframe);
-
-  const openLink = document.createElement("a");
-  openLink.className = "btn btn-outline mixcloud-feed-link";
-  openLink.href = detailHref;
-  openLink.textContent = "Details";
   topRow.append(playerWrap);
 
   const meta = document.createElement("div");
@@ -680,9 +675,19 @@ function createMixcloudFeedCard(item) {
   stats.className = "mixcloud-feed-stats";
   const playsText = item.playCount ? `${formatCount(item.playCount)} plays` : "";
   const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
-  stats.textContent = [playsText, dateText].filter(Boolean).join(" • ");
-  meta.append(title, stats);
-  article.append(topRow, meta, openLink);
+  stats.textContent = [playsText, dateText].filter(Boolean).join(" . ");
+
+  const openLink = document.createElement("a");
+  openLink.className = "btn btn-outline mixcloud-feed-link";
+  openLink.href = detailHref;
+  openLink.textContent = "Details";
+
+  const footerRow = document.createElement("div");
+  footerRow.className = "mixcloud-feed-footer";
+  footerRow.append(stats, openLink);
+
+  meta.append(title, footerRow);
+  article.append(topRow, meta);
   return article;
 }
 

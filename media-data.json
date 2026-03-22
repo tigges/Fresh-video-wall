@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-21T18:13:17Z",
+  "generatedAt": "2026-03-22T03:22:25Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
     "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
@@ -20,9 +20,9 @@
         "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
         "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
         "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
-        "viewCount": 174,
+        "viewCount": 187,
         "publishedAt": "2026-03-15",
-        "baseViewCount": 24,
+        "baseViewCount": 37,
         "featuredBonus": 150,
         "isFeaturedRecent": true
       },
@@ -32,7 +32,7 @@
         "url": "https://www.youtube.com/watch?v=8XF8FRusnWc",
         "embedUrl": "https://www.youtube.com/embed/8XF8FRusnWc",
         "thumbnailUrl": "https://i.ytimg.com/vi/8XF8FRusnWc/hqdefault.jpg",
-        "viewCount": 217,
+        "viewCount": 221,
         "publishedAt": "2026-01-07"
       },
       {
@@ -41,7 +41,7 @@
         "url": "https://www.youtube.com/watch?v=PPUISj_W6Kw",
         "embedUrl": "https://www.youtube.com/embed/PPUISj_W6Kw",
         "thumbnailUrl": "https://i.ytimg.com/vi/PPUISj_W6Kw/hqdefault.jpg",
-        "viewCount": 150,
+        "viewCount": 151,
         "publishedAt": "2026-01-07"
       }
     ],
@@ -52,7 +52,7 @@
         "url": "https://www.youtube.com/watch?v=Jf7nPjlK2Bo",
         "embedUrl": "https://www.youtube.com/embed/Jf7nPjlK2Bo",
         "thumbnailUrl": "https://i.ytimg.com/vi/Jf7nPjlK2Bo/hqdefault.jpg",
-        "viewCount": 97,
+        "viewCount": 100,
         "publishedAt": "2026-01-07"
       },
       {
@@ -73,10 +73,10 @@
         "title": "UrbanT Live! #315 - New Bass House & Tech Set",
         "url": "https://www.mixcloud.com/urbant/urbant-live-209-new-bass-house-tech-set-20250523-082021/",
         "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-209-new-bass-house-tech-set-20250523-082021%2F",
-        "playCount": 161,
+        "playCount": 176,
         "favoriteCount": 1,
         "publishedAt": "2025-05-23T15:27:35Z",
-        "basePlayCount": 11,
+        "basePlayCount": 26,
         "featuredBonus": 150,
         "isFeaturedRecent": true
       },
@@ -85,7 +85,7 @@
         "title": "UrbanT Live! #209 - New Hot Saturday Night Bass House Set",
         "url": "https://www.mixcloud.com/urbant/urbant-live-20210731-181823/",
         "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210731-181823%2F",
-        "playCount": 127,
+        "playCount": 132,
         "favoriteCount": 11,
         "publishedAt": "2021-08-01T08:35:50Z"
       },
@@ -105,7 +105,7 @@
         "title": "UrbanT Live! #212 - New Bass House & Tech Set",
         "url": "https://www.mixcloud.com/urbant/urbant-live-209-new-bass-house-tech-set-20220408-223554/",
         "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-209-new-bass-house-tech-set-20220408-223554%2F",
-        "playCount": 53,
+        "playCount": 56,
         "favoriteCount": 4,
         "publishedAt": "2022-04-24T17:10:11Z"
       },
@@ -141,7 +141,7 @@
         "title": "UrbanT Live! #208 - New Bass House Friday Set",
         "url": "https://www.mixcloud.com/urbant/urbant-live-20210721-120823/",
         "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210721-120823%2F",
-        "playCount": 15,
+        "playCount": 16,
         "favoriteCount": 3,
         "publishedAt": "2021-08-01T08:34:15Z"
       },
@@ -200,6 +200,15 @@
         "publishedAt": "2021-07-09T17:41:02Z"
       },
       {
+        "key": "/urbant/easter-egg-monday-2021-haven-london/",
+        "title": "UrbanT Live! #149 - Easter Egg Bass House Monday 2021 @Haven - London",
+        "url": "https://www.mixcloud.com/urbant/easter-egg-monday-2021-haven-london/",
+        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Feaster-egg-monday-2021-haven-london%2F",
+        "playCount": 4,
+        "favoriteCount": 1,
+        "publishedAt": "2021-04-05T15:36:57Z"
+      },
+      {
         "key": "/urbant/urban-spring-jump-vol2-haven-london/",
         "title": "UrbanT Live! #150 - Urban Spring Bass House Jump vol2 @Haven - London",
         "url": "https://www.mixcloud.com/urbant/urban-spring-jump-vol2-haven-london/",
@@ -207,15 +216,6 @@
         "playCount": 3,
         "favoriteCount": 1,
         "publishedAt": "2021-04-11T11:11:27Z"
-      },
-      {
-        "key": "/urbant/easter-egg-monday-2021-haven-london/",
-        "title": "UrbanT Live! #149 - Easter Egg Bass House Monday 2021 @Haven - London",
-        "url": "https://www.mixcloud.com/urbant/easter-egg-monday-2021-haven-london/",
-        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Feaster-egg-monday-2021-haven-london%2F",
-        "playCount": 3,
-        "favoriteCount": 1,
-        "publishedAt": "2021-04-05T15:36:57Z"
       },
       {
         "key": "/urbant/urbant-live-20210630-220620/",

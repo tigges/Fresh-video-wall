@@ -156,6 +156,30 @@ a {
   color: #fff;
 }
 
+.offline-mobile-icon-btn {
+  display: none;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: #2b3348;
+  text-decoration: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.offline-mobile-icon-btn.is-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.offline-mobile-top-actions {
+  display: none;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -749,22 +773,55 @@ a {
 
 @media (max-width: 760px) {
   .site-header {
-    height: auto;
+    height: 58px;
     padding: 8px 10px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
+    gap: 8px;
   }
   .offline-nav-left {
-    width: 100%;
+    width: auto;
+    flex: 1;
+    min-width: 0;
+    gap: 6px;
   }
   .offline-search-wrap {
-    max-width: none;
     min-width: 0;
-    flex: 1;
+    flex: 0 0 40vw;
+    max-width: 40vw;
+    height: 34px;
   }
   .offline-nav-right {
-    width: 100%;
-    flex-wrap: wrap;
+    width: auto;
+    flex-wrap: nowrap;
+    margin-left: auto;
+    gap: 6px;
+  }
+  .offline-pill-btn {
+    display: none;
+  }
+  .offline-mobile-icon-btn {
+    display: inline-flex;
+  }
+  .offline-mobile-top-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .offline-mobile-icon-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    font-size: 0.9rem;
+  }
+  .offline-wordmark {
+    font-size: 1.04rem;
+    letter-spacing: 0.03em;
+  }
+  .offline-wordmark-icon {
+    width: 18px;
+    height: 18px;
   }
   .offline-cover img {
     height: 180px;

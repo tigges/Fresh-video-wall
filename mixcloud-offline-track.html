@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DJ UrbanT | MixCloud Track</title>
+    <title>DJ UrbanT | MixCloud Offline Track</title>
     <meta
       name="description"
       content="Offline-style MixCloud track detail page for DJ UrbanT with playback UI and comments."
@@ -11,23 +11,21 @@
     <link rel="stylesheet" href="./mixcloud-offline.css" />
   </head>
   <body data-page="mixcloud-offline-track">
-    <header class="site-header">
-      <a class="brand" href="./index.html" aria-label="Back to home">
-        <img
-          class="brand-logo"
-          src="./assets/images/djurbant-logo.svg"
-          alt="DJ UrbanT"
-        />
-      </a>
-      <nav class="social-links" aria-label="Navigation">
-        <a class="btn btn-outline" href="./mixcloud-offline.html">Back to Cloudcasts</a>
-        <a class="btn btn-outline" href="./audio.html">Micloud Clone</a>
+    <header class="site-header offline-nav">
+      <div class="offline-nav-left">
+        <a class="offline-wordmark" href="./mixcloud-offline.html" aria-label="MixCloud Offline Home">
+          MIXCLOUD
+        </a>
+      </div>
+      <nav class="offline-nav-right" aria-label="Navigation">
+        <a class="offline-nav-link" href="./mixcloud-offline.html">Back to Cloudcasts</a>
+        <a class="offline-nav-link" href="./audio.html">Micloud Clone</a>
       </nav>
     </header>
 
     <main class="subpage-main">
       <section class="offline-track-hero">
-        <p class="mixcloud-profile-kicker">Cloudcast Detail</p>
+        <p class="mixcloud-profile-kicker">Cloudcast Detail (Offline)</p>
         <h1 id="offline-track-title">DJ UrbanT Live! Set</h1>
         <p id="offline-track-meta">plays • date</p>
       </section>
@@ -68,6 +66,10 @@
             aria-label="Playback progress"
           />
           <span id="offline-track-duration" class="offline-track-time">00:00</span>
+        </div>
+        <div class="offline-track-info-row" aria-hidden="true">
+          <span>Offline playback simulation</span>
+          <span>comments + related preserved locally</span>
         </div>
       </section>
 

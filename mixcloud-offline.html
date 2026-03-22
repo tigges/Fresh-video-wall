@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DJ UrbanT | MixCloud Offline</title>
+    <title>DJ UrbanT | MixCloud Offline Clone</title>
     <meta
       name="description"
       content="Offline-ready MixCloud clone experience for DJ UrbanT including cloudcasts, playback UI, and comments."
@@ -11,48 +11,84 @@
     <link rel="stylesheet" href="./mixcloud-offline.css" />
   </head>
   <body data-page="mixcloud-offline-home">
-    <header class="site-header">
-      <a class="brand" href="./index.html" aria-label="Back to home">
-        <img
-          class="brand-logo"
-          src="./assets/images/djurbant-logo.svg"
-          alt="DJ UrbanT"
-        />
-      </a>
-      <nav class="social-links" aria-label="Navigation">
-        <a class="btn btn-outline" href="./index.html">Home</a>
-        <a class="btn btn-outline" href="./audio.html">Micloud Clone</a>
+    <header class="site-header offline-nav">
+      <div class="offline-nav-left">
+        <a class="offline-wordmark" href="./mixcloud-offline.html" aria-label="MixCloud Offline Home">
+          MIXCLOUD
+        </a>
+        <label class="offline-search-wrap" aria-label="Search">
+          <span class="offline-search-icon">⌕</span>
+          <input class="offline-search-input" type="search" value="Search" aria-label="Search" />
+        </label>
+      </div>
+      <nav class="offline-nav-right" aria-label="Navigation">
+        <a class="offline-nav-link" href="./mixcloud-offline.html">Listen ▾</a>
+        <a class="offline-nav-link" href="./mixcloud-offline.html">Creator tools ▾</a>
+        <a class="offline-nav-link" href="./mixcloud-offline.html">Upgrade ▾</a>
+        <a class="offline-pill-btn" href="./audio-direct.html">Upload for free</a>
+        <a class="offline-pill-btn is-primary" href="./audio.html">Sign up</a>
+        <a class="offline-nav-link" href="./index.html">Login</a>
+        <a class="offline-nav-link" href="./index.html">☰</a>
       </nav>
     </header>
 
     <main class="subpage-main">
-      <section class="offline-clone-hero">
-        <p class="mixcloud-profile-kicker">MixCloud Offline Backstop</p>
-        <h1>@urbant</h1>
-        <p>
-          Canned profile clone with local styling for cloudcasts, playback controls,
-          comments, and detail subpages when MixCloud is unavailable.
-        </p>
-        <p class="offline-generated-at">
-          Cached data generated: <span id="offline-generated-at">-</span>
-        </p>
-        <div class="offline-clone-tabs" aria-hidden="true">
-          <span class="is-active">Cloudcasts</span>
-          <span>Comments</span>
-          <span>Favorites</span>
-          <span>Followers</span>
-        </div>
+      <section class="offline-cover">
+        <img src="./assets/images/djurbant-proto-1.png" alt="" />
+        <div class="offline-cover-overlay"></div>
       </section>
 
-      <section class="media-section">
-        <div class="section-head">
-          <h2>Cloudcasts</h2>
-        </div>
-        <p class="subpage-intro">
-          Profile-style list with canned controls and detailed subpages per set.
-        </p>
-        <div id="offline-cloudcast-list" class="offline-cloudcast-list"></div>
-      </section>
+      <div class="offline-layout">
+        <aside class="offline-sidebar">
+          <section class="offline-profile-card">
+            <div class="offline-avatar-wrap">
+              <img class="offline-avatar" src="./assets/images/djurbant-logo.svg" alt="UrbanT profile" />
+            </div>
+            <p class="mixcloud-profile-kicker">PRO</p>
+            <h1 class="offline-profile-name">UrbanT</h1>
+            <p class="offline-profile-stats">468 Following · 375 Followers</p>
+            <a class="offline-follow-btn" href="./mixcloud-offline.html">Follow</a>
+            <p class="offline-profile-location">London, United Kingdom</p>
+            <p class="offline-profile-bio">London Bass House DJ.</p>
+            <p class="offline-generated-at">
+              Cached at: <span id="offline-generated-at">-</span>
+            </p>
+            <div class="offline-profile-links">
+              <a href="./mixcloud-offline.html">Send Message</a>
+              <a href="./mixcloud-offline.html">Share</a>
+            </div>
+          </section>
+
+          <section class="offline-sidebar-panel">
+            <div class="offline-panel-head">
+              <h2>Following (468)</h2>
+              <a href="./mixcloud-offline.html">See All</a>
+            </div>
+            <div class="offline-follow-item">
+              <span class="offline-follow-avatar">D</span>
+              <div>
+                <p class="offline-follow-name">DivineRadioLondon</p>
+                <p class="offline-follow-meta">5,478 followers</p>
+              </div>
+            </div>
+          </section>
+        </aside>
+
+        <section class="offline-main-feed">
+          <div class="offline-filter-row" aria-hidden="true">
+            <span class="offline-filter-chip is-active">Shows 19</span>
+            <span class="offline-filter-chip">Favorites 66</span>
+            <span class="offline-filter-chip">History 16</span>
+          </div>
+
+          <div class="offline-section-head">
+            <h2>Highlighted</h2>
+            <a class="offline-share-btn" href="./mixcloud-offline.html">Share</a>
+          </div>
+
+          <div id="offline-cloudcast-list" class="offline-cloudcast-list"></div>
+        </section>
+      </div>
     </main>
 
     <footer class="site-footer">

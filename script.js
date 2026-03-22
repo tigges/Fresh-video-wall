@@ -807,54 +807,77 @@ function createOfflineCloudcastCard(item) {
   const article = document.createElement("article");
   article.className = "offline-cloudcast-card";
 
-  const player = document.createElement("div");
-  player.className = "offline-cloudcast-player";
+  const identity = getAudioTrackIdentity(item);
+  const hash = simpleSeedHash(identity);
+  const comments = 8 + (hash % 52);
+  const favorites = (typeof item.favoriteCount === "number" ? item.favoriteCount : 0) + (hash % 9);
+  const reposts = 1 + (hash % 6);
+
+  const thumbLink = document.createElement("a");
+  thumbLink.className = "offline-cloudcast-thumb";
+  thumbLink.href = `./mixcloud-offline-track.html?track=${encodeTrackParam(item)}`;
+
+  const thumbLogo = document.createElement("img");
+  thumbLogo.className = "offline-cloudcast-thumb-logo";
+  thumbLogo.src = "./assets/images/djurbant-logo.svg";
+  thumbLogo.alt = "";
 
   const playIcon = document.createElement("span");
-  playIcon.className = "offline-cloudcast-play";
+  playIcon.className = "offline-cloudcast-thumb-play";
   playIcon.textContent = "\u25B6";
 
-  const setBadge = document.createElement("span");
-  setBadge.className = "offline-cloudcast-set";
-  setBadge.textContent = extractSetLabel(normalizeBrandTitle(item.title || ""));
+  thumbLink.append(thumbLogo, playIcon);
 
+  const main = document.createElement("div");
+  main.className = "offline-cloudcast-main";
+
+  const meta = document.createElement("p");
+  meta.className = "offline-cloudcast-meta";
+  meta.textContent = `UrbanT • ${formatRelativeFromNow(item.publishedAt)}`;
+
+  const titleLink = document.createElement("a");
+  titleLink.className = "offline-cloudcast-title-link";
+  titleLink.href = `./mixcloud-offline-track.html?track=${encodeTrackParam(item)}`;
+  titleLink.textContent = normalizeBrandTitle(item.title || "");
+
+  const waveRow = document.createElement("div");
+  waveRow.className = "offline-cloudcast-wave-row";
+  const waveform = createOfflineWaveform(identity);
   const duration = document.createElement("span");
   duration.className = "offline-cloudcast-duration";
-  duration.textContent = estimateDurationLabel(getAudioTrackIdentity(item));
+  duration.textContent = estimateDurationLabel(identity);
+  waveRow.append(waveform, duration);
 
-  player.append(playIcon, createOfflineWaveform(getAudioTrackIdentity(item)), setBadge, duration);
+  const actionRow = document.createElement("div");
+  actionRow.className = "offline-cloudcast-action-row";
+  ["♡", "↗ Share", "+ Add"].forEach((label) => {
+    const action = document.createElement("a");
+    action.className = "offline-chip-btn";
+    action.href = `./mixcloud-offline-track.html?track=${encodeTrackParam(item)}`;
+    action.textContent = label;
+    actionRow.appendChild(action);
+  });
 
-  const body = document.createElement("div");
-  body.className = "offline-cloudcast-body";
+  const footer = document.createElement("div");
+  footer.className = "offline-cloudcast-footer";
 
-  const title = document.createElement("h3");
-  title.textContent = normalizeBrandTitle(item.title || "");
+  const counts = document.createElement("p");
+  counts.className = "offline-cloudcast-counts";
+  const plays = item.playCount ? `${formatCount(item.playCount)}` : "0";
+  counts.textContent = `▶ ${plays}   ♡ ${favorites}   💬 ${comments}   ↻ ${reposts}`;
 
-  const byline = document.createElement("p");
-  byline.className = "offline-cloudcast-byline";
-  byline.textContent = "by UrbanT";
+  const tags = document.createElement("div");
+  tags.className = "offline-cloudcast-tags";
+  ["tech house", "house", "bass house"].forEach((label) => {
+    const chip = document.createElement("span");
+    chip.className = "offline-cloudcast-tag";
+    chip.textContent = label;
+    tags.appendChild(chip);
+  });
 
-  const stats = document.createElement("p");
-  stats.className = "offline-cloudcast-stats";
-  const plays = item.playCount ? `${formatCount(item.playCount)} plays` : "";
-  stats.textContent = [plays, formatDate(item.publishedAt), "comments"].filter(Boolean).join(" • ");
-
-  const actions = document.createElement("div");
-  actions.className = "offline-cloudcast-actions";
-
-  const detailsLink = document.createElement("a");
-  detailsLink.className = "btn btn-outline";
-  detailsLink.href = `./mixcloud-offline-track.html?track=${encodeTrackParam(item)}`;
-  detailsLink.textContent = "Open Details";
-
-  const saveLink = document.createElement("a");
-  saveLink.className = "btn btn-outline";
-  saveLink.href = "./mixcloud-offline.html#saved";
-  saveLink.textContent = "Save Offline";
-
-  actions.append(detailsLink, saveLink);
-  body.append(title, byline, stats, actions);
-  article.append(player, body);
+  footer.append(counts, tags);
+  main.append(meta, titleLink, waveRow, actionRow, footer);
+  article.append(thumbLink, main);
   return article;
 }
 

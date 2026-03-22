@@ -883,6 +883,9 @@ function createOfflineCloudcastCard(item) {
   const counts = document.createElement("p");
   counts.className = "offline-cloudcast-counts";
   const plays = item.playCount ? `${formatCount(item.playCount)}` : "0";
+  const mobileMeta = document.createElement("p");
+  mobileMeta.className = "offline-cloudcast-mobile-meta";
+  mobileMeta.textContent = `${estimateDurationLabel(identity)} • ${plays} plays`;
   counts.textContent = `▶ ${plays}   ♡ ${favorites}   💬 ${comments}   ↻ ${reposts}`;
 
   const tags = document.createElement("div");
@@ -894,7 +897,7 @@ function createOfflineCloudcastCard(item) {
     tags.appendChild(chip);
   });
 
-  footer.append(counts, tags);
+  footer.append(mobileMeta, counts, tags);
   main.append(meta, titleLink, waveRow, actionRow, footer);
   article.append(thumbLink, main);
   return article;

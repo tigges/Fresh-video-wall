@@ -63,6 +63,10 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
+      .row-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
       .row-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -85,6 +89,24 @@
         color: var(--muted);
         font-size: 0.92rem;
         line-height: 1.4;
+      }
+
+      .section-list {
+        margin: 0.5rem 0 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      .section-chip {
+        border: 1px solid rgba(122, 217, 255, 0.28);
+        background: rgba(122, 217, 255, 0.08);
+        border-radius: 999px;
+        padding: 0.2rem 0.55rem;
+        font-size: 0.75rem;
+        color: #d6ecff;
       }
 
       .card a {
@@ -117,7 +139,7 @@
 
       .arrow-row {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         align-items: center;
         gap: 1rem;
         margin: 0.1rem 0 0.4rem;
@@ -148,6 +170,7 @@
 
       @media (max-width: 850px) {
         .row-3,
+        .row-4,
         .row-2,
         .arrow-row {
           grid-template-columns: 1fr;
@@ -179,12 +202,19 @@
 
         <div class="connector"><div class="line"></div></div>
 
-        <div class="map-grid row-3">
+        <div class="map-grid row-4">
           <article class="card">
             <h3>More Videos</h3>
             <p>
               <a href="./videos.html">/videos.html</a><br />
               Extended video wall beyond Top 3.
+            </p>
+          </article>
+          <article class="card">
+            <h3>More Audio (Top-Tile Style)</h3>
+            <p>
+              <a href="./audio-more.html">/audio-more.html</a><br />
+              More audio list using homepage top-audio tile style.
             </p>
           </article>
           <article class="card">
@@ -204,6 +234,7 @@
         </div>
 
         <div class="arrow-row">
+          <div class="arrow">from Home</div>
           <div class="arrow">from Home</div>
           <div class="arrow">from Home</div>
           <div class="arrow">from Home</div>
@@ -254,6 +285,64 @@
               <a href="./site-map.html">/site-map.html</a><br />
               This page: labeled map of current page structure.
             </p>
+          </article>
+        </div>
+      </section>
+
+      <h2 class="section-title">Page Visual Sections</h2>
+      <section class="map-grid">
+        <div class="map-grid row-3">
+          <article class="card">
+            <h3>Home — /index.html</h3>
+            <ul class="section-list">
+              <li class="section-chip">Fixed Header + Logo</li>
+              <li class="section-chip">Hero Diamond + CTA</li>
+              <li class="section-chip">Top Videos Grid</li>
+              <li class="section-chip">Top Audio Grid</li>
+              <li class="section-chip">Bio Panel + Booking CTA</li>
+              <li class="section-chip">Social Strip + Footer</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>More Videos — /videos.html</h3>
+            <ul class="section-list">
+              <li class="section-chip">Header + Home Action</li>
+              <li class="section-chip">More Videos Grid</li>
+              <li class="section-chip">Bottom Nav Actions</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>More Audio — /audio-more.html</h3>
+            <ul class="section-list">
+              <li class="section-chip">Header + Home Action</li>
+              <li class="section-chip">Top-Style Audio Tiles</li>
+              <li class="section-chip">Back Action</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Mixcloud Audio — /audio.html</h3>
+            <ul class="section-list">
+              <li class="section-chip">Profile Intro Block</li>
+              <li class="section-chip">Mini Mixcloud Feed</li>
+              <li class="section-chip">Details CTA per Tile</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Audio Direct — /audio-direct.html</h3>
+            <ul class="section-list">
+              <li class="section-chip">Direct Audio Tiles</li>
+              <li class="section-chip">In-Tile Playback UI</li>
+              <li class="section-chip">Back + Mixcloud Audio Links</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Offline Mixcloud — /mixcloud-offline*.html</h3>
+            <ul class="section-list">
+              <li class="section-chip">Clone Header + Profile</li>
+              <li class="section-chip">Cloudcast Feed/List</li>
+              <li class="section-chip">Track Detail Player</li>
+              <li class="section-chip">Back Navigation</li>
+            </ul>
           </article>
         </div>
       </section>

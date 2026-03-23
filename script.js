@@ -1296,6 +1296,14 @@ async function hydrateMediaWalls() {
       return;
     }
 
+    if (page === "audio-more") {
+      const audio = (data?.audio?.rest ?? []).length
+        ? data.audio.rest
+        : data?.audio?.top3 ?? [];
+      renderGrid("audio-more-grid", audio, createAudioTopTileCard);
+      return;
+    }
+
     if (page === "audio-mixcloud") {
       const audioTop = data?.audio?.top3 ?? [];
       const audioRest = data?.audio?.rest ?? [];

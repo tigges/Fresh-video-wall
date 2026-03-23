@@ -1015,9 +1015,41 @@ main {
   margin-top: 0.95rem;
 }
 
-body[data-page="home"] #videos .section-cta,
-body[data-page="home"] #music .section-cta {
+body[data-page="home"] #videos .section-cta {
   justify-content: center;
+}
+
+body[data-page="home"] #music .section-cta {
+  justify-content: flex-start;
+}
+
+body[data-page="home"] #music .section-cta .btn-audio-placeholder-first {
+  margin-left: auto;
+}
+
+body[data-page="home"] #music .section-cta .btn-audio-placeholder {
+  border-color: transparent;
+  background:
+    linear-gradient(#06070b, #06070b) padding-box,
+    linear-gradient(135deg, rgba(94, 103, 124, 0.42), rgba(66, 74, 92, 0.42)) border-box;
+  color: rgba(133, 141, 162, 0.58);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  filter: saturate(0.5);
+}
+
+body[data-page="home"] #music .section-cta .btn-audio-placeholder::before {
+  content: "◦";
+  margin-right: 0.38rem;
+  color: rgba(106, 115, 138, 0.46);
+  font-size: 0.78em;
+  line-height: 1;
+}
+
+body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
+  transform: none;
+  filter: saturate(0.55) brightness(1.02);
+  color: rgba(148, 156, 178, 0.7);
 }
 
 .subpage-end-cta {
@@ -1308,13 +1340,13 @@ body[data-page="home"] #music .section-cta {
   margin: 0;
   font-family: "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 600;
-  font-size: 14px;
-  line-height: 1.35;
+  font-size: 15px;
+  line-height: 1.32;
   display: -webkit-box;
   line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  max-height: 2.7em;
+  max-height: 2.64em;
   overflow: hidden;
   text-overflow: ellipsis;
 }

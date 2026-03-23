@@ -1115,7 +1115,7 @@ body[data-page="home"] #music .section-cta {
 
 .embed-wrap {
   position: relative;
-  flex: 0 0 198px;
+  flex: 0 0 210px;
   min-height: 0;
   aspect-ratio: auto;
   background: #000;
@@ -1301,6 +1301,7 @@ body[data-page="home"] #music .section-cta {
   justify-content: space-between;
   gap: 8px;
   margin-top: auto;
+  padding-top: 6px;
   min-height: 24px;
   white-space: nowrap;
 }

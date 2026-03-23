@@ -94,19 +94,31 @@ function toConstrainedYoutubeEmbedSrc(src) {
   }
 }
 
-function extractSetLabel(title) {
-  if (typeof title !== "string") {
-    return "#000";
+function deriveSetNumber(title, fallbackSeed = "") {
+  if (typeof title === "string") {
+    const setHashMatch = title.match(/#\s*(\d{1,4})\b/i);
+    if (setHashMatch?.[1]) {
+      return setHashMatch[1];
+    }
+    const setWordMatch = title.match(/\bset\s*#?\s*(\d{1,4})\b/i);
+    if (setWordMatch?.[1]) {
+      return setWordMatch[1];
+    }
+    const plainNumberMatch = title.match(/\b(\d{3,4})\b/);
+    if (plainNumberMatch?.[1]) {
+      return plainNumberMatch[1];
+    }
   }
-  const setHashMatch = title.match(/#\s*(\d{1,4})\b/i);
-  if (setHashMatch?.[1]) {
-    return `#${setHashMatch[1]}`;
+  const seed = `${title ?? ""}|${fallbackSeed}`;
+  let hash = 0;
+  for (let i = 0; i < seed.length; i += 1) {
+    hash = (hash * 31 + seed.charCodeAt(i)) % 900;
   }
-  const setWordMatch = title.match(/\bset\s*#?\s*(\d{1,4})\b/i);
-  if (setWordMatch?.[1]) {
-    return `#${setWordMatch[1]}`;
-  }
-  return "#000";
+  return String(hash + 100).padStart(3, "0");
+}
+
+function extractSetLabel(title, fallbackSeed = "") {
+  return `Set #${deriveSetNumber(title, fallbackSeed)}`;
 }
 
 function toInlineMixcloudEngineSrc(src) {
@@ -327,6 +339,23 @@ function createVideoCard(item, index = 0) {
   iframe.allowFullscreen = true;
   wrap.appendChild(iframe);
 
+  const setLabel = extractSetLabel(normalizedTitle, item?.url || String(index));
+  const overlay = document.createElement("button");
+  overlay.type = "button";
+  overlay.className = "audio-top-overlay video-top-overlay";
+  overlay.setAttribute("aria-label", `Play ${normalizedTitle}`);
+  const number = document.createElement("span");
+  number.className = "audio-top-overlay-number video-top-overlay-number";
+  number.textContent = setLabel;
+  overlay.appendChild(number);
+  wrap.appendChild(overlay);
+
+  overlay.addEventListener("click", (event) => {
+    event.preventDefault();
+    overlay.classList.add("is-hidden");
+    iframe.src = withAutoplayEmbedSrc(iframe.src);
+  });
+
   const meta = document.createElement("div");
   meta.className = "media-meta";
 
@@ -356,7 +385,7 @@ function createAudioCard(item, index = 0) {
   wrap.className = "embed-wrap embed-wrap-audio";
 
   const normalizedTitle = normalizeBrandTitle(item.title);
-  const setLabel = extractSetLabel(normalizedTitle);
+  const setLabel = extractSetLabel(normalizedTitle, item?.url || String(index));
   const cover = document.createElement("button");
   cover.type = "button";
   cover.className = "audio-set-cover";
@@ -598,7 +627,7 @@ function createAudioTopTileCard(item, index = 0) {
   wrap.className = "embed-wrap embed-wrap-audio";
 
   const normalizedTitle = normalizeBrandTitle(item.title);
-  const setLabel = extractSetLabel(normalizedTitle);
+  const setLabel = extractSetLabel(normalizedTitle, item?.url || String(index));
 
   const iframe = document.createElement("iframe");
   iframe.className = "audio-top-iframe";

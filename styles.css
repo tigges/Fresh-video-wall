@@ -1134,7 +1134,8 @@ body[data-page="home"] #music .section-cta {
 }
 
 .audio-top-iframe {
-  width: 100%;
+  width: calc(100% + clamp(56px, 10vw, 88px));
+  margin-left: calc(-1 * clamp(56px, 10vw, 88px));
   height: 100%;
   border: 0;
 }
@@ -1169,6 +1170,19 @@ body[data-page="home"] #music .section-cta {
   line-height: 1;
   letter-spacing: 0.02em;
   text-shadow: 0 0 14px rgba(0, 198, 255, 0.35);
+}
+
+.video-top-overlay {
+  cursor: pointer;
+  pointer-events: auto;
+  border: 0;
+  opacity: 1;
+  transition: opacity 0.24s ease;
+}
+
+.video-top-overlay.is-hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .audio-set-cover {

@@ -1023,6 +1023,12 @@ body[data-page="home"] #music .section-cta {
   justify-content: flex-start;
 }
 
+body[data-page="home"] #music .section-cta .btn-audio-primary {
+  flex: 0 0 100%;
+  width: fit-content;
+  margin-inline: auto;
+}
+
 body[data-page="home"] #music .section-cta .btn-audio-placeholder-first {
   margin-left: auto;
 }

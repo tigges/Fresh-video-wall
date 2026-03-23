@@ -6,7 +6,8 @@ if (yearNode) {
 }
 
 const page = document.body.dataset.page;
-const GENRE_BADGE_LABELS = ["Bass House", "Tech House"];
+const PRIMARY_GENRE_BADGE_LABEL = "Bass House";
+const SECONDARY_GENRE_BADGE_LABEL = "Tech House";
 let mixcloudWidgetApiPromise = null;
 let offlineAudioSourcesPromise = null;
 let activeAudioController = null;
@@ -205,15 +206,20 @@ function playTopVideoTile() {
   return true;
 }
 
-function createGenreBadge() {
+function createGenreBadge(options = {}) {
+  const { includeTechHouse = false } = options;
   const badges = document.createElement("span");
   badges.className = "genre-badges";
-  GENRE_BADGE_LABELS.forEach((label) => {
-    const badge = document.createElement("span");
-    badge.className = "genre-badge";
-    badge.textContent = label;
-    badges.appendChild(badge);
-  });
+  const primaryBadge = document.createElement("span");
+  primaryBadge.className = "genre-badge";
+  primaryBadge.textContent = PRIMARY_GENRE_BADGE_LABEL;
+  badges.appendChild(primaryBadge);
+  if (includeTechHouse) {
+    const secondaryBadge = document.createElement("span");
+    secondaryBadge.className = "genre-badge";
+    secondaryBadge.textContent = SECONDARY_GENRE_BADGE_LABEL;
+    badges.appendChild(secondaryBadge);
+  }
   return badges;
 }
 
@@ -304,7 +310,7 @@ function bindHeroLiveCtaClick() {
   });
 }
 
-function createVideoCard(item) {
+function createVideoCard(item, index = 0) {
   const article = document.createElement("article");
   article.className = "media-card";
 
@@ -326,7 +332,7 @@ function createVideoCard(item) {
 
   const title = document.createElement("h3");
   title.textContent = normalizedTitle;
-  const badge = createGenreBadge();
+  const badge = createGenreBadge({ includeTechHouse: index % 2 === 0 });
 
   const stats = document.createElement("p");
   stats.className = "tile-stats";
@@ -342,7 +348,7 @@ function createVideoCard(item) {
   return article;
 }
 
-function createAudioCard(item) {
+function createAudioCard(item, index = 0) {
   const article = document.createElement("article");
   article.className = "media-card";
 
@@ -549,7 +555,7 @@ function createAudioCard(item) {
 
   const title = document.createElement("h3");
   title.textContent = normalizedTitle;
-  const badge = createGenreBadge();
+  const badge = createGenreBadge({ includeTechHouse: index % 2 === 0 });
 
   const stats = document.createElement("p");
   stats.className = "tile-stats";
@@ -584,7 +590,7 @@ function toTopTileMixcloudEmbedSrc(src) {
   }
 }
 
-function createAudioTopTileCard(item) {
+function createAudioTopTileCard(item, index = 0) {
   const article = document.createElement("article");
   article.className = "media-card";
 
@@ -616,7 +622,7 @@ function createAudioTopTileCard(item) {
 
   const title = document.createElement("h3");
   title.textContent = normalizedTitle;
-  const badge = createGenreBadge();
+  const badge = createGenreBadge({ includeTechHouse: index % 2 === 0 });
 
   const stats = document.createElement("p");
   stats.className = "tile-stats";
@@ -1203,7 +1209,7 @@ function renderGrid(containerId, items, cardFactory) {
     container.appendChild(empty);
     return;
   }
-  items.forEach((item) => container.appendChild(cardFactory(item)));
+  items.forEach((item, index) => container.appendChild(cardFactory(item, index)));
 }
 
 async function hydrateMediaWalls() {

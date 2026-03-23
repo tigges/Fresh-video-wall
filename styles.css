@@ -2003,3 +2003,10 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
     display: none;
   }
 }
+
+@media (min-width: 640px) {
+  body[data-page="home"] #videos .media-card:nth-child(n + 4),
+  body[data-page="home"] #music .media-card:nth-child(n + 4) {
+    display: none;
+  }
+}

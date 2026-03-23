@@ -637,6 +637,11 @@ function createAudioTopTileCard(item, index = 0) {
   iframe.loading = "lazy";
   wrap.appendChild(iframe);
 
+  const logoLinkBlocker = document.createElement("div");
+  logoLinkBlocker.className = "audio-top-link-blocker";
+  logoLinkBlocker.setAttribute("aria-hidden", "true");
+  wrap.appendChild(logoLinkBlocker);
+
   const overlay = document.createElement("div");
   overlay.className = "audio-top-overlay";
   overlay.setAttribute("aria-hidden", "true");

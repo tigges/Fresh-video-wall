@@ -181,6 +181,53 @@ a {
   gap: 0.7rem;
 }
 
+.main-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(0.9rem, 2.1vw, 2rem);
+  margin-left: auto;
+}
+
+.main-nav-link {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  font-size: clamp(0.9rem, 1.25vw, 1.08rem);
+  color: rgba(222, 226, 236, 0.72);
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.main-nav-link:hover {
+  color: #f4f7ff;
+}
+
+.main-nav-link.is-active {
+  color: #f4f7ff;
+}
+
+.main-nav-book {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: clamp(0.9rem, 1.18vw, 1.02rem);
+  color: #ff4f8d;
+  border: 1px solid rgba(255, 79, 141, 0.72);
+  border-radius: 6px;
+  padding: 0.5rem 1.45rem;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.main-nav-book:hover {
+  color: #ffd4e5;
+  border-color: rgba(255, 110, 162, 0.94);
+  background: rgba(255, 72, 130, 0.08);
+}
+
 .header-social-link {
   width: 34px;
   height: 34px;
@@ -1489,6 +1536,24 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
 
   .social-links {
     width: 100%;
+  }
+
+  body[data-page="home"] .main-nav {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.62rem 1rem;
+    margin-left: 0;
+  }
+
+  body[data-page="home"] .main-nav-link {
+    font-size: 0.86rem;
+    letter-spacing: 0.06em;
+  }
+
+  body[data-page="home"] .main-nav-book {
+    font-size: 0.84rem;
+    padding: 0.44rem 1.05rem;
   }
 
   .pill {

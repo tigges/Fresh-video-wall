@@ -278,6 +278,65 @@ function getHomeAudioItems(data) {
   return [...(data?.audio?.top3 ?? []), ...(data?.audio?.rest ?? [])];
 }
 
+function updateHomeBestOfArtistToggle(data) {
+  if (page !== "home") {
+    return;
+  }
+  const bestSection = document.getElementById("best-of-artist");
+  const videosGrid = document.getElementById("videos-grid");
+  const audioGrid = document.getElementById("audio-grid");
+  const videoToggle = document.getElementById("best-of-toggle-video");
+  const audioToggle = document.getElementById("best-of-toggle-audio");
+  const moreLink = document.getElementById("best-of-more-link");
+  if (!bestSection || !videosGrid || !audioGrid || !videoToggle || !audioToggle || !moreLink) {
+    return;
+  }
+
+  const isMobileViewport = () => window.matchMedia("(max-width: 639px)").matches;
+
+  const applyMode = (mode) => {
+    const isVideo = mode === "video";
+    bestSection.dataset.bestMode = isVideo ? "video" : "audio";
+    videosGrid.classList.toggle("is-hidden-by-toggle", !isVideo);
+    audioGrid.classList.toggle("is-hidden-by-toggle", isVideo);
+    videosGrid.setAttribute("aria-hidden", isVideo ? "false" : "true");
+    audioGrid.setAttribute("aria-hidden", isVideo ? "true" : "false");
+
+    videoToggle.classList.toggle("is-active", isVideo);
+    audioToggle.classList.toggle("is-active", !isVideo);
+    videoToggle.setAttribute("aria-pressed", isVideo ? "true" : "false");
+    audioToggle.setAttribute("aria-pressed", isVideo ? "false" : "true");
+
+    moreLink.href = isVideo ? "./videos.html" : "./audio-more.html";
+  };
+
+  const setDesktopTop3Only = () => {
+    const desktopOnly = !isMobileViewport();
+    const updateGrid = (grid, showAllOnMobile = false) => {
+      const cards = [...grid.querySelectorAll(".media-card")];
+      cards.forEach((card, index) => {
+        card.hidden = desktopOnly && index >= 3 && !showAllOnMobile;
+        if (!desktopOnly) {
+          card.hidden = false;
+        }
+      });
+    };
+    updateGrid(videosGrid);
+    updateGrid(audioGrid);
+  };
+
+  if (videoToggle.dataset.boundClick !== "1") {
+    videoToggle.dataset.boundClick = "1";
+    audioToggle.dataset.boundClick = "1";
+    videoToggle.addEventListener("click", () => applyMode("video"));
+    audioToggle.addEventListener("click", () => applyMode("audio"));
+    window.addEventListener("resize", setDesktopTop3Only, { passive: true });
+  }
+
+  setDesktopTop3Only();
+  applyMode(videoToggle.classList.contains("is-active") ? "video" : "audio");
+}
+
 function updateHeroLiveCta(data) {
   const liveCta = document.querySelector(".btn-live");
   if (!liveCta) {
@@ -296,7 +355,7 @@ function updateHeroLiveCta(data) {
     youtubeLive.liveUrl
   ) {
     liveCta.textContent = "Join Live Now!";
-    liveCta.href = "#videos";
+    liveCta.href = "#best-of-artist";
     liveCta.removeAttribute("target");
     liveCta.removeAttribute("rel");
     liveCta.dataset.liveMode = "live";
@@ -304,7 +363,7 @@ function updateHeroLiveCta(data) {
   }
 
   liveCta.textContent = "Watch Latest Video";
-  liveCta.href = "#videos";
+  liveCta.href = "#best-of-artist";
   liveCta.removeAttribute("target");
   liveCta.removeAttribute("rel");
   liveCta.dataset.liveMode = "latest";
@@ -335,7 +394,7 @@ function updateLiveStrip(data) {
     statusNode.textContent = "Live Now";
     subtitleNode.textContent = "YouTube · streaming now";
     linkNode.textContent = "Join the Stream →";
-    linkNode.href = "#videos";
+    linkNode.href = "#best-of-artist";
     linkNode.dataset.liveMode = "live";
     linkNode.dataset.streamUrl = youtubeLive.liveUrl;
     return;
@@ -349,7 +408,7 @@ function updateLiveStrip(data) {
   statusNode.textContent = "Latest Set";
   subtitleNode.textContent = "YouTube · on demand";
   linkNode.textContent = "Watch the Set →";
-  linkNode.href = "#videos";
+  linkNode.href = "#best-of-artist";
   linkNode.dataset.liveMode = "latest";
   linkNode.dataset.streamUrl = latestUrl;
 }
@@ -1326,6 +1385,7 @@ async function hydrateMediaWalls() {
     if (page === "home") {
       renderGrid("videos-grid", getHomeVideoItems(data), createVideoCard);
       renderGrid("audio-grid", getHomeAudioItems(data), createAudioTopTileCard);
+      updateHomeBestOfArtistToggle(data);
       updateHeroLiveCta(data);
       updateLiveStrip(data);
       return;

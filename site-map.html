@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DJ UrbanT | Visual Site Map</title>
+    <style>
+      :root {
+        --bg: #06070a;
+        --panel: #11131a;
+        --panel-soft: #191d29;
+        --text: #eef2ff;
+        --muted: #a6b0cb;
+        --line: #4c5a86;
+        --line-dim: #313a56;
+        --accent: linear-gradient(135deg, #00c6ff, #9b00ff);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: radial-gradient(circle at top, #14192a 0%, var(--bg) 48%);
+        color: var(--text);
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      .wrap {
+        width: min(1180px, 92vw);
+        margin: 0 auto;
+        padding: 2rem 0 3rem;
+      }
+
+      h1 {
+        margin: 0 0 0.55rem;
+        font-size: clamp(1.8rem, 2.9vw, 2.6rem);
+        letter-spacing: 0.04em;
+      }
+
+      p.lead {
+        margin: 0 0 1.5rem;
+        color: var(--muted);
+      }
+
+      .section-title {
+        margin: 1.7rem 0 1rem;
+        padding-left: 12px;
+        border-left: 3px solid transparent;
+        border-image: var(--accent) 1;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 1rem;
+      }
+
+      .map-grid {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .row-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .row-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card {
+        border: 1px solid #2e354b;
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        border-radius: 14px;
+        padding: 0.95rem 1rem;
+        min-height: 95px;
+      }
+
+      .card h3 {
+        margin: 0 0 0.35rem;
+        font-size: 1.02rem;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.4;
+      }
+
+      .card a {
+        color: #7ad9ff;
+        text-decoration: none;
+      }
+
+      .connector {
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .line {
+        width: 2px;
+        height: 100%;
+        background: var(--line);
+      }
+
+      .line-dash {
+        width: 2px;
+        height: 100%;
+        background: repeating-linear-gradient(
+          to bottom,
+          var(--line-dim) 0 5px,
+          transparent 5px 10px
+        );
+      }
+
+      .arrow-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: center;
+        gap: 1rem;
+        margin: 0.1rem 0 0.4rem;
+      }
+
+      .arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        font-size: 0.8rem;
+        gap: 0.4rem;
+      }
+
+      .arrow::before {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 2px;
+        background: var(--line);
+      }
+
+      .note {
+        margin-top: 1.4rem;
+        color: #9aa5c5;
+        font-size: 0.86rem;
+      }
+
+      @media (max-width: 850px) {
+        .row-3,
+        .row-2,
+        .arrow-row {
+          grid-template-columns: 1fr;
+        }
+
+        .arrow {
+          justify-content: flex-start;
+          padding-left: 0.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>DJ UrbanT — Visual Site Map</h1>
+      <p class="lead">
+        Current page hierarchy, routing flow, and utility pages.
+      </p>
+
+      <h2 class="section-title">Primary User Flow</h2>
+      <section class="map-grid">
+        <article class="card">
+          <h3>Home — Video &amp; Audio Wall</h3>
+          <p>
+            <a href="./index.html">/index.html</a><br />
+            Main landing page with hero, Top Videos, Top Audio, and CTA links.
+          </p>
+        </article>
+
+        <div class="connector"><div class="line"></div></div>
+
+        <div class="map-grid row-3">
+          <article class="card">
+            <h3>More Videos</h3>
+            <p>
+              <a href="./videos.html">/videos.html</a><br />
+              Extended video wall beyond Top 3.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Mixcloud Audio</h3>
+            <p>
+              <a href="./audio.html">/audio.html</a><br />
+              Mixcloud-style embedded audio feed.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Audio Direct</h3>
+            <p>
+              <a href="./audio-direct.html">/audio-direct.html</a><br />
+              Direct audio tile playback page.
+            </p>
+          </article>
+        </div>
+
+        <div class="arrow-row">
+          <div class="arrow">from Home</div>
+          <div class="arrow">from Home</div>
+          <div class="arrow">from Home</div>
+        </div>
+
+        <div class="connector"><div class="line"></div></div>
+
+        <div class="map-grid row-2">
+          <article class="card">
+            <h3>Mixcloud Offline Home</h3>
+            <p>
+              <a href="./mixcloud-offline.html">/mixcloud-offline.html</a><br />
+              Local clone-style profile/feed layout.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Mixcloud Offline Track Detail</h3>
+            <p>
+              <a href="./mixcloud-offline-track.html">/mixcloud-offline-track.html?track=...</a
+              ><br />
+              Track detail player view.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <h2 class="section-title">Utility / Archive Pages</h2>
+      <section class="map-grid">
+        <div class="connector"><div class="line-dash"></div></div>
+        <div class="map-grid row-3">
+          <article class="card">
+            <h3>Gradient Options</h3>
+            <p>
+              <a href="./gradient-options.html">/gradient-options.html</a><br />
+              Visual gradient concept comparison page.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Version Gallery</h3>
+            <p>
+              <a href="./version-gallery/index.html">/version-gallery/index.html</a><br />
+              Snapshot history and comparison gallery.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Visual Site Map</h3>
+            <p>
+              <a href="./site-map.html">/site-map.html</a><br />
+              This page: labeled map of current page structure.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <p class="note">
+        Note: Mixcloud snapshot HTML files under <code>assets/mixcloud-clone/snapshot/</code> are archival assets, not primary routed pages.
+      </p>
+    </main>
+  </body>
+</html>

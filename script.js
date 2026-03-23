@@ -303,6 +303,49 @@ function updateHeroLiveCta(data) {
   liveCta.dataset.latestUrl = latestUrl;
 }
 
+function updateLiveStrip(data) {
+  const statusNode = document.getElementById("live-strip-status");
+  const titleNode = document.getElementById("live-strip-title");
+  const subtitleNode = document.getElementById("live-strip-subtitle");
+  const linkNode = document.getElementById("live-strip-link");
+  if (!statusNode || !titleNode || !subtitleNode || !linkNode) {
+    return;
+  }
+
+  const youtubeLive = data?.youtubeLive ?? {};
+  const topVideo = data?.videos?.top3?.[0] ?? {};
+  const topTitle = normalizeBrandTitle(topVideo?.title || "Bass House Set");
+  const topSetLabel = extractSetLabel(topTitle, topVideo?.id || topVideo?.url || "434");
+
+  titleNode.textContent = topSetLabel;
+
+  if (
+    youtubeLive?.isLive &&
+    typeof youtubeLive.liveUrl === "string" &&
+    youtubeLive.liveUrl
+  ) {
+    statusNode.textContent = "Live Now";
+    subtitleNode.textContent = "YouTube · streaming now";
+    linkNode.textContent = "Join the Stream →";
+    linkNode.href = "#videos";
+    linkNode.dataset.liveMode = "live";
+    linkNode.dataset.streamUrl = youtubeLive.liveUrl;
+    return;
+  }
+
+  const latestUrl =
+    (typeof youtubeLive.latestUrl === "string" && youtubeLive.latestUrl) ||
+    topVideo?.url ||
+    FALLBACK_YOUTUBE_URL;
+
+  statusNode.textContent = "Latest Set";
+  subtitleNode.textContent = "YouTube · on demand";
+  linkNode.textContent = "Watch the Set →";
+  linkNode.href = "#videos";
+  linkNode.dataset.liveMode = "latest";
+  linkNode.dataset.streamUrl = latestUrl;
+}
+
 function bindHeroLiveCtaClick() {
   const liveCta = document.querySelector(".btn-live");
   if (!liveCta || liveCta.dataset.boundClick === "1") {
@@ -317,6 +360,22 @@ function bindHeroLiveCtaClick() {
     const started = playTopVideoTile();
     if (!started) {
       const fallbackUrl = FALLBACK_YOUTUBE_URL;
+      window.location.href = fallbackUrl;
+    }
+  });
+}
+
+function bindLiveStripClick() {
+  const linkNode = document.getElementById("live-strip-link");
+  if (!linkNode || linkNode.dataset.boundClick === "1") {
+    return;
+  }
+  linkNode.dataset.boundClick = "1";
+  linkNode.addEventListener("click", (event) => {
+    event.preventDefault();
+    const started = playTopVideoTile();
+    if (!started) {
+      const fallbackUrl = linkNode.dataset.streamUrl || FALLBACK_YOUTUBE_URL;
       window.location.href = fallbackUrl;
     }
   });
@@ -1261,6 +1320,7 @@ async function hydrateMediaWalls() {
       renderGrid("audio-grid", data?.audio?.top3 ?? [], createAudioTopTileCard);
       appendGridActionTile("videos-grid", "More Videos", "./videos.html");
       updateHeroLiveCta(data);
+      updateLiveStrip(data);
       return;
     }
 
@@ -1322,4 +1382,5 @@ applyHeroFontVariant();
 initHeaderVisibilityOnScroll();
 initHeaderContentOffset();
 bindHeroLiveCtaClick();
+bindLiveStripClick();
 hydrateMediaWalls();

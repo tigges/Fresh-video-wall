@@ -1935,6 +1935,12 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
     scrollbar-width: none;
   }
 
+  body[data-page="home"] #videos .media-grid,
+  body[data-page="home"] #music .media-grid {
+    gap: 12px;
+    padding-bottom: 12px;
+  }
+
   body[data-page="home"] .media-grid::-webkit-scrollbar {
     display: none;
   }
@@ -1945,31 +1951,16 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
     scroll-snap-align: start;
   }
 
-  body[data-page="home"] .media-card-more {
-    display: flex;
+  body[data-page="home"] #videos .media-card,
+  body[data-page="home"] #music .media-card {
+    flex: 0 0 75vw;
+    max-width: 280px;
   }
 
-  body[data-page="home"] #videos .section-cta {
-    display: none;
-  }
-
-  body[data-page="home"] #music .section-cta {
-    display: flex;
-    justify-content: center;
-  }
-
+  body[data-page="home"] #videos .section-cta,
+  body[data-page="home"] #music .section-cta,
   body[data-page="home"] #music .section-cta.section-cta-audio-placeholders {
-    justify-content: flex-end;
-  }
-
-  body[data-page="home"] #videos .section-cta .btn,
-  body[data-page="home"] #music .section-cta .btn {
-    width: min(100%, 320px);
-    justify-content: center;
-  }
-
-  body[data-page="home"] #music .section-cta.section-cta-audio-placeholders .btn {
-    width: auto;
+    display: none !important;
   }
 
   body[data-page="home"] .site-footer-copy {
@@ -2009,6 +2000,13 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
   }
 
   .subpage-bottom-nav .subpage-action-btn {
+    display: none;
+  }
+}
+
+@media (min-width: 640px) {
+  body[data-page="home"] #videos .media-card:nth-child(n + 4),
+  body[data-page="home"] #music .media-card:nth-child(n + 4) {
     display: none;
   }
 }

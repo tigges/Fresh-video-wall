@@ -270,6 +270,14 @@ function appendGridActionTile(
   container.append(createMoreMenuCard(label, href, buttonClass, openInNewTab));
 }
 
+function getHomeVideoItems(data) {
+  return [...(data?.videos?.top3 ?? []), ...(data?.videos?.rest ?? [])];
+}
+
+function getHomeAudioItems(data) {
+  return [...(data?.audio?.top3 ?? []), ...(data?.audio?.rest ?? [])];
+}
+
 function updateHeroLiveCta(data) {
   const liveCta = document.querySelector(".btn-live");
   if (!liveCta) {
@@ -1316,9 +1324,8 @@ async function hydrateMediaWalls() {
     const data = await response.json();
 
     if (page === "home") {
-      renderGrid("videos-grid", data?.videos?.top3 ?? [], createVideoCard);
-      renderGrid("audio-grid", data?.audio?.top3 ?? [], createAudioTopTileCard);
-      appendGridActionTile("videos-grid", "More Videos", "./videos.html");
+      renderGrid("videos-grid", getHomeVideoItems(data), createVideoCard);
+      renderGrid("audio-grid", getHomeAudioItems(data), createAudioTopTileCard);
       updateHeroLiveCta(data);
       updateLiveStrip(data);
       return;

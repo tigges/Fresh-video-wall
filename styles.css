@@ -1937,8 +1937,8 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
 
   body[data-page="home"] #videos .media-grid,
   body[data-page="home"] #music .media-grid {
-    gap: 0;
-    padding-bottom: 0;
+    gap: 12px;
+    padding-bottom: 12px;
   }
 
   body[data-page="home"] .media-grid::-webkit-scrollbar {

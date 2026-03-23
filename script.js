@@ -610,8 +610,7 @@ function toTopTileMixcloudEmbedSrc(src) {
     parsed.hostname = "player-widget.mixcloud.com";
     parsed.pathname = "/widget/iframe/";
     parsed.searchParams.set("hide_cover", "1");
-    parsed.searchParams.set("mini", "0");
-    parsed.searchParams.set("light", "0");
+    parsed.searchParams.set("mini", "1");
     parsed.searchParams.set("autoplay", "0");
     return parsed.toString();
   } catch {
@@ -678,9 +677,8 @@ function toProfileMixcloudEmbedSrc(src) {
   }
   try {
     const parsed = new URL(src);
-    parsed.searchParams.set("mini", "0");
-    parsed.searchParams.set("hide_cover", "0");
-    parsed.searchParams.set("light", "0");
+    parsed.searchParams.set("mini", "1");
+    parsed.searchParams.set("hide_cover", "1");
     parsed.searchParams.set("autoplay", "0");
     return parsed.toString();
   } catch {
@@ -701,7 +699,7 @@ function createMixcloudFeedCard(item) {
   const iframe = document.createElement("iframe");
   iframe.src = toProfileMixcloudEmbedSrc(item.embedUrl);
   iframe.title = normalizeBrandTitle(item.title);
-  iframe.allow = "autoplay; clipboard-write";
+  iframe.allow = "encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share";
   iframe.loading = "lazy";
   playerWrap.appendChild(iframe);
   topRow.append(playerWrap);

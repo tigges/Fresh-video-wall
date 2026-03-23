@@ -1297,18 +1297,26 @@ body[data-page="home"] #music .section-cta {
   white-space: nowrap;
 }
 
+.genre-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
 .genre-badge {
   display: inline-flex;
   align-items: center;
   width: fit-content;
   margin-top: 0;
-  margin-left: auto;
-  padding: 3px 8px;
+  margin-left: 0;
+  padding: 3px 7px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.08);
   color: #eef3fb;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.02em;
   line-height: 1.1;

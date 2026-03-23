@@ -6,7 +6,7 @@ if (yearNode) {
 }
 
 const page = document.body.dataset.page;
-const GENRE_BADGE_LABEL = "\u{1F50A} Bass House";
+const GENRE_BADGE_LABELS = ["Bass House", "Tech House"];
 let mixcloudWidgetApiPromise = null;
 let offlineAudioSourcesPromise = null;
 let activeAudioController = null;
@@ -206,10 +206,15 @@ function playTopVideoTile() {
 }
 
 function createGenreBadge() {
-  const badge = document.createElement("span");
-  badge.className = "genre-badge";
-  badge.textContent = GENRE_BADGE_LABEL;
-  return badge;
+  const badges = document.createElement("span");
+  badges.className = "genre-badges";
+  GENRE_BADGE_LABELS.forEach((label) => {
+    const badge = document.createElement("span");
+    badge.className = "genre-badge";
+    badge.textContent = label;
+    badges.appendChild(badge);
+  });
+  return badges;
 }
 
 function createMoreMenuCard(label, href, buttonClass = "btn-outline", openInNewTab = false) {

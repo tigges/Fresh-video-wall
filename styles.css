@@ -519,18 +519,26 @@ body[data-hero-font="russo"] .hero-overlay-title {
   padding: 1rem 1.1rem 1.2rem;
 }
 
+.bio-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.7rem;
+}
+
 .bio-title {
-  margin: 0 0 0.7rem;
+  margin: 0;
   width: auto;
   text-align: left;
 }
 
 .bio-stats {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0;
 }
 
 .bio-stat-pill {
@@ -1053,7 +1061,7 @@ body[data-page="home"] #music .section-cta {
 }
 
 .bio-title {
-  margin-bottom: 0.7rem;
+  margin-bottom: 0;
   justify-content: flex-start;
 }
 
@@ -1391,6 +1399,12 @@ body[data-page="home"] #music .section-cta {
 
   .bio-panel {
     padding: 0.95rem 0.9rem 1.05rem;
+  }
+
+  .bio-head {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.55rem;
   }
 
   .btn-book {

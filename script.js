@@ -1267,9 +1267,7 @@ async function hydrateMediaWalls() {
     }
 
     if (page === "videos") {
-      const videos = (data?.videos?.rest ?? []).length
-        ? data.videos.rest
-        : data?.videos?.top3 ?? [];
+      const videos = [...(data?.videos?.top3 ?? []), ...(data?.videos?.rest ?? [])];
       renderGrid("videos-rest-grid", videos, createVideoCard);
       appendGridActionTile(
         "videos-rest-grid",
@@ -1297,9 +1295,7 @@ async function hydrateMediaWalls() {
     }
 
     if (page === "audio-more") {
-      const audio = (data?.audio?.rest ?? []).length
-        ? data.audio.rest
-        : data?.audio?.top3 ?? [];
+      const audio = [...(data?.audio?.top3 ?? []), ...(data?.audio?.rest ?? [])];
       renderGrid("audio-more-grid", audio, createAudioTopTileCard);
       return;
     }

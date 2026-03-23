@@ -23,8 +23,8 @@
       </a>
       <nav class="main-nav" aria-label="Main navigation">
         <a class="main-nav-link is-active" href="#live">Live</a>
-        <a class="main-nav-link" href="#videos">Videos</a>
-        <a class="main-nav-link" href="#music">Audio</a>
+        <a class="main-nav-link" href="#best-of-artist">Videos</a>
+        <a class="main-nav-link" href="#best-of-artist">Audio</a>
         <a class="main-nav-link" href="#about">About</a>
         <a class="main-nav-book" href="mailto:booking@djurbant.com">Book</a>
       </nav>
@@ -57,7 +57,7 @@
       </div>
       <a
         class="btn btn-live"
-        href="#videos"
+        href="#best-of-artist"
         >Watch Latest Video</a
       >
     </section>
@@ -69,30 +69,39 @@
           <p id="live-strip-title" class="live-strip-title">Bass House Set #434</p>
           <p id="live-strip-subtitle" class="live-strip-subtitle">YouTube &middot; streaming now</p>
         </div>
-        <a id="live-strip-link" class="live-strip-link" href="#videos"
+        <a id="live-strip-link" class="live-strip-link" href="#best-of-artist"
           >Join the Stream <span aria-hidden="true">→</span></a
         >
       </div>
     </section>
 
     <main>
-      <section id="videos" class="media-section">
+      <section id="best-of-artist" class="media-section">
         <div class="section-head">
           <h2>The Best of Artist</h2>
+        </div>
+        <div class="section-cta section-cta-best-of-toggle">
+          <button
+            id="best-of-toggle-video"
+            class="btn btn-outline is-active"
+            type="button"
+            aria-pressed="true"
+          >
+            Video
+          </button>
+          <button
+            id="best-of-toggle-audio"
+            class="btn btn-outline"
+            type="button"
+            aria-pressed="false"
+          >
+            Audio
+          </button>
         </div>
         <div id="videos-grid" class="media-grid"></div>
-        <div class="section-cta">
-          <a class="btn btn-outline" href="./videos.html">More</a>
-        </div>
-      </section>
-
-      <section id="music" class="media-section">
-        <div class="section-head">
-          <h2>The Best of Artist</h2>
-        </div>
         <div id="audio-grid" class="media-grid"></div>
         <div class="section-cta">
-          <a class="btn btn-outline" href="./audio-more.html">More</a>
+          <a id="best-of-more-link" class="btn btn-outline" href="./videos.html">More</a>
         </div>
       </section>
     </main>

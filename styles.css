@@ -1240,12 +1240,24 @@ main {
   margin-top: 0.95rem;
 }
 
-body[data-page="home"] #videos .section-cta {
+body[data-page="home"] #best-of-artist .section-cta {
   justify-content: center;
 }
 
-body[data-page="home"] #music .section-cta {
-  justify-content: center;
+body[data-page="home"] #best-of-artist .section-cta.section-cta-best-of-toggle {
+  margin-top: 0.15rem;
+  margin-bottom: 0.65rem;
+}
+
+body[data-page="home"] #videos-grid.is-hidden-by-toggle,
+body[data-page="home"] #audio-grid.is-hidden-by-toggle {
+  display: none !important;
+}
+
+body[data-page="home"] #best-of-artist .section-cta-best-of-toggle .btn.is-active {
+  border-color: #ff3d6b;
+  color: #ff3d6b;
+  box-shadow: 0 0 0 1px rgba(255, 61, 107, 0.26);
 }
 
 body[data-page="home"] #music .section-cta.section-cta-audio-placeholders {
@@ -1907,13 +1919,11 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
     width: clamp(238px, 68vw, 300px);
   }
 
-  body[data-page="home"] #videos.media-section,
-  body[data-page="home"] #music.media-section {
+  body[data-page="home"] #best-of-artist.media-section {
     position: relative;
   }
 
-  body[data-page="home"] #videos.media-section::after,
-  body[data-page="home"] #music.media-section::after {
+  body[data-page="home"] #best-of-artist.media-section::after {
     content: "";
     position: absolute;
     right: 0;
@@ -1935,10 +1945,14 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
     scrollbar-width: none;
   }
 
-  body[data-page="home"] #videos .media-grid,
-  body[data-page="home"] #music .media-grid {
+  body[data-page="home"] #best-of-artist .media-grid {
     gap: 12px;
     padding-bottom: 12px;
+  }
+
+  body[data-page="home"] #best-of-artist #audio-grid.is-hidden-by-toggle,
+  body[data-page="home"] #best-of-artist #videos-grid.is-hidden-by-toggle {
+    display: none !important;
   }
 
   body[data-page="home"] .media-grid::-webkit-scrollbar {
@@ -1951,14 +1965,12 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
     scroll-snap-align: start;
   }
 
-  body[data-page="home"] #videos .media-card,
-  body[data-page="home"] #music .media-card {
+  body[data-page="home"] #best-of-artist .media-card {
     flex: 0 0 75vw;
     max-width: 280px;
   }
 
-  body[data-page="home"] #videos .section-cta,
-  body[data-page="home"] #music .section-cta,
+  body[data-page="home"] #best-of-artist .section-cta:not(.section-cta-best-of-toggle),
   body[data-page="home"] #music .section-cta.section-cta-audio-placeholders {
     display: none !important;
   }
@@ -2005,8 +2017,7 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
 }
 
 @media (min-width: 640px) {
-  body[data-page="home"] #videos .media-card:nth-child(n + 4),
-  body[data-page="home"] #music .media-card:nth-child(n + 4) {
+  body[data-page="home"] #best-of-artist .media-card:nth-child(n + 4) {
     display: none;
   }
 }

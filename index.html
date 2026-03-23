@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://www.youtube.com" />
     <link rel="preconnect" href="https://www.mixcloud.com" />
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./assets/css/best-of-artist.css" />
   </head>
   <body data-page="home">
     <header class="site-header">
@@ -23,8 +24,8 @@
       </a>
       <nav class="main-nav" aria-label="Main navigation">
         <a class="main-nav-link is-active" href="#live">Live</a>
-        <a class="main-nav-link" href="#videos">Videos</a>
-        <a class="main-nav-link" href="#music">Audio</a>
+        <a class="main-nav-link" href="/videos/">Videos</a>
+        <a class="main-nav-link" href="/audio/">Audio</a>
         <a class="main-nav-link" href="#about">About</a>
         <a class="main-nav-book" href="mailto:booking@djurbant.com">Book</a>
       </nav>
@@ -57,7 +58,7 @@
       </div>
       <a
         class="btn btn-live"
-        href="#videos"
+        href="#best-of-artist"
         >Watch Latest Video</a
       >
     </section>
@@ -69,37 +70,32 @@
           <p id="live-strip-title" class="live-strip-title">Bass House Set #434</p>
           <p id="live-strip-subtitle" class="live-strip-subtitle">YouTube &middot; streaming now</p>
         </div>
-        <a id="live-strip-link" class="live-strip-link" href="#videos"
+        <a id="live-strip-link" class="live-strip-link" href="#best-of-artist"
           >Join the Stream <span aria-hidden="true">→</span></a
         >
       </div>
     </section>
 
-    <main>
-      <section id="videos" class="media-section">
-        <div class="section-head">
-          <h2>Top Videos</h2>
+    <section class="best-of-artist" id="best-of-artist">
+      <div class="boa-header">
+        <h2 class="boa-title">Best of Artist</h2>
+        <div class="boa-toggles">
+          <button class="boa-tog boa-tog--video active" data-type="video" aria-pressed="true">
+            Video
+          </button>
+          <button class="boa-tog boa-tog--audio" data-type="audio" aria-pressed="false">
+            Audio
+          </button>
         </div>
-        <div id="videos-grid" class="media-grid"></div>
-        <div class="section-cta">
-          <a class="btn btn-outline" href="./videos.html">More Videos</a>
-        </div>
-      </section>
+        <a class="boa-more" id="boa-more" href="/videos/">More &#8594;</a>
+      </div>
 
-      <section id="music" class="media-section">
-        <div class="section-head">
-          <h2>Top Audio</h2>
-        </div>
-        <div id="audio-grid" class="media-grid"></div>
-        <div class="section-cta">
-          <a class="btn btn-outline" href="./audio-more.html">More Audio</a>
-        </div>
-        <div class="section-cta section-cta-audio-placeholders">
-          <a class="btn btn-outline btn-audio-placeholder" href="./audio.html">Offline Mixcloud</a>
-          <a class="btn btn-outline btn-audio-placeholder" href="./audio-direct.html">Audio Direct</a>
-        </div>
-      </section>
-    </main>
+      <div class="boa-grid" id="boa-grid"></div>
+
+      <div class="boa-carousel" id="boa-carousel">
+        <div class="boa-carousel-inner" id="boa-carousel-inner"></div>
+      </div>
+    </section>
 
     <section class="stats-strip" aria-label="DJ UrbanT highlights">
       <div class="stats-strip-grid">
@@ -231,5 +227,6 @@
     </footer>
 
     <script src="./script.js"></script>
+    <script src="./assets/js/best-of-artist.js"></script>
   </body>
 </html>

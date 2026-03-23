@@ -1314,6 +1314,10 @@ async function hydrateMediaWalls() {
       return;
     }
     const data = await response.json();
+    if (typeof window !== "undefined") {
+      window.__DJURBANT_MEDIA_DATA__ = data;
+      window.dispatchEvent(new CustomEvent("mediaDataLoaded", { detail: data }));
+    }
 
     if (page === "home") {
       renderGrid("videos-grid", data?.videos?.top3 ?? [], createVideoCard);

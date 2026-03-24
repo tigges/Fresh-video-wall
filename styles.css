@@ -2492,43 +2492,6 @@ body[data-page="home"] .hero > * {
   z-index: 2;
 }
 
-/* Keep hero headline/tagline clear of the rotating diamond asset. */
-body[data-page="home"] .hero-overlay {
-  position: relative;
-  inset: auto;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  mix-blend-mode: normal;
-  z-index: 2;
-}
-
-body[data-page="home"] .hero-overlay-title {
-  position: relative;
-  animation: none;
-  font-size: clamp(2rem, 6.4vw, 4.9rem);
-  line-height: 0.96;
-  white-space: normal;
-  text-align: center;
-}
-
-body[data-page="home"] .hero-overlay-title-alt {
-  display: none;
-}
-
-body[data-page="home"] .hero-tagline {
-  position: relative;
-  left: auto;
-  top: auto;
-  transform: none;
-  margin: 0.12rem 0 0.38rem;
-  z-index: 2;
-}
-
-body[data-page="home"] .diamond-stage {
-  margin-top: 0.24rem;
-}
-
 body[data-page="home"] .media-card,
 body[data-page="video"] .media-card,
 body[data-page="audio-more"] .media-card,

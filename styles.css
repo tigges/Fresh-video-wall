@@ -2309,9 +2309,4 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   body[data-page="home"] #best-of-artist .media-card:nth-child(n + 4) {
     display: none;
   }
-
-  body[data-page="video"] .subpage-grid .media-card:nth-child(n + 4),
-  body[data-page="audio-more"] .subpage-grid .media-card:nth-child(n + 4) {
-    display: none;
-  }
 }

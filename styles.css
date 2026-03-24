@@ -97,8 +97,8 @@
   --brand-cyan-rgb: 0, 198, 255;
   --brand-violet-rgb: 155, 0, 255;
   --brand-book: #ff4fa1;
-  --tile-overlay-accent: #8fd6ff;
-  --tile-overlay-accent-rgb: 143, 214, 255;
+  --tile-overlay-accent: #22bfff;
+  --tile-overlay-accent-rgb: 34, 191, 255;
   --rainbow-divider-gradient: linear-gradient(
     90deg,
     rgba(255, 79, 141, 0.88) 0%,
@@ -1706,9 +1706,9 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   justify-content: center;
   background: linear-gradient(
     160deg,
-    rgba(47, 123, 255, 0.34) 0%,
-    rgba(122, 44, 255, 0.24) 46%,
-    rgba(32, 213, 255, 0.14) 100%
+    rgba(34, 191, 255, 0.36) 0%,
+    rgba(24, 148, 228, 0.26) 46%,
+    rgba(10, 88, 166, 0.18) 100%
   );
   pointer-events: none;
   z-index: 2;
@@ -1723,7 +1723,7 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   white-space: nowrap;
   padding: 0.04em 0.22em;
   border-radius: 0.18em;
-  background: rgba(8, 18, 40, 0.48);
+  background: rgba(6, 22, 42, 0.56);
   color: rgba(var(--tile-overlay-accent-rgb), 0.95);
   font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 700;

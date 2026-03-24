@@ -1438,17 +1438,18 @@ body[data-page="home"] #best-of-artist .section-cta {
 }
 
 body[data-page="home"] #best-of-artist .section-cta.section-cta-best-of-toggle {
-  margin-top: 0.15rem;
-  margin-bottom: 0.65rem;
+  margin-top: 0.2rem;
+  margin-bottom: 1.1rem;
 }
 
 body[data-page="home"] #best-of-artist .section-cta-best-of-toggle .btn {
-  min-width: clamp(136px, 16vw, 184px);
-  min-height: 56px;
+  min-width: clamp(148px, 17vw, 196px);
+  min-height: 58px;
   border-radius: 12px;
   font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: clamp(1.5rem, 2.2vw, 1.95rem);
-  letter-spacing: 0.08em;
+  font-size: clamp(1.42rem, 2.1vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.075em;
 }
 
 body[data-page="home"] #videos-grid.is-hidden-by-toggle,
@@ -2582,20 +2583,21 @@ body[data-page="audio-more"] .subpage-intro {
 }
 
 body[data-page="home"] .section-cta.section-cta-home-more {
-  margin-top: 0.22rem;
-  margin-bottom: 1.05rem;
+  margin-top: 0.95rem;
+  margin-bottom: 1.4rem;
 }
 
 body[data-page="home"] #best-of-artist > .section-cta:last-child {
-  margin-bottom: 1rem;
+  margin-bottom: 1.4rem;
 }
 
 body[data-page="home"] .section-cta.section-cta-home-more .btn {
-  min-width: clamp(136px, 16vw, 184px);
-  min-height: 56px;
+  min-width: clamp(148px, 17vw, 196px);
+  min-height: 58px;
   border-radius: 12px;
   font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: clamp(1.5rem, 2.2vw, 1.95rem);
-  letter-spacing: 0.08em;
+  font-size: clamp(1.42rem, 2.1vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.075em;
 }
 

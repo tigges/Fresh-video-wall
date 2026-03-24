@@ -6,6 +6,36 @@
   --muted: #afafaf;
   --accent: #d8d8d8;
   --accent-2: #8f8f8f;
+  --logo-cyan: #20d5ff;
+  --logo-blue: #2f7bff;
+  --logo-violet: #7a2cff;
+  --logo-magenta: #ff2f8a;
+  --logo-red: #ff3f3f;
+  --logo-orange: #ff8f1f;
+  --logo-yellow: #ffe033;
+  --logo-green: #4be548;
+  --rainbow-gradient: linear-gradient(
+    102deg,
+    var(--logo-cyan) 0%,
+    var(--logo-blue) 16%,
+    var(--logo-violet) 32%,
+    var(--logo-magenta) 48%,
+    var(--logo-red) 64%,
+    var(--logo-orange) 80%,
+    var(--logo-yellow) 92%,
+    var(--logo-green) 100%
+  );
+  --rainbow-gradient-soft: linear-gradient(
+    102deg,
+    rgba(32, 213, 255, 0.42) 0%,
+    rgba(47, 123, 255, 0.36) 16%,
+    rgba(122, 44, 255, 0.34) 32%,
+    rgba(255, 47, 138, 0.34) 48%,
+    rgba(255, 63, 63, 0.3) 64%,
+    rgba(255, 143, 31, 0.28) 80%,
+    rgba(255, 224, 51, 0.3) 92%,
+    rgba(75, 229, 72, 0.3) 100%
+  );
   --accent-iridescent: linear-gradient(
     128deg,
     #f8fbff 0%,
@@ -28,11 +58,57 @@
     rgba(171, 146, 207, 0.24) 86%,
     rgba(207, 214, 225, 0.24) 100%
   );
-  --cta-gradient: linear-gradient(90deg, #9db0c3 0%, #7488aa 50%, #665884 100%);
+  --accent-iridescent: var(--rainbow-gradient);
+  --accent-iridescent-soft: var(--rainbow-gradient-soft);
+  --cta-gradient: linear-gradient(
+    118deg,
+    var(--logo-cyan) 0%,
+    var(--logo-blue) 20%,
+    var(--logo-violet) 40%,
+    var(--logo-magenta) 58%,
+    var(--logo-red) 74%,
+    var(--logo-orange) 88%,
+    var(--logo-yellow) 100%
+  );
   --cta-glow:
-    0 0 0 1px rgba(157, 176, 195, 0.48),
-    0 0 12px rgba(116, 136, 170, 0.22),
-    0 0 18px rgba(102, 88, 132, 0.24);
+    0 0 0 1px rgba(32, 213, 255, 0.46),
+    0 0 16px rgba(122, 44, 255, 0.24),
+    0 0 22px rgba(255, 47, 138, 0.24),
+    0 0 28px rgba(255, 143, 31, 0.24);
+  --brand-text-bright: #f4f7ff;
+  --brand-live-pill-bg: #f1ba31;
+  --brand-danger: #ff5d57;
+  --brand-magenta: #ff4f8d;
+  --brand-orange: #ffb347;
+  --brand-cyan: #00c6ff;
+  --brand-violet: #9b00ff;
+  --brand-cyan-rgb: 0, 198, 255;
+  --brand-violet-rgb: 155, 0, 255;
+  --brand-book: #ff4fa1;
+  --rainbow-divider-gradient: linear-gradient(
+    90deg,
+    rgba(255, 79, 141, 0.88) 0%,
+    rgba(255, 170, 0, 0.8) 24%,
+    rgba(146, 239, 107, 0.78) 48%,
+    rgba(0, 198, 255, 0.86) 73%,
+    rgba(155, 0, 255, 0.76) 100%
+  );
+  --aqua-violet-gradient-horizontal: linear-gradient(
+    90deg,
+    var(--brand-cyan),
+    var(--brand-violet)
+  );
+  --aqua-violet-gradient-vertical: linear-gradient(
+    180deg,
+    var(--brand-cyan) 0%,
+    var(--brand-violet) 100%
+  );
+  --stats-highlight-gradient: linear-gradient(
+    135deg,
+    var(--brand-magenta) 0%,
+    var(--brand-orange) 45%,
+    var(--brand-text-bright) 100%
+  );
   --card-border: rgba(255, 255, 255, 0.12);
   --shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
 }
@@ -201,11 +277,11 @@ a {
 }
 
 .main-nav-link:hover {
-  color: #f4f7ff;
+  color: var(--brand-text-bright);
 }
 
 .main-nav-link.is-active {
-  color: #f4f7ff;
+  color: var(--brand-text-bright);
 }
 
 .main-nav-book {
@@ -215,8 +291,8 @@ a {
   font-weight: 700;
   letter-spacing: 0.08em;
   font-size: clamp(0.9rem, 1.18vw, 1.02rem);
-  color: #ff4f8d;
-  border: 1px solid rgba(255, 79, 141, 0.72);
+  color: var(--brand-book);
+  border: 1px solid rgba(255, 79, 161, 0.72);
   border-radius: 6px;
   padding: 0.5rem 1.45rem;
   transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
@@ -411,7 +487,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
   margin-top: 1.1rem;
   position: relative;
   top: clamp(8px, 1vw, 12px);
-  background: linear-gradient(135deg, #00c6ff, #9b00ff);
+  background: var(--cta-gradient);
   border-color: transparent;
   color: #fff;
   font-family: "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -424,7 +500,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
   padding-inline: 1.75rem;
   min-width: min(320px, calc(100vw - 2rem));
   white-space: nowrap;
-  box-shadow: 0 0 24px rgba(0, 198, 255, 0.4);
+  box-shadow: 0 0 24px rgba(0, 198, 255, 0.34), 0 0 18px rgba(255, 79, 161, 0.24);
 }
 
 .btn-outline {
@@ -478,14 +554,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
   right: 0;
   bottom: -1px;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 79, 141, 0.88) 0%,
-    rgba(255, 170, 0, 0.8) 24%,
-    rgba(146, 239, 107, 0.78) 48%,
-    rgba(0, 198, 255, 0.86) 73%,
-    rgba(155, 0, 255, 0.76) 100%
-  );
+  background: var(--rainbow-divider-gradient);
 }
 
 .live-strip-status {
@@ -495,7 +564,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
   gap: 0.42rem;
   border-radius: 5px;
   padding: 0.28rem 0.68rem;
-  background: #f1ba31;
+  background: var(--brand-live-pill-bg);
   color: #0c0d12;
   text-transform: none;
   letter-spacing: 0.02em;
@@ -549,7 +618,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
 }
 
 .live-strip-link:hover {
-  color: #f4f7ff;
+  color: var(--brand-text-bright);
 }
 
 .stats-strip {
@@ -574,14 +643,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
   right: 0;
   bottom: -1px;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 79, 141, 0.88) 0%,
-    rgba(255, 170, 0, 0.8) 24%,
-    rgba(146, 239, 107, 0.78) 48%,
-    rgba(0, 198, 255, 0.86) 73%,
-    rgba(155, 0, 255, 0.76) 100%
-  );
+  background: var(--rainbow-divider-gradient);
 }
 
 .stats-tile {
@@ -609,11 +671,11 @@ body[data-hero-font="russo"] .hero-overlay-title {
 }
 
 .stats-tile-main .stats-number-accent {
-  color: #ff5d57;
+  color: var(--brand-danger);
 }
 
 .stats-gradient-text {
-  background: linear-gradient(135deg, #ff4f8d 0%, #ffb347 45%, #f4f7ff 100%);
+  background: var(--stats-highlight-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -763,7 +825,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
   border-radius: 14px;
   border: 1px solid rgba(255, 79, 141, 0.45);
   background: rgba(0, 0, 0, 0.45);
-  color: #ff4f8d;
+  color: var(--brand-magenta);
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -995,7 +1057,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
 
 .offline-clone-tabs .is-active {
   color: #eef3ff;
-  border-color: rgba(0, 198, 255, 0.46);
+  border-color: rgba(var(--brand-cyan-rgb), 0.46);
 }
 
 .offline-cloudcast-list {
@@ -1025,9 +1087,9 @@ body[data-hero-font="russo"] .hero-overlay-title {
   width: 42px;
   height: 42px;
   border-radius: 999px;
-  border: 1px solid rgba(0, 198, 255, 0.55);
+  border: 1px solid rgba(var(--brand-cyan-rgb), 0.55);
   background: rgba(0, 0, 0, 0.34);
-  color: #00c6ff;
+  color: var(--brand-cyan);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1056,7 +1118,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
   right: 10px;
   font-family: "Barlow Condensed", "Syne", sans-serif;
   font-size: 1.18rem;
-  color: #00c6ff;
+  color: var(--brand-cyan);
   font-weight: 700;
 }
 
@@ -1142,7 +1204,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
   display: block;
   width: 36%;
   height: 100%;
-  background: linear-gradient(90deg, #00c6ff, #9b00ff);
+  background: var(--aqua-violet-gradient-horizontal);
 }
 
 .offline-track-iframe-wrap iframe {
@@ -1192,7 +1254,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
 
 .offline-comment-likes {
   margin-top: 0.32rem;
-  color: rgba(0, 198, 255, 0.8);
+  color: rgba(var(--brand-cyan-rgb), 0.8);
   font-size: 0.8rem;
 }
 
@@ -1316,14 +1378,14 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
   align-items: center;
   padding-left: 12px;
   border-left: 3px solid transparent;
-  border-image: linear-gradient(180deg, #00c6ff 0%, #9b00ff 100%) 1;
+  border-image: var(--aqua-violet-gradient-vertical) 1;
   font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 700;
   font-size: 28px;
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  color: #f4f7ff;
+  color: var(--brand-text-bright);
   background: none;
   -webkit-background-clip: border-box;
   background-clip: border-box;
@@ -1356,7 +1418,7 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
 
 .media-card:hover {
   border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 12px rgba(0, 198, 255, 0.15);
+  box-shadow: 0 0 12px rgba(var(--brand-cyan-rgb), 0.15);
 }
 
 .media-card-more {
@@ -1447,13 +1509,13 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
   padding: 0.04em 0.22em;
   border-radius: 0.18em;
   background: rgba(8, 18, 40, 0.48);
-  color: rgba(0, 198, 255, 0.9);
+  color: rgba(var(--brand-cyan-rgb), 0.9);
   font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 700;
   font-size: clamp(1.95rem, 4.7vw, 3.2rem);
   line-height: 1;
   letter-spacing: 0.02em;
-  text-shadow: 0 0 14px rgba(0, 198, 255, 0.35);
+  text-shadow: 0 0 14px rgba(var(--brand-cyan-rgb), 0.35);
 }
 
 .video-top-overlay {
@@ -1496,14 +1558,14 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
 }
 
 .audio-set-number {
-  color: #00c6ff;
+  color: var(--brand-cyan);
   font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 700;
   font-size: clamp(2.5rem, 5.4vw, 3.6rem);
   line-height: 1;
   letter-spacing: 0.02em;
   white-space: nowrap;
-  text-shadow: 0 0 14px rgba(0, 198, 255, 0.25);
+  text-shadow: 0 0 14px rgba(var(--brand-cyan-rgb), 0.25);
 }
 
 .audio-set-play {
@@ -1517,11 +1579,11 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.46);
-  border: 1px solid rgba(0, 198, 255, 0.48);
-  color: #00c6ff;
+  border: 1px solid rgba(var(--brand-cyan-rgb), 0.48);
+  color: var(--brand-cyan);
   font-size: 15px;
   line-height: 1;
-  text-shadow: 0 0 10px rgba(0, 198, 255, 0.26);
+  text-shadow: 0 0 10px rgba(var(--brand-cyan-rgb), 0.26);
 }
 
 .audio-set-cover.is-playing .audio-set-play {
@@ -1544,7 +1606,7 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
   display: block;
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #00c6ff, #9b00ff);
+  background: var(--aqua-violet-gradient-horizontal);
   transition: width 0.22s linear;
 }
 

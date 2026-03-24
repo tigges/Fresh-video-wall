@@ -8,6 +8,11 @@ if (yearNode) {
 const page = document.body.dataset.page;
 const PRIMARY_GENRE_BADGE_LABEL = "Bass House";
 const SECONDARY_GENRE_BADGE_LABEL = "Tech House";
+const HOME_BEST_OF_MORE_LINKS = Object.freeze({
+  video: "./videos.html",
+  audio: "./audio-more.html",
+});
+const HOME_BEST_OF_MOBILE_QUERY = "(max-width: 639px)";
 let mixcloudWidgetApiPromise = null;
 let offlineAudioSourcesPromise = null;
 let activeAudioController = null;
@@ -208,11 +213,19 @@ function withAutoplayEmbedSrc(src) {
 }
 
 function playTopVideoTile() {
+  if (page === "home") {
+    const bestSection = document.getElementById("best-of-artist");
+    if (bestSection?.dataset.bestMode === "audio") {
+      const videoToggle = document.getElementById("best-of-toggle-video");
+      videoToggle?.click();
+    }
+  }
+
   const topVideoFrame = document.querySelector("#videos-grid .embed-wrap iframe");
   if (!topVideoFrame) {
     return false;
   }
-  const videosSection = document.getElementById("videos");
+  const videosSection = document.getElementById("best-of-artist");
   videosSection?.scrollIntoView({ behavior: "smooth", block: "start" });
   topVideoFrame.src = withAutoplayEmbedSrc(topVideoFrame.src);
   return true;
@@ -278,7 +291,7 @@ function getHomeAudioItems(data) {
   return [...(data?.audio?.top3 ?? []), ...(data?.audio?.rest ?? [])];
 }
 
-function updateHomeBestOfArtistToggle(data) {
+function updateHomeBestOfArtistToggle() {
   if (page !== "home") {
     return;
   }
@@ -292,10 +305,11 @@ function updateHomeBestOfArtistToggle(data) {
     return;
   }
 
-  const isMobileViewport = () => window.matchMedia("(max-width: 639px)").matches;
+  const isMobileViewport = () => window.matchMedia(HOME_BEST_OF_MOBILE_QUERY).matches;
 
   const applyMode = (mode) => {
-    const isVideo = mode === "video";
+    const normalizedMode = mode === "audio" ? "audio" : "video";
+    const isVideo = normalizedMode === "video";
     bestSection.dataset.bestMode = isVideo ? "video" : "audio";
     videosGrid.classList.toggle("is-hidden-by-toggle", !isVideo);
     audioGrid.classList.toggle("is-hidden-by-toggle", isVideo);
@@ -307,15 +321,15 @@ function updateHomeBestOfArtistToggle(data) {
     videoToggle.setAttribute("aria-pressed", isVideo ? "true" : "false");
     audioToggle.setAttribute("aria-pressed", isVideo ? "false" : "true");
 
-    moreLink.href = isVideo ? "./videos.html" : "./audio-more.html";
+    moreLink.href = HOME_BEST_OF_MORE_LINKS[normalizedMode] ?? HOME_BEST_OF_MORE_LINKS.video;
   };
 
   const setDesktopTop3Only = () => {
     const desktopOnly = !isMobileViewport();
-    const updateGrid = (grid, showAllOnMobile = false) => {
+    const updateGrid = (grid) => {
       const cards = [...grid.querySelectorAll(".media-card")];
       cards.forEach((card, index) => {
-        card.hidden = desktopOnly && index >= 3 && !showAllOnMobile;
+        card.hidden = desktopOnly && index >= 3;
         if (!desktopOnly) {
           card.hidden = false;
         }
@@ -328,13 +342,34 @@ function updateHomeBestOfArtistToggle(data) {
   if (videoToggle.dataset.boundClick !== "1") {
     videoToggle.dataset.boundClick = "1";
     audioToggle.dataset.boundClick = "1";
-    videoToggle.addEventListener("click", () => applyMode("video"));
-    audioToggle.addEventListener("click", () => applyMode("audio"));
-    window.addEventListener("resize", setDesktopTop3Only, { passive: true });
+    videoToggle.addEventListener("click", () => {
+      applyMode("video");
+      setDesktopTop3Only();
+    });
+    audioToggle.addEventListener("click", () => {
+      applyMode("audio");
+      setDesktopTop3Only();
+    });
+    window.addEventListener(
+      "resize",
+      () => {
+        setDesktopTop3Only();
+      },
+      { passive: true },
+    );
   }
 
   setDesktopTop3Only();
-  applyMode(videoToggle.classList.contains("is-active") ? "video" : "audio");
+  const initialMode =
+    bestSection.dataset.bestMode ||
+    (videoToggle.classList.contains("is-active") ? "video" : "audio");
+  applyMode(initialMode);
+}
+
+function hydrateHomeBestOfArtist(data) {
+  renderGrid("videos-grid", getHomeVideoItems(data), createVideoCard);
+  renderGrid("audio-grid", getHomeAudioItems(data), createAudioTopTileCard);
+  updateHomeBestOfArtistToggle();
 }
 
 function updateHeroLiveCta(data) {
@@ -1383,9 +1418,7 @@ async function hydrateMediaWalls() {
     const data = await response.json();
 
     if (page === "home") {
-      renderGrid("videos-grid", getHomeVideoItems(data), createVideoCard);
-      renderGrid("audio-grid", getHomeAudioItems(data), createAudioTopTileCard);
-      updateHomeBestOfArtistToggle(data);
+      hydrateHomeBestOfArtist(data);
       updateHeroLiveCta(data);
       updateLiveStrip(data);
       return;
@@ -1397,7 +1430,7 @@ async function hydrateMediaWalls() {
       appendGridActionTile(
         "videos-rest-grid",
         "Top Videos",
-        "./index.html#videos",
+        "./index.html#best-of-artist",
         "btn-outline",
         false,
       );

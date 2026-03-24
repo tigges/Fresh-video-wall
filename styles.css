@@ -873,37 +873,40 @@ body[data-page="home"] .stats-strip {
 }
 
 .about-cta-book {
-  width: clamp(86px, 11vw, 102px);
-  height: clamp(86px, 11vw, 102px);
-  border-radius: 14px;
+  width: clamp(132px, 16vw, 168px);
+  min-height: 56px;
+  border-radius: 12px;
   border: 1px solid rgba(0, 200, 255, 0.58);
   background: rgba(0, 200, 255, 0.14);
   color: #dff7ff;
   display: inline-flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 0.42rem;
+  gap: 0;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 700;
+  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+  line-height: 1;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .about-cta-book svg {
-  width: clamp(20px, 2vw, 25px);
+  width: clamp(18px, 1.8vw, 22px);
   height: auto;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.7;
+  display: none;
 }
 
 .about-cta-book span {
-  font-size: clamp(1.18rem, 1.5vw, 1.38rem);
+  font-size: inherit;
   line-height: 1;
 }
 
@@ -1439,15 +1442,25 @@ body[data-page="home"] #best-of-artist .section-cta.section-cta-best-of-toggle {
   margin-bottom: 0.65rem;
 }
 
+body[data-page="home"] #best-of-artist .section-cta-best-of-toggle .btn {
+  min-width: clamp(136px, 16vw, 184px);
+  min-height: 56px;
+  border-radius: 12px;
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: clamp(1.5rem, 2.2vw, 1.95rem);
+  letter-spacing: 0.08em;
+}
+
 body[data-page="home"] #videos-grid.is-hidden-by-toggle,
 body[data-page="home"] #audio-grid.is-hidden-by-toggle {
   display: none !important;
 }
 
 body[data-page="home"] #best-of-artist .section-cta-best-of-toggle .btn.is-active {
-  border-color: var(--tile-overlay-accent);
-  color: var(--tile-overlay-accent);
-  box-shadow: 0 0 0 1px rgba(var(--tile-overlay-accent-rgb), 0.26);
+  border-color: #22bfff;
+  color: #dff7ff;
+  background: rgba(0, 200, 255, 0.18);
+  box-shadow: 0 0 0 1px rgba(34, 191, 255, 0.34);
 }
 
 body[data-page="home"] #music .section-cta.section-cta-audio-placeholders {
@@ -2079,13 +2092,13 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   }
 
   .about-cta-book {
-    width: 82px;
-    height: 82px;
-    gap: 0.35rem;
+    width: clamp(124px, 38vw, 152px);
+    min-height: 52px;
+    height: auto;
   }
 
   .about-cta-book span {
-    font-size: 1.06rem;
+    font-size: clamp(1rem, 4.2vw, 1.14rem);
   }
 
   .stats-strip {
@@ -2449,6 +2462,15 @@ body[data-page="contact"] .btn-outline {
   color: var(--color-type);
 }
 
+body[data-page="home"] #best-of-more-link {
+  min-width: clamp(132px, 15vw, 164px);
+  min-height: 56px;
+  border-radius: 12px;
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: clamp(1.12rem, 1.7vw, 1.34rem);
+  letter-spacing: 0.08em;
+}
+
 body[data-page="home"] .hero {
   background-color: var(--color-bg);
   isolation: isolate;
@@ -2560,11 +2582,20 @@ body[data-page="audio-more"] .subpage-intro {
 }
 
 body[data-page="home"] .section-cta.section-cta-home-more {
-  margin-top: 0.2rem;
-  margin-bottom: 0.8rem;
+  margin-top: 0.22rem;
+  margin-bottom: 1.05rem;
 }
 
 body[data-page="home"] #best-of-artist > .section-cta:last-child {
   margin-bottom: 1rem;
+}
+
+body[data-page="home"] .section-cta.section-cta-home-more .btn {
+  min-width: clamp(136px, 16vw, 184px);
+  min-height: 56px;
+  border-radius: 12px;
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: clamp(1.5rem, 2.2vw, 1.95rem);
+  letter-spacing: 0.08em;
 }
 

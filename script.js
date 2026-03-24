@@ -16,6 +16,8 @@ const HOME_BEST_OF_MOBILE_QUERY = "(max-width: 639px)";
 let mixcloudWidgetApiPromise = null;
 let offlineAudioSourcesPromise = null;
 let activeAudioController = null;
+let activeMediaController = null;
+const youtubeControllerByFrame = new WeakMap();
 
 function initHeaderVisibilityOnScroll() {
   const siteHeader = document.querySelector(".site-header");
@@ -212,6 +214,110 @@ function withAutoplayEmbedSrc(src) {
   }
 }
 
+function clearActiveMediaController(controller) {
+  if (activeMediaController === controller) {
+    activeMediaController = null;
+  }
+}
+
+function activateMediaController(controller) {
+  if (!controller || typeof controller.pause !== "function") {
+    return;
+  }
+  if (activeMediaController === controller) {
+    return;
+  }
+  const previousController = activeMediaController;
+  activeMediaController = controller;
+  if (previousController && previousController !== controller) {
+    try {
+      previousController.pause();
+    } catch {
+      // Keep media switching resilient if one source errors while pausing.
+    }
+  }
+}
+
+function pauseYoutubeIframe(iframe) {
+  if (!(iframe instanceof HTMLIFrameElement)) {
+    return;
+  }
+  try {
+    iframe.contentWindow?.postMessage(
+      JSON.stringify({
+        event: "command",
+        func: "pauseVideo",
+        args: [],
+      }),
+      "*",
+    );
+  } catch {
+    // Ignore postMessage failures for cross-origin players.
+  }
+}
+
+function playYoutubeIframe(iframe) {
+  if (!(iframe instanceof HTMLIFrameElement)) {
+    return;
+  }
+  try {
+    iframe.contentWindow?.postMessage(
+      JSON.stringify({
+        event: "command",
+        func: "playVideo",
+        args: [],
+      }),
+      "*",
+    );
+  } catch {
+    // Ignore postMessage failures for cross-origin players.
+  }
+}
+
+function getYoutubeFrameController(iframe) {
+  if (!(iframe instanceof HTMLIFrameElement)) {
+    return null;
+  }
+  const existing = youtubeControllerByFrame.get(iframe);
+  if (existing) {
+    return existing;
+  }
+  const controller = {
+    pause: () => pauseYoutubeIframe(iframe),
+  };
+  youtubeControllerByFrame.set(iframe, controller);
+  return controller;
+}
+
+function startVideoPlayback(iframe, { shouldScrollIntoView = true } = {}) {
+  if (!(iframe instanceof HTMLIFrameElement)) {
+    return false;
+  }
+  const controller = getYoutubeFrameController(iframe);
+  if (controller) {
+    activateMediaController(controller);
+  }
+  if (activeAudioController && typeof activeAudioController.pause === "function") {
+    activeAudioController.pause();
+  }
+  const wrap = iframe.closest(".embed-wrap");
+  const overlay = wrap?.querySelector(".video-top-overlay");
+  if (overlay) {
+    overlay.classList.add("is-hidden");
+  }
+  if (shouldScrollIntoView) {
+    const card = iframe.closest(".media-card");
+    card?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  if (iframe.dataset.playerReady === "1") {
+    playYoutubeIframe(iframe);
+    return true;
+  }
+  iframe.src = withAutoplayEmbedSrc(iframe.src);
+  iframe.dataset.playerReady = "1";
+  return true;
+}
+
 function playTopVideoTile() {
   if (page === "home") {
     const bestSection = document.getElementById("best-of-artist");
@@ -225,10 +331,7 @@ function playTopVideoTile() {
   if (!topVideoFrame) {
     return false;
   }
-  const videosSection = document.getElementById("best-of-artist");
-  videosSection?.scrollIntoView({ behavior: "smooth", block: "start" });
-  topVideoFrame.src = withAutoplayEmbedSrc(topVideoFrame.src);
-  return true;
+  return startVideoPlayback(topVideoFrame, { shouldScrollIntoView: true });
 }
 
 function createGenreBadge(options = {}) {
@@ -483,6 +586,24 @@ function bindLiveStripClick() {
   });
 }
 
+function bindSubpageMainNav() {
+  const mainNav = document.querySelector(".main-nav[data-subpage-nav='1']");
+  if (!mainNav) {
+    return;
+  }
+  const currentHref = window.location.pathname.split("/").pop() || "index.html";
+  const links = [...mainNav.querySelectorAll(".main-nav-link")];
+  links.forEach((link) => {
+    const target = link.getAttribute("href") || "";
+    if (!target) {
+      return;
+    }
+    const normalizedTarget = target.replace("./", "");
+    const isActive = normalizedTarget === currentHref;
+    link.classList.toggle("is-active", isActive);
+  });
+}
+
 function createVideoCard(item, index = 0) {
   const article = document.createElement("article");
   article.className = "media-card";
@@ -664,9 +785,11 @@ function createAudioCard(item, index = 0) {
         if (activeAudioController === controls) {
           activeAudioController = null;
         }
+        clearActiveMediaController(controls);
         setPlayingState(false);
       });
       mixcloudWidget.events?.play?.on(() => {
+        activateMediaController(controls);
         setPlayingState(true);
         startProgressLoop();
       });
@@ -695,9 +818,7 @@ function createAudioCard(item, index = 0) {
     try {
       cover.classList.add("is-loading");
       await ensureWidgetReady();
-      if (activeAudioController && activeAudioController !== controls) {
-        activeAudioController.pause();
-      }
+      activateMediaController(controls);
       activeAudioController = controls;
       mixcloudWidget.play();
       setPlayingState(true);

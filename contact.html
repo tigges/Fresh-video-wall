@@ -3,16 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DJ UrbanT | Video & Audio Wall</title>
+    <title>DJ UrbanT | Contact</title>
     <meta
       name="description"
-      content="DJ UrbanT landing page with a video wall and audio wall featuring top 3 YouTube videos and top 3 Mixcloud mixes."
+      content="Contact DJ UrbanT for bookings, collaborations, and event inquiries."
     />
-    <link rel="preconnect" href="https://www.youtube.com" />
-    <link rel="preconnect" href="https://www.mixcloud.com" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body data-page="home">
+  <body data-page="contact">
     <header class="site-header">
       <a class="brand" href="./index.html" aria-label="DJ UrbanT home">
         <img
@@ -22,128 +20,74 @@
         />
       </a>
       <nav class="main-nav" aria-label="Main navigation">
-        <a class="main-nav-link is-active" href="#live">Live</a>
+        <a class="main-nav-link" href="./index.html#live">Live</a>
         <a class="main-nav-link" href="./videos.html">Videos</a>
-        <a class="main-nav-link" href="./audio.html">Audio</a>
-        <a class="main-nav-link" href="#about">About</a>
-        <a class="main-nav-link" href="./contact.html">Contact</a>
-        <a class="main-nav-book" href="./contact.html">Book</a>
+        <a class="main-nav-link" href="./audio-more.html">Audio</a>
+        <a class="main-nav-link" href="./index.html#about">About</a>
+        <a class="main-nav-link is-active" href="./contact.html">Contact</a>
+        <a class="main-nav-book is-active" href="./contact.html">Book</a>
       </nav>
     </header>
 
-    <section id="live" class="hero">
-      <div class="hero-overlay" aria-hidden="true">
-        <h2 class="hero-overlay-title">
-          DJ
-          <span class="urbant-wordmark"
-            ><span class="urbant-u">U</span>rban<span class="urbant-t">T</span></span
-          >
-          - Live
-        </h2>
-        <h2 class="hero-overlay-title hero-overlay-title-alt">
-          DJ
-          <span class="urbant-wordmark"
-            ><span class="urbant-u">U</span>rban<span class="urbant-t">T</span></span
-          >
-          - Live
-        </h2>
-      </div>
-      <p class="hero-tagline">Bass House. Tech House. Live Sets.</p>
-      <div class="diamond-stage" aria-hidden="true">
-        <img
-          class="hero-proto"
-          src="./assets/images/djurbant-proto-1.png"
-          alt=""
-        />
-      </div>
-      <a
-        class="btn btn-live"
-        href="#best-of-artist"
-        >Watch Latest Video</a
-      >
-    </section>
-
-    <section class="live-strip" aria-label="Live stream status">
-      <div class="live-strip-inner">
-        <span id="live-strip-status" class="live-strip-status">Live Now</span>
-        <div class="live-strip-meta">
-          <p id="live-strip-title" class="live-strip-title">Bass House Set #434</p>
-          <p id="live-strip-subtitle" class="live-strip-subtitle">YouTube &middot; streaming now</p>
-        </div>
-        <a id="live-strip-link" class="live-strip-link" href="#best-of-artist"
-          >Join the Stream <span aria-hidden="true">→</span></a
-        >
-      </div>
-    </section>
-
-    <main>
-      <section id="best-of-artist" class="media-section">
+    <main class="subpage-main">
+      <section class="media-section">
         <div class="section-head">
-          <h2>The Best of Artist</h2>
+          <h1>Contact DJ UrbanT</h1>
         </div>
-        <div class="section-cta section-cta-best-of-toggle">
-          <button
-            id="best-of-toggle-video"
-            class="btn btn-outline is-active"
-            type="button"
-            aria-pressed="true"
-          >
-            Video
-          </button>
-          <button
-            id="best-of-toggle-audio"
-            class="btn btn-outline"
-            type="button"
-            aria-pressed="false"
-          >
-            Audio
-          </button>
-        </div>
-        <div id="videos-grid" class="media-grid"></div>
-        <div id="audio-grid" class="media-grid"></div>
-        <div class="section-cta">
-          <a id="best-of-more-link" class="btn btn-outline" href="./videos.html">More</a>
-        </div>
+        <p class="subpage-intro contact-intro">
+          Use this form for bookings, event inquiries, collaborations, and press.
+        </p>
+
+        <form
+          class="contact-form"
+          action="mailto:booking@djurbant.com"
+          method="post"
+          enctype="text/plain"
+        >
+          <div class="contact-grid">
+            <label class="contact-field">
+              <span>Name</span>
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label class="contact-field">
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label class="contact-field">
+              <span>Phone (optional)</span>
+              <input type="tel" name="phone" autocomplete="tel" />
+            </label>
+            <label class="contact-field">
+              <span>Event date (optional)</span>
+              <input type="date" name="event_date" />
+            </label>
+            <label class="contact-field contact-field-wide">
+              <span>Subject</span>
+              <input
+                type="text"
+                name="subject"
+                value="Booking Inquiry - DJ UrbanT"
+                required
+              />
+            </label>
+            <label class="contact-field contact-field-wide">
+              <span>Message</span>
+              <textarea
+                name="message"
+                rows="7"
+                placeholder="Tell us about your event, venue, timing, and expected set style."
+                required
+              ></textarea>
+            </label>
+          </div>
+
+          <div class="section-cta subpage-bottom-nav">
+            <a class="btn btn-outline" href="./index.html">Back Home</a>
+            <button class="btn btn-subscribe" type="submit">Send Inquiry</button>
+          </div>
+        </form>
       </section>
     </main>
-
-    <section class="stats-strip" aria-label="DJ UrbanT highlights">
-      <div class="stats-strip-grid">
-        <article class="stats-tile">
-          <p class="stats-tile-main">
-            434<span class="stats-number-accent">+</span>
-          </p>
-          <p class="stats-tile-sub">Sets</p>
-        </article>
-        <article class="stats-tile stats-tile--genre">
-          <p class="stats-tile-main stats-gradient-text">Bass<br />House</p>
-          <p class="stats-tile-sub">&amp; Tech House</p>
-        </article>
-        <article class="stats-tile">
-          <p class="stats-tile-main">
-            5<span class="stats-number-accent">+</span>
-          </p>
-          <p class="stats-tile-sub">Platforms</p>
-        </article>
-        <article class="stats-tile stats-tile--archive">
-          <p class="stats-tile-main">On<br />Demand</p>
-          <p class="stats-tile-sub">Full Archive</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="about" class="about-cta-section" aria-label="Book DJ UrbanT">
-      <div class="about-cta-bar">
-        <h2 class="about-cta-title">Bring the set to you.</h2>
-        <a class="about-cta-book" href="./contact.html" aria-label="Book DJ UrbanT">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="3.5" y="5.5" width="17" height="15" rx="2.5" />
-            <path d="M8 3.5v4M16 3.5v4M3.5 10.5h17" />
-          </svg>
-          <span>Book</span>
-        </a>
-      </div>
-    </section>
 
     <footer class="site-footer">
       <div class="site-footer-inner">
@@ -181,11 +125,7 @@
               />
             </svg>
           </a>
-          <a
-            class="social-link"
-            href="./videos.html"
-            aria-label="Videos"
-          >
+          <a class="social-link" href="./videos.html" aria-label="Videos">
             <svg viewBox="0 0 576 512" aria-hidden="true">
               <path
                 d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"

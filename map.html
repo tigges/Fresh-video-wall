@@ -4,54 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DJ UrbanT | Map</title>
+    <link rel="stylesheet" href="./styles.css" />
     <style>
       :root {
-        --bg: #06070a;
-        --panel: #11131a;
-        --panel-soft: #191d29;
-        --text: #eef2ff;
-        --muted: #a6b0cb;
-        --line: #4c5a86;
-        --line-dim: #313a56;
-        --accent: linear-gradient(135deg, #00c6ff, #9b00ff);
+        --map-bg: #06070a;
+        --map-panel: #11131a;
+        --map-panel-soft: #191d29;
+        --map-text: #eef2ff;
+        --map-muted: #a6b0cb;
+        --map-line: #4c5a86;
+        --map-line-dim: #313a56;
       }
 
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
+      body[data-page="map"] {
         margin: 0;
-        background: radial-gradient(circle at top, #14192a 0%, var(--bg) 48%);
-        color: var(--text);
-        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: radial-gradient(circle at top, #14192a 0%, var(--map-bg) 48%);
+        color: var(--map-text);
       }
 
-      .wrap {
+      .map-wrap {
         width: min(1180px, 92vw);
         margin: 0 auto;
         padding: 2rem 0 3rem;
       }
 
-      h1 {
+      .map-wrap h1 {
         margin: 0 0 0.55rem;
-        font-size: clamp(1.8rem, 2.9vw, 2.6rem);
+        font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: clamp(1.95rem, 3.4vw, 2.8rem);
         letter-spacing: 0.04em;
+        text-transform: uppercase;
       }
 
-      p.lead {
+      .map-wrap p.lead {
         margin: 0 0 1.5rem;
-        color: var(--muted);
+        color: var(--map-muted);
       }
 
       .section-title {
         margin: 1.7rem 0 1rem;
         padding-left: 12px;
         border-left: 3px solid transparent;
-        border-image: var(--accent) 1;
+        border-image: var(--aqua-violet-gradient-vertical) 1;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        font-size: 1rem;
+        font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: 1.05rem;
       }
 
       .map-grid {
@@ -71,29 +69,36 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .card {
-        border: 1px solid #2e354b;
-        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
-        border-radius: 14px;
+      .map-card {
+        border: 1px solid var(--brand-line-soft);
+        background: linear-gradient(180deg, var(--map-panel) 0%, var(--map-panel-soft) 100%);
+        border-radius: var(--radius-md);
         padding: 0.95rem 1rem;
         min-height: 95px;
+        box-shadow: var(--shadow-soft);
       }
 
-      .card h3 {
+      .map-card h3 {
         margin: 0 0 0.35rem;
-        font-size: 1.02rem;
+        font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: 1.04rem;
+        letter-spacing: 0.03em;
       }
 
-      .card p {
+      .map-card p {
         margin: 0;
-        color: var(--muted);
+        color: var(--map-muted);
         font-size: 0.92rem;
         line-height: 1.4;
       }
 
-      .card a {
+      .map-card a {
         color: #7ad9ff;
         text-decoration: none;
+      }
+
+      .map-card a:hover {
+        text-decoration: underline;
       }
 
       .connector {
@@ -106,7 +111,7 @@
       .line {
         width: 2px;
         height: 100%;
-        background: var(--line);
+        background: var(--map-line);
       }
 
       .line-dash {
@@ -114,7 +119,7 @@
         height: 100%;
         background: repeating-linear-gradient(
           to bottom,
-          var(--line-dim) 0 5px,
+          var(--map-line-dim) 0 5px,
           transparent 5px 10px
         );
       }
@@ -152,9 +157,9 @@
       }
 
       .all-pages li {
-        border: 1px solid #2e354b;
-        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
-        border-radius: 10px;
+        border: 1px solid var(--brand-line-soft);
+        background: linear-gradient(180deg, var(--map-panel) 0%, var(--map-panel-soft) 100%);
+        border-radius: var(--radius-sm);
         padding: 0.65rem 0.8rem;
       }
 
@@ -179,8 +184,8 @@
       }
     </style>
   </head>
-  <body>
-    <main class="wrap">
+  <body data-page="map">
+    <main class="map-wrap">
       <h1>DJ UrbanT — Map</h1>
       <p class="lead">
         Layered map of all pages, with focus on Layer 1 and Layer 2 administration.
@@ -189,19 +194,19 @@
       <h2 class="section-title">Layer 1 — Key Pages</h2>
       <section class="map-grid">
         <div class="map-grid row-4">
-          <article class="card">
+          <article class="map-card">
             <h3>Index <span class="status status-linked">Linked</span></h3>
             <p><a href="./index.html">/index.html</a><br />Main landing page.</p>
           </article>
-          <article class="card">
+          <article class="map-card">
             <h3>Video <span class="status status-linked">Linked</span></h3>
             <p><a href="./video.html">/video.html</a><br />Layer 1 video page.</p>
           </article>
-          <article class="card">
+          <article class="map-card">
             <h3>Audio <span class="status status-linked">Linked</span></h3>
             <p><a href="./audio.html">/audio.html</a><br />Layer 1 audio page.</p>
           </article>
-          <article class="card">
+          <article class="map-card">
             <h3>Contact <span class="status status-linked">Linked</span></h3>
             <p><a href="./contact.html">/contact.html</a><br />Layer 1 contact page.</p>
           </article>
@@ -213,14 +218,14 @@
       <h2 class="section-title">Layer 2 — Admin</h2>
       <section class="map-grid">
         <div class="map-grid row-2">
-          <article class="card">
+          <article class="map-card">
             <h3>Map <span class="status status-unlinked">Utility</span></h3>
             <p>
               <a href="./map.html">/map.html</a><br />
               Layered index and routing map.
             </p>
           </article>
-          <article class="card">
+          <article class="map-card">
             <h3>Admin <span class="status status-unlinked">Unlinked</span></h3>
             <p>
               <a href="./admin.html">/admin.html</a><br />
@@ -235,19 +240,19 @@
       <h2 class="section-title">Layer 3 — Alt Audio</h2>
       <section class="map-grid">
         <div class="map-grid row-4">
-          <article class="card">
+          <article class="map-card">
             <h3>Audio Bridge <span class="status status-linked">Linked</span></h3>
             <p><a href="./audio-bridge.html">/audio-bridge.html</a><br />Alternate audio bridge.</p>
           </article>
-          <article class="card">
+          <article class="map-card">
             <h3>Audio Direct <span class="status status-linked">Linked</span></h3>
             <p><a href="./audio-direct.html">/audio-direct.html</a><br />Direct playback layer.</p>
           </article>
-          <article class="card">
+          <article class="map-card">
             <h3>Offline Mixcloud Home <span class="status status-linked">Linked</span></h3>
             <p><a href="./mixcloud-offline.html">/mixcloud-offline.html</a><br />Offline home clone.</p>
           </article>
-          <article class="card">
+          <article class="map-card">
             <h3>Offline Track Details <span class="status status-linked">Linked</span></h3>
             <p>
               <a href="./mixcloud-offline-track.html">/mixcloud-offline-track.html?track=...</a><br />
@@ -262,7 +267,7 @@
       <h2 class="section-title">Layer 4 — Unlinked</h2>
       <section class="map-grid">
         <div class="map-grid row-3">
-          <article class="card">
+          <article class="map-card">
             <h3>Snapshot (Generic) <span class="status status-unlinked">Archive</span></h3>
             <p>
               <a href="./assets/mixcloud-clone/snapshot/html/urbant.html"
@@ -270,7 +275,7 @@
               >
             </p>
           </article>
-          <article class="card">
+          <article class="map-card">
             <h3>Snapshot (Desktop) <span class="status status-unlinked">Archive</span></h3>
             <p>
               <a href="./assets/mixcloud-clone/snapshot/desktop/html/urbant.html"
@@ -278,7 +283,7 @@
               >
             </p>
           </article>
-          <article class="card">
+          <article class="map-card">
             <h3>Snapshot (Mobile) <span class="status status-unlinked">Archive</span></h3>
             <p>
               <a href="./assets/mixcloud-clone/snapshot/mobile/html/urbant.html"
@@ -294,14 +299,14 @@
       <h2 class="section-title">Layer 5 — Utility / Supporting Pages</h2>
       <section class="map-grid">
         <div class="map-grid row-2">
-          <article class="card">
+          <article class="map-card">
             <h3>Gradient Options <span class="status status-unlinked">Support</span></h3>
             <p>
               <a href="./gradient-options.html">/gradient-options.html</a><br />
               Supporting visual gradient page.
             </p>
           </article>
-          <article class="card">
+          <article class="map-card">
             <h3>Version Gallery <span class="status status-unlinked">Support</span></h3>
             <p>
               <a href="./version-gallery/index.html">/version-gallery/index.html</a><br />

@@ -409,6 +409,11 @@ function updateHomeBestOfArtistToggle() {
   }
 
   const isMobileViewport = () => window.matchMedia(HOME_BEST_OF_MOBILE_QUERY).matches;
+  const requestedModeFromQuery = (() => {
+    const params = new URLSearchParams(window.location.search);
+    const raw = (params.get("bestOf") || "").trim().toLowerCase();
+    return raw === "audio" ? "audio" : raw === "video" ? "video" : "";
+  })();
 
   const applyMode = (mode) => {
     const normalizedMode = mode === "audio" ? "audio" : "video";
@@ -464,6 +469,7 @@ function updateHomeBestOfArtistToggle() {
 
   setDesktopTop3Only();
   const initialMode =
+    requestedModeFromQuery ||
     bestSection.dataset.bestMode ||
     (videoToggle.classList.contains("is-active") ? "video" : "audio");
   applyMode(initialMode);

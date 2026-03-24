@@ -1635,13 +1635,6 @@ async function hydrateMediaWalls() {
     if (page === "video") {
       const videos = [...(data?.videos?.top3 ?? []), ...(data?.videos?.rest ?? [])];
       renderGrid("videos-rest-grid", videos, createVideoCard);
-      appendGridActionTile(
-        "videos-rest-grid",
-        "Top Videos",
-        "./index.html#best-of-artist",
-        "btn-outline",
-        false,
-      );
       return;
     }
 
@@ -1650,13 +1643,6 @@ async function hydrateMediaWalls() {
         ? data.audio.rest
         : data?.audio?.top3 ?? [];
       renderGrid("audio-rest-grid", audio, createAudioCard);
-      appendGridActionTile(
-        "audio-rest-grid",
-        "Open Mixcloud",
-        "https://www.mixcloud.com/urbant/",
-        "btn-outline",
-        true,
-      );
       return;
     }
 

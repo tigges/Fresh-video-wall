@@ -25,6 +25,7 @@
   --admin-transition: 0.15s ease;
   --admin-sidebar-width: 200px;
   --admin-topbar-height: 52px;
+  --color-surface-outer: #000000;
 }
 
 *,
@@ -159,7 +160,7 @@ body {
 .admin-topbar {
   height: var(--admin-topbar-height);
   border-bottom: 0.5px solid var(--color-border);
-  background: var(--color-surface);
+  background: var(--color-surface-outer);
   display: flex;
   align-items: center;
   justify-content: space-between;

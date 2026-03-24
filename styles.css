@@ -85,6 +85,8 @@
   --brand-cyan-rgb: 0, 198, 255;
   --brand-violet-rgb: 155, 0, 255;
   --brand-book: #ff4fa1;
+  --tile-overlay-accent: #8fd6ff;
+  --tile-overlay-accent-rgb: 143, 214, 255;
   --rainbow-divider-gradient: linear-gradient(
     90deg,
     rgba(255, 79, 141, 0.88) 0%,
@@ -1317,9 +1319,9 @@ body[data-page="home"] #audio-grid.is-hidden-by-toggle {
 }
 
 body[data-page="home"] #best-of-artist .section-cta-best-of-toggle .btn.is-active {
-  border-color: #ff3d6b;
-  color: #ff3d6b;
-  box-shadow: 0 0 0 1px rgba(255, 61, 107, 0.26);
+  border-color: var(--tile-overlay-accent);
+  color: var(--tile-overlay-accent);
+  box-shadow: 0 0 0 1px rgba(var(--tile-overlay-accent-rgb), 0.26);
 }
 
 body[data-page="home"] #music .section-cta.section-cta-audio-placeholders {
@@ -1508,9 +1510,9 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
   justify-content: center;
   background: linear-gradient(
     160deg,
-    rgba(122, 44, 255, 0.42) 0%,
-    rgba(255, 47, 138, 0.28) 42%,
-    rgba(32, 213, 255, 0.16) 100%
+    rgba(47, 123, 255, 0.34) 0%,
+    rgba(122, 44, 255, 0.24) 46%,
+    rgba(32, 213, 255, 0.14) 100%
   );
   pointer-events: none;
   z-index: 2;
@@ -1526,13 +1528,13 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
   padding: 0.04em 0.22em;
   border-radius: 0.18em;
   background: rgba(8, 18, 40, 0.48);
-  color: rgba(var(--brand-cyan-rgb), 0.9);
+  color: rgba(var(--tile-overlay-accent-rgb), 0.95);
   font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 700;
   font-size: clamp(1.95rem, 4.7vw, 3.2rem);
   line-height: 1;
   letter-spacing: 0.02em;
-  text-shadow: 0 0 14px rgba(var(--brand-cyan-rgb), 0.35);
+  text-shadow: 0 0 14px rgba(var(--tile-overlay-accent-rgb), 0.35);
 }
 
 .video-top-overlay {
@@ -1580,14 +1582,14 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
 }
 
 .audio-set-number {
-  color: var(--brand-cyan);
+  color: var(--tile-overlay-accent);
   font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 700;
   font-size: clamp(2.5rem, 5.4vw, 3.6rem);
   line-height: 1;
   letter-spacing: 0.02em;
   white-space: nowrap;
-  text-shadow: 0 0 14px rgba(var(--brand-cyan-rgb), 0.25);
+  text-shadow: 0 0 14px rgba(var(--tile-overlay-accent-rgb), 0.3);
 }
 
 .audio-set-play {

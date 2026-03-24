@@ -2310,3 +2310,259 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
     display: none;
   }
 }
+
+/* Palette 01 overrides (Layer 1 pages) */
+:root {
+  --color-bg: #0d0f1a;
+  --color-surface: #13162a;
+  --color-border: #252840;
+  --color-type: #f5f0e8;
+  --color-type-muted: rgba(245, 240, 232, 0.55);
+  --gradient: linear-gradient(
+    90deg,
+    #00c8ff 0%,
+    #7b5cf0 35%,
+    #f43f8e 60%,
+    #ff8c00 80%,
+    #ffd700 100%
+  );
+  --gradient-diagonal: linear-gradient(
+    135deg,
+    #00c8ff 0%,
+    #7b5cf0 35%,
+    #f43f8e 60%,
+    #ff8c00 80%,
+    #ffd700 100%
+  );
+  --brand-ink: var(--color-bg);
+  --brand-panel: var(--color-surface);
+  --brand-line-soft: var(--color-border);
+  --brand-text-bright: var(--color-type);
+  --muted: var(--color-type-muted);
+  --cta-gradient: var(--gradient);
+  --accent-iridescent: var(--gradient);
+  --accent-iridescent-soft: var(--gradient);
+}
+
+body[data-page="home"],
+body[data-page="video"],
+body[data-page="audio-more"],
+body[data-page="contact"] {
+  background: var(--color-bg);
+  color: var(--color-type);
+}
+
+body[data-page="home"] a,
+body[data-page="video"] a,
+body[data-page="audio-more"] a,
+body[data-page="contact"] a {
+  color: var(--color-type);
+}
+
+body[data-page="home"] hr,
+body[data-page="video"] hr,
+body[data-page="audio-more"] hr,
+body[data-page="contact"] hr,
+body[data-page="home"] .divider,
+body[data-page="video"] .divider,
+body[data-page="audio-more"] .divider,
+body[data-page="contact"] .divider,
+.section-divider {
+  border: 0;
+  height: 1px;
+  background: var(--color-border);
+}
+
+body[data-page="home"] .site-header,
+body[data-page="video"] .site-header,
+body[data-page="audio-more"] .site-header,
+body[data-page="contact"] .site-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+body[data-page="home"] .main-nav-link,
+body[data-page="video"] .main-nav-link,
+body[data-page="audio-more"] .main-nav-link,
+body[data-page="contact"] .main-nav-link {
+  color: var(--color-type);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+body[data-page="home"] .main-nav-link:hover,
+body[data-page="video"] .main-nav-link:hover,
+body[data-page="audio-more"] .main-nav-link:hover,
+body[data-page="contact"] .main-nav-link:hover {
+  opacity: 0.7;
+}
+
+body[data-page="home"] .main-nav-book {
+  background: var(--gradient);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+body[data-page="home"] .main-nav-book:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+body[data-page="home"] .btn,
+body[data-page="video"] .btn,
+body[data-page="audio-more"] .btn,
+body[data-page="contact"] .btn {
+  background: var(--gradient);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 8px;
+  transition:
+    opacity 0.2s,
+    transform 0.15s;
+}
+
+body[data-page="home"] .btn:hover,
+body[data-page="video"] .btn:hover,
+body[data-page="audio-more"] .btn:hover,
+body[data-page="contact"] .btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+body[data-page="home"] .btn-outline,
+body[data-page="video"] .btn-outline,
+body[data-page="audio-more"] .btn-outline,
+body[data-page="contact"] .btn-outline {
+  background:
+    linear-gradient(var(--color-bg), var(--color-bg)) padding-box,
+    var(--gradient) border-box;
+  border: 1px solid transparent;
+  color: var(--color-type);
+}
+
+body[data-page="home"] .hero {
+  background-color: var(--color-bg);
+  isolation: isolate;
+}
+
+body[data-page="home"] .hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-diagonal);
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body[data-page="home"] .hero > * {
+  position: relative;
+  z-index: 2;
+}
+
+body[data-page="home"] .media-card,
+body[data-page="video"] .media-card,
+body[data-page="audio-more"] .media-card,
+body[data-page="contact"] .media-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+body[data-page="home"] .media-card:hover,
+body[data-page="video"] .media-card:hover,
+body[data-page="audio-more"] .media-card:hover,
+body[data-page="contact"] .media-card:hover {
+  border-color: #7b5cf0;
+  box-shadow: 0 0 0 1.5px #7b5cf0;
+}
+
+body[data-page="home"] .genre-badge,
+body[data-page="video"] .genre-badge,
+body[data-page="audio-more"] .genre-badge,
+body[data-page="contact"] .genre-badge {
+  background: var(--gradient);
+  color: #fff;
+  border: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+body[data-page="home"] .audio-set-progress-fill,
+body[data-page="video"] .audio-set-progress-fill,
+body[data-page="audio-more"] .audio-set-progress-fill,
+body[data-page="contact"] .audio-set-progress-fill,
+body[data-page="home"] .offline-track-progress-fill,
+body[data-page="video"] .offline-track-progress-fill,
+body[data-page="audio-more"] .offline-track-progress-fill,
+body[data-page="contact"] .offline-track-progress-fill {
+  background: var(--gradient);
+}
+
+body[data-page="home"] .social-link,
+body[data-page="video"] .social-link,
+body[data-page="audio-more"] .social-link,
+body[data-page="contact"] .social-link {
+  background: var(--gradient);
+  border: 0;
+  padding: 2px;
+}
+
+body[data-page="home"] .social-link svg,
+body[data-page="video"] .social-link svg,
+body[data-page="audio-more"] .social-link svg,
+body[data-page="contact"] .social-link svg {
+  background: var(--color-bg);
+  border-radius: 50%;
+  padding: 6px;
+}
+
+body[data-page="home"] .site-footer,
+body[data-page="video"] .site-footer,
+body[data-page="audio-more"] .site-footer,
+body[data-page="contact"] .site-footer {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+body[data-page="home"] .site-footer a,
+body[data-page="video"] .site-footer a,
+body[data-page="audio-more"] .site-footer a,
+body[data-page="contact"] .site-footer a {
+  color: var(--color-type-muted);
+}
+
+body[data-page="home"] .site-footer a:hover,
+body[data-page="video"] .site-footer a:hover,
+body[data-page="audio-more"] .site-footer a:hover,
+body[data-page="contact"] .site-footer a:hover {
+  color: var(--color-type);
+}
+
+body[data-page="contact"] .contact-field input,
+body[data-page="contact"] .contact-field textarea {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-type);
+}
+
+body[data-page="contact"] .contact-field > span,
+body[data-page="contact"] .subpage-intro,
+body[data-page="video"] .subpage-intro,
+body[data-page="audio-more"] .subpage-intro {
+  color: var(--color-type-muted);
+}

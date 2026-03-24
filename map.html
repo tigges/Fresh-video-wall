@@ -7,18 +7,20 @@
     <link rel="stylesheet" href="./styles.css" />
     <style>
       :root {
-        --map-bg: #06070a;
-        --map-panel: #11131a;
-        --map-panel-soft: #191d29;
-        --map-text: #eef2ff;
-        --map-muted: #a6b0cb;
-        --map-line: #4c5a86;
-        --map-line-dim: #313a56;
+        --map-bg: var(--color-bg, #0d0f1a);
+        --map-panel: var(--color-surface, #13162a);
+        --map-panel-soft: #1b1f38;
+        --map-text: var(--color-type, #f5f0e8);
+        --map-muted: var(--color-type-muted, rgba(245, 240, 232, 0.55));
+        --map-line: var(--color-border, #252840);
+        --map-line-dim: rgba(37, 40, 64, 0.7);
       }
 
       body[data-page="map"] {
         margin: 0;
-        background: radial-gradient(circle at top, #14192a 0%, var(--map-bg) 48%);
+        background:
+          radial-gradient(circle at top, rgba(123, 92, 240, 0.14) 0%, transparent 48%),
+          var(--map-bg);
         color: var(--map-text);
       }
 
@@ -93,7 +95,7 @@
       }
 
       .map-card a {
-        color: #7ad9ff;
+        color: #97d8ff;
         text-decoration: none;
       }
 
@@ -142,9 +144,9 @@
       }
 
       .status-unlinked {
-        border: 1px solid rgba(255, 184, 0, 0.38);
-        background: rgba(255, 184, 0, 0.11);
-        color: #ffe5a3;
+        border: 1px solid rgba(244, 63, 142, 0.42);
+        background: rgba(244, 63, 142, 0.12);
+        color: #ffd0e9;
       }
 
       .all-pages {

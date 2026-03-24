@@ -2558,10 +2558,3 @@ body[data-page="audio-more"] .subpage-intro {
   color: var(--color-type-muted);
 }
 
-body[data-page="home"] .stats-strip + .section-divider {
-  width: min(1150px, calc(100% - 2.2rem));
-  margin: 0 auto 0.45rem;
-  height: 2px;
-  background: var(--gradient);
-  opacity: 0.62;
-}

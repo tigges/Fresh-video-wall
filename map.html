@@ -101,6 +101,53 @@
         text-decoration: underline;
       }
 
+      .map-thumb {
+        margin-top: 0.72rem;
+        display: block;
+        height: 136px;
+        border: 1px solid var(--color-border, #252840);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #000;
+        text-decoration: none;
+        transition: border-color 0.15s ease;
+      }
+
+      .map-thumb:hover {
+        border-color: #7b5cf0;
+      }
+
+      .map-thumb iframe {
+        width: 1280px;
+        height: 720px;
+        border: 0;
+        transform: scale(0.2);
+        transform-origin: top left;
+        pointer-events: none;
+        display: block;
+        filter: saturate(0.88) contrast(0.94);
+      }
+
+      .map-thumb-placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 200, 255, 0.12),
+          rgba(123, 92, 240, 0.14),
+          rgba(244, 63, 142, 0.14)
+        );
+      }
+
+      .map-thumb-placeholder span {
+        font-size: 0.76rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--map-text);
+        opacity: 0.84;
+      }
+
       .connector {
         height: 24px;
         display: flex;
@@ -197,18 +244,30 @@
           <article class="map-card">
             <h3>Index <span class="status status-linked">Linked</span></h3>
             <p><a href="./index.html">/index.html</a><br />Main landing page.</p>
+            <a class="map-thumb" href="./index.html" aria-label="Preview index page">
+              <iframe loading="lazy" src="./index.html" title="Index page preview"></iframe>
+            </a>
           </article>
           <article class="map-card">
             <h3>Video <span class="status status-linked">Linked</span></h3>
             <p><a href="./video.html">/video.html</a><br />Layer 1 video page.</p>
+            <a class="map-thumb" href="./video.html" aria-label="Preview video page">
+              <iframe loading="lazy" src="./video.html" title="Video page preview"></iframe>
+            </a>
           </article>
           <article class="map-card">
             <h3>Audio <span class="status status-linked">Linked</span></h3>
             <p><a href="./audio.html">/audio.html</a><br />Layer 1 audio page.</p>
+            <a class="map-thumb" href="./audio.html" aria-label="Preview audio page">
+              <iframe loading="lazy" src="./audio.html" title="Audio page preview"></iframe>
+            </a>
           </article>
           <article class="map-card">
             <h3>Contact <span class="status status-linked">Linked</span></h3>
             <p><a href="./contact.html">/contact.html</a><br />Layer 1 contact page.</p>
+            <a class="map-thumb" href="./contact.html" aria-label="Preview contact page">
+              <iframe loading="lazy" src="./contact.html" title="Contact page preview"></iframe>
+            </a>
           </article>
         </div>
       </section>
@@ -224,6 +283,9 @@
               <a href="./map.html">/map.html</a><br />
               Layered index and routing map.
             </p>
+            <a class="map-thumb map-thumb-placeholder" href="./map.html" aria-label="Open map page">
+              <span>Map preview</span>
+            </a>
           </article>
           <article class="map-card">
             <h3>Admin <span class="status status-unlinked">Unlinked</span></h3>
@@ -231,6 +293,9 @@
               <a href="./admin.html">/admin.html</a><br />
               Unlinked admin workspace page.
             </p>
+            <a class="map-thumb" href="./admin.html" aria-label="Preview admin page">
+              <iframe loading="lazy" src="./admin.html" title="Admin page preview"></iframe>
+            </a>
           </article>
         </div>
       </section>

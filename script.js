@@ -1604,4 +1604,5 @@ initHeaderVisibilityOnScroll();
 initHeaderContentOffset();
 bindHeroLiveCtaClick();
 bindLiveStripClick();
+bindSubpageMainNav();
 hydrateMediaWalls();

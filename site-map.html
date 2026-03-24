@@ -235,41 +235,50 @@
         Complete map of all HTML pages in this repo (including pages not linked in primary navigation).
       </p>
 
-      <h2 class="section-title">Primary Routed Pages</h2>
+      <h2 class="section-title">Layer 1 — Key Pages</h2>
       <section class="map-grid">
-        <article class="card">
-          <h3>
-            Home — Video &amp; Audio Wall
-            <span class="status status-linked">Linked</span>
-          </h3>
-          <p>
-            <a href="./index.html">/index.html</a><br />
-            Main landing page with hero, Best of Artist toggle, live strip, and CTA bars.
-          </p>
-        </article>
-
-        <div class="connector"><div class="line"></div></div>
-
         <div class="map-grid row-4">
           <article class="card">
-            <h3>Videos <span class="status status-linked">Linked</span></h3>
+            <h3>Index <span class="status status-linked">Linked</span></h3>
             <p>
-              <a href="./videos.html">/videos.html</a><br />
-              Extended video wall beyond homepage Top 3.
+              <a href="./index.html">/index.html</a><br />
+              Main landing page with hero, Best of Artist, and CTA sections.
             </p>
           </article>
           <article class="card">
-            <h3>Top Audio <span class="status status-linked">Linked</span></h3>
+            <h3>Video <span class="status status-linked">Linked</span></h3>
             <p>
-              <a href="./audio.html">/audio.html</a><br />
-              Additional audio tiles in homepage style.
+              <a href="./videos.html">/videos.html</a><br />
+              Video page routed from global main navigation.
             </p>
           </article>
+          <article class="card">
+            <h3>Audio <span class="status status-linked">Linked</span></h3>
+            <p>
+              <a href="./audio.html">/audio.html</a><br />
+              Main audio page routed from global main navigation.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Contact <span class="status status-linked">Linked</span></h3>
+            <p>
+              <a href="./contact.html">/contact.html</a><br />
+              Contact and booking form page (Book button target).
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <div class="connector"><div class="line"></div></div>
+
+      <h2 class="section-title">Layer 2 — Alt Audio</h2>
+      <section class="map-grid">
+        <div class="map-grid row-4">
           <article class="card">
             <h3>Audio Bridge <span class="status status-linked">Linked</span></h3>
             <p>
               <a href="./audio-bridge.html">/audio-bridge.html</a><br />
-              Mixcloud-style embedded audio feed.
+              Mixcloud-style bridge page for alternate audio browsing.
             </p>
           </article>
           <article class="card">
@@ -279,73 +288,28 @@
               Direct tile playback page reached from Audio Bridge.
             </p>
           </article>
-        </div>
-
-        <div class="arrow-row">
-          <div class="arrow">from Home</div>
-          <div class="arrow">from Home</div>
-          <div class="arrow">from Top Audio</div>
-          <div class="arrow">from Audio Bridge</div>
-        </div>
-
-        <div class="connector"><div class="line"></div></div>
-
-        <div class="map-grid row-2">
           <article class="card">
-            <h3>Mixcloud Offline Home <span class="status status-linked">Linked</span></h3>
+            <h3>Offline Mixcloud Home <span class="status status-linked">Linked</span></h3>
             <p>
               <a href="./mixcloud-offline.html">/mixcloud-offline.html</a><br />
-              Local clone-style profile/feed layout.
+              Offline/clone-style Mixcloud listing page.
             </p>
           </article>
           <article class="card">
-            <h3>Mixcloud Offline Track Detail <span class="status status-linked">Linked</span></h3>
+            <h3>Offline Mixcloud Track Details <span class="status status-linked">Linked</span></h3>
             <p>
-              <a href="./mixcloud-offline-track.html">/mixcloud-offline-track.html?track=...</a
-              ><br />
-              Track detail player view.
-            </p>
-          </article>
-        </div>
-
-        <div class="connector"><div class="line"></div></div>
-
-        <div class="map-grid row-2">
-          <article class="card">
-            <h3>Contact <span class="status status-linked">Linked</span></h3>
-            <p>
-              <a href="./contact.html">/contact.html</a><br />
-              Contact and booking form page.
-            </p>
-          </article>
-          <article class="card">
-            <h3>Visual Site Map <span class="status status-unlinked">Utility</span></h3>
-            <p>
-              <a href="./site-map.html">/site-map.html</a><br />
-              Repository-level map for all pages.
+              <a href="./mixcloud-offline-track.html">/mixcloud-offline-track.html?track=...</a><br />
+              Offline track detail/player view.
             </p>
           </article>
         </div>
       </section>
 
-      <h2 class="section-title">Utility / Supporting Pages</h2>
+      <div class="connector"><div class="line"></div></div>
+
+      <h2 class="section-title">Layer 3 — Unlinked</h2>
       <section class="map-grid">
-        <div class="connector"><div class="line-dash"></div></div>
-        <div class="map-grid row-3">
-          <article class="card">
-            <h3>Gradient Options <span class="status status-unlinked">Not linked</span></h3>
-            <p>
-              <a href="./gradient-options.html">/gradient-options.html</a><br />
-              Visual gradient concept comparison page.
-            </p>
-          </article>
-          <article class="card">
-            <h3>Version Gallery <span class="status status-unlinked">Not linked</span></h3>
-            <p>
-              <a href="./version-gallery/index.html">/version-gallery/index.html</a><br />
-              Snapshot history and comparison gallery.
-            </p>
-          </article>
+        <div class="map-grid row-4">
           <article class="card">
             <h3>Legacy Audio URL <span class="status status-unlinked">Redirect</span></h3>
             <p>
@@ -353,14 +317,8 @@
               Backward-compatible redirect page forwarding to <code>/audio.html</code>.
             </p>
           </article>
-        </div>
-      </section>
-
-      <h2 class="section-title">Archive Snapshot Pages (Not linked)</h2>
-      <section class="map-grid">
-        <div class="map-grid row-3">
           <article class="card">
-            <h3>Snapshot (Generic)</h3>
+            <h3>Snapshot (Generic) <span class="status status-unlinked">Archive</span></h3>
             <p>
               <a href="./assets/mixcloud-clone/snapshot/html/urbant.html"
                 >/assets/mixcloud-clone/snapshot/html/urbant.html</a
@@ -368,7 +326,7 @@
             </p>
           </article>
           <article class="card">
-            <h3>Snapshot (Desktop)</h3>
+            <h3>Snapshot (Desktop) <span class="status status-unlinked">Archive</span></h3>
             <p>
               <a href="./assets/mixcloud-clone/snapshot/desktop/html/urbant.html"
                 >/assets/mixcloud-clone/snapshot/desktop/html/urbant.html</a
@@ -376,11 +334,40 @@
             </p>
           </article>
           <article class="card">
-            <h3>Snapshot (Mobile)</h3>
+            <h3>Snapshot (Mobile) <span class="status status-unlinked">Archive</span></h3>
             <p>
               <a href="./assets/mixcloud-clone/snapshot/mobile/html/urbant.html"
                 >/assets/mixcloud-clone/snapshot/mobile/html/urbant.html</a
               >
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <div class="connector"><div class="line-dash"></div></div>
+
+      <h2 class="section-title">Layer 4 — Utility / Supporting Pages</h2>
+      <section class="map-grid">
+        <div class="map-grid row-3">
+          <article class="card">
+            <h3>Visual Site Map <span class="status status-unlinked">Utility</span></h3>
+            <p>
+              <a href="./site-map.html">/site-map.html</a><br />
+              This 4-layer index and direct-link map page.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Gradient Options <span class="status status-unlinked">Support</span></h3>
+            <p>
+              <a href="./gradient-options.html">/gradient-options.html</a><br />
+              Supporting visual gradient comparison page.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Version Gallery <span class="status status-unlinked">Support</span></h3>
+            <p>
+              <a href="./version-gallery/index.html">/version-gallery/index.html</a><br />
+              Supporting snapshot history and comparison gallery.
             </p>
           </article>
         </div>

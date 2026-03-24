@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DJ UrbanT | Visual Site Map</title>
+    <title>DJ UrbanT | Map</title>
     <style>
       :root {
         --bg: #06070a;
@@ -59,12 +59,12 @@
         gap: 1rem;
       }
 
-      .row-3 {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
       .row-4 {
         grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .row-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
       .row-2 {
@@ -89,24 +89,6 @@
         color: var(--muted);
         font-size: 0.92rem;
         line-height: 1.4;
-      }
-
-      .section-list {
-        margin: 0.5rem 0 0;
-        padding: 0;
-        list-style: none;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-      }
-
-      .section-chip {
-        border: 1px solid rgba(122, 217, 255, 0.28);
-        background: rgba(122, 217, 255, 0.08);
-        border-radius: 999px;
-        padding: 0.2rem 0.55rem;
-        font-size: 0.75rem;
-        color: #d6ecff;
       }
 
       .card a {
@@ -135,37 +117,6 @@
           var(--line-dim) 0 5px,
           transparent 5px 10px
         );
-      }
-
-      .arrow-row {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        align-items: center;
-        gap: 1rem;
-        margin: 0.1rem 0 0.4rem;
-      }
-
-      .arrow {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--muted);
-        font-size: 0.8rem;
-        gap: 0.4rem;
-      }
-
-      .arrow::before {
-        content: "";
-        display: block;
-        width: 40px;
-        height: 2px;
-        background: var(--line);
-      }
-
-      .note {
-        margin-top: 1.4rem;
-        color: #9aa5c5;
-        font-size: 0.86rem;
       }
 
       .status {
@@ -212,27 +163,27 @@
         font-size: 0.85rem;
       }
 
+      .note {
+        margin-top: 1.4rem;
+        color: #9aa5c5;
+        font-size: 0.86rem;
+      }
+
       @media (max-width: 850px) {
-        .row-3,
         .row-4,
+        .row-3,
         .row-2,
-        .arrow-row,
         .all-pages {
           grid-template-columns: 1fr;
-        }
-
-        .arrow {
-          justify-content: flex-start;
-          padding-left: 0.2rem;
         }
       }
     </style>
   </head>
   <body>
     <main class="wrap">
-      <h1>DJ UrbanT — Visual Site Map</h1>
+      <h1>DJ UrbanT — Map</h1>
       <p class="lead">
-        Complete map of all HTML pages in this repo (including pages not linked in primary navigation).
+        Layered map of all pages, with focus on Layer 1 and Layer 2 administration.
       </p>
 
       <h2 class="section-title">Layer 1 — Key Pages</h2>
@@ -240,31 +191,19 @@
         <div class="map-grid row-4">
           <article class="card">
             <h3>Index <span class="status status-linked">Linked</span></h3>
-            <p>
-              <a href="./index.html">/index.html</a><br />
-              Main landing page with hero, Best of Artist, and CTA sections.
-            </p>
+            <p><a href="./index.html">/index.html</a><br />Main landing page.</p>
           </article>
           <article class="card">
             <h3>Video <span class="status status-linked">Linked</span></h3>
-            <p>
-              <a href="./videos.html">/videos.html</a><br />
-              Video page routed from global main navigation and scoped to Layer 1.
-            </p>
+            <p><a href="./videos.html">/videos.html</a><br />Layer 1 video page.</p>
           </article>
           <article class="card">
             <h3>Audio <span class="status status-linked">Linked</span></h3>
-            <p>
-              <a href="./audio.html">/audio.html</a><br />
-              Main audio page routed from global main navigation and scoped to Layer 1.
-            </p>
+            <p><a href="./audio.html">/audio.html</a><br />Layer 1 audio page.</p>
           </article>
           <article class="card">
             <h3>Contact <span class="status status-linked">Linked</span></h3>
-            <p>
-              <a href="./contact.html">/contact.html</a><br />
-              Contact and booking form page (Book button target).
-            </p>
+            <p><a href="./contact.html">/contact.html</a><br />Layer 1 contact page.</p>
           </article>
         </div>
       </section>
@@ -275,10 +214,17 @@
       <section class="map-grid">
         <div class="map-grid row-2">
           <article class="card">
-            <h3>Visual Site Map <span class="status status-unlinked">Utility</span></h3>
+            <h3>Map <span class="status status-unlinked">Utility</span></h3>
             <p>
-              <a href="./site-map.html">/site-map.html</a><br />
-              Admin index page for layer control and direct-link overview.
+              <a href="./map.html">/map.html</a><br />
+              Layered index and routing map.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Admin <span class="status status-unlinked">Unlinked</span></h3>
+            <p>
+              <a href="./admin.html">/admin.html</a><br />
+              Unlinked admin workspace page.
             </p>
           </article>
         </div>
@@ -291,30 +237,21 @@
         <div class="map-grid row-4">
           <article class="card">
             <h3>Audio Bridge <span class="status status-linked">Linked</span></h3>
-            <p>
-              <a href="./audio-bridge.html">/audio-bridge.html</a><br />
-              Mixcloud-style bridge page for alternate audio browsing.
-            </p>
+            <p><a href="./audio-bridge.html">/audio-bridge.html</a><br />Alternate audio bridge.</p>
           </article>
           <article class="card">
             <h3>Audio Direct <span class="status status-linked">Linked</span></h3>
-            <p>
-              <a href="./audio-direct.html">/audio-direct.html</a><br />
-              Direct tile playback page reached from Audio Bridge.
-            </p>
+            <p><a href="./audio-direct.html">/audio-direct.html</a><br />Direct playback layer.</p>
           </article>
           <article class="card">
             <h3>Offline Mixcloud Home <span class="status status-linked">Linked</span></h3>
-            <p>
-              <a href="./mixcloud-offline.html">/mixcloud-offline.html</a><br />
-              Offline/clone-style Mixcloud listing page.
-            </p>
+            <p><a href="./mixcloud-offline.html">/mixcloud-offline.html</a><br />Offline home clone.</p>
           </article>
           <article class="card">
-            <h3>Offline Mixcloud Track Details <span class="status status-linked">Linked</span></h3>
+            <h3>Offline Track Details <span class="status status-linked">Linked</span></h3>
             <p>
               <a href="./mixcloud-offline-track.html">/mixcloud-offline-track.html?track=...</a><br />
-              Offline track detail/player view.
+              Offline detail/player view.
             </p>
           </article>
         </div>
@@ -361,14 +298,14 @@
             <h3>Gradient Options <span class="status status-unlinked">Support</span></h3>
             <p>
               <a href="./gradient-options.html">/gradient-options.html</a><br />
-              Supporting visual gradient comparison page.
+              Supporting visual gradient page.
             </p>
           </article>
           <article class="card">
             <h3>Version Gallery <span class="status status-unlinked">Support</span></h3>
             <p>
               <a href="./version-gallery/index.html">/version-gallery/index.html</a><br />
-              Supporting snapshot history and comparison gallery.
+              Supporting snapshot history page.
             </p>
           </article>
         </div>
@@ -377,50 +314,18 @@
       <h2 class="section-title">All HTML Pages (Complete Index)</h2>
       <section class="map-grid">
         <ul class="all-pages">
-          <li>
-            <code>/index.html</code>
-            <span class="status status-linked">Linked</span>
-          </li>
-          <li>
-            <code>/videos.html</code>
-            <span class="status status-linked">Linked</span>
-          </li>
-          <li>
-            <code>/audio.html</code>
-            <span class="status status-linked">Linked</span>
-          </li>
-          <li>
-            <code>/audio-bridge.html</code>
-            <span class="status status-linked">Linked</span>
-          </li>
-          <li>
-            <code>/audio-direct.html</code>
-            <span class="status status-linked">Linked</span>
-          </li>
-          <li>
-            <code>/mixcloud-offline.html</code>
-            <span class="status status-linked">Linked</span>
-          </li>
-          <li>
-            <code>/mixcloud-offline-track.html</code>
-            <span class="status status-linked">Linked</span>
-          </li>
-          <li>
-            <code>/contact.html</code>
-            <span class="status status-linked">Linked</span>
-          </li>
-          <li>
-            <code>/site-map.html</code>
-            <span class="status status-unlinked">Utility</span>
-          </li>
-          <li>
-            <code>/gradient-options.html</code>
-            <span class="status status-unlinked">Not linked</span>
-          </li>
-          <li>
-            <code>/version-gallery/index.html</code>
-            <span class="status status-unlinked">Not linked</span>
-          </li>
+          <li><code>/index.html</code> <span class="status status-linked">Linked</span></li>
+          <li><code>/videos.html</code> <span class="status status-linked">Linked</span></li>
+          <li><code>/audio.html</code> <span class="status status-linked">Linked</span></li>
+          <li><code>/contact.html</code> <span class="status status-linked">Linked</span></li>
+          <li><code>/map.html</code> <span class="status status-unlinked">Utility</span></li>
+          <li><code>/admin.html</code> <span class="status status-unlinked">Unlinked</span></li>
+          <li><code>/audio-bridge.html</code> <span class="status status-linked">Linked</span></li>
+          <li><code>/audio-direct.html</code> <span class="status status-linked">Linked</span></li>
+          <li><code>/mixcloud-offline.html</code> <span class="status status-linked">Linked</span></li>
+          <li><code>/mixcloud-offline-track.html</code> <span class="status status-linked">Linked</span></li>
+          <li><code>/gradient-options.html</code> <span class="status status-unlinked">Not linked</span></li>
+          <li><code>/version-gallery/index.html</code> <span class="status status-unlinked">Not linked</span></li>
           <li>
             <code>/assets/mixcloud-clone/snapshot/html/urbant.html</code>
             <span class="status status-unlinked">Archive</span>

@@ -10,7 +10,7 @@ const PRIMARY_GENRE_BADGE_LABEL = "Bass House";
 const SECONDARY_GENRE_BADGE_LABEL = "Tech House";
 const HOME_BEST_OF_MORE_LINKS = Object.freeze({
   video: "./videos.html",
-  audio: "./audio-more.html",
+  audio: "./audio.html",
 });
 const HOME_BEST_OF_MOBILE_QUERY = "(max-width: 639px)";
 let mixcloudWidgetApiPromise = null;
@@ -602,6 +602,19 @@ function bindSubpageMainNav() {
     const isActive = normalizedTarget === currentHref;
     link.classList.toggle("is-active", isActive);
   });
+}
+
+function normalizeLegacyAudioRoutes() {
+  const legacyPath = "/audio-more.html";
+  const currentPath = window.location.pathname;
+  if (!currentPath.endsWith(legacyPath)) {
+    return;
+  }
+  const replacement = `${window.location.origin}${window.location.pathname.replace(
+    /audio-more\.html$/,
+    "audio.html",
+  )}${window.location.search}${window.location.hash}`;
+  window.location.replace(replacement);
 }
 
 function createVideoCard(item, index = 0) {
@@ -1600,6 +1613,7 @@ async function hydrateMediaWalls() {
 }
 
 applyHeroFontVariant();
+normalizeLegacyAudioRoutes();
 initHeaderVisibilityOnScroll();
 initHeaderContentOffset();
 bindHeroLiveCtaClick();

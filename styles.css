@@ -24,18 +24,26 @@
   --logo-yellow: #ffe033;
   --logo-green: #4be548;
   --rainbow-gradient: linear-gradient(
-    115deg,
+    102deg,
     var(--logo-cyan) 0%,
-    var(--logo-blue) 40%,
-    var(--logo-violet) 74%,
-    var(--logo-magenta) 100%
+    var(--logo-blue) 16%,
+    var(--logo-violet) 32%,
+    var(--logo-magenta) 48%,
+    var(--logo-red) 64%,
+    var(--logo-orange) 80%,
+    var(--logo-yellow) 92%,
+    var(--logo-green) 100%
   );
   --rainbow-gradient-soft: linear-gradient(
-    115deg,
-    rgba(32, 213, 255, 0.36) 0%,
-    rgba(47, 123, 255, 0.3) 40%,
-    rgba(122, 44, 255, 0.28) 74%,
-    rgba(255, 47, 138, 0.26) 100%
+    102deg,
+    rgba(32, 213, 255, 0.42) 0%,
+    rgba(47, 123, 255, 0.36) 16%,
+    rgba(122, 44, 255, 0.34) 32%,
+    rgba(255, 47, 138, 0.34) 48%,
+    rgba(255, 63, 63, 0.3) 64%,
+    rgba(255, 143, 31, 0.28) 80%,
+    rgba(255, 224, 51, 0.3) 92%,
+    rgba(75, 229, 72, 0.3) 100%
   );
   --accent-iridescent: linear-gradient(
     128deg,
@@ -59,23 +67,23 @@
     rgba(171, 146, 207, 0.24) 86%,
     rgba(207, 214, 225, 0.24) 100%
   );
-  --accent-iridescent: var(--aqua-violet-gradient-horizontal);
-  --accent-iridescent-soft: linear-gradient(
-    130deg,
-    rgba(var(--brand-cyan-rgb), 0.34),
-    rgba(var(--brand-violet-rgb), 0.28)
-  );
+  --accent-iridescent: var(--rainbow-gradient);
+  --accent-iridescent-soft: var(--rainbow-gradient-soft);
   --cta-gradient: linear-gradient(
     118deg,
     var(--logo-cyan) 0%,
-    var(--logo-blue) 42%,
-    var(--logo-violet) 78%,
-    var(--logo-magenta) 100%
+    var(--logo-blue) 20%,
+    var(--logo-violet) 40%,
+    var(--logo-magenta) 58%,
+    var(--logo-red) 74%,
+    var(--logo-orange) 88%,
+    var(--logo-yellow) 100%
   );
   --cta-glow:
-    0 0 0 1px rgba(32, 213, 255, 0.36),
-    0 0 14px rgba(122, 44, 255, 0.22),
-    0 0 20px rgba(255, 47, 138, 0.16);
+    0 0 0 1px rgba(32, 213, 255, 0.46),
+    0 0 16px rgba(122, 44, 255, 0.24),
+    0 0 22px rgba(255, 47, 138, 0.24),
+    0 0 28px rgba(255, 143, 31, 0.24);
   --brand-text-bright: #f4f7ff;
   --brand-live-pill-bg: #f1ba31;
   --brand-danger: #ff5d57;
@@ -93,9 +101,11 @@
   --tile-overlay-accent-rgb: 143, 214, 255;
   --rainbow-divider-gradient: linear-gradient(
     90deg,
-    rgba(var(--brand-cyan-rgb), 0.9) 0%,
-    rgba(47, 123, 255, 0.78) 44%,
-    rgba(var(--brand-violet-rgb), 0.72) 100%
+    rgba(255, 79, 141, 0.88) 0%,
+    rgba(255, 170, 0, 0.8) 24%,
+    rgba(146, 239, 107, 0.78) 48%,
+    rgba(0, 198, 255, 0.86) 73%,
+    rgba(155, 0, 255, 0.76) 100%
   );
   --aqua-violet-gradient-horizontal: linear-gradient(
     90deg,
@@ -513,27 +523,19 @@ body[data-hero-font="russo"] .hero-overlay-title {
   padding-inline: 1.75rem;
   min-width: min(320px, calc(100vw - 2rem));
   white-space: nowrap;
-  box-shadow: 0 0 22px rgba(var(--brand-cyan-rgb), 0.34), 0 0 18px rgba(var(--brand-violet-rgb), 0.22);
+  box-shadow: 0 0 24px rgba(0, 198, 255, 0.34), 0 0 18px rgba(255, 79, 161, 0.24);
 }
 
 .btn-outline {
   border-color: transparent;
   background:
-    linear-gradient(var(--brand-panel), var(--brand-panel)) padding-box,
-    linear-gradient(
-        135deg,
-        rgba(var(--brand-cyan-rgb), 0.45),
-        rgba(var(--brand-violet-rgb), 0.35)
-      )
-      border-box;
-  color: #edf3ff;
-  box-shadow: var(--shadow-soft);
+    linear-gradient(#080808, #080808) padding-box,
+    var(--accent-iridescent-soft) border-box;
+  color: #f2f4ff;
 }
 
 .btn-outline:hover {
-  box-shadow:
-    0 0 0 1px rgba(var(--brand-cyan-rgb), 0.24),
-    0 10px 20px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 0 0 1px rgba(127, 93, 255, 0.26);
 }
 
 .diamond-stage {
@@ -566,10 +568,10 @@ body[data-hero-font="russo"] .hero-overlay-title {
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: clamp(0.7rem, 1.9vw, 1.4rem);
-  border-top: 1px solid rgba(var(--brand-cyan-rgb), 0.24);
-  border-bottom: 1px solid var(--brand-line-soft);
-  background: rgba(8, 11, 18, 0.9);
-  padding: var(--space-2) var(--space-3);
+  border-top: 1px solid rgba(0, 198, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(5, 6, 11, 0.86);
+  padding: 0.82rem 1rem 0.9rem;
 }
 
 .live-strip-inner::after {
@@ -579,11 +581,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
   right: 0;
   bottom: -1px;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(var(--brand-cyan-rgb), 0.62) 0%,
-    rgba(var(--brand-violet-rgb), 0.62) 100%
-  );
+  background: var(--rainbow-divider-gradient);
 }
 
 .live-strip-status {
@@ -660,9 +658,9 @@ body[data-hero-font="russo"] .hero-overlay-title {
   position: relative;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1px solid var(--brand-line-soft);
-  border-bottom: 1px solid var(--brand-line-soft);
-  background: rgba(8, 11, 18, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(5, 6, 11, 0.86);
 }
 
 .stats-strip-grid::after {
@@ -672,11 +670,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
   right: 0;
   bottom: -1px;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(var(--brand-cyan-rgb), 0.62) 0%,
-    rgba(var(--brand-violet-rgb), 0.62) 100%
-  );
+  background: var(--rainbow-divider-gradient);
 }
 
 .stats-tile {
@@ -834,9 +828,9 @@ body[data-hero-font="russo"] .hero-overlay-title {
   align-items: center;
   justify-content: space-between;
   gap: clamp(1rem, 2.8vw, 2.8rem);
-  border-top: 1px solid var(--brand-line-soft);
-  border-bottom: 1px solid var(--brand-line-soft);
-  background: rgba(8, 11, 18, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(5, 6, 11, 0.86);
   padding: clamp(1.35rem, 3.8vw, 2.7rem) clamp(1rem, 3vw, 2.2rem);
 }
 
@@ -894,8 +888,8 @@ body[data-hero-font="russo"] .hero-overlay-title {
 }
 
 .social-link {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
   border: 1.5px solid transparent;
   background:

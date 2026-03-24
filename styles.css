@@ -2110,7 +2110,7 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
     font-size: 0.82rem;
   }
 
-  body[data-page="videos"] .subpage-grid,
+  body[data-page="video"] .subpage-grid,
   body[data-page="audio"] .subpage-grid {
     display: flex;
     flex-direction: row;
@@ -2121,19 +2121,19 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
     scrollbar-width: none;
   }
 
-  body[data-page="videos"] .subpage-grid::-webkit-scrollbar,
+  body[data-page="video"] .subpage-grid::-webkit-scrollbar,
   body[data-page="audio"] .subpage-grid::-webkit-scrollbar {
     display: none;
   }
 
-  body[data-page="videos"] .subpage-grid .media-card,
+  body[data-page="video"] .subpage-grid .media-card,
   body[data-page="audio"] .subpage-grid .media-card {
     flex: 0 0 75vw;
     max-width: 280px;
     scroll-snap-align: start;
   }
 
-  body[data-page="videos"] .subpage-grid .media-card-more,
+  body[data-page="video"] .subpage-grid .media-card-more,
   body[data-page="audio"] .subpage-grid .media-card-more {
     display: flex;
   }

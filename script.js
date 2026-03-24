@@ -1,5 +1,5 @@
 const yearNode = document.getElementById("year");
-const FALLBACK_YOUTUBE_URL = "./videos.html";
+const FALLBACK_YOUTUBE_URL = "./video.html";
 
 if (yearNode) {
   yearNode.textContent = String(new Date().getFullYear());
@@ -9,7 +9,7 @@ const page = document.body.dataset.page;
 const PRIMARY_GENRE_BADGE_LABEL = "Bass House";
 const SECONDARY_GENRE_BADGE_LABEL = "Tech House";
 const HOME_BEST_OF_MORE_LINKS = Object.freeze({
-  video: "./videos.html",
+  video: "./video.html",
   audio: "./audio.html",
 });
 const HOME_BEST_OF_MOBILE_QUERY = "(max-width: 639px)";
@@ -1632,7 +1632,7 @@ async function hydrateMediaWalls() {
       return;
     }
 
-    if (page === "videos") {
+    if (page === "video") {
       const videos = [...(data?.videos?.top3 ?? []), ...(data?.videos?.rest ?? [])];
       renderGrid("videos-rest-grid", videos, createVideoCard);
       appendGridActionTile(

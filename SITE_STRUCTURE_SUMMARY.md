@@ -21,13 +21,13 @@ Most content is driven from `media-data.json` and rendered by `script.js` based 
 - **Role:** Main landing page and navigation hub
 
 **Links out to:**
-- More Videos -> `./videos.html`
+- More Videos -> `./video.html`
 - More Audio -> `./audio.html` (Micloud Clone)
 - Audio Direct -> `./audio-direct.html`
 - Social/footer links (X, Instagram, Twitch, TikTok, etc.)
 
 ### 2) More Videos
-- **Route:** `./videos.html`
+- **Route:** `./video.html`
 - **Role:** Extended video wall (beyond Top 3)
 
 **Links out to:**
@@ -101,7 +101,7 @@ Most content is driven from `media-data.json` and rendered by `script.js` based 
 - About/bio block + booking CTA
 - Social strip + footer
 
-### More Videos (`videos.html`)
+### More Videos (`video.html`)
 - Shared brand shell
 - Section heading + ranked "rest" video cards
 - Bottom nav CTA (Back / Top Videos)

@@ -208,7 +208,7 @@ body {
   font-family: "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 500;
   color: var(--text);
-  background: radial-gradient(circle at top, #0d1220 0%, var(--brand-ink) 52%, #000 100%);
+  background: #000;
   line-height: 1.5;
   overflow-x: hidden;
   padding-top: var(--header-offset);
@@ -991,34 +991,30 @@ body[data-page="home"] .stats-strip {
 }
 
 .social-link {
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   border-radius: 999px;
-  border: 1.5px solid transparent;
+  border: 1.8px solid transparent;
   background:
-    linear-gradient(#0a0a0a, #0a0a0a) padding-box,
-    var(--accent-iridescent) border-box;
+    linear-gradient(#000, #000) padding-box,
+    var(--gradient) border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #f1f1f1;
+  color: #fff;
   text-decoration: none;
-  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .social-link svg {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   fill: currentColor;
 }
 
 .social-link:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.09);
-  background:
-    linear-gradient(#0a0a0a, #0a0a0a) padding-box,
-    var(--cta-gradient) border-box;
-  box-shadow: var(--cta-glow);
+  opacity: 0.84;
+  transform: scale(1.06);
 }
 
 .subpage-main {
@@ -2313,7 +2309,7 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
 
 /* Palette 01 overrides (Layer 1 pages) */
 :root {
-  --color-bg: #0d0f1a;
+  --color-bg: #000;
   --color-surface: #13162a;
   --color-border: #252840;
   --color-type: #f5f0e8;
@@ -2461,7 +2457,7 @@ body[data-page="home"] .hero::before {
   position: absolute;
   inset: 0;
   background: var(--gradient-diagonal);
-  opacity: 0.06;
+  opacity: 0;
   pointer-events: none;
   z-index: 1;
 }
@@ -2517,18 +2513,12 @@ body[data-page="home"] .social-link,
 body[data-page="video"] .social-link,
 body[data-page="audio-more"] .social-link,
 body[data-page="contact"] .social-link {
-  background: var(--gradient);
-  border: 0;
-  padding: 2px;
-}
-
-body[data-page="home"] .social-link svg,
-body[data-page="video"] .social-link svg,
-body[data-page="audio-more"] .social-link svg,
-body[data-page="contact"] .social-link svg {
-  background: var(--color-bg);
-  border-radius: 50%;
-  padding: 6px;
+  border: 1.8px solid transparent;
+  background:
+    linear-gradient(#000, #000) padding-box,
+    var(--gradient) border-box;
+  padding: 0;
+  box-shadow: none;
 }
 
 body[data-page="home"] .site-footer,

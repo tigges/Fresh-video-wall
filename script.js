@@ -586,6 +586,39 @@ function bindLiveStripClick() {
   });
 }
 
+function bindMainNavLiveClick() {
+  const navLiveLinks = [...document.querySelectorAll(".main-nav .main-nav-link[data-live-nav-link='1']")];
+  if (!navLiveLinks.length) {
+    return;
+  }
+  navLiveLinks.forEach((link) => {
+    if (link.dataset.boundClick === "1") {
+      return;
+    }
+    link.dataset.boundClick = "1";
+    link.addEventListener("click", (event) => {
+      const mode = link.dataset.liveMode || "latest";
+      const streamUrl = link.dataset.streamUrl || FALLBACK_YOUTUBE_URL;
+      // On home, always keep Live action in-site and aligned to hero CTA behavior.
+      if (page === "home") {
+        event.preventDefault();
+        const started = playTopVideoTile();
+        if (!started) {
+          window.location.href = FALLBACK_YOUTUBE_URL;
+        }
+        return;
+      }
+      // On subpages: if live now, go to stream URL; if latest mode, route home and autoplay there.
+      event.preventDefault();
+      if (mode === "live") {
+        window.location.href = streamUrl || FALLBACK_YOUTUBE_URL;
+        return;
+      }
+      window.location.href = "./index.html?autoplayTopVideo=1#best-of-artist";
+    });
+  });
+}
+
 function bindSubpageMainNav() {
   const mainNav = document.querySelector(".main-nav[data-subpage-nav='1']");
   if (!mainNav) {
@@ -620,19 +653,28 @@ function updateGlobalLiveNav(data) {
     youtubeLive.liveUrl
       ? youtubeLive.liveUrl
       : latestUrl;
-  const isExternalUrl = /^https?:\/\//i.test(targetUrl);
 
   navLiveLinks.forEach((link) => {
-    link.href = targetUrl;
-    if (isExternalUrl) {
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-    } else {
-      link.removeAttribute("target");
-      link.removeAttribute("rel");
-    }
+    // Keep deterministic in-site fallback href while click logic handles behavior.
+    link.href = page === "home" ? "#best-of-artist" : "./index.html?autoplayTopVideo=1#best-of-artist";
+    link.removeAttribute("target");
+    link.removeAttribute("rel");
     link.dataset.liveMode = youtubeLive?.isLive ? "live" : "latest";
+    link.dataset.streamUrl = targetUrl;
   });
+}
+
+function autoplayTopVideoFromQuery() {
+  if (page !== "home") {
+    return;
+  }
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("autoplayTopVideo") !== "1") {
+    return;
+  }
+  window.setTimeout(() => {
+    playTopVideoTile();
+  }, 120);
 }
 
 function createVideoCard(item, index = 0) {
@@ -1641,9 +1683,11 @@ function bindFallbackMainNavLiveLink() {
     if (link.dataset.liveMode) {
       return;
     }
-    link.href = FALLBACK_YOUTUBE_URL;
+    link.href = page === "home" ? "#best-of-artist" : "./index.html#best-of-artist";
     link.removeAttribute("target");
     link.removeAttribute("rel");
+    link.dataset.liveMode = "latest";
+    link.dataset.streamUrl = FALLBACK_YOUTUBE_URL;
   });
 }
 
@@ -1652,6 +1696,8 @@ initHeaderVisibilityOnScroll();
 initHeaderContentOffset();
 bindHeroLiveCtaClick();
 bindLiveStripClick();
+bindMainNavLiveClick();
 bindSubpageMainNav();
 hydrateMediaWalls();
 bindFallbackMainNavLiveLink();
+autoplayTopVideoFromQuery();

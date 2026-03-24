@@ -599,7 +599,13 @@ function bindMainNavLiveClick() {
     link.addEventListener("click", (event) => {
       const mode = link.dataset.liveMode || "latest";
       const streamUrl = link.dataset.streamUrl || FALLBACK_YOUTUBE_URL;
-      // On home, always keep Live action in-site and aligned to hero CTA behavior.
+      // If currently live, always route to the live stream URL.
+      if (mode === "live") {
+        event.preventDefault();
+        window.location.href = streamUrl || FALLBACK_YOUTUBE_URL;
+        return;
+      }
+      // Not live: keep Live action in-site and aligned to hero CTA behavior.
       if (page === "home") {
         event.preventDefault();
         const started = playTopVideoTile();
@@ -608,12 +614,8 @@ function bindMainNavLiveClick() {
         }
         return;
       }
-      // On subpages: if live now, go to stream URL; if latest mode, route home and autoplay there.
+      // On subpages in latest mode, route home and autoplay there.
       event.preventDefault();
-      if (mode === "live") {
-        window.location.href = streamUrl || FALLBACK_YOUTUBE_URL;
-        return;
-      }
       window.location.href = "./index.html?autoplayTopVideo=1#best-of-artist";
     });
   });
@@ -656,7 +658,12 @@ function updateGlobalLiveNav(data) {
 
   navLiveLinks.forEach((link) => {
     // Keep deterministic in-site fallback href while click logic handles behavior.
-    link.href = page === "home" ? "#best-of-artist" : "./index.html?autoplayTopVideo=1#best-of-artist";
+    link.href =
+      youtubeLive?.isLive && targetUrl
+        ? targetUrl
+        : page === "home"
+          ? "#best-of-artist"
+          : "./index.html?autoplayTopVideo=1#best-of-artist";
     link.removeAttribute("target");
     link.removeAttribute("rel");
     link.dataset.liveMode = youtubeLive?.isLive ? "live" : "latest";

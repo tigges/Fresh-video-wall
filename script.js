@@ -604,6 +604,37 @@ function bindSubpageMainNav() {
   });
 }
 
+function updateGlobalLiveNav(data) {
+  const navLiveLinks = [...document.querySelectorAll(".main-nav .main-nav-link[data-live-nav-link='1']")];
+  if (!navLiveLinks.length) {
+    return;
+  }
+  const youtubeLive = data?.youtubeLive ?? {};
+  const latestUrl =
+    (typeof youtubeLive.latestUrl === "string" && youtubeLive.latestUrl) ||
+    data?.videos?.top3?.[0]?.url ||
+    FALLBACK_YOUTUBE_URL;
+  const targetUrl =
+    youtubeLive?.isLive &&
+    typeof youtubeLive.liveUrl === "string" &&
+    youtubeLive.liveUrl
+      ? youtubeLive.liveUrl
+      : latestUrl;
+  const isExternalUrl = /^https?:\/\//i.test(targetUrl);
+
+  navLiveLinks.forEach((link) => {
+    link.href = targetUrl;
+    if (isExternalUrl) {
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    } else {
+      link.removeAttribute("target");
+      link.removeAttribute("rel");
+    }
+    link.dataset.liveMode = youtubeLive?.isLive ? "live" : "latest";
+  });
+}
+
 function normalizeLegacyAudioRoutes() {
   const legacyPath = "/audio-more.html";
   const currentPath = window.location.pathname;
@@ -1550,6 +1581,7 @@ async function hydrateMediaWalls() {
       return;
     }
     const data = await response.json();
+    updateGlobalLiveNav(data);
 
     if (page === "home") {
       hydrateHomeBestOfArtist(data);
@@ -1608,8 +1640,24 @@ async function hydrateMediaWalls() {
       await renderOfflineTrackDetail(data);
     }
   } catch {
+    updateGlobalLiveNav(null);
     // Keep page usable if media-data fetch fails.
   }
+}
+
+function bindFallbackMainNavLiveLink() {
+  const navLiveLinks = [...document.querySelectorAll(".main-nav .main-nav-link[data-live-nav-link='1']")];
+  if (!navLiveLinks.length) {
+    return;
+  }
+  navLiveLinks.forEach((link) => {
+    if (link.dataset.liveMode) {
+      return;
+    }
+    link.href = FALLBACK_YOUTUBE_URL;
+    link.removeAttribute("target");
+    link.removeAttribute("rel");
+  });
 }
 
 applyHeroFontVariant();
@@ -1620,3 +1668,4 @@ bindHeroLiveCtaClick();
 bindLiveStripClick();
 bindSubpageMainNav();
 hydrateMediaWalls();
+bindFallbackMainNavLiveLink();

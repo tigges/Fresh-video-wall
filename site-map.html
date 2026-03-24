@@ -168,11 +168,56 @@
         font-size: 0.86rem;
       }
 
+      .status {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0.12rem 0.5rem;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        margin-left: 0.42rem;
+      }
+
+      .status-linked {
+        border: 1px solid rgba(75, 229, 72, 0.38);
+        background: rgba(75, 229, 72, 0.12);
+        color: #bdf9bc;
+      }
+
+      .status-unlinked {
+        border: 1px solid rgba(255, 184, 0, 0.38);
+        background: rgba(255, 184, 0, 0.11);
+        color: #ffe5a3;
+      }
+
+      .all-pages {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem;
+      }
+
+      .all-pages li {
+        border: 1px solid #2e354b;
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        border-radius: 10px;
+        padding: 0.65rem 0.8rem;
+      }
+
+      .all-pages code {
+        color: #d5def8;
+        font-size: 0.85rem;
+      }
+
       @media (max-width: 850px) {
         .row-3,
         .row-4,
         .row-2,
-        .arrow-row {
+        .arrow-row,
+        .all-pages {
           grid-template-columns: 1fr;
         }
 
@@ -187,16 +232,19 @@
     <main class="wrap">
       <h1>DJ UrbanT — Visual Site Map</h1>
       <p class="lead">
-        Current page hierarchy, routing flow, and utility pages.
+        Complete map of all HTML pages in this repo (including pages not linked in primary navigation).
       </p>
 
-      <h2 class="section-title">Primary User Flow</h2>
+      <h2 class="section-title">Primary Routed Pages</h2>
       <section class="map-grid">
         <article class="card">
-          <h3>Home — Video &amp; Audio Wall</h3>
+          <h3>
+            Home — Video &amp; Audio Wall
+            <span class="status status-linked">Linked</span>
+          </h3>
           <p>
             <a href="./index.html">/index.html</a><br />
-            Main landing page with hero, Top Videos, Top Audio, and CTA links.
+            Main landing page with hero, Best of Artist toggle, live strip, and CTA bars.
           </p>
         </article>
 
@@ -204,28 +252,28 @@
 
         <div class="map-grid row-4">
           <article class="card">
-            <h3>More Videos</h3>
+            <h3>More Videos <span class="status status-linked">Linked</span></h3>
             <p>
               <a href="./videos.html">/videos.html</a><br />
               Extended video wall beyond Top 3.
             </p>
           </article>
           <article class="card">
-            <h3>More Audio (Top-Tile Style)</h3>
+            <h3>More Audio <span class="status status-linked">Linked</span></h3>
             <p>
               <a href="./audio-more.html">/audio-more.html</a><br />
-              More audio list using homepage top-audio tile style.
+              Additional audio tiles in homepage style.
             </p>
           </article>
           <article class="card">
-            <h3>Mixcloud Audio</h3>
+            <h3>Mixcloud Audio <span class="status status-linked">Linked</span></h3>
             <p>
               <a href="./audio.html">/audio.html</a><br />
               Mixcloud-style embedded audio feed.
             </p>
           </article>
           <article class="card">
-            <h3>Audio Direct</h3>
+            <h3>Audio Direct <span class="status status-linked">Linked</span></h3>
             <p>
               <a href="./audio-direct.html">/audio-direct.html</a><br />
               Direct audio tile playback page.
@@ -244,14 +292,14 @@
 
         <div class="map-grid row-2">
           <article class="card">
-            <h3>Mixcloud Offline Home</h3>
+            <h3>Mixcloud Offline Home <span class="status status-linked">Linked</span></h3>
             <p>
               <a href="./mixcloud-offline.html">/mixcloud-offline.html</a><br />
               Local clone-style profile/feed layout.
             </p>
           </article>
           <article class="card">
-            <h3>Mixcloud Offline Track Detail</h3>
+            <h3>Mixcloud Offline Track Detail <span class="status status-linked">Linked</span></h3>
             <p>
               <a href="./mixcloud-offline-track.html">/mixcloud-offline-track.html?track=...</a
               ><br />
@@ -259,96 +307,149 @@
             </p>
           </article>
         </div>
+
+        <div class="connector"><div class="line"></div></div>
+
+        <div class="map-grid row-2">
+          <article class="card">
+            <h3>Contact <span class="status status-linked">Linked</span></h3>
+            <p>
+              <a href="./contact.html">/contact.html</a><br />
+              Contact and booking form page.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Visual Site Map <span class="status status-unlinked">Utility</span></h3>
+            <p>
+              <a href="./site-map.html">/site-map.html</a><br />
+              Repository-level map for all pages.
+            </p>
+          </article>
+        </div>
       </section>
 
-      <h2 class="section-title">Utility / Archive Pages</h2>
+      <h2 class="section-title">Utility / Supporting Pages</h2>
       <section class="map-grid">
         <div class="connector"><div class="line-dash"></div></div>
         <div class="map-grid row-3">
           <article class="card">
-            <h3>Gradient Options</h3>
+            <h3>Gradient Options <span class="status status-unlinked">Not linked</span></h3>
             <p>
               <a href="./gradient-options.html">/gradient-options.html</a><br />
               Visual gradient concept comparison page.
             </p>
           </article>
           <article class="card">
-            <h3>Version Gallery</h3>
+            <h3>Version Gallery <span class="status status-unlinked">Not linked</span></h3>
             <p>
               <a href="./version-gallery/index.html">/version-gallery/index.html</a><br />
               Snapshot history and comparison gallery.
             </p>
           </article>
           <article class="card">
-            <h3>Visual Site Map</h3>
+            <h3>Contact <span class="status status-unlinked">Not linked</span></h3>
             <p>
-              <a href="./site-map.html">/site-map.html</a><br />
-              This page: labeled map of current page structure.
+              <a href="./contact.html">/contact.html</a><br />
+              Form page present in repo; include in navigation to surface it.
             </p>
           </article>
         </div>
       </section>
 
-      <h2 class="section-title">Page Visual Sections</h2>
+      <h2 class="section-title">Archive Snapshot Pages (Not linked)</h2>
       <section class="map-grid">
         <div class="map-grid row-3">
           <article class="card">
-            <h3>Home — /index.html</h3>
-            <ul class="section-list">
-              <li class="section-chip">Fixed Header + Logo</li>
-              <li class="section-chip">Hero Diamond + CTA</li>
-              <li class="section-chip">Top Videos Grid</li>
-              <li class="section-chip">Top Audio Grid</li>
-              <li class="section-chip">Bio Panel + Booking CTA</li>
-              <li class="section-chip">Social Strip + Footer</li>
-            </ul>
+            <h3>Snapshot (Generic)</h3>
+            <p>
+              <a href="./assets/mixcloud-clone/snapshot/html/urbant.html"
+                >/assets/mixcloud-clone/snapshot/html/urbant.html</a
+              >
+            </p>
           </article>
           <article class="card">
-            <h3>More Videos — /videos.html</h3>
-            <ul class="section-list">
-              <li class="section-chip">Header + Home Action</li>
-              <li class="section-chip">More Videos Grid</li>
-              <li class="section-chip">Bottom Nav Actions</li>
-            </ul>
+            <h3>Snapshot (Desktop)</h3>
+            <p>
+              <a href="./assets/mixcloud-clone/snapshot/desktop/html/urbant.html"
+                >/assets/mixcloud-clone/snapshot/desktop/html/urbant.html</a
+              >
+            </p>
           </article>
           <article class="card">
-            <h3>More Audio — /audio-more.html</h3>
-            <ul class="section-list">
-              <li class="section-chip">Header + Home Action</li>
-              <li class="section-chip">Top-Style Audio Tiles</li>
-              <li class="section-chip">Back Action</li>
-            </ul>
-          </article>
-          <article class="card">
-            <h3>Mixcloud Audio — /audio.html</h3>
-            <ul class="section-list">
-              <li class="section-chip">Profile Intro Block</li>
-              <li class="section-chip">Mini Mixcloud Feed</li>
-              <li class="section-chip">Details CTA per Tile</li>
-            </ul>
-          </article>
-          <article class="card">
-            <h3>Audio Direct — /audio-direct.html</h3>
-            <ul class="section-list">
-              <li class="section-chip">Direct Audio Tiles</li>
-              <li class="section-chip">In-Tile Playback UI</li>
-              <li class="section-chip">Back + Mixcloud Audio Links</li>
-            </ul>
-          </article>
-          <article class="card">
-            <h3>Offline Mixcloud — /mixcloud-offline*.html</h3>
-            <ul class="section-list">
-              <li class="section-chip">Clone Header + Profile</li>
-              <li class="section-chip">Cloudcast Feed/List</li>
-              <li class="section-chip">Track Detail Player</li>
-              <li class="section-chip">Back Navigation</li>
-            </ul>
+            <h3>Snapshot (Mobile)</h3>
+            <p>
+              <a href="./assets/mixcloud-clone/snapshot/mobile/html/urbant.html"
+                >/assets/mixcloud-clone/snapshot/mobile/html/urbant.html</a
+              >
+            </p>
           </article>
         </div>
       </section>
 
+      <h2 class="section-title">All HTML Pages (Complete Index)</h2>
+      <section class="map-grid">
+        <ul class="all-pages">
+          <li>
+            <code>/index.html</code>
+            <span class="status status-linked">Linked</span>
+          </li>
+          <li>
+            <code>/videos.html</code>
+            <span class="status status-linked">Linked</span>
+          </li>
+          <li>
+            <code>/audio-more.html</code>
+            <span class="status status-linked">Linked</span>
+          </li>
+          <li>
+            <code>/audio.html</code>
+            <span class="status status-linked">Linked</span>
+          </li>
+          <li>
+            <code>/audio-direct.html</code>
+            <span class="status status-linked">Linked</span>
+          </li>
+          <li>
+            <code>/mixcloud-offline.html</code>
+            <span class="status status-linked">Linked</span>
+          </li>
+          <li>
+            <code>/mixcloud-offline-track.html</code>
+            <span class="status status-linked">Linked</span>
+          </li>
+          <li>
+            <code>/contact.html</code>
+            <span class="status status-unlinked">Not linked</span>
+          </li>
+          <li>
+            <code>/site-map.html</code>
+            <span class="status status-unlinked">Utility</span>
+          </li>
+          <li>
+            <code>/gradient-options.html</code>
+            <span class="status status-unlinked">Not linked</span>
+          </li>
+          <li>
+            <code>/version-gallery/index.html</code>
+            <span class="status status-unlinked">Not linked</span>
+          </li>
+          <li>
+            <code>/assets/mixcloud-clone/snapshot/html/urbant.html</code>
+            <span class="status status-unlinked">Archive</span>
+          </li>
+          <li>
+            <code>/assets/mixcloud-clone/snapshot/desktop/html/urbant.html</code>
+            <span class="status status-unlinked">Archive</span>
+          </li>
+          <li>
+            <code>/assets/mixcloud-clone/snapshot/mobile/html/urbant.html</code>
+            <span class="status status-unlinked">Archive</span>
+          </li>
+        </ul>
+      </section>
+
       <p class="note">
-        Note: Mixcloud snapshot HTML files under <code>assets/mixcloud-clone/snapshot/</code> are archival assets, not primary routed pages.
+        Note: snapshot pages under <code>/assets/mixcloud-clone/snapshot/</code> are archival artifacts and not part of the main user journey.
       </p>
     </main>
   </body>

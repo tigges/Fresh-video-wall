@@ -2487,7 +2487,7 @@ body[data-page="home"] .hero::before {
   z-index: 1;
 }
 
-body[data-page="home"] .hero > * {
+body[data-page="home"] .hero > *:not(.hero-overlay):not(.hero-tagline) {
   position: relative;
   z-index: 2;
 }

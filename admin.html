@@ -6,83 +6,445 @@
     <title>DJ UrbanT | Admin</title>
     <meta
       name="description"
-      content="Unlinked admin workspace page for Layer 2 planning and controls."
+      content="Standalone unlinked admin workspace for DJ UrbanT operations."
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./admin.css" />
   </head>
   <body data-page="admin">
-    <header class="site-header">
-      <a class="brand" href="./index.html" aria-label="Back to home">
+    <div id="admin-auth-gate" class="admin-auth-gate">
+      <div class="admin-auth-card">
         <img
-          class="brand-logo"
+          class="admin-auth-logo"
           src="./assets/images/UT_TITLE_SVG.svg"
           alt="DJ UrbanT"
         />
-      </a>
-      <nav class="main-nav" aria-label="Main navigation">
-        <a class="main-nav-link" href="./video.html">Video</a>
-        <a class="main-nav-link" href="./audio.html">Audio</a>
-        <a class="main-nav-link" href="./contact.html">Contact</a>
-      </nav>
-    </header>
-
-    <main class="subpage-main">
-      <section class="media-section">
-        <div class="section-head">
-          <h1>Admin</h1>
+        <h1>DJ UrbanT Admin</h1>
+        <p>Google Workspace access only.</p>
+        <button id="google-login-btn" class="admin-btn admin-btn-google" type="button">
+          Continue with Google
+        </button>
+        <p id="admin-auth-message" class="admin-auth-message" role="status" aria-live="polite"></p>
+        <div id="account-picker" class="account-picker" hidden>
+          <p class="account-picker-title">Choose Google account</p>
+          <button class="account-choice" type="button" data-auth-email="c@tigges.ch">
+            c@tigges.ch
+          </button>
+          <button class="account-choice" type="button" data-auth-email="demo.user@gmail.com">
+            demo.user@gmail.com
+          </button>
         </div>
-        <p class="subpage-intro">
-          This page is intentionally unlinked from Layer 1 navigation. It is reserved
-          for Layer 2 administration tasks and future controls.
-        </p>
-        <div class="section-cta">
-          <a class="btn btn-outline" href="./map.html">Open Map</a>
-          <a class="btn btn-outline" href="./index.html">Back to Home</a>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="site-footer-inner">
-        <a class="footer-logo-link" href="./index.html" aria-label="DJ UrbanT home">
-          <img
-            class="footer-logo-image"
-            src="./assets/images/UT_TITLE_SVG.svg"
-            alt="DJ UrbanT"
-          />
-        </a>
-        <section class="social-strip footer-social-strip" aria-label="DJ UrbanT social media">
-          <a
-            class="social-link"
-            href="https://twitter.com/DJUrbanT"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="X (Twitter)"
-          >
-            <svg viewBox="0 0 512 512" aria-hidden="true">
-              <path
-                d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"
-              />
-            </svg>
-          </a>
-          <a
-            class="social-link"
-            href="https://www.instagram.com/_urbant_/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-          >
-            <svg viewBox="0 0 448 512" aria-hidden="true">
-              <path
-                d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"
-              />
-            </svg>
-          </a>
-        </section>
-        <p class="site-footer-copy">DJ UrbanT &copy; <span id="year"></span>.</p>
       </div>
-    </footer>
+    </div>
 
-    <script src="./script.js"></script>
+    <div id="admin-app" class="admin-app" hidden>
+      <header class="admin-topbar">
+        <div class="admin-topbar-left">
+          <button id="sidebar-toggle-btn" class="admin-icon-btn mobile-only" type="button" aria-label="Open menu">
+            ☰
+          </button>
+          <a class="admin-brand" href="./admin.html" aria-label="Admin home">
+            <img src="./assets/images/UT_TITLE_SVG.svg" alt="" />
+            <span class="admin-brand-wordmark">DJ URBANT</span>
+          </a>
+          <span class="admin-divider" aria-hidden="true"></span>
+          <span class="admin-topbar-label">ADMIN</span>
+          <button id="settings-toggle-btn" class="admin-icon-btn" type="button" aria-label="Open settings">
+            ⚙
+          </button>
+        </div>
+        <div class="admin-topbar-right">
+          <a class="admin-home-link" href="./index.html">← Home</a>
+          <span class="admin-divider" aria-hidden="true"></span>
+          <div class="admin-user-block">
+            <span class="admin-avatar">CT</span>
+            <span id="admin-user-email">c@tigges.ch</span>
+          </div>
+        </div>
+      </header>
+
+      <div id="sidebar-scrim" class="sidebar-scrim"></div>
+
+      <div class="admin-shell">
+        <aside id="admin-sidebar" class="admin-sidebar">
+          <nav aria-label="Admin navigation">
+            <button class="admin-nav-item is-active" type="button" data-view="home">
+              <span class="admin-nav-icon">⌂</span>
+              <span>Admin Home</span>
+            </button>
+
+            <p class="admin-nav-group-label">Site</p>
+            <button class="admin-nav-item" type="button" data-view="dashboard">
+              <span class="admin-nav-icon">▦</span>
+              <span>Dashboard</span>
+            </button>
+            <button class="admin-nav-item" type="button" data-view="analytics">
+              <span class="admin-nav-icon">▤</span>
+              <span>Analytics</span>
+            </button>
+            <button class="admin-nav-item" type="button" data-view="settings">
+              <span class="admin-nav-icon">⚙</span>
+              <span>Settings</span>
+            </button>
+
+            <p class="admin-nav-group-label">Content</p>
+            <button class="admin-nav-item" type="button" data-view="pages">
+              <span class="admin-nav-icon">▣</span>
+              <span>Pages</span>
+            </button>
+            <button class="admin-nav-item" type="button" data-view="uploads">
+              <span class="admin-nav-icon">⇪</span>
+              <span>Uploads</span>
+            </button>
+            <button class="admin-nav-item" type="button" data-view="socials">
+              <span class="admin-nav-icon">⎔</span>
+              <span>Socials</span>
+            </button>
+            <button class="admin-nav-item" type="button" data-view="youtube">
+              <span class="admin-nav-icon">▶</span>
+              <span>YouTube</span>
+              <span id="youtube-live-badge" class="admin-badge admin-badge-amber">Live</span>
+            </button>
+            <button class="admin-nav-item" type="button" data-view="bookings">
+              <span class="admin-nav-icon">⌕</span>
+              <span>Bookings</span>
+              <span id="bookings-unread-badge" class="admin-badge admin-badge-danger">0</span>
+            </button>
+          </nav>
+        </aside>
+
+        <main class="admin-main">
+          <section class="admin-view" data-view-panel="home">
+            <div class="admin-view-head">
+              <h1>Admin Home</h1>
+              <p>Fast overview and quick actions for site and content operations.</p>
+            </div>
+
+            <section class="admin-stats-grid">
+              <article class="admin-card admin-stat-card">
+                <p class="admin-stat-label">Site visits today</p>
+                <p class="admin-stat-value">142</p>
+                <p class="admin-stat-meta admin-stat-up">↑ 18% vs yesterday</p>
+              </article>
+              <article class="admin-card admin-stat-card">
+                <p class="admin-stat-label">Site visits (7d)</p>
+                <p class="admin-stat-value">892</p>
+                <p class="admin-stat-meta admin-stat-up">↑ 12% vs last week</p>
+              </article>
+              <article class="admin-card admin-stat-card">
+                <p class="admin-stat-label">Social stats</p>
+                <div class="admin-social-mini-grid">
+                  <p><span>▶</span> 4.8k</p>
+                  <p><span>☁</span> 2.1k</p>
+                  <p><span>◎</span> 7.4k</p>
+                  <p><span>◉</span> 5.9k</p>
+                </div>
+              </article>
+              <article id="unread-stat-card" class="admin-card admin-stat-card">
+                <p class="admin-stat-label">Unread messages</p>
+                <p id="unread-stat-value" class="admin-stat-value">0</p>
+                <p class="admin-stat-meta">booking form</p>
+              </article>
+            </section>
+
+            <section class="admin-quick-grid">
+              <button class="admin-card admin-quick-card admin-quick-live" type="button" data-open-view="dashboard">
+                <div class="admin-quick-head">
+                  <span class="admin-quick-icon">▶</span>
+                  <span id="home-youtube-badge" class="admin-badge admin-badge-amber">● Live now</span>
+                </div>
+                <h2>YouTube</h2>
+                <p>Channel status and latest stream controls.</p>
+                <span class="admin-quick-link">View dashboard →</span>
+              </button>
+              <button class="admin-card admin-quick-card admin-quick-alert" type="button" data-open-view="bookings">
+                <div class="admin-quick-head">
+                  <span class="admin-quick-icon">⌕</span>
+                  <span id="home-bookings-badge" class="admin-badge admin-badge-danger">0</span>
+                </div>
+                <h2>Booking requests</h2>
+                <p id="home-bookings-meta">No unread venue requests.</p>
+                <span class="admin-quick-link">Open inbox →</span>
+              </button>
+              <button class="admin-card admin-quick-card" type="button" data-open-view="analytics">
+                <div class="admin-quick-head">
+                  <span class="admin-quick-icon">▤</span>
+                </div>
+                <h2>Site stats</h2>
+                <p>7-day trend, traffic and engagement.</p>
+                <span class="admin-quick-link">Open analytics →</span>
+              </button>
+              <button class="admin-card admin-quick-card" type="button" data-open-view="pages">
+                <div class="admin-quick-head">
+                  <span class="admin-quick-icon">▣</span>
+                </div>
+                <h2>Pages</h2>
+                <p>5 pages, 1 draft pending publication.</p>
+                <span class="admin-quick-link">Manage pages →</span>
+              </button>
+              <button class="admin-card admin-quick-card" type="button" data-open-view="uploads">
+                <div class="admin-quick-head">
+                  <span class="admin-quick-icon">⇪</span>
+                </div>
+                <h2>Uploads</h2>
+                <p>Last upload: Set #434 • Mar 15, 2026.</p>
+                <span class="admin-quick-link">Open uploads →</span>
+              </button>
+              <button class="admin-card admin-quick-card" type="button" data-open-view="socials">
+                <div class="admin-quick-head">
+                  <span class="admin-quick-icon">⎔</span>
+                </div>
+                <h2>Social links</h2>
+                <p>6 platforms active in navigation.</p>
+                <span class="admin-quick-link">Edit socials →</span>
+              </button>
+            </section>
+
+            <section id="home-activity-section" class="admin-card admin-block">
+              <div class="admin-block-head">
+                <h2>Recent activity</h2>
+              </div>
+              <ul id="recent-activity-list" class="admin-activity-list"></ul>
+            </section>
+
+            <section id="home-socials-section" class="admin-card admin-block">
+              <div class="admin-block-head">
+                <h2>Social links management</h2>
+                <button id="add-platform-btn" class="admin-btn admin-btn-outline" type="button">
+                  Add platform
+                </button>
+              </div>
+              <div class="admin-table-wrap">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Platform</th>
+                      <th>URL</th>
+                      <th>In nav</th>
+                      <th>Order</th>
+                    </tr>
+                  </thead>
+                  <tbody id="social-links-table-body"></tbody>
+                </table>
+              </div>
+              <form id="add-platform-form" class="admin-inline-form" hidden>
+                <input id="add-platform-name" type="text" placeholder="Platform name" />
+                <input id="add-platform-url" type="url" placeholder="https://example.com" />
+                <label class="admin-checkbox">
+                  <input id="add-platform-in-nav" type="checkbox" checked />
+                  <span>In nav</span>
+                </label>
+                <button class="admin-btn admin-btn-solid" type="submit">Add</button>
+                <button id="cancel-platform-btn" class="admin-btn admin-btn-outline" type="button">
+                  Cancel
+                </button>
+              </form>
+            </section>
+
+            <section class="admin-card admin-customize" aria-label="Customise this page">
+              <div class="admin-customize-left">✎ Customise this page</div>
+              <div class="admin-customize-chips">
+                <button class="admin-chip is-on" type="button" data-home-chip="activity">Activity</button>
+                <button class="admin-chip is-on" type="button" data-home-chip="socials">Socials</button>
+              </div>
+              <button id="home-customize-reset" class="admin-reset-btn" type="button">Reset</button>
+            </section>
+          </section>
+
+          <section class="admin-view" data-view-panel="dashboard" hidden>
+            <div class="admin-view-head">
+              <h1>Dashboard</h1>
+              <p>Operational dashboard with toggleable modules.</p>
+            </div>
+
+            <section id="dashboard-site-stats" class="admin-stats-grid admin-stats-grid-compact">
+              <article class="admin-card admin-stat-card">
+                <p class="admin-stat-label">Site visits today</p>
+                <p class="admin-stat-value">142</p>
+                <p class="admin-stat-meta admin-stat-up">↑ 18%</p>
+              </article>
+              <article class="admin-card admin-stat-card">
+                <p class="admin-stat-label">Site visits (7d)</p>
+                <p class="admin-stat-value">892</p>
+                <p class="admin-stat-meta admin-stat-up">↑ 12%</p>
+              </article>
+              <article class="admin-card admin-stat-card">
+                <p class="admin-stat-label">Booking form views</p>
+                <p class="admin-stat-value">67</p>
+                <p class="admin-stat-meta">last 7 days</p>
+              </article>
+              <article class="admin-card admin-stat-card">
+                <p class="admin-stat-label">Booking requests</p>
+                <p id="dashboard-bookings-value" class="admin-stat-value">0</p>
+                <p class="admin-stat-meta">inbox total</p>
+              </article>
+            </section>
+
+            <section id="dashboard-platforms" class="admin-stats-grid admin-stats-grid-compact">
+              <article class="admin-card admin-stat-card">
+                <p class="admin-stat-label">YouTube</p>
+                <p class="admin-stat-value">4.8k</p>
+                <p class="admin-stat-meta">subscribers • live</p>
+              </article>
+              <article class="admin-card admin-stat-card">
+                <p class="admin-stat-label">Mixcloud</p>
+                <p class="admin-stat-value">2.1k</p>
+                <p class="admin-stat-meta">followers • 124k plays</p>
+              </article>
+              <article class="admin-card admin-stat-card">
+                <p class="admin-stat-label">Instagram</p>
+                <p class="admin-stat-value">7.4k</p>
+                <p class="admin-stat-meta">followers • 7d reach</p>
+              </article>
+              <article class="admin-card admin-stat-card">
+                <p class="admin-stat-label">TikTok</p>
+                <p class="admin-stat-value">5.9k</p>
+                <p class="admin-stat-meta">followers • 32 videos</p>
+              </article>
+            </section>
+
+            <section class="admin-dashboard-grid">
+              <article id="dashboard-pages" class="admin-card admin-block">
+                <div class="admin-block-head"><h2>Pages</h2></div>
+                <ul class="admin-simple-list">
+                  <li>index.html <span>Published</span></li>
+                  <li>video.html <span>Published</span></li>
+                  <li>audio.html <span>Published</span></li>
+                  <li>contact.html <span>Published</span></li>
+                  <li>map.html <span>Published</span></li>
+                </ul>
+              </article>
+              <article id="dashboard-uploads" class="admin-card admin-block">
+                <div class="admin-block-head"><h2>Uploads</h2></div>
+                <p>Drop zone and recent upload tracking module.</p>
+              </article>
+              <article id="dashboard-youtube" class="admin-card admin-block">
+                <div class="admin-block-head"><h2>YouTube Channel</h2></div>
+                <p>DJ UrbanT channel controls and live shortcuts.</p>
+                <div class="admin-inline-actions">
+                  <a class="admin-btn admin-btn-outline" href="https://studio.youtube.com" target="_blank" rel="noopener noreferrer">Open YouTube Studio</a>
+                  <a class="admin-btn admin-btn-outline" href="https://www.youtube.com/@djurbant/live" target="_blank" rel="noopener noreferrer">View Live</a>
+                </div>
+              </article>
+              <article id="dashboard-bookings" class="admin-card admin-block">
+                <div class="admin-block-head"><h2>Bookings</h2></div>
+                <p>Inbox and routing controls.</p>
+                <button class="admin-btn admin-btn-outline" type="button" data-open-view="bookings">Open bookings</button>
+              </article>
+            </section>
+
+            <section id="dashboard-socials" class="admin-card admin-block">
+              <div class="admin-block-head"><h2>Social links</h2></div>
+              <div class="admin-table-wrap">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Platform</th>
+                      <th>URL</th>
+                      <th>In nav</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboard-social-links-body"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="admin-card admin-customize" aria-label="Customise dashboard">
+              <div class="admin-customize-left">✎ Customise dashboard</div>
+              <div class="admin-customize-chips admin-customize-chips-wrap">
+                <button class="admin-chip is-on" type="button" data-dashboard-chip="siteStats">Site stats</button>
+                <button class="admin-chip is-on" type="button" data-dashboard-chip="platforms">Platforms</button>
+                <button class="admin-chip is-on" type="button" data-dashboard-chip="pages">Pages</button>
+                <button class="admin-chip is-on" type="button" data-dashboard-chip="uploads">Uploads</button>
+                <button class="admin-chip is-on" type="button" data-dashboard-chip="youtube">YouTube</button>
+                <button class="admin-chip is-on" type="button" data-dashboard-chip="bookings">Bookings</button>
+                <button class="admin-chip is-on" type="button" data-dashboard-chip="socials">Socials</button>
+              </div>
+              <button id="dashboard-customize-reset" class="admin-reset-btn" type="button">Reset</button>
+            </section>
+          </section>
+
+          <section class="admin-view" data-view-panel="bookings" hidden>
+            <div class="admin-view-head">
+              <h1>Bookings</h1>
+              <p>Inbox for booking requests and routing controls.</p>
+            </div>
+            <section class="admin-card admin-block">
+              <div class="admin-table-wrap">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Status</th>
+                      <th>Venue / Event</th>
+                      <th>Date</th>
+                      <th>Type</th>
+                      <th>Budget</th>
+                      <th>Received</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bookings-table-body"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+
+          <section class="admin-view" data-view-panel="pages" hidden>
+            <div class="admin-view-head"><h1>Pages</h1><p>Full page management view placeholder.</p></div>
+            <section class="admin-card admin-block"><p>Pages module will be expanded next.</p></section>
+          </section>
+          <section class="admin-view" data-view-panel="uploads" hidden>
+            <div class="admin-view-head"><h1>Uploads</h1><p>Full uploads view placeholder.</p></div>
+            <section class="admin-card admin-block"><p>Uploads module will be expanded next.</p></section>
+          </section>
+          <section class="admin-view" data-view-panel="socials" hidden>
+            <div class="admin-view-head"><h1>Socials</h1><p>Full social links view placeholder.</p></div>
+            <section class="admin-card admin-block"><p>Social links module will be expanded next.</p></section>
+          </section>
+          <section class="admin-view" data-view-panel="youtube" hidden>
+            <div class="admin-view-head"><h1>YouTube</h1><p>YouTube module placeholder.</p></div>
+            <section class="admin-card admin-block"><p>YouTube module will be expanded next.</p></section>
+          </section>
+          <section class="admin-view" data-view-panel="analytics" hidden>
+            <div class="admin-view-head"><h1>Analytics</h1><p>Analytics module placeholder.</p></div>
+            <section class="admin-card admin-block"><p>Analytics module will be expanded next.</p></section>
+          </section>
+          <section class="admin-view" data-view-panel="settings" hidden>
+            <div class="admin-view-head"><h1>Settings</h1><p>Global admin settings.</p></div>
+            <section class="admin-card admin-block"><p>Use the top-right gear icon for quick settings.</p></section>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="settings-panel-scrim" class="settings-panel-scrim" hidden></div>
+    <aside id="settings-panel" class="settings-panel" hidden>
+      <div class="settings-panel-head">
+        <h2>Settings</h2>
+        <button id="settings-close-btn" class="admin-icon-btn" type="button" aria-label="Close settings">✕</button>
+      </div>
+      <label class="settings-field">
+        <span>Font size</span>
+        <select id="setting-font-size">
+          <option value="small">Small</option>
+          <option value="medium">Medium</option>
+          <option value="large">Large</option>
+        </select>
+      </label>
+      <label class="settings-field">
+        <span>Timezone</span>
+        <select id="setting-timezone">
+          <option value="Europe/Zurich">Europe/Zurich</option>
+          <option value="Europe/London">Europe/London</option>
+          <option value="UTC">UTC</option>
+        </select>
+      </label>
+      <label class="settings-field settings-checkbox-row">
+        <input id="setting-notifications" type="checkbox" />
+        <span>Notifications enabled</span>
+      </label>
+      <button id="admin-logout-btn" class="admin-btn admin-btn-outline" type="button">Logout</button>
+    </aside>
+
+    <script src="./admin.js"></script>
   </body>
 </html>

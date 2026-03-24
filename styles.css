@@ -876,9 +876,9 @@ body[data-page="home"] .stats-strip {
   width: clamp(86px, 11vw, 102px);
   height: clamp(86px, 11vw, 102px);
   border-radius: 14px;
-  border: 1px solid rgba(255, 79, 141, 0.45);
-  background: rgba(0, 0, 0, 0.45);
-  color: var(--brand-magenta);
+  border: 1px solid rgba(0, 200, 255, 0.58);
+  background: rgba(0, 200, 255, 0.14);
+  color: #dff7ff;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -909,8 +909,9 @@ body[data-page="home"] .stats-strip {
 
 .about-cta-book:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 79, 141, 0.68);
-  box-shadow: 0 0 18px rgba(255, 79, 141, 0.18);
+  border-color: rgba(0, 200, 255, 0.8);
+  background: rgba(0, 200, 255, 0.22);
+  box-shadow: 0 0 0 1px rgba(0, 200, 255, 0.28);
 }
 
 .stats-strip {
@@ -2556,5 +2557,14 @@ body[data-page="contact"] .subpage-intro,
 body[data-page="video"] .subpage-intro,
 body[data-page="audio-more"] .subpage-intro {
   color: var(--color-type-muted);
+}
+
+body[data-page="home"] .section-cta.section-cta-home-more {
+  margin-top: 0.2rem;
+  margin-bottom: 0.8rem;
+}
+
+body[data-page="home"] #best-of-artist > .section-cta:last-child {
+  margin-bottom: 1rem;
 }
 

@@ -635,19 +635,6 @@ function updateGlobalLiveNav(data) {
   });
 }
 
-function normalizeLegacyAudioRoutes() {
-  const legacyPath = "/audio-more.html";
-  const currentPath = window.location.pathname;
-  if (!currentPath.endsWith(legacyPath)) {
-    return;
-  }
-  const replacement = `${window.location.origin}${window.location.pathname.replace(
-    /audio-more\.html$/,
-    "audio.html",
-  )}${window.location.search}${window.location.hash}`;
-  window.location.replace(replacement);
-}
-
 function createVideoCard(item, index = 0) {
   const article = document.createElement("article");
   article.className = "media-card";
@@ -1661,7 +1648,6 @@ function bindFallbackMainNavLiveLink() {
 }
 
 applyHeroFontVariant();
-normalizeLegacyAudioRoutes();
 initHeaderVisibilityOnScroll();
 initHeaderContentOffset();
 bindHeroLiveCtaClick();

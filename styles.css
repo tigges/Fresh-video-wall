@@ -1365,6 +1365,14 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
   flex-wrap: nowrap;
 }
 
+body[data-page="audio-more"] .subpage-bottom-nav {
+  justify-content: flex-end;
+}
+
+body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
+  display: none;
+}
+
 .subpage-teaser-row {
   margin-top: 0.2rem;
   margin-bottom: 0.4rem;
@@ -1388,6 +1396,43 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
   color: #fff;
   font-weight: 700;
   box-shadow: var(--cta-glow);
+}
+
+.contact-form {
+  width: min(100%, 720px);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.95rem;
+}
+
+.contact-field {
+  display: grid;
+  gap: 0.34rem;
+}
+
+.contact-field > span {
+  color: rgba(227, 234, 245, 0.88);
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+}
+
+.contact-field input,
+.contact-field textarea {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(6, 8, 12, 0.9);
+  color: var(--brand-text-bright);
+  font: inherit;
+  padding: 0.68rem 0.78rem;
+}
+
+.contact-field textarea {
+  resize: vertical;
+  min-height: 160px;
 }
 
 .section-head h1,
@@ -2099,6 +2144,14 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
 
   .subpage-bottom-nav .subpage-action-btn {
     display: none;
+  }
+
+  body[data-page="audio-more"] .subpage-bottom-nav {
+    justify-content: flex-end;
+  }
+
+  body[data-page="audio-more"] .subpage-bottom-nav .subpage-action-btn {
+    display: inline-flex;
   }
 }
 

@@ -234,6 +234,52 @@ function activateMediaController(controller) {
   }
 }
 
+function restoreVideoOverlayForCard(card) {
+  if (!(card instanceof HTMLElement)) {
+    return;
+  }
+  const overlay = card.querySelector(".video-top-overlay");
+  if (!overlay) {
+    return;
+  }
+  overlay.classList.add("is-resetting");
+  overlay.classList.remove("is-hidden", "is-overlay-dimming");
+  window.setTimeout(() => {
+    overlay.classList.remove("is-resetting");
+  }, 280);
+}
+
+function clearActiveMediaTiles(exceptCard = null) {
+  document.querySelectorAll(".media-card.is-media-active").forEach((card) => {
+    if (card === exceptCard) {
+      return;
+    }
+    card.classList.remove("is-media-active");
+    restoreVideoOverlayForCard(card);
+  });
+}
+
+function setActiveMediaTile(card, { fadeVideoOverlay = false } = {}) {
+  if (!(card instanceof HTMLElement)) {
+    return;
+  }
+  clearActiveMediaTiles(card);
+  card.classList.add("is-media-active");
+  const overlay = card.querySelector(".video-top-overlay");
+  if (!overlay) {
+    return;
+  }
+  overlay.classList.remove("is-resetting", "is-hidden");
+  if (!fadeVideoOverlay) {
+    overlay.classList.remove("is-overlay-dimming");
+    return;
+  }
+  overlay.classList.add("is-overlay-dimming");
+  window.requestAnimationFrame(() => {
+    overlay.classList.add("is-hidden");
+  });
+}
+
 function pauseYoutubeIframe(iframe) {
   if (!(iframe instanceof HTMLIFrameElement)) {
     return;
@@ -289,6 +335,8 @@ function startVideoPlayback(iframe, { shouldScrollIntoView = true } = {}) {
   if (!(iframe instanceof HTMLIFrameElement)) {
     return false;
   }
+  const card = iframe.closest(".media-card");
+  setActiveMediaTile(card, { fadeVideoOverlay: true });
   const controller = getYoutubeFrameController(iframe);
   if (controller) {
     activateMediaController(controller);
@@ -296,13 +344,7 @@ function startVideoPlayback(iframe, { shouldScrollIntoView = true } = {}) {
   if (activeAudioController && typeof activeAudioController.pause === "function") {
     activeAudioController.pause();
   }
-  const wrap = iframe.closest(".embed-wrap");
-  const overlay = wrap?.querySelector(".video-top-overlay");
-  if (overlay) {
-    overlay.classList.add("is-hidden");
-  }
   if (shouldScrollIntoView) {
-    const card = iframe.closest(".media-card");
     card?.scrollIntoView({ behavior: "smooth", block: "center" });
   }
   if (iframe.dataset.playerReady === "1") {
@@ -655,8 +697,7 @@ function createVideoCard(item, index = 0) {
 
   overlay.addEventListener("click", (event) => {
     event.preventDefault();
-    overlay.classList.add("is-hidden");
-    iframe.src = withAutoplayEmbedSrc(iframe.src);
+    startVideoPlayback(iframe, { shouldScrollIntoView: false });
   });
 
   const meta = document.createElement("div");
@@ -725,6 +766,7 @@ function createAudioCard(item, index = 0) {
 
   const setPlayingState = (isPlaying) => {
     cover.classList.toggle("is-playing", isPlaying);
+    article.classList.toggle("is-media-active", isPlaying);
     cover.classList.remove("is-loading");
     playIcon.textContent = isPlaying ? "\u275A\u275A" : "\u25B6";
     cover.setAttribute("aria-label", `${isPlaying ? "Pause" : "Play"} ${normalizedTitle}`);
@@ -839,6 +881,7 @@ function createAudioCard(item, index = 0) {
     try {
       cover.classList.add("is-loading");
       await ensureWidgetReady();
+      setActiveMediaTile(article);
       activateMediaController(controls);
       activeAudioController = controls;
       mixcloudWidget.play();

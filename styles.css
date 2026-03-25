@@ -2107,6 +2107,96 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   color: #e0fff6;
 }
 
+.genre-badge--afro-house {
+  border-color: rgba(255, 157, 63, 0.74);
+  background: rgba(255, 157, 63, 0.22);
+  color: #ffe9d2;
+}
+
+.genre-badge--melodic-house {
+  border-color: rgba(146, 163, 255, 0.74);
+  background: rgba(146, 163, 255, 0.22);
+  color: #e9edff;
+}
+
+.genre-badge--jazz-house {
+  border-color: rgba(186, 143, 255, 0.74);
+  background: rgba(186, 143, 255, 0.22);
+  color: #f1e8ff;
+}
+
+.genre-badge--latin-house {
+  border-color: rgba(255, 107, 145, 0.74);
+  background: rgba(255, 107, 145, 0.2);
+  color: #ffe0ea;
+}
+
+.genre-badge--french-house {
+  border-color: rgba(141, 231, 255, 0.74);
+  background: rgba(141, 231, 255, 0.2);
+  color: #ddf7ff;
+}
+
+.genre-badge--uk-garage {
+  border-color: rgba(128, 224, 191, 0.74);
+  background: rgba(128, 224, 191, 0.2);
+  color: #e1fff4;
+}
+
+.genre-badge--baile-funk {
+  border-color: rgba(255, 124, 102, 0.74);
+  background: rgba(255, 124, 102, 0.2);
+  color: #ffe5df;
+}
+
+.genre-badge--drift-phonk {
+  border-color: rgba(167, 167, 167, 0.74);
+  background: rgba(167, 167, 167, 0.2);
+  color: #f3f3f3;
+}
+
+.genre-badge--disco-house {
+  border-color: rgba(255, 219, 110, 0.74);
+  background: rgba(255, 219, 110, 0.2);
+  color: #fff5d6;
+}
+
+.genre-badge--vocal-deep-house {
+  border-color: rgba(125, 214, 255, 0.74);
+  background: rgba(125, 214, 255, 0.2);
+  color: #dcf4ff;
+}
+
+.genre-badge--amapiano {
+  border-color: rgba(156, 229, 120, 0.74);
+  background: rgba(156, 229, 120, 0.2);
+  color: #eaffde;
+}
+
+.genre-badge--gqom {
+  border-color: rgba(255, 171, 95, 0.74);
+  background: rgba(255, 171, 95, 0.2);
+  color: #ffeedf;
+}
+
+.genre-badge--lo-fi-house {
+  border-color: rgba(172, 193, 255, 0.74);
+  background: rgba(172, 193, 255, 0.2);
+  color: #ecf1ff;
+}
+
+.genre-badge--hard-techno {
+  border-color: rgba(255, 89, 137, 0.74);
+  background: rgba(255, 89, 137, 0.2);
+  color: #ffe1ea;
+}
+
+.genre-badge--hard-dance {
+  border-color: rgba(255, 131, 210, 0.74);
+  background: rgba(255, 131, 210, 0.2);
+  color: #ffe4f8;
+}
+
 .genre-badge--unknown {
   border-color: rgba(255, 255, 255, 0.24);
   background: rgba(255, 255, 255, 0.1);

@@ -9,6 +9,28 @@
       content="More DJ UrbanT video performances from YouTube."
     />
     <link rel="stylesheet" href="./styles.css" />
+    <style>
+      /* Layer 1 alignment: frame subpage main content like home content bands. */
+      body[data-page="video"] .media-section {
+        position: relative;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(5, 6, 11, 0.86);
+        padding: clamp(1rem, 2.8vw, 1.8rem) clamp(1rem, 3vw, 2.2rem);
+        box-sizing: border-box;
+      }
+
+      body[data-page="video"] .media-section::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 1px;
+        background: var(--rainbow-divider-gradient);
+        pointer-events: none;
+      }
+    </style>
   </head>
   <body data-page="video">
     <header class="site-header">
@@ -31,9 +53,7 @@
         <div class="section-head">
           <h1>Video</h1>
         </div>
-        <p class="subpage-intro">
-          Ranked from fetched channel stats. This page shows all YouTube videos.
-        </p>
+        <p class="subpage-intro">Ranked from fetched video channel stats.</p>
         <div id="videos-rest-grid" class="subpage-grid"></div>
         <div class="section-cta subpage-bottom-nav">
           <a class="btn btn-subscribe subpage-action-btn" href="./index.html?bestOf=video#best-of-artist"

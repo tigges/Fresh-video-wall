@@ -2324,27 +2324,27 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
 
 /* Palette 01 overrides (Layer 1 pages) */
 :root {
-  --color-bg: #000;
-  --color-surface: #13162a;
-  --color-border: #252840;
-  --color-type: #f5f0e8;
-  --color-type-muted: rgba(245, 240, 232, 0.55);
+  /* UT Prism palette aligned to DJ UrbanT logo. */
+  --color-bg: #05060a;
+  --color-surface: #0d1220;
+  --color-border: #27314a;
+  --color-type: #f4f7ff;
+  --color-type-muted: #a7b1c8;
   --color-header-footer: var(--color-bg);
   --gradient: linear-gradient(
-    90deg,
-    #00c8ff 0%,
-    #7b5cf0 35%,
-    #f43f8e 60%,
-    #ff8c00 80%,
-    #ffd700 100%
+    100deg,
+    #29d8ff 0%,
+    #4d7dff 20%,
+    #7a4dff 40%,
+    #c557ff 58%,
+    #ff8a3d 80%,
+    #ffd34a 100%
   );
   --gradient-diagonal: linear-gradient(
-    135deg,
-    #00c8ff 0%,
-    #7b5cf0 35%,
-    #f43f8e 60%,
-    #ff8c00 80%,
-    #ffd700 100%
+    100deg,
+    rgba(41, 216, 255, 0.22),
+    rgba(122, 77, 255, 0.18),
+    rgba(255, 138, 61, 0.18)
   );
   --brand-ink: var(--color-bg);
   --brand-panel: var(--color-surface);
@@ -2400,8 +2400,10 @@ body[data-page="video"] .main-nav-link,
 body[data-page="audio-more"] .main-nav-link,
 body[data-page="contact"] .main-nav-link {
   color: var(--color-type);
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  font-size: clamp(0.92rem, 1.1vw, 1.02rem);
   text-transform: uppercase;
 }
 
@@ -2434,8 +2436,10 @@ body[data-page="audio-more"] .btn,
 body[data-page="contact"] .btn {
   background: var(--gradient);
   color: #fff;
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  font-size: clamp(0.98rem, 1.2vw, 1.14rem);
+  letter-spacing: 0.09em;
   text-transform: uppercase;
   border: 0;
   border-radius: 8px;
@@ -2565,6 +2569,50 @@ body[data-page="home"] .site-footer a:hover,
 body[data-page="video"] .site-footer a:hover,
 body[data-page="audio-more"] .site-footer a:hover,
 body[data-page="contact"] .site-footer a:hover {
+  color: var(--color-type);
+}
+
+/* Layer 1 logo size refinement: slightly smaller top + footer logos. */
+body[data-page="home"] .brand-logo,
+body[data-page="video"] .brand-logo,
+body[data-page="audio-more"] .brand-logo,
+body[data-page="contact"] .brand-logo {
+  width: clamp(206px, 25vw, 292px);
+}
+
+body[data-page="home"] .footer-logo-image,
+body[data-page="video"] .footer-logo-image,
+body[data-page="audio-more"] .footer-logo-image,
+body[data-page="contact"] .footer-logo-image {
+  width: clamp(102px, 13vw, 142px);
+}
+
+/* Layer 1 typographic simplification (titles + body copy). */
+body[data-page="home"] .section-head h1,
+body[data-page="home"] .section-head h2,
+body[data-page="video"] .section-head h1,
+body[data-page="audio-more"] .section-head h1,
+body[data-page="contact"] .section-head h1,
+body[data-page="home"] .about-cta-title,
+body[data-page="home"] .stats-card-value,
+body[data-page="home"] .hero-overlay-title {
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--color-type);
+}
+
+body[data-page="home"] p,
+body[data-page="home"] li,
+body[data-page="home"] span,
+body[data-page="video"] p,
+body[data-page="video"] li,
+body[data-page="video"] span,
+body[data-page="audio-more"] p,
+body[data-page="audio-more"] li,
+body[data-page="audio-more"] span,
+body[data-page="contact"] p,
+body[data-page="contact"] li,
+body[data-page="contact"] span {
+  font-family: "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--color-type);
 }
 

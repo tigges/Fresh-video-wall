@@ -2203,20 +2203,6 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   color: #eaf0ff;
 }
 
-@media (max-width: 640px) {
-  .tile-stats-sep {
-    display: block;
-    visibility: hidden;
-    line-height: 0.1;
-    height: 0;
-  }
-
-  .tile-stats-play,
-  .tile-stats-date {
-    display: block;
-  }
-}
-
 .site-footer {
   padding: var(--space-4) 0 var(--space-5);
   border-top: 1px solid rgba(255, 255, 255, 0.09);

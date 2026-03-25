@@ -110,6 +110,17 @@ function formatDate(dateValue) {
   return parsed.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 }
 
+function formatTileDate(dateValue) {
+  if (!dateValue) {
+    return "";
+  }
+  const parsed = new Date(dateValue);
+  if (Number.isNaN(parsed.getTime())) {
+    return dateValue;
+  }
+  return parsed.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+}
+
 function normalizeBrandTitle(value) {
   if (typeof value !== "string" || !value.trim()) {
     return "";
@@ -533,7 +544,7 @@ function buildTileStatsNode({ countValue, countLabel, dateValue }) {
 
   const date = document.createElement("span");
   date.className = "tile-stats-date";
-  date.textContent = dateValue ? formatDate(dateValue) : "";
+  date.textContent = dateValue ? formatTileDate(dateValue) : "";
 
   if (!count.textContent && !date.textContent) {
     stats.textContent = "";

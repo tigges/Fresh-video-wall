@@ -77,6 +77,9 @@
         gap: 12px;
         padding-bottom: 12px;
         scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scroll-padding-inline: 4px;
+        overscroll-behavior-x: contain;
         scrollbar-width: none;
       }
 
@@ -96,18 +99,43 @@
         body[data-page="home"] #best-of-artist .home-rail-controls {
           display: flex;
           justify-content: flex-end;
+          align-items: center;
           gap: 10px;
           margin-bottom: 12px;
+        }
+
+        body[data-page="home"] #best-of-artist .home-rail-controls[data-scrollable="false"] {
+          opacity: 0.45;
         }
 
         body[data-page="home"] #best-of-artist .home-rail-arrow {
           min-width: 2.75rem;
           padding-inline: 0.9rem;
+          transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease;
+        }
+
+        body[data-page="home"] #best-of-artist .home-rail-arrow:hover:not([disabled]) {
+          background: rgba(34, 191, 255, 0.14);
+          border-color: rgba(34, 191, 255, 0.76);
+          transform: translateY(-1px);
+        }
+
+        body[data-page="home"] #best-of-artist .home-rail-arrow:active:not([disabled]) {
+          transform: translateY(0);
         }
 
         body[data-page="home"] #best-of-artist .home-rail-arrow[disabled] {
           opacity: 0.45;
           cursor: not-allowed;
+        }
+
+        body[data-page="home"] #videos-grid,
+        body[data-page="home"] #audio-grid {
+          gap: 16px;
+          padding-bottom: 16px;
         }
 
         body[data-page="home"] #best-of-artist .media-card,
@@ -485,10 +513,19 @@
         const audioToggle = document.getElementById("best-of-toggle-audio");
         const prevRailButton = document.getElementById("best-of-rail-prev");
         const nextRailButton = document.getElementById("best-of-rail-next");
+        const railControls = document.querySelector("#best-of-artist .home-rail-controls");
         const isDesktop = () => window.matchMedia("(min-width: 901px)").matches;
         const getActiveRail = () => {
           const activeId = audioToggle?.classList.contains("is-active") ? "audio-grid" : "videos-grid";
           return document.getElementById(activeId);
+        };
+        const getRailGap = (rail) => {
+          if (!rail) {
+            return 12;
+          }
+          const styles = window.getComputedStyle(rail);
+          const gap = Number.parseFloat(styles.columnGap || styles.gap || "12");
+          return Number.isFinite(gap) ? gap : 12;
         };
         const getRailStep = (rail) => {
           if (!rail) {
@@ -497,12 +534,14 @@
           const firstCard = rail.querySelector(
             ":scope > .media-card:not(.chunk-hidden), :scope > .chunk-load-more-tile",
           );
-          const gap = 12;
+          const gap = getRailGap(rail);
           if (firstCard) {
-            const width = firstCard.getBoundingClientRect().width;
-            return Math.max(220, Math.round(width + gap));
+            const cardSpan = firstCard.getBoundingClientRect().width + gap;
+            const cardsPerView = Math.max(1, Math.floor((rail.clientWidth + gap) / cardSpan));
+            const cardsToAdvance = Math.max(1, cardsPerView - 1);
+            return Math.max(220, Math.round(cardSpan * cardsToAdvance));
           }
-          return Math.max(220, Math.round(rail.clientWidth * 0.82));
+          return Math.max(220, Math.round(rail.clientWidth * 0.86));
         };
         const syncRailControls = () => {
           if (!prevRailButton || !nextRailButton) {
@@ -511,17 +550,46 @@
           if (!isDesktop()) {
             prevRailButton.disabled = true;
             nextRailButton.disabled = true;
+            railControls?.setAttribute("data-scrollable", "false");
             return;
           }
           const rail = getActiveRail();
           if (!rail) {
             prevRailButton.disabled = true;
             nextRailButton.disabled = true;
+            railControls?.setAttribute("data-scrollable", "false");
             return;
           }
           const maxScrollLeft = Math.max(0, rail.scrollWidth - rail.clientWidth);
+          const isScrollable = maxScrollLeft > 8;
+          railControls?.setAttribute("data-scrollable", isScrollable ? "true" : "false");
+          if (!isScrollable) {
+            prevRailButton.disabled = true;
+            nextRailButton.disabled = true;
+            return;
+          }
           prevRailButton.disabled = rail.scrollLeft <= 2;
           nextRailButton.disabled = rail.scrollLeft >= maxScrollLeft - 2;
+        };
+        const syncRailControlsAfterSmoothScroll = () => {
+          let frameCount = 0;
+          let lastLeft = -1;
+          const tick = () => {
+            frameCount += 1;
+            const rail = getActiveRail();
+            if (!rail) {
+              syncRailControls();
+              return;
+            }
+            const currentLeft = rail.scrollLeft;
+            syncRailControls();
+            if (frameCount > 24 || (frameCount > 3 && Math.abs(currentLeft - lastLeft) < 0.5)) {
+              return;
+            }
+            lastLeft = currentLeft;
+            window.requestAnimationFrame(tick);
+          };
+          window.requestAnimationFrame(tick);
         };
         const scrollActiveRail = (direction) => {
           const rail = getActiveRail();
@@ -529,14 +597,13 @@
             return;
           }
           rail.scrollBy({ left: direction * getRailStep(rail), behavior: "smooth" });
+          syncRailControlsAfterSmoothScroll();
         };
         prevRailButton?.addEventListener("click", () => {
           scrollActiveRail(-1);
-          window.setTimeout(syncRailControls, 280);
         });
         nextRailButton?.addEventListener("click", () => {
           scrollActiveRail(1);
-          window.setTimeout(syncRailControls, 280);
         });
         targets.forEach((id) => {
           const container = document.getElementById(id);

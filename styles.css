@@ -2605,7 +2605,7 @@ body[data-page="home"] .section-cta.section-cta-home-more .btn {
 :root {
   --rhythm-lg: 80px;
   --rhythm-sm: 24px;
-  --btn-pill-radius: 999px;
+  --btn-pill-radius: 12px;
   --btn-pill-height: 52px;
 }
 

@@ -1969,7 +1969,7 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.22rem;
   padding: var(--space-3);
 }
 
@@ -1988,6 +1988,20 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   text-overflow: ellipsis;
 }
 
+.media-meta-stats,
+.media-meta-genres {
+  width: 100%;
+}
+
+.media-meta-stats {
+  margin-top: auto;
+  padding-top: 0.36rem;
+}
+
+.media-meta-genres {
+  margin-top: 0.32rem;
+}
+
 .urbant-wordmark {
   display: inline-flex;
   align-items: baseline;
@@ -1999,16 +2013,6 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   font-size: 1.24em;
   line-height: 0.92;
   transform: translateY(0.01em);
-}
-
-.media-meta-footer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.44rem;
-  margin-top: auto;
-  padding-top: 0.42rem;
-  min-height: 44px;
 }
 
 .genre-badges {
@@ -2044,9 +2048,9 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   min-width: 100%;
   color: var(--muted);
   font-size: var(--type-meta);
-  overflow: visible;
-  text-overflow: clip;
-  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   line-height: 1.2;
 }
 

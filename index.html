@@ -225,9 +225,6 @@
           <div id="videos-grid" class="media-grid"></div>
           <div id="audio-grid" class="media-grid"></div>
         </div>
-        <div class="section-cta section-cta-home-more" hidden aria-hidden="true">
-          <a id="best-of-more-link" class="btn btn-outline" href="./video.html" tabindex="-1">More</a>
-        </div>
       </section>
 
       <section class="stats-strip" aria-label="DJ UrbanT highlights">
@@ -413,16 +410,6 @@
             }
             container.dataset.chunkAutoLoading = "0";
           }, 90);
-        }
-
-        function updateMoreCta(mode = "video") {
-          const moreLink = document.getElementById("best-of-more-link");
-          if (!moreLink) {
-            return;
-          }
-          const isAudio = mode === "audio";
-          moreLink.href = isAudio ? "./audio.html" : "./video.html";
-          moreLink.textContent = isAudio ? "More Audio" : "More Video";
         }
 
         function initChunkedContainer(containerId) {
@@ -619,8 +606,6 @@
           );
         });
         const syncMode = () => {
-          const mode = audioToggle?.classList.contains("is-active") ? "audio" : "video";
-          updateMoreCta(mode);
           syncRailControls();
         };
         videoToggle?.addEventListener("click", () => {

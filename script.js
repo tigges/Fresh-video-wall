@@ -8,10 +8,6 @@ if (yearNode) {
 const page = document.body.dataset.page;
 const PRIMARY_GENRE_BADGE_LABEL = "Bass House";
 const SECONDARY_GENRE_BADGE_LABEL = "Tech House";
-const HOME_BEST_OF_MORE_LINKS = Object.freeze({
-  video: "./video.html",
-  audio: "./audio.html",
-});
 const HOME_BEST_OF_MOBILE_QUERY = "(max-width: 639px)";
 let mixcloudWidgetApiPromise = null;
 let offlineAudioSourcesPromise = null;
@@ -403,8 +399,7 @@ function updateHomeBestOfArtistToggle() {
   const audioGrid = document.getElementById("audio-grid");
   const videoToggle = document.getElementById("best-of-toggle-video");
   const audioToggle = document.getElementById("best-of-toggle-audio");
-  const moreLink = document.getElementById("best-of-more-link");
-  if (!bestSection || !videosGrid || !audioGrid || !videoToggle || !audioToggle || !moreLink) {
+  if (!bestSection || !videosGrid || !audioGrid || !videoToggle || !audioToggle) {
     return;
   }
 
@@ -429,7 +424,6 @@ function updateHomeBestOfArtistToggle() {
     videoToggle.setAttribute("aria-pressed", isVideo ? "true" : "false");
     audioToggle.setAttribute("aria-pressed", isVideo ? "false" : "true");
 
-    moreLink.href = HOME_BEST_OF_MORE_LINKS[normalizedMode] ?? HOME_BEST_OF_MORE_LINKS.video;
   };
 
   const setDesktopTop3Only = () => {

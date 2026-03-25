@@ -1460,7 +1460,7 @@ body[data-page="home"] #audio-grid.is-hidden-by-toggle {
 body[data-page="home"] #best-of-artist .section-cta-best-of-toggle .btn.is-active {
   border-color: #22bfff;
   color: #dff7ff;
-  background: rgba(0, 200, 255, 0.18);
+  background: rgba(34, 191, 255, 0.22);
   box-shadow: 0 0 0 1px rgba(34, 191, 255, 0.34);
 }
 
@@ -2728,9 +2728,10 @@ body[data-page="home"] #best-of-toggle-audio:hover {
 }
 
 body[data-page="home"] #best-of-artist .section-cta-best-of-toggle .btn.is-active {
-  background: rgba(255, 255, 255, 0.16);
-  color: #fff;
-  border-color: #fff;
-  box-shadow: none;
+  /* Keep selected toggle highlight consistent across desktop/mobile. */
+  background: rgba(34, 191, 255, 0.22);
+  color: #dff7ff;
+  border-color: #22bfff;
+  box-shadow: 0 0 0 1px rgba(34, 191, 255, 0.34);
 }
 

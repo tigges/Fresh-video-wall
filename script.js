@@ -987,14 +987,150 @@ function createAudioTopTileCard(item, index = 0) {
   logoLinkBlocker.setAttribute("aria-hidden", "true");
   wrap.appendChild(logoLinkBlocker);
 
-  const overlay = document.createElement("div");
-  overlay.className = "audio-top-overlay";
-  overlay.setAttribute("aria-hidden", "true");
+  const overlay = document.createElement("button");
+  overlay.type = "button";
+  overlay.className = "audio-top-overlay audio-top-overlay-play";
+  overlay.setAttribute("aria-label", `Play ${normalizedTitle}`);
   const number = document.createElement("span");
   number.className = "audio-top-overlay-number";
   number.textContent = setLabel;
+  const action = document.createElement("span");
+  action.className = "audio-top-overlay-action";
+  action.textContent = "Play";
+  action.setAttribute("aria-hidden", "true");
   overlay.appendChild(number);
+  overlay.appendChild(action);
   wrap.appendChild(overlay);
+
+  let mixcloudWidget = null;
+  let widgetReadyPromise = null;
+  let widgetIsReady = false;
+
+  const setPlayingState = (isPlaying) => {
+    article.classList.toggle("is-media-active", isPlaying);
+    overlay.classList.toggle("is-playing", isPlaying);
+    action.textContent = isPlaying ? "Pause" : "Play";
+    overlay.setAttribute("aria-label", `${isPlaying ? "Pause" : "Play"} ${normalizedTitle}`);
+  };
+
+  const ensureWidgetReady = async () => {
+    if (mixcloudWidget) {
+      return mixcloudWidget;
+    }
+    if (widgetReadyPromise) {
+      return widgetReadyPromise;
+    }
+
+    widgetReadyPromise = (async () => {
+      await loadMixcloudWidgetApi();
+      const frame = document.createElement("iframe");
+      frame.className = "audio-engine-frame";
+      frame.src = toInlineMixcloudEngineSrc(item.embedUrl);
+      frame.title = `${normalizedTitle} audio engine`;
+      frame.allow = "autoplay; clipboard-write";
+      frame.loading = "lazy";
+      frame.tabIndex = -1;
+      frame.setAttribute("aria-hidden", "true");
+      wrap.appendChild(frame);
+
+      mixcloudWidget = window.Mixcloud?.PlayerWidget?.(frame) ?? null;
+      if (!mixcloudWidget) {
+        throw new Error("Mixcloud widget API unavailable");
+      }
+
+      await new Promise((resolve) => {
+        let settled = false;
+        const done = () => {
+          if (settled) {
+            return;
+          }
+          settled = true;
+          widgetIsReady = true;
+          resolve();
+        };
+        if (mixcloudWidget.ready && typeof mixcloudWidget.ready.then === "function") {
+          mixcloudWidget.ready.then(done).catch(done);
+        } else if (mixcloudWidget.events?.ready?.on) {
+          mixcloudWidget.events.ready.on(done);
+        }
+        window.setTimeout(done, 7000);
+      });
+
+      mixcloudWidget.events?.pause?.on(() => {
+        if (activeAudioController === controls) {
+          activeAudioController = null;
+        }
+        clearActiveMediaController(controls);
+        setPlayingState(false);
+      });
+      mixcloudWidget.events?.play?.on(() => {
+        activateMediaController(controls);
+        activeAudioController = controls;
+        setPlayingState(true);
+      });
+      return mixcloudWidget;
+    })().catch((error) => {
+      widgetReadyPromise = null;
+      throw error;
+    });
+
+    return widgetReadyPromise;
+  };
+
+  const pauseAudio = () => {
+    if (!mixcloudWidget) {
+      setPlayingState(false);
+      return;
+    }
+    try {
+      mixcloudWidget.pause();
+    } catch {
+      setPlayingState(false);
+    }
+  };
+
+  const playAudio = async () => {
+    try {
+      setActiveMediaTile(article);
+      await ensureWidgetReady();
+      activateMediaController(controls);
+      activeAudioController = controls;
+      mixcloudWidget.play();
+      setPlayingState(true);
+      if (!widgetIsReady) {
+        let retries = 0;
+        const retryPlay = () => {
+          if (!mixcloudWidget || overlay.classList.contains("is-playing") || retries >= 4) {
+            return;
+          }
+          retries += 1;
+          try {
+            mixcloudWidget.play();
+          } catch {
+            // Ignore retry errors and keep trying a few times.
+          }
+          window.setTimeout(retryPlay, 400);
+        };
+        window.setTimeout(retryPlay, 400);
+      }
+    } catch {
+      // Keep overlay UI stable if widget setup fails.
+    }
+  };
+
+  const controls = {
+    pause: pauseAudio,
+  };
+
+  overlay.addEventListener("click", async () => {
+    if (overlay.classList.contains("is-playing")) {
+      pauseAudio();
+      return;
+    }
+    await playAudio();
+  });
+
+  ensureWidgetReady().catch(() => {});
 
   const meta = document.createElement("div");
   meta.className = "media-meta";

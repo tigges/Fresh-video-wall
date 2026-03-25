@@ -2660,6 +2660,8 @@ body[data-page="home"] .section-cta.section-cta-home-more .btn {
 :root {
   --rhythm-lg: 80px;
   --rhythm-sm: 24px;
+  --btn-type-size: clamp(1rem, 1.18vw, 1.12rem);
+  --btn-type-letter: 0.09em;
   --btn-pill-radius: 12px;
   --btn-pill-height: 52px;
 }
@@ -2729,8 +2731,8 @@ body[data-page="contact"] .btn.btn-subscribe {
   padding: 0.7rem 1.8rem;
   font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 700;
-  font-size: clamp(1rem, 1.25vw, 1.18rem);
-  letter-spacing: 0.09em;
+  font-size: var(--btn-type-size);
+  letter-spacing: var(--btn-type-letter);
   text-transform: uppercase;
   text-decoration: none;
   box-shadow: none;
@@ -2767,8 +2769,8 @@ body[data-page="home"] #best-of-toggle-audio {
   min-height: var(--btn-pill-height);
   font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 700;
-  font-size: clamp(1rem, 1.25vw, 1.18rem);
-  letter-spacing: 0.09em;
+  font-size: var(--btn-type-size);
+  letter-spacing: var(--btn-type-letter);
   text-transform: uppercase;
   box-shadow: none;
 }
@@ -2788,5 +2790,20 @@ body[data-page="home"] #best-of-artist .section-cta-best-of-toggle .btn.is-activ
   color: #dff7ff;
   border-color: #22bfff;
   box-shadow: 0 0 0 1px rgba(34, 191, 255, 0.34);
+}
+
+/* Harmonize high-visibility Layer 1 button font sizing. */
+body[data-page="home"] .main-nav-book,
+body[data-page="home"] .btn-live,
+body[data-page="home"] .about-cta-book,
+body[data-page="home"] #best-of-more-link,
+body[data-page="home"] #best-of-toggle-video,
+body[data-page="home"] #best-of-toggle-audio,
+body[data-page="video"] .subpage-action-btn,
+body[data-page="audio-more"] .subpage-action-btn,
+body[data-page="contact"] .btn.btn-subscribe,
+body[data-page="contact"] .btn.btn-outline {
+  font-size: var(--btn-type-size);
+  letter-spacing: var(--btn-type-letter);
 }
 

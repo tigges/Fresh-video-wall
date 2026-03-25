@@ -2324,27 +2324,34 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
 
 /* Palette 01 overrides (Layer 1 pages) */
 :root {
-  /* UT Prism palette aligned to DJ UrbanT logo. */
-  --color-bg: #05060a;
-  --color-surface: #0d1220;
-  --color-border: #27314a;
-  --color-type: #f4f7ff;
-  --color-type-muted: #a7b1c8;
+  /* Punchy rainbow palette aligned to DJ UrbanT logo. */
+  --color-bg: #000;
+  --color-surface: #090d1a;
+  --color-border: #21304d;
+  --color-type: #f6f8ff;
+  --color-type-muted: #aeb8d4;
   --color-header-footer: var(--color-bg);
   --gradient: linear-gradient(
-    100deg,
-    #29d8ff 0%,
-    #4d7dff 20%,
-    #7a4dff 40%,
-    #c557ff 58%,
-    #ff8a3d 80%,
-    #ffd34a 100%
+    95deg,
+    #20d5ff 0%,
+    #2f7bff 16%,
+    #7a2cff 34%,
+    #ff2f8a 50%,
+    #ff3f3f 66%,
+    #ff8f1f 82%,
+    #ffe033 92%,
+    #4be548 100%
   );
   --gradient-diagonal: linear-gradient(
-    100deg,
-    rgba(41, 216, 255, 0.22),
-    rgba(122, 77, 255, 0.18),
-    rgba(255, 138, 61, 0.18)
+    95deg,
+    rgba(32, 213, 255, 0.32),
+    rgba(47, 123, 255, 0.28),
+    rgba(122, 44, 255, 0.28),
+    rgba(255, 47, 138, 0.28),
+    rgba(255, 63, 63, 0.24),
+    rgba(255, 143, 31, 0.24),
+    rgba(255, 224, 51, 0.26),
+    rgba(75, 229, 72, 0.24)
   );
   --brand-ink: var(--color-bg);
   --brand-panel: var(--color-surface);
@@ -2360,7 +2367,7 @@ body[data-page="home"],
 body[data-page="video"],
 body[data-page="audio-more"],
 body[data-page="contact"] {
-  background: var(--color-bg);
+  background: #000;
   color: var(--color-type);
 }
 

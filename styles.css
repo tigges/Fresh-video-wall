@@ -1697,13 +1697,13 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
 .audio-top-link-blocker {
   position: absolute;
   left: 0;
-  bottom: 0;
-  top: auto;
-  height: 60px;
-  width: clamp(56px, 10vw, 88px);
+  top: 0;
+  bottom: auto;
+  height: clamp(52px, 8vw, 64px);
+  width: clamp(56px, 9vw, 92px);
   background: transparent;
-  pointer-events: auto;
-  z-index: 1;
+  pointer-events: none;
+  z-index: 5;
 }
 
 .audio-top-overlay {
@@ -1824,7 +1824,7 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
 }
 
 .media-card.is-controls-open .audio-top-link-blocker {
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .audio-top-overlay-number {

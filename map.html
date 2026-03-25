@@ -174,6 +174,7 @@
       .status {
         display: inline-flex;
         align-items: center;
+        gap: 0.32rem;
         border-radius: 999px;
         padding: 0.12rem 0.5rem;
         font-size: 0.7rem;
@@ -182,16 +183,52 @@
         margin-left: 0.42rem;
       }
 
+      .status-icon {
+        position: relative;
+        display: inline-block;
+        width: 0.54rem;
+        height: 0.54rem;
+        flex: 0 0 auto;
+      }
+
       .status-open {
         border: 1px solid rgba(75, 229, 72, 0.38);
         background: rgba(75, 229, 72, 0.12);
         color: #bdf9bc;
       }
 
+      .status-open .status-icon {
+        border-radius: 999px;
+        background: #4be548;
+        box-shadow: 0 0 0 1px rgba(75, 229, 72, 0.35);
+      }
+
       .status-locked {
         border: 1px solid rgba(244, 63, 142, 0.42);
         background: rgba(244, 63, 142, 0.12);
         color: #ffd0e9;
+      }
+
+      .status-locked .status-icon {
+        width: 0.56rem;
+        height: 0.44rem;
+        margin-top: 0.08rem;
+        border-radius: 2px;
+        background: rgba(255, 208, 233, 0.95);
+        box-shadow: 0 0 0 1px rgba(244, 63, 142, 0.35);
+      }
+
+      .status-locked .status-icon::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: -0.28rem;
+        transform: translateX(-50%);
+        width: 0.4rem;
+        height: 0.28rem;
+        border: 1.5px solid rgba(255, 208, 233, 0.95);
+        border-bottom: 0;
+        border-radius: 0.35rem 0.35rem 0 0;
       }
 
       .all-pages {
@@ -242,28 +279,37 @@
       <section class="map-grid">
         <div class="map-grid row-4">
           <article class="map-card">
-            <h3>Index <span class="status status-open">Open</span></h3>
+            <h3>
+              Index <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+            </h3>
             <p><a href="./index.html">/index.html</a><br />Main landing page.</p>
             <a class="map-thumb" href="./index.html" aria-label="Preview index page">
               <iframe loading="lazy" src="./index.html" title="Index page preview"></iframe>
             </a>
           </article>
           <article class="map-card">
-            <h3>Video <span class="status status-open">Open</span></h3>
+            <h3>
+              Video <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+            </h3>
             <p><a href="./video.html">/video.html</a><br />Layer 1 video page.</p>
             <a class="map-thumb" href="./video.html" aria-label="Preview video page">
               <iframe loading="lazy" src="./video.html" title="Video page preview"></iframe>
             </a>
           </article>
           <article class="map-card">
-            <h3>Audio <span class="status status-open">Open</span></h3>
+            <h3>
+              Audio <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+            </h3>
             <p><a href="./audio.html">/audio.html</a><br />Layer 1 audio page.</p>
             <a class="map-thumb" href="./audio.html" aria-label="Preview audio page">
               <iframe loading="lazy" src="./audio.html" title="Audio page preview"></iframe>
             </a>
           </article>
           <article class="map-card">
-            <h3>Contact <span class="status status-open">Open</span></h3>
+            <h3>
+              Contact
+              <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+            </h3>
             <p><a href="./contact.html">/contact.html</a><br />Layer 1 contact page.</p>
             <a class="map-thumb" href="./contact.html" aria-label="Preview contact page">
               <iframe loading="lazy" src="./contact.html" title="Contact page preview"></iframe>
@@ -278,7 +324,10 @@
       <section class="map-grid">
         <div class="map-grid row-2">
           <article class="map-card">
-            <h3>Map <span class="status status-locked">Locked</span></h3>
+            <h3>
+              Map
+              <span class="status status-locked"><span class="status-icon" aria-hidden="true"></span>Locked</span>
+            </h3>
             <p>
               <a href="./map.html">/map.html</a><br />
               Layered index and routing map.
@@ -288,7 +337,10 @@
             </a>
           </article>
           <article class="map-card">
-            <h3>Admin <span class="status status-locked">Locked</span></h3>
+            <h3>
+              Admin
+              <span class="status status-locked"><span class="status-icon" aria-hidden="true"></span>Locked</span>
+            </h3>
             <p>
               <a href="./admin.html">/admin.html</a><br />
               Unlinked admin workspace page.
@@ -303,12 +355,34 @@
       <h2 class="section-title">All HTML Pages (Rainbow Cut Scope)</h2>
       <section class="map-grid">
         <ul class="all-pages">
-          <li><code>/index.html</code> <span class="status status-open">Open</span></li>
-          <li><code>/video.html</code> <span class="status status-open">Open</span></li>
-          <li><code>/audio.html</code> <span class="status status-open">Open</span></li>
-          <li><code>/contact.html</code> <span class="status status-open">Open</span></li>
-          <li><code>/map.html</code> <span class="status status-locked">Locked</span></li>
-          <li><code>/admin.html</code> <span class="status status-locked">Locked</span></li>
+          <li>
+            <code>/index.html</code>
+            <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+          </li>
+          <li>
+            <code>/video.html</code>
+            <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+          </li>
+          <li>
+            <code>/audio.html</code>
+            <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+          </li>
+          <li>
+            <code>/contact.html</code>
+            <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+          </li>
+          <li>
+            <code>/map.html</code>
+            <span class="status status-locked"
+              ><span class="status-icon" aria-hidden="true"></span>Locked</span
+            >
+          </li>
+          <li>
+            <code>/admin.html</code>
+            <span class="status status-locked"
+              ><span class="status-icon" aria-hidden="true"></span>Locked</span
+            >
+          </li>
         </ul>
       </section>
 

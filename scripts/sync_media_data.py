@@ -53,13 +53,26 @@ def normalize_brand(text: str) -> str:
 
 
 GENRE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
-    ("bass-house", re.compile(r"\bbass\s*house\b", flags=re.IGNORECASE)),
-    ("tech-house", re.compile(r"\btech\s*house\b", flags=re.IGNORECASE)),
+    ("afro-house", re.compile(r"\bafro\s*house\b", flags=re.IGNORECASE)),
+    ("melodic-house", re.compile(r"\bmelodic\s*house\b", flags=re.IGNORECASE)),
+    ("vocal-deep-house", re.compile(r"\bvocal\s*deep\s*house\b", flags=re.IGNORECASE)),
     ("deep-house", re.compile(r"\bdeep\s*house\b", flags=re.IGNORECASE)),
+    ("tech-house", re.compile(r"\btech\s*house\b", flags=re.IGNORECASE)),
+    ("jazz-house", re.compile(r"\bjazz\s*house\b", flags=re.IGNORECASE)),
+    ("latin-house", re.compile(r"\blatin\s*house\b", flags=re.IGNORECASE)),
+    ("french-house", re.compile(r"\bfrench\s*house\b", flags=re.IGNORECASE)),
+    ("lo-fi-house", re.compile(r"\blo[\s-]?fi\s*house\b", flags=re.IGNORECASE)),
+    ("disco-house", re.compile(r"\bdisco\s*house\b", flags=re.IGNORECASE)),
+    ("bass-house", re.compile(r"\bbass\s*house\b", flags=re.IGNORECASE)),
     ("progressive-house", re.compile(r"\bprogressive\s*house\b", flags=re.IGNORECASE)),
-    ("house", re.compile(r"\bhouse\b", flags=re.IGNORECASE)),
     ("electro-house", re.compile(r"\belectro\s*house\b", flags=re.IGNORECASE)),
     ("future-house", re.compile(r"\bfuture\s*house\b", flags=re.IGNORECASE)),
+    ("uk-garage", re.compile(r"\b(ukg|uk\s*garage)\b", flags=re.IGNORECASE)),
+    ("amapiano", re.compile(r"\bamapiano\b", flags=re.IGNORECASE)),
+    ("gqom", re.compile(r"\bgqom\b", flags=re.IGNORECASE)),
+    ("baile-funk", re.compile(r"\bbaile\s*funk\b", flags=re.IGNORECASE)),
+    ("drift-phonk", re.compile(r"\bdrift\s*phonk\b", flags=re.IGNORECASE)),
+    ("house", re.compile(r"\bhouse\b", flags=re.IGNORECASE)),
 ]
 
 
@@ -72,9 +85,17 @@ def detect_genres(title: str) -> list[str]:
             if slug == "house" and any(
                 specific in genres
                 for specific in (
+                    "afro-house",
+                    "melodic-house",
+                    "vocal-deep-house",
                     "bass-house",
                     "tech-house",
                     "deep-house",
+                    "jazz-house",
+                    "latin-house",
+                    "french-house",
+                    "lo-fi-house",
+                    "disco-house",
                     "progressive-house",
                     "electro-house",
                     "future-house",

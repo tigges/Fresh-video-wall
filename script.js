@@ -290,6 +290,23 @@ function setAudioTopOverlayState(card, isPlaying) {
   overlay.setAttribute("aria-label", `${isPlaying ? "Pause" : "Play"} ${title}`);
 }
 
+function setAudioTopControlsMode(card, isOpen) {
+  if (!(card instanceof HTMLElement)) {
+    return;
+  }
+  const controlsOpen = Boolean(isOpen);
+  card.classList.toggle("is-controls-open", controlsOpen);
+  const overlay = card.querySelector(".audio-top-overlay-play");
+  if (overlay instanceof HTMLButtonElement) {
+    overlay.classList.toggle("is-controls-open", controlsOpen);
+  }
+  const toggle = card.querySelector(".audio-top-controls-toggle");
+  if (toggle instanceof HTMLButtonElement) {
+    toggle.textContent = controlsOpen ? "Done" : "Controls";
+    toggle.setAttribute("aria-label", controlsOpen ? "Hide audio controls" : "Show audio controls");
+  }
+}
+
 function clearActiveMediaTiles(exceptCard = null) {
   document.querySelectorAll(".media-card.is-media-active").forEach((card) => {
     if (card === exceptCard) {
@@ -298,6 +315,7 @@ function clearActiveMediaTiles(exceptCard = null) {
     card.classList.remove("is-media-active");
     restoreVideoOverlayForCard(card);
     setAudioTopOverlayState(card, false);
+    setAudioTopControlsMode(card, false);
   });
 }
 
@@ -1023,6 +1041,13 @@ function createAudioTopTileCard(item, index = 0) {
   overlay.appendChild(action);
   wrap.appendChild(overlay);
 
+  const controlsToggle = document.createElement("button");
+  controlsToggle.type = "button";
+  controlsToggle.className = "audio-top-controls-toggle";
+  controlsToggle.textContent = "Controls";
+  controlsToggle.setAttribute("aria-label", "Show audio controls");
+  wrap.appendChild(controlsToggle);
+
   let mixcloudWidget = null;
   let widgetReadyPromise = null;
   let widgetIsReady = false;
@@ -1032,6 +1057,9 @@ function createAudioTopTileCard(item, index = 0) {
     overlay.classList.toggle("is-playing", isPlaying);
     action.textContent = isPlaying ? "Pause" : "Play";
     overlay.setAttribute("aria-label", `${isPlaying ? "Pause" : "Play"} ${normalizedTitle}`);
+    if (!isPlaying) {
+      setAudioTopControlsMode(article, false);
+    }
   };
 
   const ensureWidgetReady = async () => {
@@ -1044,17 +1072,7 @@ function createAudioTopTileCard(item, index = 0) {
 
     widgetReadyPromise = (async () => {
       await loadMixcloudWidgetApi();
-      const frame = document.createElement("iframe");
-      frame.className = "audio-engine-frame";
-      frame.src = toInlineMixcloudEngineSrc(item.embedUrl);
-      frame.title = `${normalizedTitle} audio engine`;
-      frame.allow = "autoplay; clipboard-write";
-      frame.loading = "lazy";
-      frame.tabIndex = -1;
-      frame.setAttribute("aria-hidden", "true");
-      wrap.appendChild(frame);
-
-      mixcloudWidget = window.Mixcloud?.PlayerWidget?.(frame) ?? null;
+      mixcloudWidget = window.Mixcloud?.PlayerWidget?.(iframe) ?? null;
       if (!mixcloudWidget) {
         throw new Error("Mixcloud widget API unavailable");
       }
@@ -1113,6 +1131,7 @@ function createAudioTopTileCard(item, index = 0) {
   const playAudio = async () => {
     try {
       setActiveMediaTile(article);
+      setAudioTopControlsMode(article, false);
       await ensureWidgetReady();
       activateMediaController(controls);
       activeAudioController = controls;
@@ -1149,6 +1168,15 @@ function createAudioTopTileCard(item, index = 0) {
       return;
     }
     await playAudio();
+  });
+
+  controlsToggle.addEventListener("click", async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (!overlay.classList.contains("is-playing")) {
+      await playAudio();
+    }
+    setAudioTopControlsMode(article, !article.classList.contains("is-controls-open"));
   });
 
   ensureWidgetReady().catch(() => {});

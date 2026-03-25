@@ -12,25 +12,80 @@
     <link rel="preconnect" href="https://www.mixcloud.com" />
     <link rel="stylesheet" href="./styles.css" />
     <style>
-      /* Home-only: frame Best of Artist like the stats/booking bands. */
-      body[data-page="home"] #best-of-artist {
-        position: relative;
-        border-top: 1px solid rgba(255, 255, 255, 0.14);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-        background: rgba(5, 6, 11, 0.86);
-        padding: clamp(1rem, 2.8vw, 1.8rem) clamp(1rem, 3vw, 2.2rem);
-        box-sizing: border-box;
+      /* Home rails: progressive loading without touching shared styles/script. */
+      body[data-page="home"] #best-of-artist .section-cta.section-cta-home-more {
+        display: none !important;
       }
 
-      body[data-page="home"] #best-of-artist::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -1px;
-        height: 1px;
-        background: var(--rainbow-divider-gradient);
-        pointer-events: none;
+      body[data-page="home"] #best-of-artist .media-card.chunk-hidden {
+        display: none !important;
+      }
+
+      body[data-page="home"] #best-of-artist .media-card.chunk-force-visible[hidden] {
+        display: flex !important;
+      }
+
+      body[data-page="home"] #best-of-artist .chunk-load-more-tile {
+        display: flex;
+        align-items: stretch;
+      }
+
+      body[data-page="home"] #best-of-artist .chunk-load-more-inner {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.03);
+        padding: 1rem;
+      }
+
+      body[data-page="home"] #best-of-artist .chunk-load-more-btn {
+        width: 100%;
+      }
+
+      body[data-page="home"] #best-of-artist .chunk-load-more-hint {
+        margin: 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        color: rgba(220, 226, 240, 0.68);
+      }
+
+      body[data-page="home"] #best-of-artist .chunk-end-state {
+        margin: 0;
+        padding: 0.35rem 0.2rem 0;
+        text-align: center;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        color: rgba(220, 226, 240, 0.64);
+      }
+
+      @media (max-width: 900px) {
+        body[data-page="home"] #videos-grid,
+        body[data-page="home"] #audio-grid {
+          display: flex;
+          flex-direction: row;
+          overflow-x: auto;
+          gap: 12px;
+          padding-bottom: 12px;
+          scroll-snap-type: x mandatory;
+          scrollbar-width: none;
+        }
+
+        body[data-page="home"] #videos-grid::-webkit-scrollbar,
+        body[data-page="home"] #audio-grid::-webkit-scrollbar {
+          display: none;
+        }
+
+        body[data-page="home"] #best-of-artist .media-card,
+        body[data-page="home"] #best-of-artist .chunk-load-more-tile {
+          flex: 0 0 75vw;
+          max-width: 280px;
+          scroll-snap-align: start;
+        }
       }
     </style>
   </head>
@@ -246,5 +301,133 @@
     </footer>
 
     <script src="./script.js"></script>
+    <script>
+      (() => {
+        const CHUNK_SIZE = 12;
+        const INITIAL_COUNT = 3;
+        const FORCE_VISIBLE_FROM = 3;
+
+        function createLoadMoreTile(remainingCount, onClick) {
+          const article = document.createElement("article");
+          article.className = "media-card chunk-load-more-tile";
+
+          const inner = document.createElement("div");
+          inner.className = "chunk-load-more-inner";
+
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "btn btn-outline chunk-load-more-btn";
+          button.textContent = "More";
+          button.addEventListener("click", onClick);
+
+          const hint = document.createElement("p");
+          hint.className = "chunk-load-more-hint";
+          hint.textContent = `${remainingCount}+ more`;
+
+          inner.append(button, hint);
+          article.append(inner);
+          return article;
+        }
+
+        function initChunkedContainer(containerId) {
+          const container = document.getElementById(containerId);
+          if (!container) {
+            return false;
+          }
+          const cards = [...container.querySelectorAll(":scope > .media-card:not(.chunk-load-more-tile)")];
+          if (!cards.length) {
+            return false;
+          }
+
+          if (!container.dataset.chunkVisibleCount) {
+            container.dataset.chunkVisibleCount = String(Math.min(INITIAL_COUNT, cards.length));
+          }
+
+          const apply = () => {
+            const allCards = [...container.querySelectorAll(":scope > .media-card:not(.chunk-load-more-tile)")];
+            const visibleCount = Math.min(
+              Number(container.dataset.chunkVisibleCount) || INITIAL_COUNT,
+              allCards.length,
+            );
+
+            allCards.forEach((card, index) => {
+              const isVisible = index < visibleCount;
+              card.classList.toggle("chunk-hidden", !isVisible);
+              if (index >= FORCE_VISIBLE_FROM) {
+                card.classList.toggle("chunk-force-visible", isVisible);
+              } else {
+                card.classList.remove("chunk-force-visible");
+              }
+            });
+
+            const existingTile = container.querySelector(":scope > .chunk-load-more-tile");
+            if (existingTile) {
+              existingTile.remove();
+            }
+
+            const remaining = allCards.length - visibleCount;
+            if (remaining > 0) {
+              container.appendChild(
+                createLoadMoreTile(remaining, () => {
+                  container.dataset.chunkVisibleCount = String(
+                    Math.min(allCards.length, visibleCount + CHUNK_SIZE),
+                  );
+                  apply();
+                }),
+              );
+            } else {
+              const endState = document.createElement("p");
+              endState.className = "chunk-end-state";
+              endState.textContent = "All loaded.";
+              container.appendChild(endState);
+            }
+          };
+
+          container._applyChunkState = apply;
+          apply();
+          return true;
+        }
+
+        const targets = ["videos-grid", "audio-grid"];
+        let attempts = 0;
+        const maxAttempts = 160;
+        const interval = window.setInterval(() => {
+          attempts += 1;
+          let initialized = 0;
+          targets.forEach((id) => {
+            const container = document.getElementById(id);
+            if (!container) {
+              return;
+            }
+            if (container.dataset.chunkInit === "1") {
+              initialized += 1;
+              return;
+            }
+            if (initChunkedContainer(id)) {
+              container.dataset.chunkInit = "1";
+              initialized += 1;
+            }
+          });
+          if (initialized === targets.length || attempts >= maxAttempts) {
+            window.clearInterval(interval);
+          }
+        }, 120);
+
+        const reapplyAll = () => {
+          targets.forEach((id) => {
+            const container = document.getElementById(id);
+            if (container?._applyChunkState) {
+              container._applyChunkState();
+            }
+          });
+        };
+
+        const videoToggle = document.getElementById("best-of-toggle-video");
+        const audioToggle = document.getElementById("best-of-toggle-audio");
+        videoToggle?.addEventListener("click", () => window.setTimeout(reapplyAll, 0));
+        audioToggle?.addEventListener("click", () => window.setTimeout(reapplyAll, 0));
+        window.addEventListener("resize", reapplyAll, { passive: true });
+      })();
+    </script>
   </body>
 </html>

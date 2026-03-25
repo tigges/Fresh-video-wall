@@ -1690,6 +1690,7 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   margin-left: 0;
   height: 60px;
   border: 0;
+  pointer-events: none;
   z-index: 1;
 }
 
@@ -1793,6 +1794,7 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   line-height: 1.2;
   cursor: pointer;
   pointer-events: auto;
+  z-index: 4;
   opacity: 0;
   transform: translateY(6px);
   transition:
@@ -1815,6 +1817,14 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
 .media-card.is-media-active .audio-top-controls-toggle {
   opacity: 1;
   transform: translateY(0);
+}
+
+.media-card.is-controls-open .audio-top-iframe {
+  pointer-events: auto;
+}
+
+.media-card.is-controls-open .audio-top-link-blocker {
+  pointer-events: none;
 }
 
 .audio-top-overlay-number {

@@ -14,7 +14,9 @@
     <style>
       /* Home rails: progressive loading without touching shared styles/script. */
       body[data-page="home"] #best-of-artist .section-cta.section-cta-home-more {
-        display: none !important;
+        display: flex !important;
+        justify-content: center;
+        margin-top: 12px;
       }
 
       body[data-page="home"] #best-of-artist .media-card.chunk-hidden {
@@ -63,28 +65,34 @@
         color: rgba(220, 226, 240, 0.64);
       }
 
-      @media (max-width: 900px) {
-        body[data-page="home"] #videos-grid,
-        body[data-page="home"] #audio-grid {
-          display: flex;
-          flex-direction: row;
-          overflow-x: auto;
-          gap: 12px;
-          padding-bottom: 12px;
-          scroll-snap-type: x mandatory;
-          scrollbar-width: none;
-        }
+      body[data-page="home"] #videos-grid,
+      body[data-page="home"] #audio-grid {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 12px;
+        padding-bottom: 12px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+      }
 
-        body[data-page="home"] #videos-grid::-webkit-scrollbar,
-        body[data-page="home"] #audio-grid::-webkit-scrollbar {
-          display: none;
-        }
+      body[data-page="home"] #videos-grid::-webkit-scrollbar,
+      body[data-page="home"] #audio-grid::-webkit-scrollbar {
+        display: none;
+      }
 
+      body[data-page="home"] #best-of-artist .media-card,
+      body[data-page="home"] #best-of-artist .chunk-load-more-tile {
+        flex: 0 0 75vw;
+        max-width: 280px;
+        scroll-snap-align: start;
+      }
+
+      @media (min-width: 901px) {
         body[data-page="home"] #best-of-artist .media-card,
         body[data-page="home"] #best-of-artist .chunk-load-more-tile {
-          flex: 0 0 75vw;
-          max-width: 280px;
-          scroll-snap-align: start;
+          flex: 0 0 340px;
+          max-width: 340px;
         }
       }
     </style>
@@ -329,6 +337,16 @@
           return article;
         }
 
+        function updateMoreCta(mode = "video") {
+          const moreLink = document.getElementById("best-of-more-link");
+          if (!moreLink) {
+            return;
+          }
+          const isAudio = mode === "audio";
+          moreLink.href = isAudio ? "./audio.html" : "./video.html";
+          moreLink.textContent = isAudio ? "More Audio" : "More Video";
+        }
+
         function initChunkedContainer(containerId) {
           const container = document.getElementById(containerId);
           if (!container) {
@@ -424,9 +442,24 @@
 
         const videoToggle = document.getElementById("best-of-toggle-video");
         const audioToggle = document.getElementById("best-of-toggle-audio");
-        videoToggle?.addEventListener("click", () => window.setTimeout(reapplyAll, 0));
-        audioToggle?.addEventListener("click", () => window.setTimeout(reapplyAll, 0));
+        const syncMode = () => {
+          const mode = audioToggle?.classList.contains("is-active") ? "audio" : "video";
+          updateMoreCta(mode);
+        };
+        videoToggle?.addEventListener("click", () => {
+          window.setTimeout(() => {
+            reapplyAll();
+            syncMode();
+          }, 0);
+        });
+        audioToggle?.addEventListener("click", () => {
+          window.setTimeout(() => {
+            reapplyAll();
+            syncMode();
+          }, 0);
+        });
         window.addEventListener("resize", reapplyAll, { passive: true });
+        syncMode();
       })();
     </script>
   </body>

@@ -22,6 +22,57 @@
         display: flex !important;
       }
 
+      body[data-page="home"] #best-of-artist .chunk-load-more-tile {
+        display: flex;
+        align-items: stretch;
+      }
+
+      body[data-page="home"] #best-of-artist .chunk-load-more-inner {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        border-radius: 8px;
+        border: 1px solid rgba(76, 196, 255, 0.38);
+        background: rgba(7, 12, 26, 0.9);
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+          0 8px 24px rgba(0, 0, 0, 0.3);
+        padding: 1rem;
+      }
+
+      body[data-page="home"] #best-of-artist .chunk-load-more-btn {
+        width: 100%;
+      }
+
+      body[data-page="home"] #best-of-artist .chunk-load-more-hint {
+        margin: 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        color: rgba(220, 226, 240, 0.68);
+      }
+
+      body[data-page="home"] #best-of-artist .section-cta-best-of-toggle .btn {
+        border: 1px solid transparent;
+        background:
+          linear-gradient(rgba(5, 9, 17, 0.95), rgba(5, 9, 17, 0.95)) padding-box,
+          var(--rainbow-divider-gradient) border-box;
+        color: #f4f7ff;
+      }
+
+      body[data-page="home"] #best-of-artist .section-cta-best-of-toggle .btn.is-active {
+        border: 1px solid transparent;
+        background:
+          linear-gradient(rgba(15, 78, 115, 0.92), rgba(9, 56, 90, 0.92)) padding-box,
+          linear-gradient(135deg, #35ceff 0%, #2a8bff 100%) border-box;
+        color: #ebfbff;
+        box-shadow:
+          0 0 0 1px rgba(34, 191, 255, 0.34),
+          0 8px 18px rgba(0, 0, 0, 0.26);
+      }
+
       body[data-page="home"] #best-of-artist .home-rail-shell {
         position: relative;
       }
@@ -49,7 +100,8 @@
         display: none;
       }
 
-      body[data-page="home"] #best-of-artist .media-card {
+      body[data-page="home"] #best-of-artist .media-card,
+      body[data-page="home"] #best-of-artist .chunk-load-more-tile {
         flex: 0 0 75vw;
         max-width: 280px;
         scroll-snap-align: start;
@@ -71,6 +123,10 @@
 
         body[data-page="home"] #best-of-artist .home-rail-controls[data-scrollable="false"] {
           display: none;
+        }
+
+        body[data-page="home"] #best-of-artist .chunk-load-more-tile {
+          display: none !important;
         }
 
         body[data-page="home"] #best-of-artist .home-rail-arrow {
@@ -114,7 +170,8 @@
           padding-bottom: 16px;
         }
 
-        body[data-page="home"] #best-of-artist .media-card {
+        body[data-page="home"] #best-of-artist .media-card,
+        body[data-page="home"] #best-of-artist .chunk-load-more-tile {
           flex: 0 0 340px;
           max-width: 340px;
         }
@@ -362,7 +419,31 @@
         const getInitialCount = () =>
           window.matchMedia(RAIL_DESKTOP_QUERY).matches ? INITIAL_COUNT_DESKTOP : INITIAL_COUNT_MOBILE;
 
-        const getCards = (container) => [...container.querySelectorAll(":scope > .media-card")];
+        const isDesktopRail = () => window.matchMedia(RAIL_DESKTOP_QUERY).matches;
+        const getCards = (container) =>
+          [...container.querySelectorAll(":scope > .media-card:not(.chunk-load-more-tile)")];
+
+        function createLoadMoreTile(remainingCount, onClick) {
+          const article = document.createElement("article");
+          article.className = "media-card chunk-load-more-tile";
+
+          const inner = document.createElement("div");
+          inner.className = "chunk-load-more-inner";
+
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "btn btn-outline chunk-load-more-btn";
+          button.textContent = "More";
+          button.addEventListener("click", onClick);
+
+          const hint = document.createElement("p");
+          hint.className = "chunk-load-more-hint";
+          hint.textContent = `${remainingCount}+ more`;
+
+          inner.append(button, hint);
+          article.append(inner);
+          return article;
+        }
 
         function ensureViewportMinimum(container) {
           const cards = getCards(container);
@@ -378,6 +459,9 @@
 
         function maybeAutoLoadChunk(container, force = false) {
           if (!container || container.dataset.chunkAutoLoading === "1") {
+            return;
+          }
+          if (!isDesktopRail()) {
             return;
           }
           const cards = getCards(container);
@@ -443,6 +527,23 @@
                 card.classList.remove("chunk-force-visible");
               }
             });
+
+            const existingTile = container.querySelector(":scope > .chunk-load-more-tile");
+            if (existingTile) {
+              existingTile.remove();
+            }
+            const remaining = allCards.length - visibleCount;
+            if (!isDesktopRail() && remaining > 0) {
+              container.appendChild(
+                createLoadMoreTile(remaining, () => {
+                  container.dataset.chunkVisibleCount = String(
+                    Math.min(allCards.length, visibleCount + CHUNK_SIZE),
+                  );
+                  apply();
+                }),
+              );
+            }
+
             window.requestAnimationFrame(() => {
               maybeAutoLoadChunk(container, false);
               syncRailControls();

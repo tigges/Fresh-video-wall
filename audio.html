@@ -30,6 +30,58 @@
         background: var(--rainbow-divider-gradient);
         pointer-events: none;
       }
+
+      /* Layer 1: chunk loader tile for horizontal/desktop rails. */
+      .layer1-chunk-more-tile {
+        display: flex !important;
+        align-items: stretch;
+        min-height: 324px;
+      }
+
+      .layer1-chunk-more-inner {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .layer1-chunk-more-btn {
+        width: 100%;
+      }
+
+      .layer1-chunk-more-hint {
+        margin: 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        color: rgba(220, 226, 240, 0.68);
+      }
+
+      @media (max-width: 639px) {
+        body[data-page="audio-more"] .subpage-grid {
+          display: flex;
+          flex-direction: row;
+          overflow-x: auto;
+          gap: 12px;
+          padding-bottom: 12px;
+          scroll-snap-type: x mandatory;
+          scrollbar-width: none;
+        }
+
+        body[data-page="audio-more"] .subpage-grid::-webkit-scrollbar {
+          display: none;
+        }
+
+        body[data-page="audio-more"] .subpage-grid .media-card {
+          flex: 0 0 75vw;
+          max-width: 280px;
+          scroll-snap-align: start;
+        }
+      }
     </style>
   </head>
   <body data-page="audio-more">
@@ -156,5 +208,82 @@
     </footer>
 
     <script src="./script.js"></script>
+    <script>
+      (() => {
+        if (document.body?.dataset?.page !== "audio-more") {
+          return;
+        }
+
+        const CHUNK_SIZE = 12;
+        const INITIAL_COUNT = 12;
+        const container = document.getElementById("audio-more-grid");
+        if (!container) {
+          return;
+        }
+
+        const isMediaCard = (node) => node instanceof HTMLElement && node.classList.contains("media-card");
+        const cloneItems = () =>
+          [...container.children].filter(isMediaCard).map((node) => node.cloneNode(true));
+
+        const makeMoreTile = (remaining, onClick) => {
+          const article = document.createElement("article");
+          article.className = "media-card layer1-chunk-more-tile";
+          const inner = document.createElement("div");
+          inner.className = "layer1-chunk-more-inner";
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "btn btn-outline layer1-chunk-more-btn";
+          button.textContent = "More";
+          button.addEventListener("click", onClick);
+          const hint = document.createElement("p");
+          hint.className = "layer1-chunk-more-hint";
+          hint.textContent = `${remaining}+ more`;
+          inner.append(button, hint);
+          article.append(inner);
+          return article;
+        };
+
+        const hydrateChunked = () => {
+          const cards = cloneItems();
+          if (!cards.length) {
+            return;
+          }
+          container.innerHTML = "";
+          let index = 0;
+          let moreTile = null;
+
+          const clearMore = () => {
+            if (moreTile && moreTile.parentNode === container) {
+              container.removeChild(moreTile);
+            }
+            moreTile = null;
+          };
+
+          const appendBatch = (count) => {
+            clearMore();
+            const max = Math.min(cards.length, index + count);
+            while (index < max) {
+              container.appendChild(cards[index]);
+              index += 1;
+            }
+            if (index < cards.length) {
+              moreTile = makeMoreTile(cards.length - index, () => appendBatch(CHUNK_SIZE));
+              container.appendChild(moreTile);
+            }
+          };
+
+          appendBatch(INITIAL_COUNT);
+        };
+
+        const observer = new MutationObserver(() => {
+          if (container.querySelector(".media-card") && !container.querySelector(".layer1-chunk-more-tile")) {
+            observer.disconnect();
+            hydrateChunked();
+          }
+        });
+
+        observer.observe(container, { childList: true });
+      })();
+    </script>
   </body>
 </html>

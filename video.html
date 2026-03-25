@@ -30,6 +30,33 @@
         background: var(--rainbow-divider-gradient);
         pointer-events: none;
       }
+
+      /* Layer 1 mobile rail + in-stream More tile for chunk loading. */
+      body[data-page="video"] .media-card[data-load-more-tile="1"] {
+        display: flex;
+        align-items: stretch;
+      }
+
+      body[data-page="video"] .media-card[data-load-more-tile="1"] .media-card-more-inner {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        border-style: solid;
+        border-color: rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      body[data-page="video"] .media-card[data-load-more-tile="1"] .media-card-more-link {
+        width: 100%;
+      }
+
+      body[data-page="video"] .media-card[data-load-more-tile="1"] .tile-stats {
+        margin: 0;
+        text-align: center;
+      }
     </style>
   </head>
   <body data-page="video">
@@ -151,5 +178,104 @@
     </footer>
 
     <script src="./script.js"></script>
+    <script>
+      (function () {
+        const CHUNK_SIZE = 12;
+        const INITIAL_COUNT = 12;
+        const grid = document.getElementById("videos-rest-grid");
+        if (!grid) return;
+
+        const createMoreTile = (remaining) => {
+          const article = document.createElement("article");
+          article.className = "media-card";
+          article.dataset.loadMoreTile = "1";
+          const inner = document.createElement("div");
+          inner.className = "media-card-more-inner";
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "btn btn-outline media-card-more-link";
+          button.textContent = "More";
+          const hint = document.createElement("p");
+          hint.className = "tile-stats";
+          hint.textContent = `${remaining}+ more`;
+          inner.append(button, hint);
+          article.append(inner);
+          return { article, button };
+        };
+
+        const chunkify = () => {
+          const cards = Array.from(grid.querySelectorAll(".media-card:not([data-load-more-tile='1'])"));
+          if (!cards.length) return;
+          grid.innerHTML = "";
+          let nextIndex = 0;
+          let moreTile = null;
+
+          const removeMore = () => {
+            if (moreTile && moreTile.article.parentNode === grid) {
+              grid.removeChild(moreTile.article);
+            }
+            moreTile = null;
+          };
+
+          const appendBatch = (count) => {
+            removeMore();
+            const max = Math.min(cards.length, nextIndex + count);
+            for (; nextIndex < max; nextIndex += 1) {
+              grid.appendChild(cards[nextIndex]);
+            }
+            if (nextIndex < cards.length) {
+              moreTile = createMoreTile(cards.length - nextIndex);
+              moreTile.button.addEventListener("click", () => appendBatch(CHUNK_SIZE));
+              grid.appendChild(moreTile.article);
+            }
+          };
+
+          appendBatch(INITIAL_COUNT);
+        };
+
+        const makeHorizontalRail = () => {
+          const mobile = window.matchMedia("(max-width: 639px)").matches;
+          if (mobile) {
+            grid.style.display = "flex";
+            grid.style.flexDirection = "row";
+            grid.style.overflowX = "auto";
+            grid.style.gap = "12px";
+            grid.style.paddingBottom = "12px";
+            grid.style.scrollSnapType = "x mandatory";
+            grid.style.scrollbarWidth = "none";
+            Array.from(grid.children).forEach((card) => {
+              card.style.flex = "0 0 75vw";
+              card.style.maxWidth = "280px";
+              card.style.scrollSnapAlign = "start";
+            });
+          } else {
+            grid.style.display = "";
+            grid.style.flexDirection = "";
+            grid.style.overflowX = "";
+            grid.style.gap = "";
+            grid.style.paddingBottom = "";
+            grid.style.scrollSnapType = "";
+            grid.style.scrollbarWidth = "";
+            Array.from(grid.children).forEach((card) => {
+              card.style.flex = "";
+              card.style.maxWidth = "";
+              card.style.scrollSnapAlign = "";
+            });
+          }
+        };
+
+        const waitForCards = () => {
+          if (grid.querySelector(".media-card")) {
+            chunkify();
+            makeHorizontalRail();
+            window.addEventListener("resize", makeHorizontalRail, { passive: true });
+            return;
+          }
+          window.setTimeout(waitForCards, 100);
+        };
+
+        waitForCards();
+      })();
+    </script>
   </body>
 </html>

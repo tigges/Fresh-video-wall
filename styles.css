@@ -2601,3 +2601,136 @@ body[data-page="home"] .section-cta.section-cta-home-more .btn {
   letter-spacing: 0.075em;
 }
 
+/* Unified rhythm + two-style button system (index/video/audio/contact only). */
+:root {
+  --rhythm-lg: 80px;
+  --rhythm-sm: 24px;
+  --btn-pill-radius: 999px;
+  --btn-pill-height: 52px;
+}
+
+/* Large vertical rhythm between major home sections. */
+body[data-page="home"] #live {
+  margin-bottom: var(--rhythm-lg);
+}
+
+body[data-page="home"] #best-of-artist {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body[data-page="home"] #best-of-artist + .stats-strip {
+  margin-top: var(--rhythm-lg);
+}
+
+body[data-page="home"] .stats-strip + .about-cta-section {
+  margin-top: var(--rhythm-lg);
+}
+
+body[data-page="home"] .site-footer {
+  margin-top: var(--rhythm-lg);
+}
+
+/* Small vertical rhythm within home sections. */
+body[data-page="home"] #best-of-artist .section-head {
+  margin-bottom: var(--rhythm-sm);
+}
+
+body[data-page="home"] #best-of-artist .section-cta.section-cta-best-of-toggle {
+  margin-top: 0;
+  margin-bottom: var(--rhythm-sm);
+}
+
+body[data-page="home"] .section-cta.section-cta-home-more {
+  margin-top: var(--rhythm-sm);
+  margin-bottom: 0;
+}
+
+body[data-page="home"] #best-of-artist > .section-cta:last-child {
+  margin-bottom: 0;
+}
+
+body[data-page="home"] .stats-card-value {
+  margin: 0 0 var(--rhythm-sm);
+}
+
+body[data-page="home"] .stats-card-label {
+  margin: 0;
+}
+
+/* PRIMARY buttons: gradient fill, pill shape, bold white text. */
+body[data-page="home"] .main-nav-book,
+body[data-page="home"] .btn-live,
+body[data-page="home"] .about-cta-book,
+body[data-page="home"] .btn.btn-subscribe,
+body[data-page="video"] .btn.btn-subscribe,
+body[data-page="audio-more"] .btn.btn-subscribe,
+body[data-page="contact"] .btn.btn-subscribe {
+  background: var(--gradient);
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: var(--btn-pill-radius);
+  min-height: var(--btn-pill-height);
+  padding: 0.7rem 1.8rem;
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1rem, 1.25vw, 1.18rem);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: none;
+}
+
+body[data-page="home"] .about-cta-book {
+  width: auto;
+  height: auto;
+}
+
+body[data-page="home"] .main-nav-book:hover,
+body[data-page="home"] .btn-live:hover,
+body[data-page="home"] .about-cta-book:hover,
+body[data-page="home"] .btn.btn-subscribe:hover,
+body[data-page="video"] .btn.btn-subscribe:hover,
+body[data-page="audio-more"] .btn.btn-subscribe:hover,
+body[data-page="contact"] .btn.btn-subscribe:hover {
+  filter: brightness(0.9);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* SECONDARY buttons: transparent, white border/text, same pill radius. */
+body[data-page="home"] .btn.btn-outline,
+body[data-page="video"] .btn.btn-outline,
+body[data-page="audio-more"] .btn.btn-outline,
+body[data-page="contact"] .btn.btn-outline,
+body[data-page="home"] #best-of-toggle-video,
+body[data-page="home"] #best-of-toggle-audio {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: var(--btn-pill-radius);
+  min-height: var(--btn-pill-height);
+  font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1rem, 1.25vw, 1.18rem);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  box-shadow: none;
+}
+
+body[data-page="home"] .btn.btn-outline:hover,
+body[data-page="video"] .btn.btn-outline:hover,
+body[data-page="audio-more"] .btn.btn-outline:hover,
+body[data-page="contact"] .btn.btn-outline:hover,
+body[data-page="home"] #best-of-toggle-video:hover,
+body[data-page="home"] #best-of-toggle-audio:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+body[data-page="home"] #best-of-artist .section-cta-best-of-toggle .btn.is-active {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  border-color: #fff;
+  box-shadow: none;
+}
+

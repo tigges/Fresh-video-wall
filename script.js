@@ -296,6 +296,10 @@ function setAudioTopControlsMode(card, isOpen) {
   }
   const controlsOpen = Boolean(isOpen);
   card.classList.toggle("is-controls-open", controlsOpen);
+  const iframe = card.querySelector(".audio-top-iframe");
+  if (iframe instanceof HTMLIFrameElement) {
+    iframe.style.pointerEvents = controlsOpen ? "auto" : "none";
+  }
   const overlay = card.querySelector(".audio-top-overlay-play");
   if (overlay instanceof HTMLButtonElement) {
     overlay.classList.toggle("is-controls-open", controlsOpen);

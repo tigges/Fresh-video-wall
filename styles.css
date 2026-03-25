@@ -2003,21 +2003,21 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
 
 .media-meta-footer {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.44rem;
   margin-top: auto;
-  padding-top: 6px;
-  min-height: 24px;
-  white-space: nowrap;
+  padding-top: 0.42rem;
+  min-height: 44px;
 }
 
 .genre-badges {
-  display: inline-flex;
-  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 6px;
-  margin-left: auto;
-  flex-shrink: 0;
+  margin-left: 0;
+  width: 100%;
 }
 
 .genre-badge {
@@ -2040,13 +2040,91 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
 
 .tile-stats {
   margin: 0;
-  flex: 1;
-  min-width: 0;
+  width: 100%;
+  min-width: 100%;
   color: var(--muted);
   font-size: var(--type-meta);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  line-height: 1.2;
+}
+
+.tile-stats-play,
+.tile-stats-date {
+  display: inline;
+}
+
+.tile-stats-sep {
+  display: inline;
+}
+
+.genre-badge--bass-house {
+  border-color: rgba(255, 83, 83, 0.7);
+  background: rgba(255, 83, 83, 0.2);
+  color: #ffdede;
+}
+
+.genre-badge--tech-house {
+  border-color: rgba(255, 208, 66, 0.75);
+  background: rgba(255, 208, 66, 0.2);
+  color: #fff4cf;
+}
+
+.genre-badge--house {
+  border-color: rgba(78, 210, 255, 0.72);
+  background: rgba(78, 210, 255, 0.2);
+  color: #ddf5ff;
+}
+
+.genre-badge--deep-house {
+  border-color: rgba(137, 123, 255, 0.74);
+  background: rgba(137, 123, 255, 0.22);
+  color: #ece8ff;
+}
+
+.genre-badge--progressive-house {
+  border-color: rgba(99, 238, 149, 0.72);
+  background: rgba(99, 238, 149, 0.2);
+  color: #ddffe9;
+}
+
+.genre-badge--electro-house {
+  border-color: rgba(255, 126, 234, 0.72);
+  background: rgba(255, 126, 234, 0.2);
+  color: #ffe4fa;
+}
+
+.genre-badge--melodic-house {
+  border-color: rgba(138, 243, 255, 0.72);
+  background: rgba(138, 243, 255, 0.2);
+  color: #dcfaff;
+}
+
+.genre-badge--future-house {
+  border-color: rgba(114, 255, 213, 0.72);
+  background: rgba(114, 255, 213, 0.2);
+  color: #e0fff6;
+}
+
+.genre-badge--unknown {
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.1);
+  color: #eaf0ff;
+}
+
+@media (max-width: 640px) {
+  .tile-stats-sep {
+    display: block;
+    visibility: hidden;
+    line-height: 0.1;
+    height: 0;
+  }
+
+  .tile-stats-play,
+  .tile-stats-date {
+    display: block;
+  }
 }
 
 .site-footer {
@@ -2656,9 +2734,6 @@ body[data-page="home"] .genre-badge,
 body[data-page="video"] .genre-badge,
 body[data-page="audio-more"] .genre-badge,
 body[data-page="contact"] .genre-badge {
-  background: var(--gradient);
-  color: #fff;
-  border: 0;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;

@@ -241,6 +241,19 @@
           return article;
         };
 
+        const makeDoneTile = () => {
+          const article = document.createElement("article");
+          article.className = "media-card layer1-chunk-more-tile";
+          const inner = document.createElement("div");
+          inner.className = "layer1-chunk-more-inner";
+          const done = document.createElement("p");
+          done.className = "layer1-chunk-more-hint";
+          done.textContent = "All audio sets loaded";
+          inner.append(done);
+          article.append(inner);
+          return article;
+        };
+
         const hydrateChunked = () => {
           const cards = cloneItems();
           if (!cards.length) {
@@ -248,26 +261,29 @@
           }
           container.innerHTML = "";
           let index = 0;
-          let moreTile = null;
+          let railTile = null;
 
-          const clearMore = () => {
-            if (moreTile && moreTile.parentNode === container) {
-              container.removeChild(moreTile);
+          const clearRailTile = () => {
+            if (railTile && railTile.parentNode === container) {
+              container.removeChild(railTile);
             }
-            moreTile = null;
+            railTile = null;
           };
 
           const appendBatch = (count) => {
-            clearMore();
+            clearRailTile();
             const max = Math.min(cards.length, index + count);
             while (index < max) {
               container.appendChild(cards[index]);
               index += 1;
             }
             if (index < cards.length) {
-              moreTile = makeMoreTile(cards.length - index, () => appendBatch(CHUNK_SIZE));
-              container.appendChild(moreTile);
+              railTile = makeMoreTile(cards.length - index, () => appendBatch(CHUNK_SIZE));
+              container.appendChild(railTile);
+              return;
             }
+            railTile = makeDoneTile();
+            container.appendChild(railTile);
           };
 
           appendBatch(INITIAL_COUNT);

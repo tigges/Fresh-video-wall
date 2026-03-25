@@ -201,6 +201,22 @@
           return { article, button };
         };
 
+        const createDoneTile = () => {
+          const article = document.createElement("article");
+          article.className = "media-card";
+          article.dataset.loadMoreTile = "1";
+          const inner = document.createElement("div");
+          inner.className = "media-card-more-inner";
+          const done = document.createElement("p");
+          done.className = "tile-stats";
+          done.textContent = "All videos loaded";
+          done.style.margin = "0";
+          done.style.textAlign = "center";
+          inner.append(done);
+          article.append(inner);
+          return article;
+        };
+
         const chunkify = () => {
           const cards = Array.from(grid.querySelectorAll(".media-card:not([data-load-more-tile='1'])"));
           if (!cards.length) return;
@@ -225,6 +241,8 @@
               moreTile = createMoreTile(cards.length - nextIndex);
               moreTile.button.addEventListener("click", () => appendBatch(CHUNK_SIZE));
               grid.appendChild(moreTile.article);
+            } else {
+              grid.appendChild(createDoneTile());
             }
           };
 

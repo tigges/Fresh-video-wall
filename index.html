@@ -54,6 +54,15 @@
         color: rgba(220, 226, 240, 0.68);
       }
 
+      body[data-page="home"] #best-of-artist .chunk-end-state {
+        margin: 0;
+        padding: 0.35rem 0.2rem 0;
+        text-align: center;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        color: rgba(220, 226, 240, 0.64);
+      }
+
       @media (max-width: 900px) {
         body[data-page="home"] #videos-grid,
         body[data-page="home"] #audio-grid {
@@ -366,6 +375,11 @@
                   apply();
                 }),
               );
+            } else {
+              const endState = document.createElement("p");
+              endState.className = "chunk-end-state";
+              endState.textContent = "All loaded.";
+              container.appendChild(endState);
             }
           };
 

@@ -9,6 +9,28 @@
       content="Contact DJ UrbanT for bookings, collaborations, and event inquiries."
     />
     <link rel="stylesheet" href="./styles.css" />
+    <style>
+      /* Layer 1 consistency: frame contact main content band. */
+      body[data-page="contact"] .media-section {
+        position: relative;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(5, 6, 11, 0.86);
+        padding: clamp(1rem, 2.8vw, 1.8rem) clamp(1rem, 3vw, 2.2rem);
+        box-sizing: border-box;
+      }
+
+      body[data-page="contact"] .media-section::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 1px;
+        background: var(--rainbow-divider-gradient);
+        pointer-events: none;
+      }
+    </style>
   </head>
   <body data-page="contact">
     <header class="site-header">

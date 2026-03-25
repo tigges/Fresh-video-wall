@@ -52,6 +52,39 @@ def normalize_brand(text: str) -> str:
     return re.sub(r"\burbant\b", "UrbanT", text, flags=re.IGNORECASE)
 
 
+GENRE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+    ("bass-house", re.compile(r"\bbass\s*house\b", flags=re.IGNORECASE)),
+    ("tech-house", re.compile(r"\btech\s*house\b", flags=re.IGNORECASE)),
+    ("deep-house", re.compile(r"\bdeep\s*house\b", flags=re.IGNORECASE)),
+    ("progressive-house", re.compile(r"\bprogressive\s*house\b", flags=re.IGNORECASE)),
+    ("house", re.compile(r"\bhouse\b", flags=re.IGNORECASE)),
+    ("electro-house", re.compile(r"\belectro\s*house\b", flags=re.IGNORECASE)),
+    ("future-house", re.compile(r"\bfuture\s*house\b", flags=re.IGNORECASE)),
+]
+
+
+def detect_genres(title: str) -> list[str]:
+    if not title:
+        return []
+    genres: list[str] = []
+    for slug, pattern in GENRE_PATTERNS:
+        if pattern.search(title):
+            if slug == "house" and any(
+                specific in genres
+                for specific in (
+                    "bass-house",
+                    "tech-house",
+                    "deep-house",
+                    "progressive-house",
+                    "electro-house",
+                    "future-house",
+                )
+            ):
+                continue
+            genres.append(slug)
+    return genres
+
+
 def unique_preserve_order(items: list[str]) -> list[str]:
     out: list[str] = []
     seen: set[str] = set()
@@ -186,6 +219,7 @@ def youtube_video_item(video_id: str) -> dict[str, Any]:
     return {
         "id": video_id,
         "title": unescape(title),
+        "genres": detect_genres(unescape(title)),
         "url": watch_url,
         "embedUrl": f"https://www.youtube.com/embed/{video_id}",
         "thumbnailUrl": f"https://i.ytimg.com/vi/{video_id}/hqdefault.jpg",
@@ -210,9 +244,11 @@ def ranked_youtube_items() -> list[dict[str, Any]]:
 def mixcloud_item(entry: dict[str, Any]) -> dict[str, Any]:
     key = str(entry.get("key", ""))
     encoded_key = quote(key, safe="")
+    title = normalize_brand(str(entry.get("name", "Untitled Mix")))
     return {
         "key": key,
-        "title": normalize_brand(str(entry.get("name", "Untitled Mix"))),
+        "title": title,
+        "genres": detect_genres(title),
         "url": str(entry.get("url", "")),
         "embedUrl": (
             "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed="

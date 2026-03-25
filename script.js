@@ -8,6 +8,27 @@ if (yearNode) {
 const page = document.body.dataset.page;
 const PRIMARY_GENRE_BADGE_LABEL = "Bass House";
 const SECONDARY_GENRE_BADGE_LABEL = "Tech House";
+const DEFAULT_GENRE_SLUGS = Object.freeze(["bass-house"]);
+const GENRE_LABELS = Object.freeze({
+  "bass-house": "Bass House",
+  "tech-house": "Tech House",
+  "deep-house": "Deep House",
+  "house": "House",
+  "melodic-techno": "Melodic Techno",
+  "afro-house": "Afro House",
+  "progressive-house": "Progressive House",
+  techno: "Techno",
+});
+const GENRE_PATTERNS = Object.freeze([
+  [/\bbass[\s-]*house\b/i, "bass-house"],
+  [/\btech[\s-]*house\b/i, "tech-house"],
+  [/\bdeep[\s-]*house\b/i, "deep-house"],
+  [/\bmelodic[\s-]*techno\b/i, "melodic-techno"],
+  [/\bafro[\s-]*house\b/i, "afro-house"],
+  [/\bprogressive[\s-]*house\b/i, "progressive-house"],
+  [/\btechno\b/i, "techno"],
+  [/\bhouse\b/i, "house"],
+]);
 const HOME_BEST_OF_MOBILE_QUERY = "(max-width: 639px)";
 let mixcloudWidgetApiPromise = null;
 let offlineAudioSourcesPromise = null;
@@ -415,21 +436,118 @@ function playTopVideoTile() {
   return startVideoPlayback(topVideoFrame, { shouldScrollIntoView: true });
 }
 
-function createGenreBadge(options = {}) {
-  const { includeTechHouse = false } = options;
+function toGenreSlug(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function detectGenreSlugsFromText(text = "") {
+  if (typeof text !== "string" || !text.trim()) {
+    return [];
+  }
+  const slugs = [];
+  GENRE_PATTERNS.forEach(([pattern, slug]) => {
+    if (pattern.test(text) && !slugs.includes(slug)) {
+      slugs.push(slug);
+    }
+  });
+  return slugs;
+}
+
+function getItemGenreSlugs(item = {}) {
+  const fromMetadata = Array.isArray(item?.genres)
+    ? item.genres.map(toGenreSlug).filter((genre) => genre.length > 0)
+    : [];
+  const inferredFromTitle = detectGenreSlugsFromText(item?.title || "");
+  const merged = [...fromMetadata, ...inferredFromTitle].filter((genre, index, list) => {
+    return genre && list.indexOf(genre) === index;
+  });
+  if (merged.length) {
+    return merged.slice(0, 3);
+  }
+
+  // Keep legacy defaults when feed metadata is sparse.
+  return [...DEFAULT_GENRE_SLUGS, toGenreSlug(SECONDARY_GENRE_BADGE_LABEL)].slice(0, 2);
+}
+
+function genreLabelFromSlug(slug) {
+  if (GENRE_LABELS[slug]) {
+    return GENRE_LABELS[slug];
+  }
+  return slug
+    .split("-")
+    .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
+    .join(" ");
+}
+
+function createGenreBadge(item = {}) {
   const badges = document.createElement("span");
   badges.className = "genre-badges";
-  const primaryBadge = document.createElement("span");
-  primaryBadge.className = "genre-badge";
-  primaryBadge.textContent = PRIMARY_GENRE_BADGE_LABEL;
-  badges.appendChild(primaryBadge);
-  if (includeTechHouse) {
-    const secondaryBadge = document.createElement("span");
-    secondaryBadge.className = "genre-badge";
-    secondaryBadge.textContent = SECONDARY_GENRE_BADGE_LABEL;
-    badges.appendChild(secondaryBadge);
-  }
+  const slugs = getItemGenreSlugs(item);
+  slugs.forEach((slug) => {
+    const badge = document.createElement("span");
+    badge.className = `genre-badge genre-badge--${slug}`;
+    badge.textContent = genreLabelFromSlug(slug);
+    badges.appendChild(badge);
+  });
   return badges;
+}
+
+function buildTileStatsNode({ countValue, countLabel, dateValue }) {
+  const stats = document.createElement("p");
+  stats.className = "tile-stats";
+
+  const count = document.createElement("span");
+  count.className = "tile-stats-play";
+  count.textContent =
+    typeof countValue === "number" && Number.isFinite(countValue)
+      ? `${formatCount(countValue)} ${countLabel}`
+      : "";
+
+  const date = document.createElement("span");
+  date.className = "tile-stats-date";
+  date.textContent = dateValue ? formatDate(dateValue) : "";
+
+  if (!count.textContent && !date.textContent) {
+    stats.textContent = "";
+    return stats;
+  }
+  if (!count.textContent) {
+    stats.textContent = date.textContent;
+    return stats;
+  }
+  if (!date.textContent) {
+    stats.textContent = count.textContent;
+    return stats;
+  }
+
+  const sep = document.createElement("span");
+  sep.className = "tile-stats-sep";
+  sep.textContent = " • ";
+  stats.append(count, sep, date);
+  return stats;
+}
+
+function createTileMetaBlock({ titleText, item, countValue, countLabel, dateValue }) {
+  const meta = document.createElement("div");
+  meta.className = "media-meta";
+
+  const title = document.createElement("h3");
+  title.textContent = titleText;
+
+  const statsWrap = document.createElement("div");
+  statsWrap.className = "media-meta-stats";
+  statsWrap.append(buildTileStatsNode({ countValue, countLabel, dateValue }));
+
+  const genresWrap = document.createElement("div");
+  genresWrap.className = "media-meta-genres";
+  genresWrap.append(createGenreBadge(item));
+
+  meta.append(title, statsWrap, genresWrap);
+  return meta;
 }
 
 function createMoreMenuCard(label, href, buttonClass = "btn-outline", openInNewTab = false) {
@@ -743,23 +861,13 @@ function createVideoCard(item, index = 0) {
     startVideoPlayback(iframe, { shouldScrollIntoView: false });
   });
 
-  const meta = document.createElement("div");
-  meta.className = "media-meta";
-
-  const title = document.createElement("h3");
-  title.textContent = normalizedTitle;
-  const badge = createGenreBadge({ includeTechHouse: index % 2 === 0 });
-
-  const stats = document.createElement("p");
-  stats.className = "tile-stats";
-  const viewText = item.viewCount ? `${formatCount(item.viewCount)} views` : "";
-  const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
-  stats.textContent = [viewText, dateText].filter(Boolean).join(" • ");
-  const footer = document.createElement("div");
-  footer.className = "media-meta-footer";
-  footer.append(stats, badge);
-
-  meta.append(title, footer);
+  const meta = createTileMetaBlock({
+    titleText: normalizedTitle,
+    item,
+    countValue: item.viewCount,
+    countLabel: "views",
+    dateValue: item.publishedAt,
+  });
   article.append(wrap, meta);
   return article;
 }
@@ -968,23 +1076,13 @@ function createAudioCard(item, index = 0) {
     cover.classList.remove("is-loading");
   });
 
-  const meta = document.createElement("div");
-  meta.className = "media-meta";
-
-  const title = document.createElement("h3");
-  title.textContent = normalizedTitle;
-  const badge = createGenreBadge({ includeTechHouse: index % 2 === 0 });
-
-  const stats = document.createElement("p");
-  stats.className = "tile-stats";
-  const playsText = item.playCount ? `${formatCount(item.playCount)} plays` : "";
-  const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
-  stats.textContent = [playsText, dateText].filter(Boolean).join(" • ");
-  const footer = document.createElement("div");
-  footer.className = "media-meta-footer";
-  footer.append(stats, badge);
-
-  meta.append(title, footer);
+  const meta = createTileMetaBlock({
+    titleText: normalizedTitle,
+    item,
+    countValue: item.playCount,
+    countLabel: "plays",
+    dateValue: item.publishedAt,
+  });
   article.append(wrap, meta);
   return article;
 }
@@ -1185,23 +1283,13 @@ function createAudioTopTileCard(item, index = 0) {
 
   ensureWidgetReady().catch(() => {});
 
-  const meta = document.createElement("div");
-  meta.className = "media-meta";
-
-  const title = document.createElement("h3");
-  title.textContent = normalizedTitle;
-  const badge = createGenreBadge({ includeTechHouse: index % 2 === 0 });
-
-  const stats = document.createElement("p");
-  stats.className = "tile-stats";
-  const playsText = item.playCount ? `${formatCount(item.playCount)} plays` : "";
-  const dateText = item.publishedAt ? formatDate(item.publishedAt) : "";
-  stats.textContent = [playsText, dateText].filter(Boolean).join(" • ");
-  const footer = document.createElement("div");
-  footer.className = "media-meta-footer";
-  footer.append(stats, badge);
-
-  meta.append(title, footer);
+  const meta = createTileMetaBlock({
+    titleText: normalizedTitle,
+    item,
+    countValue: item.playCount,
+    countLabel: "plays",
+    dateValue: item.publishedAt,
+  });
   article.append(wrap, meta);
   return article;
 }

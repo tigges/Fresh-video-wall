@@ -12,12 +12,7 @@
     <link rel="preconnect" href="https://www.mixcloud.com" />
     <link rel="stylesheet" href="./styles.css" />
     <style>
-      /* Home rails: progressive loading without touching shared styles/script. */
-      body[data-page="home"] #best-of-artist .section-cta.section-cta-home-more {
-        display: flex !important;
-        justify-content: center;
-        margin-top: 12px;
-      }
+      /* Home rails: progressive loading with unified desktop/mobile behavior. */
 
       body[data-page="home"] #best-of-artist .media-card.chunk-hidden {
         display: none !important;
@@ -27,42 +22,8 @@
         display: flex !important;
       }
 
-      body[data-page="home"] #best-of-artist .chunk-load-more-tile {
-        display: flex;
-        align-items: stretch;
-      }
-
-      body[data-page="home"] #best-of-artist .chunk-load-more-inner {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0.6rem;
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        background: rgba(255, 255, 255, 0.03);
-        padding: 1rem;
-      }
-
-      body[data-page="home"] #best-of-artist .chunk-load-more-btn {
-        width: 100%;
-      }
-
-      body[data-page="home"] #best-of-artist .chunk-load-more-hint {
-        margin: 0;
-        font-size: 0.78rem;
-        letter-spacing: 0.04em;
-        color: rgba(220, 226, 240, 0.68);
-      }
-
-      body[data-page="home"] #best-of-artist .chunk-end-state {
-        margin: 0;
-        padding: 0.35rem 0.2rem 0;
-        text-align: center;
-        font-size: 0.78rem;
-        letter-spacing: 0.04em;
-        color: rgba(220, 226, 240, 0.64);
+      body[data-page="home"] #best-of-artist .home-rail-shell {
+        position: relative;
       }
 
       body[data-page="home"] #best-of-artist .home-rail-controls {
@@ -88,8 +49,7 @@
         display: none;
       }
 
-      body[data-page="home"] #best-of-artist .media-card,
-      body[data-page="home"] #best-of-artist .chunk-load-more-tile {
+      body[data-page="home"] #best-of-artist .media-card {
         flex: 0 0 75vw;
         max-width: 280px;
         scroll-snap-align: start;
@@ -98,27 +58,43 @@
       @media (min-width: 901px) {
         body[data-page="home"] #best-of-artist .home-rail-controls {
           display: flex;
-          justify-content: flex-end;
+          position: absolute;
+          top: 50%;
+          left: -28px;
+          right: -28px;
+          transform: translateY(-50%);
+          justify-content: space-between;
           align-items: center;
-          gap: 10px;
-          margin-bottom: 12px;
+          pointer-events: none;
+          z-index: 5;
         }
 
         body[data-page="home"] #best-of-artist .home-rail-controls[data-scrollable="false"] {
-          opacity: 0.45;
+          display: none;
         }
 
         body[data-page="home"] #best-of-artist .home-rail-arrow {
-          min-width: 2.75rem;
-          padding-inline: 0.9rem;
+          pointer-events: auto;
+          width: 54px;
+          height: 54px;
+          border-radius: 999px;
+          padding: 0;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.32rem;
+          background: rgba(7, 9, 16, 0.86);
+          border: 1px solid rgba(255, 255, 255, 0.34);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.34);
           transition:
             background-color 0.2s ease,
             border-color 0.2s ease,
-            transform 0.2s ease;
+            transform 0.2s ease,
+            opacity 0.2s ease;
         }
 
         body[data-page="home"] #best-of-artist .home-rail-arrow:hover:not([disabled]) {
-          background: rgba(34, 191, 255, 0.14);
+          background: rgba(12, 17, 33, 0.92);
           border-color: rgba(34, 191, 255, 0.76);
           transform: translateY(-1px);
         }
@@ -138,8 +114,7 @@
           padding-bottom: 16px;
         }
 
-        body[data-page="home"] #best-of-artist .media-card,
-        body[data-page="home"] #best-of-artist .chunk-load-more-tile {
+        body[data-page="home"] #best-of-artist .media-card {
           flex: 0 0 340px;
           max-width: 340px;
         }
@@ -228,28 +203,30 @@
             Audio
           </button>
         </div>
-        <div class="home-rail-controls" aria-label="Best of Artist rail controls">
-          <button
-            id="best-of-rail-prev"
-            class="btn btn-outline home-rail-arrow"
-            type="button"
-            aria-label="Scroll media rail left"
-          >
-            &larr;
-          </button>
-          <button
-            id="best-of-rail-next"
-            class="btn btn-outline home-rail-arrow"
-            type="button"
-            aria-label="Scroll media rail right"
-          >
-            &rarr;
-          </button>
+        <div class="home-rail-shell">
+          <div class="home-rail-controls" aria-label="Best of Artist rail controls">
+            <button
+              id="best-of-rail-prev"
+              class="btn btn-outline home-rail-arrow"
+              type="button"
+              aria-label="Scroll media rail left"
+            >
+              &larr;
+            </button>
+            <button
+              id="best-of-rail-next"
+              class="btn btn-outline home-rail-arrow"
+              type="button"
+              aria-label="Scroll media rail right"
+            >
+              &rarr;
+            </button>
+          </div>
+          <div id="videos-grid" class="media-grid"></div>
+          <div id="audio-grid" class="media-grid"></div>
         </div>
-        <div id="videos-grid" class="media-grid"></div>
-        <div id="audio-grid" class="media-grid"></div>
-        <div class="section-cta section-cta-home-more">
-          <a id="best-of-more-link" class="btn btn-outline" href="./video.html">More</a>
+        <div class="section-cta section-cta-home-more" hidden aria-hidden="true">
+          <a id="best-of-more-link" class="btn btn-outline" href="./video.html" tabindex="-1">More</a>
         </div>
       </section>
 
@@ -379,29 +356,63 @@
     <script>
       (() => {
         const CHUNK_SIZE = 12;
-        const INITIAL_COUNT = 3;
+        const INITIAL_COUNT_MOBILE = 3;
+        const INITIAL_COUNT_DESKTOP = 6;
         const FORCE_VISIBLE_FROM = 3;
+        const AUTOLOAD_THRESHOLD = 0.78;
+        const RAIL_DESKTOP_QUERY = "(min-width: 901px)";
 
-        function createLoadMoreTile(remainingCount, onClick) {
-          const article = document.createElement("article");
-          article.className = "media-card chunk-load-more-tile";
+        const getInitialCount = () =>
+          window.matchMedia(RAIL_DESKTOP_QUERY).matches ? INITIAL_COUNT_DESKTOP : INITIAL_COUNT_MOBILE;
 
-          const inner = document.createElement("div");
-          inner.className = "chunk-load-more-inner";
+        const getCards = (container) => [...container.querySelectorAll(":scope > .media-card")];
 
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "btn btn-outline chunk-load-more-btn";
-          button.textContent = "More";
-          button.addEventListener("click", onClick);
+        function ensureViewportMinimum(container) {
+          const cards = getCards(container);
+          if (!cards.length) {
+            return;
+          }
+          const currentVisible = Number(container.dataset.chunkVisibleCount) || 0;
+          const minVisible = Math.min(cards.length, getInitialCount());
+          if (currentVisible < minVisible) {
+            container.dataset.chunkVisibleCount = String(minVisible);
+          }
+        }
 
-          const hint = document.createElement("p");
-          hint.className = "chunk-load-more-hint";
-          hint.textContent = `${remainingCount}+ more`;
-
-          inner.append(button, hint);
-          article.append(inner);
-          return article;
+        function maybeAutoLoadChunk(container, force = false) {
+          if (!container || container.dataset.chunkAutoLoading === "1") {
+            return;
+          }
+          const cards = getCards(container);
+          if (!cards.length) {
+            return;
+          }
+          const visibleCount = Math.min(
+            Number(container.dataset.chunkVisibleCount) || getInitialCount(),
+            cards.length,
+          );
+          if (visibleCount >= cards.length) {
+            return;
+          }
+          if (!force) {
+            const maxScrollLeft = Math.max(0, container.scrollWidth - container.clientWidth);
+            if (maxScrollLeft <= 0 || container.scrollLeft < maxScrollLeft * AUTOLOAD_THRESHOLD) {
+              return;
+            }
+          }
+          container.dataset.chunkAutoLoading = "1";
+          window.setTimeout(() => {
+            const currentVisible = Math.min(
+              Number(container.dataset.chunkVisibleCount) || getInitialCount(),
+              cards.length,
+            );
+            const nextVisible = Math.min(cards.length, currentVisible + CHUNK_SIZE);
+            if (nextVisible !== currentVisible) {
+              container.dataset.chunkVisibleCount = String(nextVisible);
+              container._applyChunkState?.();
+            }
+            container.dataset.chunkAutoLoading = "0";
+          }, 90);
         }
 
         function updateMoreCta(mode = "video") {
@@ -419,19 +430,20 @@
           if (!container) {
             return false;
           }
-          const cards = [...container.querySelectorAll(":scope > .media-card:not(.chunk-load-more-tile)")];
+          const cards = getCards(container);
           if (!cards.length) {
             return false;
           }
 
           if (!container.dataset.chunkVisibleCount) {
-            container.dataset.chunkVisibleCount = String(Math.min(INITIAL_COUNT, cards.length));
+            container.dataset.chunkVisibleCount = String(Math.min(getInitialCount(), cards.length));
           }
+          ensureViewportMinimum(container);
 
           const apply = () => {
-            const allCards = [...container.querySelectorAll(":scope > .media-card:not(.chunk-load-more-tile)")];
+            const allCards = getCards(container);
             const visibleCount = Math.min(
-              Number(container.dataset.chunkVisibleCount) || INITIAL_COUNT,
+              Number(container.dataset.chunkVisibleCount) || getInitialCount(),
               allCards.length,
             );
 
@@ -444,29 +456,10 @@
                 card.classList.remove("chunk-force-visible");
               }
             });
-
-            const existingTile = container.querySelector(":scope > .chunk-load-more-tile");
-            if (existingTile) {
-              existingTile.remove();
-            }
-
-            const remaining = allCards.length - visibleCount;
-            if (remaining > 0) {
-              container.appendChild(
-                createLoadMoreTile(remaining, () => {
-                  container.dataset.chunkVisibleCount = String(
-                    Math.min(allCards.length, visibleCount + CHUNK_SIZE),
-                  );
-                  apply();
-                }),
-              );
-            } else {
-              const endState = document.createElement("p");
-              endState.className = "chunk-end-state";
-              endState.textContent = "All loaded.";
-              container.appendChild(endState);
-            }
-            window.requestAnimationFrame(syncRailControls);
+            window.requestAnimationFrame(() => {
+              maybeAutoLoadChunk(container, false);
+              syncRailControls();
+            });
           };
 
           container._applyChunkState = apply;
@@ -502,6 +495,9 @@
         const reapplyAll = () => {
           targets.forEach((id) => {
             const container = document.getElementById(id);
+            if (container) {
+              ensureViewportMinimum(container);
+            }
             if (container?._applyChunkState) {
               container._applyChunkState();
             }
@@ -514,7 +510,7 @@
         const prevRailButton = document.getElementById("best-of-rail-prev");
         const nextRailButton = document.getElementById("best-of-rail-next");
         const railControls = document.querySelector("#best-of-artist .home-rail-controls");
-        const isDesktop = () => window.matchMedia("(min-width: 901px)").matches;
+        const isDesktop = () => window.matchMedia(RAIL_DESKTOP_QUERY).matches;
         const getActiveRail = () => {
           const activeId = audioToggle?.classList.contains("is-active") ? "audio-grid" : "videos-grid";
           return document.getElementById(activeId);
@@ -532,7 +528,7 @@
             return 0;
           }
           const firstCard = rail.querySelector(
-            ":scope > .media-card:not(.chunk-hidden), :scope > .chunk-load-more-tile",
+            ":scope > .media-card:not(.chunk-hidden)",
           );
           const gap = getRailGap(rail);
           if (firstCard) {
@@ -596,6 +592,12 @@
           if (!rail) {
             return;
           }
+          if (direction > 0) {
+            const maxScrollLeft = Math.max(0, rail.scrollWidth - rail.clientWidth);
+            if (maxScrollLeft < 8 || rail.scrollLeft >= maxScrollLeft * AUTOLOAD_THRESHOLD) {
+              maybeAutoLoadChunk(rail, true);
+            }
+          }
           rail.scrollBy({ left: direction * getRailStep(rail), behavior: "smooth" });
           syncRailControlsAfterSmoothScroll();
         };
@@ -607,7 +609,14 @@
         });
         targets.forEach((id) => {
           const container = document.getElementById(id);
-          container?.addEventListener("scroll", syncRailControls, { passive: true });
+          container?.addEventListener(
+            "scroll",
+            () => {
+              maybeAutoLoadChunk(container, false);
+              syncRailControls();
+            },
+            { passive: true },
+          );
         });
         const syncMode = () => {
           const mode = audioToggle?.classList.contains("is-active") ? "audio" : "video";

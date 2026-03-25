@@ -249,16 +249,6 @@ function restoreVideoOverlayForCard(card) {
   }, 280);
 }
 
-function clearActiveMediaTiles(exceptCard = null) {
-  document.querySelectorAll(".media-card.is-media-active").forEach((card) => {
-    if (card === exceptCard) {
-      return;
-    }
-    card.classList.remove("is-media-active");
-    restoreVideoOverlayForCard(card);
-  });
-}
-
 function setActiveMediaTile(card, { fadeVideoOverlay = false } = {}) {
   if (!(card instanceof HTMLElement)) {
     return;
@@ -277,6 +267,37 @@ function setActiveMediaTile(card, { fadeVideoOverlay = false } = {}) {
   overlay.classList.add("is-overlay-dimming");
   window.requestAnimationFrame(() => {
     overlay.classList.add("is-hidden");
+  });
+}
+
+function setAudioTopOverlayState(card, isPlaying) {
+  if (!(card instanceof HTMLElement)) {
+    return;
+  }
+  const overlay = card.querySelector(".audio-top-overlay-play");
+  if (!(overlay instanceof HTMLButtonElement)) {
+    return;
+  }
+  const action = overlay.querySelector(".audio-top-overlay-action");
+  overlay.classList.toggle("is-playing", isPlaying);
+  if (action) {
+    action.textContent = isPlaying ? "Pause" : "Play";
+  }
+  const title =
+    card.querySelector(".media-meta h3")?.textContent?.trim() ||
+    card.querySelector(".audio-top-iframe")?.getAttribute("title") ||
+    "audio set";
+  overlay.setAttribute("aria-label", `${isPlaying ? "Pause" : "Play"} ${title}`);
+}
+
+function clearActiveMediaTiles(exceptCard = null) {
+  document.querySelectorAll(".media-card.is-media-active").forEach((card) => {
+    if (card === exceptCard) {
+      return;
+    }
+    card.classList.remove("is-media-active");
+    restoreVideoOverlayForCard(card);
+    setAudioTopOverlayState(card, false);
   });
 }
 

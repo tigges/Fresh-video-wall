@@ -1506,7 +1506,7 @@ body[data-page="home"] #music .section-cta .btn-audio-placeholder:hover {
 }
 
 body[data-page="video"] .subpage-bottom-nav {
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 body[data-page="audio-more"] .subpage-bottom-nav {

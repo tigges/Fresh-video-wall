@@ -1619,7 +1619,7 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
 }
 
 .media-card {
-  height: 324px;
+  height: 352px;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--brand-line-soft);
@@ -1978,12 +1978,12 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   font-family: "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 600;
   font-size: var(--type-body);
-  line-height: 1.32;
+  line-height: 1.28;
   display: -webkit-box;
-  line-clamp: 2;
-  -webkit-line-clamp: 2;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  max-height: 2.64em;
+  max-height: 3.84em;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -2267,6 +2267,10 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .media-card {
+    height: 344px;
+  }
+
   .subpage-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2328,6 +2332,18 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
 
   .mini-strip-item:last-child {
     border-bottom: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .media-card {
+    height: 334px;
+  }
+
+  .media-meta h3 {
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    max-height: 2.56em;
   }
 }
 

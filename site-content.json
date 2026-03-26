@@ -1,0 +1,101 @@
+{
+  "global": {
+    "ctaDefaults": {
+      "bookLabel": "Book",
+      "bookUrl": "./contact.html"
+    },
+    "meta": {
+      "replySlaText": "We usually reply within 24 hours."
+    },
+    "socialLinks": {
+      "x": {
+        "label": "X (Twitter)",
+        "url": "https://twitter.com/DJUrbanT",
+        "openInNewTab": true,
+        "enabled": true
+      },
+      "instagram": {
+        "label": "Instagram",
+        "url": "https://www.instagram.com/_urbant_/",
+        "openInNewTab": true,
+        "enabled": true
+      },
+      "youtube": {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/@DJ_UrbanT",
+        "openInNewTab": true,
+        "enabled": true
+      },
+      "mixcloud": {
+        "label": "Mixcloud",
+        "url": "https://www.mixcloud.com/urbant/",
+        "openInNewTab": true,
+        "enabled": true
+      },
+      "twitch": {
+        "label": "Twitch",
+        "url": "https://www.twitch.tv/djurbant",
+        "openInNewTab": true,
+        "enabled": true
+      },
+      "tiktok": {
+        "label": "TikTok",
+        "url": "https://www.tiktok.com/@_urbant_",
+        "openInNewTab": true,
+        "enabled": true
+      }
+    }
+  },
+  "pages": {
+    "home": {
+      "hero": {
+        "tagline": "Bass House. Tech House. Live Sets."
+      },
+      "bestOf": {
+        "title": "The Best of Artist"
+      },
+      "sections": {
+        "showStatsBand": true,
+        "showBookingBand": true,
+        "showSocialStrip": true
+      },
+      "bookingBand": {
+        "title": "Bring the set to you.",
+        "buttonLabel": "Book",
+        "buttonUrl": "./contact.html"
+      }
+    },
+    "video": {
+      "title": "Video",
+      "intro": "Ranked from fetched video channel stats.",
+      "topButton": {
+        "label": "Top Video",
+        "url": "./index.html?bestOf=video#best-of-artist"
+      },
+      "sections": {
+        "showSocialStrip": true
+      }
+    },
+    "audio": {
+      "title": "Audio",
+      "intro": "Ranked from fetched audio channel stats.",
+      "topButton": {
+        "label": "Top Audio",
+        "url": "./index.html?bestOf=audio#best-of-artist"
+      },
+      "sections": {
+        "showSocialStrip": true
+      }
+    },
+    "contact": {
+      "title": "Contact DJ UrbanT",
+      "introText": "Use this form for bookings, event inquiries, collaborations, and press.",
+      "formAction": "mailto:booking@djurbant.com",
+      "backButtonLabel": "Back Home",
+      "submitButtonLabel": "Send Inquiry",
+      "sections": {
+        "showSocialStrip": true
+      }
+    }
+  }
+}

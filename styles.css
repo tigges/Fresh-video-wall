@@ -813,7 +813,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
 .social-strip {
   width: min(1150px, calc(100% - 2.2rem));
   margin-inline: auto;
-  padding: 0.6rem 0 1rem;
+  padding: 0.4rem 0 0.72rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -824,7 +824,7 @@ body[data-hero-font="russo"] .hero-overlay-title {
 .about-cta-section {
   width: min(1150px, calc(100% - 2.2rem));
   margin-inline: auto;
-  padding: 0.6rem 0 0.9rem;
+  padding: 0.42rem 0 0.72rem;
 }
 
 body[data-page="home"] .about-cta-section,
@@ -920,7 +920,7 @@ body[data-page="home"] .stats-strip {
 .stats-strip {
   width: min(1150px, calc(100% - 2.2rem));
   margin-inline: auto;
-  padding: 0 0 0.9rem;
+  padding: 0 0 0.66rem;
 }
 
 .stats-strip-grid {
@@ -2208,7 +2208,7 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
 }
 
 .site-footer {
-  padding: var(--space-4) 0 var(--space-5);
+  padding: 1rem 0 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
 
@@ -2291,9 +2291,22 @@ body[data-page="audio-more"] .subpage-bottom-nav .btn-outline {
   body[data-page="home"] .footer-social-strip {
     order: 2;
     width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
     padding-top: 0.12rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-inline: 0.2rem;
+  }
+
+  body[data-page="home"] .footer-social-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  body[data-page="home"] .footer-social-strip .social-link {
+    flex: 0 0 auto;
   }
 
   body[data-page="home"] .site-footer-copy {
@@ -2981,15 +2994,15 @@ body[data-page="home"] #best-of-artist {
 }
 
 body[data-page="home"] #best-of-artist + .stats-strip {
-  margin-top: var(--rhythm-lg);
+  margin-top: calc(var(--rhythm-lg) - 18px);
 }
 
 body[data-page="home"] .stats-strip + .about-cta-section {
-  margin-top: var(--rhythm-lg);
+  margin-top: calc(var(--rhythm-lg) - 20px);
 }
 
 body[data-page="home"] .site-footer {
-  margin-top: var(--rhythm-lg);
+  margin-top: calc(var(--rhythm-lg) - 16px);
 }
 
 /* Small vertical rhythm within home sections. */

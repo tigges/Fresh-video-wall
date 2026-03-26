@@ -76,12 +76,16 @@
     <main class="subpage-main">
       <section class="media-section">
         <div class="section-head">
-          <h1>Video</h1>
+          <h1 data-cms-text="page.title">Video</h1>
         </div>
-        <p class="subpage-intro">Ranked from fetched video channel stats.</p>
+        <p class="subpage-intro" data-cms-text="page.intro">Ranked from fetched video channel stats.</p>
         <div id="videos-rest-grid" class="subpage-grid"></div>
         <div class="section-cta subpage-bottom-nav">
-          <a class="btn btn-subscribe subpage-action-btn" href="./index.html?bestOf=video#best-of-artist"
+          <a
+            class="btn btn-subscribe subpage-action-btn"
+            href="./index.html?bestOf=video#best-of-artist"
+            data-cms-href="page.topButton.url"
+            data-cms-text="page.topButton.label"
             >Top Video</a
           >
         </div>
@@ -97,13 +101,18 @@
             alt="DJ UrbanT"
           />
         </a>
-        <section class="social-strip footer-social-strip" aria-label="DJ UrbanT social media">
+        <section
+          class="social-strip footer-social-strip"
+          aria-label="DJ UrbanT social media"
+          data-cms-visible-if="page.sections.showSocialStrip"
+        >
           <a
             class="social-link"
             href="https://twitter.com/DJUrbanT"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="X (Twitter)"
+            data-cms-social="x"
           >
             <svg viewBox="0 0 512 512" aria-hidden="true">
               <path
@@ -117,6 +126,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
+            data-cms-social="instagram"
           >
             <svg viewBox="0 0 448 512" aria-hidden="true">
               <path
@@ -124,7 +134,14 @@
               />
             </svg>
           </a>
-          <a class="social-link" href="https://www.youtube.com/@DJ_UrbanT" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+          <a
+            class="social-link"
+            href="https://www.youtube.com/@DJ_UrbanT"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+            data-cms-social="youtube"
+          >
             <svg viewBox="0 0 576 512" aria-hidden="true">
               <path
                 d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"
@@ -137,6 +154,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Mixcloud"
+            data-cms-social="mixcloud"
           >
             <svg viewBox="0 0 640 512" aria-hidden="true">
               <path
@@ -150,6 +168,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Twitch"
+            data-cms-social="twitch"
           >
             <svg viewBox="0 0 512 512" aria-hidden="true">
               <path
@@ -163,6 +182,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="TikTok"
+            data-cms-social="tiktok"
           >
             <svg viewBox="0 0 448 512" aria-hidden="true">
               <path
@@ -175,6 +195,7 @@
       </div>
     </footer>
 
+    <script src="./cms-content.js"></script>
     <script src="./script.js"></script>
     <script>
       (function () {

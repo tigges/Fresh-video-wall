@@ -188,7 +188,13 @@
         />
       </a>
       <nav class="main-nav" aria-label="Main navigation">
-        <a class="main-nav-book" href="./contact.html">Book</a>
+        <a
+          class="main-nav-book"
+          href="./contact.html"
+          data-cms-href="global.ctaDefaults.bookUrl"
+          data-cms-text="global.ctaDefaults.bookLabel"
+          >Book</a
+        >
       </nav>
     </header>
 
@@ -209,7 +215,7 @@
           - Live
         </h2>
       </div>
-      <p class="hero-tagline">Bass House. Tech House. Live Sets.</p>
+      <p class="hero-tagline" data-cms-text="page.hero.tagline">Bass House. Tech House. Live Sets.</p>
       <div class="diamond-stage" aria-hidden="true">
         <img
           class="hero-proto"
@@ -240,7 +246,7 @@
     <main>
       <section id="best-of-artist" class="media-section">
         <div class="section-head">
-          <h2>The Best of Artist</h2>
+          <h2 data-cms-text="page.bestOf.title">The Best of Artist</h2>
         </div>
         <div class="section-cta section-cta-best-of-toggle">
           <button
@@ -284,7 +290,11 @@
         </div>
       </section>
 
-      <section class="stats-strip" aria-label="DJ UrbanT highlights">
+      <section
+        class="stats-strip"
+        aria-label="DJ UrbanT highlights"
+        data-cms-visible-if="page.sections.showStatsBand"
+      >
         <div class="stats-strip-grid">
           <article class="stats-card">
             <p class="stats-card-value">434<span class="accent-plus">+</span></p>
@@ -305,11 +315,20 @@
         </div>
       </section>
 
-      <section class="about-cta-section" aria-label="Booking call to action">
+      <section
+        class="about-cta-section"
+        aria-label="Booking call to action"
+        data-cms-visible-if="page.sections.showBookingBand"
+      >
         <div class="about-cta-bar">
-          <h2 class="about-cta-title">Bring the set to you.</h2>
-          <a class="about-cta-book" href="./contact.html" aria-label="Book DJ UrbanT">
-            <span>Book</span>
+          <h2 class="about-cta-title" data-cms-text="page.bookingBand.title">Bring the set to you.</h2>
+          <a
+            class="about-cta-book"
+            href="./contact.html"
+            aria-label="Book DJ UrbanT"
+            data-cms-href="page.bookingBand.buttonUrl"
+          >
+            <span data-cms-text="page.bookingBand.buttonLabel">Book</span>
           </a>
         </div>
       </section>
@@ -324,13 +343,18 @@
             alt="DJ UrbanT"
           />
         </a>
-        <section class="social-strip footer-social-strip" aria-label="DJ UrbanT social media">
+        <section
+          class="social-strip footer-social-strip"
+          aria-label="DJ UrbanT social media"
+          data-cms-visible-if="page.sections.showSocialStrip"
+        >
           <a
             class="social-link"
             href="https://twitter.com/DJUrbanT"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="X (Twitter)"
+            data-cms-social="x"
           >
             <svg viewBox="0 0 512 512" aria-hidden="true">
               <path
@@ -344,6 +368,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
+            data-cms-social="instagram"
           >
             <svg viewBox="0 0 448 512" aria-hidden="true">
               <path
@@ -357,6 +382,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"
+            data-cms-social="youtube"
           >
             <svg viewBox="0 0 576 512" aria-hidden="true">
               <path
@@ -370,6 +396,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Mixcloud"
+            data-cms-social="mixcloud"
           >
             <svg viewBox="0 0 640 512" aria-hidden="true">
               <path
@@ -383,6 +410,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Twitch"
+            data-cms-social="twitch"
           >
             <svg viewBox="0 0 512 512" aria-hidden="true">
               <path
@@ -396,6 +424,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="TikTok"
+            data-cms-social="tiktok"
           >
             <svg viewBox="0 0 448 512" aria-hidden="true">
               <path
@@ -408,6 +437,7 @@
       </div>
     </footer>
 
+    <script src="./cms-content.js"></script>
     <script src="./script.js"></script>
     <script>
       (() => {

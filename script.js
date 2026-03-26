@@ -5,6 +5,20 @@ if (yearNode) {
   yearNode.textContent = String(new Date().getFullYear());
 }
 
+function getCmsValue(path, fallback = undefined) {
+  const content = window.__SITE_CONTENT;
+  if (!content || !path) {
+    return fallback;
+  }
+  const value = path.split(".").reduce((current, key) => {
+    if (current === null || current === undefined) {
+      return undefined;
+    }
+    return current[key];
+  }, content);
+  return value === undefined ? fallback : value;
+}
+
 const page = document.body.dataset.page;
 const PRIMARY_GENRE_BADGE_LABEL = "Bass House";
 const SECONDARY_GENRE_BADGE_LABEL = "Tech House";
@@ -1979,6 +1993,26 @@ function bindFallbackMainNavLiveLink() {
   });
 }
 
+function refreshContentDrivenLinks() {
+  const heroCta = document.querySelector(".btn-live");
+  if (heroCta instanceof HTMLAnchorElement) {
+    const configuredHref = heroCta.getAttribute("href");
+    if (typeof configuredHref === "string" && configuredHref.trim()) {
+      if (heroCta.dataset.liveMode !== "live") {
+        heroCta.dataset.latestUrl = configuredHref;
+      }
+    }
+  }
+
+  const navBook = document.querySelector(".main-nav .main-nav-book");
+  if (navBook instanceof HTMLAnchorElement) {
+    const configuredBookHref = navBook.getAttribute("href");
+    if (typeof configuredBookHref === "string" && configuredBookHref.trim()) {
+      navBook.href = configuredBookHref;
+    }
+  }
+}
+
 applyHeroFontVariant();
 initHeaderVisibilityOnScroll();
 initHeaderContentOffset();
@@ -1988,3 +2022,5 @@ bindSubpageMainNav();
 hydrateMediaWalls();
 bindFallbackMainNavLiveLink();
 autoplayTopVideoFromQuery();
+refreshContentDrivenLinks();
+window.addEventListener("site-content:applied", refreshContentDrivenLinks);

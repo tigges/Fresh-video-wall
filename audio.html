@@ -101,13 +101,17 @@
     <main class="subpage-main">
       <section class="media-section">
         <div class="section-head">
-          <h1>Audio</h1>
+          <h1 data-cms-text="page.title">Audio</h1>
         </div>
-        <p class="subpage-intro">Ranked from fetched audio channel stats.</p>
+        <p class="subpage-intro" data-cms-text="page.intro">Ranked from fetched audio channel stats.</p>
 
         <div id="audio-more-grid" class="subpage-grid"></div>
         <div class="section-cta subpage-bottom-nav">
-          <a class="btn btn-subscribe subpage-action-btn" href="./index.html?bestOf=audio#best-of-artist"
+          <a
+            class="btn btn-subscribe subpage-action-btn"
+            href="./index.html?bestOf=audio#best-of-artist"
+            data-cms-href="page.topButton.url"
+            data-cms-text="page.topButton.label"
             >Top Audio</a
           >
         </div>
@@ -123,13 +127,18 @@
             alt="DJ UrbanT"
           />
         </a>
-        <section class="social-strip footer-social-strip" aria-label="DJ UrbanT social media">
+        <section
+          class="social-strip footer-social-strip"
+          aria-label="DJ UrbanT social media"
+          data-cms-visible-if="page.sections.showSocialStrip"
+        >
           <a
             class="social-link"
             href="https://twitter.com/DJUrbanT"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="X (Twitter)"
+            data-cms-social="x"
           >
             <svg viewBox="0 0 512 512" aria-hidden="true">
               <path
@@ -143,6 +152,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
+            data-cms-social="instagram"
           >
             <svg viewBox="0 0 448 512" aria-hidden="true">
               <path
@@ -156,6 +166,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"
+            data-cms-social="youtube"
           >
             <svg viewBox="0 0 576 512" aria-hidden="true">
               <path
@@ -169,6 +180,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Mixcloud"
+            data-cms-social="mixcloud"
           >
             <svg viewBox="0 0 640 512" aria-hidden="true">
               <path
@@ -182,6 +194,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Twitch"
+            data-cms-social="twitch"
           >
             <svg viewBox="0 0 512 512" aria-hidden="true">
               <path
@@ -195,6 +208,7 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="TikTok"
+            data-cms-social="tiktok"
           >
             <svg viewBox="0 0 448 512" aria-hidden="true">
               <path
@@ -207,6 +221,7 @@
       </div>
     </footer>
 
+    <script src="./cms-content.js"></script>
     <script src="./script.js"></script>
     <script>
       (() => {

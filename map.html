@@ -258,11 +258,64 @@
         font-size: 0.86rem;
       }
 
+      .fallback-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem;
+      }
+
+      .fallback-item {
+        border: 1px solid var(--brand-line-soft);
+        background: linear-gradient(180deg, var(--map-panel) 0%, var(--map-panel-soft) 100%);
+        border-radius: var(--radius-sm);
+        padding: 0.72rem 0.82rem;
+      }
+
+      .fallback-item h3 {
+        margin: 0 0 0.35rem;
+        font-size: 0.96rem;
+        letter-spacing: 0.03em;
+      }
+
+      .fallback-item p {
+        margin: 0;
+        color: var(--map-muted);
+        font-size: 0.84rem;
+      }
+
+      .fallback-links {
+        margin-top: 0.45rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.44rem;
+      }
+
+      .fallback-links a {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--brand-line-soft);
+        border-radius: 999px;
+        padding: 0.18rem 0.54rem;
+        font-size: 0.74rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+
+      .fallback-links a:hover {
+        border-color: #7b5cf0;
+        text-decoration: none;
+      }
+
       @media (max-width: 850px) {
         .row-4,
         .row-3,
         .row-2,
-        .all-pages {
+        .all-pages,
+        .fallback-list {
           grid-template-columns: 1fr;
         }
       }
@@ -382,6 +435,92 @@
             <span class="status status-locked"
               ><span class="status-icon" aria-hidden="true"></span>Locked</span
             >
+          </li>
+        </ul>
+      </section>
+
+      <h2 class="section-title">Fallback States (Rollback Tags)</h2>
+      <section class="map-grid">
+        <ul class="fallback-list">
+          <li class="fallback-item">
+            <h3>Rainbow-Diamond-V3</h3>
+            <p>Legacy rainbow baseline before the newer fallback stack.</p>
+            <div class="fallback-links">
+              <a href="https://github.com/tigges/Fresh-video-wall/tree/Rainbow-Diamond-V3" target="_blank" rel="noopener noreferrer">Open tag</a>
+              <a href="https://github.com/tigges/Fresh-video-wall/commit/ffb74bdd2f7f7d30183800e77356af90ec5a34b2" target="_blank" rel="noopener noreferrer">Fallback commit</a>
+            </div>
+          </li>
+          <li class="fallback-item">
+            <h3>RAINBOW-ALL</h3>
+            <p>Full-site Rainbow baseline snapshot.</p>
+            <div class="fallback-links">
+              <a href="https://github.com/tigges/Fresh-video-wall/tree/RAINBOW-ALL" target="_blank" rel="noopener noreferrer">Open tag</a>
+              <a href="https://github.com/tigges/Fresh-video-wall/commit/41206de958b7158456f7688352f0a6b8f9d6283f" target="_blank" rel="noopener noreferrer">Fallback commit</a>
+            </div>
+          </li>
+          <li class="fallback-item">
+            <h3>MIXCLOUD-ALL</h3>
+            <p>Layer 3 Mixcloud-oriented fallback scope.</p>
+            <div class="fallback-links">
+              <a href="https://github.com/tigges/Fresh-video-wall/tree/MIXCLOUD-ALL" target="_blank" rel="noopener noreferrer">Open tag</a>
+              <a href="https://github.com/tigges/Fresh-video-wall/commit/41206de958b7158456f7688352f0a6b8f9d6283f" target="_blank" rel="noopener noreferrer">Fallback commit</a>
+            </div>
+          </li>
+          <li class="fallback-item">
+            <h3>ADMIN-AND-MAP</h3>
+            <p>Layer 2 admin/map fallback scope.</p>
+            <div class="fallback-links">
+              <a href="https://github.com/tigges/Fresh-video-wall/tree/ADMIN-AND-MAP" target="_blank" rel="noopener noreferrer">Open tag</a>
+              <a href="https://github.com/tigges/Fresh-video-wall/commit/41206de958b7158456f7688352f0a6b8f9d6283f" target="_blank" rel="noopener noreferrer">Fallback commit</a>
+            </div>
+          </li>
+          <li class="fallback-item">
+            <h3>RAINBOW-KEY-ONLY</h3>
+            <p>Layer 1-only fallback scope.</p>
+            <div class="fallback-links">
+              <a href="https://github.com/tigges/Fresh-video-wall/tree/RAINBOW-KEY-ONLY" target="_blank" rel="noopener noreferrer">Open tag</a>
+              <a href="https://github.com/tigges/Fresh-video-wall/commit/41206de958b7158456f7688352f0a6b8f9d6283f" target="_blank" rel="noopener noreferrer">Fallback commit</a>
+            </div>
+          </li>
+          <li class="fallback-item">
+            <h3>RAINBOW-CUT</h3>
+            <p>Layer 1 + Layer 2 combined fallback scope.</p>
+            <div class="fallback-links">
+              <a href="https://github.com/tigges/Fresh-video-wall/tree/RAINBOW-CUT" target="_blank" rel="noopener noreferrer">Open tag</a>
+              <a href="https://github.com/tigges/Fresh-video-wall/commit/41206de958b7158456f7688352f0a6b8f9d6283f" target="_blank" rel="noopener noreferrer">Fallback commit</a>
+            </div>
+          </li>
+          <li class="fallback-item">
+            <h3>RAINBOW-CLEAN</h3>
+            <p>Homepage rails cleanup fallback.</p>
+            <div class="fallback-links">
+              <a href="https://github.com/tigges/Fresh-video-wall/tree/RAINBOW-CLEAN" target="_blank" rel="noopener noreferrer">Open tag</a>
+              <a href="https://github.com/tigges/Fresh-video-wall/commit/65fd9a7942026ea4f4a26bb5d972ad4efe5f746f" target="_blank" rel="noopener noreferrer">Fallback commit</a>
+            </div>
+          </li>
+          <li class="fallback-item">
+            <h3>RAINBOW-CLEAN-V3</h3>
+            <p>Rainbow toggle + mobile in-rail more tile fallback.</p>
+            <div class="fallback-links">
+              <a href="https://github.com/tigges/Fresh-video-wall/tree/RAINBOW-CLEAN-V3" target="_blank" rel="noopener noreferrer">Open tag</a>
+              <a href="https://github.com/tigges/Fresh-video-wall/commit/08b226fa91f5f2f6a0c73f16816f8ad1b7c76ee5" target="_blank" rel="noopener noreferrer">Fallback commit</a>
+            </div>
+          </li>
+          <li class="fallback-item">
+            <h3>RAINBOW-PLAYBACK</h3>
+            <p>Playback controls and safe audio overlay fallback.</p>
+            <div class="fallback-links">
+              <a href="https://github.com/tigges/Fresh-video-wall/tree/RAINBOW-PLAYBACK" target="_blank" rel="noopener noreferrer">Open tag</a>
+              <a href="https://github.com/tigges/Fresh-video-wall/commit/26f6186b50b44a42f316cb1a582614deea464c7d" target="_blank" rel="noopener noreferrer">Fallback commit</a>
+            </div>
+          </li>
+          <li class="fallback-item">
+            <h3>RAINBOW-FINAL</h3>
+            <p>Current Rainbow Final fallback state.</p>
+            <div class="fallback-links">
+              <a href="https://github.com/tigges/Fresh-video-wall/tree/RAINBOW-FINAL" target="_blank" rel="noopener noreferrer">Open tag</a>
+              <a href="https://github.com/tigges/Fresh-video-wall/commit/443256e6b413b8ef5ef08bbfd0808a24b487ff54" target="_blank" rel="noopener noreferrer">Fallback commit</a>
+            </div>
           </li>
         </ul>
       </section>

@@ -59,3 +59,58 @@ automatically on a schedule.
 - trigger: scheduled run or manual workflow dispatch
 - commit behavior: only commits when meaningful ranking/content changes are
   detected (it ignores timestamp-only changes)
+
+## Headless WordPress content sync (Phase 2)
+
+This repository now includes:
+
+- `.github/workflows/sync-site-content-from-wp.yml`
+- `scripts/sync_site_content_from_wp.py`
+
+It syncs editable site content from a headless WordPress endpoint into
+`site-content.json`, which is used by Layer 1 pages (`index`, `video`, `audio`,
+`contact`).
+
+### Required configuration
+
+In GitHub -> **Settings** -> **Secrets and variables** -> **Actions** set:
+
+- `WP_HEADLESS_BASE_URL` (secret or variable)  
+  Example: `https://cms.your-domain.com`
+
+Optional:
+
+- `WP_HEADLESS_CONTENT_PATH` (secret or variable)  
+  Default: `/wp-json/djurbant/v1/site-content`
+- `WP_HEADLESS_AUTH_TOKEN` (secret)  
+  Bearer token for protected endpoints.
+
+### How it works
+
+1. Workflow runs every 30 minutes (or manually via workflow_dispatch).
+2. Calls `scripts/sync_site_content_from_wp.py`.
+3. Normalizes the response into the schema expected by `cms-content.js`.
+4. Merges into existing `site-content.json` (preserving values not sent by CMS).
+5. Commits only when actual content changes.
+6. Push to `main` triggers Cloudways deploy workflow automatically.
+
+### Endpoint payload shape
+
+The sync script accepts either:
+
+1. Canonical format:
+
+```json
+{
+  "global": { "...": "..." },
+  "pages": {
+    "home": { "...": "..." },
+    "video": { "...": "..." },
+    "audio": { "...": "..." },
+    "contact": { "...": "..." }
+  }
+}
+```
+
+2. Flexible format (script maps aliases and normalized field names), including
+social lists or maps.

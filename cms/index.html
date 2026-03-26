@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DJ UrbanT | CMS</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Barlow Condensed", "Syne", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: #000;
+        color: #f5f0e8;
+      }
+
+      .wrap {
+        width: min(980px, 92vw);
+        margin: 0 auto;
+        padding: 2.2rem 0 3rem;
+      }
+
+      h1 {
+        margin: 0 0 0.6rem;
+        font-size: clamp(1.7rem, 3vw, 2.5rem);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      p {
+        margin: 0.2rem 0 1rem;
+        color: rgba(245, 240, 232, 0.78);
+        line-height: 1.45;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin: 1rem 0 1.4rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 0.45rem 0.88rem;
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+        color: #f5f0e8;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .btn:hover {
+        border-color: rgba(58, 191, 255, 0.82);
+      }
+
+      .panel {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 0.8rem;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      pre {
+        margin: 0;
+        overflow: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+          "Courier New", monospace;
+        font-size: 0.8rem;
+        line-height: 1.45;
+        color: #d9e5ff;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>CMS Content Endpoint</h1>
+      <p>
+        This route exposes the current headless content source used by Layer 1 pages
+        (<code>index</code>, <code>video</code>, <code>audio</code>, <code>contact</code>).
+      </p>
+      <div class="actions">
+        <a class="btn" href="/site-content.json" target="_blank" rel="noopener noreferrer"
+          >Open /site-content.json</a
+        >
+        <a class="btn" href="/index.html">Open Homepage</a>
+        <a class="btn" href="/map.html">Open Map</a>
+      </div>
+      <section class="panel" aria-label="CMS content preview">
+        <pre id="cms-json-preview">Loading /site-content.json …</pre>
+      </section>
+    </main>
+    <script>
+      (async () => {
+        const preview = document.getElementById("cms-json-preview");
+        if (!preview) return;
+        try {
+          const response = await fetch("/site-content.json", { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error("Unable to load /site-content.json");
+          }
+          const data = await response.json();
+          preview.textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+          preview.textContent = String(error?.message || error || "Failed to load content.");
+        }
+      })();
+    </script>
+  </body>
+</html>

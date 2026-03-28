@@ -72,6 +72,54 @@
         background: rgba(255, 255, 255, 0.03);
       }
 
+      .ops-grid {
+        display: grid;
+        gap: 0.85rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .ops-card {
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 10px;
+        padding: 0.8rem;
+        background: rgba(255, 255, 255, 0.025);
+      }
+
+      .ops-step {
+        margin: 0 0 0.4rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(58, 191, 255, 0.92);
+      }
+
+      .ops-card h3 {
+        margin: 0 0 0.4rem;
+        font-size: 0.98rem;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+
+      .ops-card p {
+        margin: 0 0 0.7rem;
+      }
+
+      .status-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+      }
+
+      .status-chip {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        padding: 0.25rem 0.55rem;
+        font-size: 0.75rem;
+        color: rgba(245, 240, 232, 0.86);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
       .ownership {
         margin-top: 1rem;
       }
@@ -126,6 +174,10 @@
         .ownership-grid {
           grid-template-columns: 1fr;
         }
+
+        .ops-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -154,6 +206,62 @@
         Preview screenshots in WP Visual CMS are auto-refreshed by workflow
         <code>Refresh CMS Preview Screens</code> and shipped in the plugin ZIP.
       </p>
+      <section class="panel ownership" aria-label="Publishing checklist">
+        <h2 style="margin: 0 0 0.55rem; font-size: 1rem; letter-spacing: 0.03em; text-transform: uppercase">
+          Publishing checklist
+        </h2>
+        <div class="ops-grid">
+          <article class="ops-card">
+            <p class="ops-step">Step 1</p>
+            <h3>Edit in WordPress CMS</h3>
+            <p>Update text/links/toggles in the Visual CMS form and save there first.</p>
+            <a
+              class="btn"
+              href="https://wordpress-1344959-6311701.cloudwaysapps.com/wp-admin/admin.php?page=djurbant-headless-visual-cms"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Open WP Visual CMS</a
+            >
+          </article>
+          <article class="ops-card">
+            <p class="ops-step">Step 2</p>
+            <h3>Run content sync workflow</h3>
+            <p>Trigger GitHub Action to sync WP endpoint content into <code>site-content.json</code>.</p>
+            <div class="actions" style="margin: 0">
+              <a
+                class="btn"
+                href="https://github.com/tigges/Fresh-video-wall/actions/workflows/sync-site-content-from-wp.yml"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Open Sync Workflow</a
+              >
+              <a
+                class="btn"
+                href="https://github.com/tigges/Fresh-video-wall/actions/workflows/sync-site-content-from-wp.yml?query=branch%3Amain"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View Workflow Runs</a
+              >
+            </div>
+          </article>
+          <article class="ops-card">
+            <p class="ops-step">Step 3</p>
+            <h3>Verify on live site</h3>
+            <p>Confirm endpoint and page copy on live URLs after workflow success.</p>
+            <div class="actions" style="margin: 0">
+              <a class="btn" href="/site-content.json" target="_blank" rel="noopener noreferrer"
+                >Open Content JSON</a
+              >
+              <a class="btn" href="/index.html" target="_blank" rel="noopener noreferrer">Open Homepage</a>
+            </div>
+          </article>
+        </div>
+        <div class="status-strip">
+          <span class="status-chip">Source: <code id="status-source-url">/site-content.json</code></span>
+          <span class="status-chip">Last modified: <span id="status-last-modified">n/a</span></span>
+          <span class="status-chip">Social links: <span id="status-social-count">n/a</span></span>
+        </div>
+      </section>
       <section class="panel" aria-label="CMS content preview">
         <pre id="cms-json-preview">Loading /site-content.json …</pre>
       </section>
@@ -190,16 +298,30 @@
     <script>
       (async () => {
         const preview = document.getElementById("cms-json-preview");
+        const sourceEl = document.getElementById("status-source-url");
+        const modifiedEl = document.getElementById("status-last-modified");
+        const socialCountEl = document.getElementById("status-social-count");
         if (!preview) return;
+        const contentUrl = "/site-content.json";
+        if (sourceEl) sourceEl.textContent = contentUrl;
         try {
-          const response = await fetch("/site-content.json", { cache: "no-store" });
+          const response = await fetch(contentUrl, { cache: "no-store" });
           if (!response.ok) {
             throw new Error("Unable to load /site-content.json");
           }
+          if (modifiedEl) {
+            modifiedEl.textContent = response.headers.get("last-modified") || "n/a";
+          }
           const data = await response.json();
           preview.textContent = JSON.stringify(data, null, 2);
+          if (socialCountEl) {
+            const socialCount = Object.keys(data?.global?.socialLinks || {}).length;
+            socialCountEl.textContent = String(socialCount);
+          }
         } catch (error) {
           preview.textContent = String(error?.message || error || "Failed to load content.");
+          if (modifiedEl) modifiedEl.textContent = "unavailable";
+          if (socialCountEl) socialCountEl.textContent = "unavailable";
         }
       })();
     </script>

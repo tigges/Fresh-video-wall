@@ -2,7 +2,7 @@
 /*
 Plugin Name: DJ UrbanT Headless Visual CMS
 Description: Visual editor for DJ UrbanT site content with headless endpoint mapper at /wp-json/djurbant/v1/site-content.
-Version: 1.0.0
+Version: 1.1.0
 */
 
 if (!defined("ABSPATH")) {
@@ -12,6 +12,7 @@ if (!defined("ABSPATH")) {
 const DJURBANT_HVC_OPTION_KEY = "djurbant_hvc_options";
 const DJURBANT_HVC_MIGRATION_FLAG = "djurbant_hvc_migrated_from_legacy_json";
 const DJURBANT_HVC_LEGACY_JSON_OPTION_KEY = "djurbant_site_content_json";
+const DJURBANT_HVC_LAST_WP_SAVE_OPTION_KEY = "djurbant_hvc_last_wp_save_at";
 
 function djurbant_hvc_default_schema() {
     return [
@@ -345,6 +346,8 @@ function djurbant_hvc_sanitize_options($input) {
         );
     }
 
+    // Store the latest WP-side save time for operator confidence.
+    update_option(DJURBANT_HVC_LAST_WP_SAVE_OPTION_KEY, time(), false);
     return $out;
 }
 
@@ -437,6 +440,117 @@ function djurbant_hvc_render_section_header($title, $description = "") {
     }
 }
 
+function djurbant_hvc_fetch_last_sync_run() {
+    $cached = get_transient("djurbant_hvc_last_sync_run");
+    if (is_array($cached) && isset($cached["statusLabel"])) {
+        return $cached;
+    }
+
+    $repo = trim(
+        strval(
+            apply_filters("djurbant_hvc_github_repo", "tigges/Fresh-video-wall")
+        )
+    );
+    $workflow_file = trim(
+        strval(
+            apply_filters(
+                "djurbant_hvc_sync_workflow_file",
+                "sync-site-content-from-wp.yml"
+            )
+        )
+    );
+
+    if (
+        !preg_match("/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/", $repo) ||
+        $workflow_file === ""
+    ) {
+        return [
+            "statusLabel" => "Unavailable",
+            "detailLabel" => "Invalid GitHub repo/workflow configuration.",
+            "updatedLabel" => "n/a",
+            "htmlUrl" => "",
+        ];
+    }
+
+    [$owner, $name] = explode("/", $repo, 2);
+    $api_url =
+        "https://api.github.com/repos/" .
+        rawurlencode($owner) .
+        "/" .
+        rawurlencode($name) .
+        "/actions/workflows/" .
+        rawurlencode($workflow_file) .
+        "/runs?per_page=1";
+
+    $response = wp_remote_get($api_url, [
+        "timeout" => 8,
+        "headers" => [
+            "Accept" => "application/vnd.github+json",
+            "User-Agent" => "DJ-UrbanT-HVC/1.1",
+        ],
+    ]);
+
+    if (is_wp_error($response)) {
+        return [
+            "statusLabel" => "Unavailable",
+            "detailLabel" => "GitHub API request failed.",
+            "updatedLabel" => "n/a",
+            "htmlUrl" => "",
+        ];
+    }
+
+    $status_code = wp_remote_retrieve_response_code($response);
+    if ($status_code !== 200) {
+        return [
+            "statusLabel" => "Unavailable",
+            "detailLabel" => "GitHub API returned HTTP " . intval($status_code) . ".",
+            "updatedLabel" => "n/a",
+            "htmlUrl" => "",
+        ];
+    }
+
+    $body = json_decode(strval(wp_remote_retrieve_body($response)), true);
+    $runs = is_array($body) ? ($body["workflow_runs"] ?? []) : [];
+    $run = is_array($runs) && !empty($runs) && is_array($runs[0]) ? $runs[0] : null;
+    if (!is_array($run)) {
+        return [
+            "statusLabel" => "Unavailable",
+            "detailLabel" => "No workflow runs found yet.",
+            "updatedLabel" => "n/a",
+            "htmlUrl" => "",
+        ];
+    }
+
+    $status = strtolower(strval($run["status"] ?? ""));
+    $conclusion = strtolower(strval($run["conclusion"] ?? ""));
+    $status_label = "Unknown";
+    $detail_label = "Status unknown";
+
+    if ($status !== "completed") {
+        $status_label = "In progress";
+        $detail_label = "Current status: " . $status;
+    } elseif ($conclusion === "success") {
+        $status_label = "Success";
+        $detail_label = "Latest sync run completed successfully.";
+    } elseif ($conclusion !== "") {
+        $status_label = "Failed";
+        $detail_label = "Latest sync run concluded: " . $conclusion . ".";
+    }
+
+    $updated_at = strval($run["updated_at"] ?? "");
+    $updated_ts = $updated_at !== "" ? strtotime($updated_at) : false;
+    $updated_label = $updated_ts ? wp_date("Y-m-d H:i T", intval($updated_ts)) : "n/a";
+
+    $result = [
+        "statusLabel" => $status_label,
+        "detailLabel" => $detail_label,
+        "updatedLabel" => $updated_label,
+        "htmlUrl" => strval($run["html_url"] ?? ""),
+    ];
+    set_transient("djurbant_hvc_last_sync_run", $result, 300);
+    return $result;
+}
+
 function djurbant_hvc_admin_page() {
     if (!current_user_can("manage_options")) {
         return;
@@ -452,6 +566,21 @@ function djurbant_hvc_admin_page() {
         ),
         "/"
     );
+    $github_repo = trim(
+        strval(apply_filters("djurbant_hvc_github_repo", "tigges/Fresh-video-wall"))
+    );
+    $sync_workflow_url =
+        "https://github.com/" .
+        rawurlencode($github_repo) .
+        "/actions/workflows/sync-site-content-from-wp.yml";
+    $sync_runs_url = $sync_workflow_url . "?query=branch%3Amain";
+    $sync_run = djurbant_hvc_fetch_last_sync_run();
+    $last_wp_save_ts = intval(
+        get_option(DJURBANT_HVC_LAST_WP_SAVE_OPTION_KEY, 0)
+    );
+    $last_wp_save_label = $last_wp_save_ts > 0
+        ? wp_date("Y-m-d H:i T", $last_wp_save_ts)
+        : "n/a";
     $preview_asset_base = plugins_url("assets/previews/", __FILE__);
     $preview_cards = [
         [
@@ -510,6 +639,29 @@ function djurbant_hvc_admin_page() {
     <div class="wrap">
       <h1>DJ UrbanT — Visual Site Content CMS</h1>
       <p>Use this form-based editor for content and links. It powers <code>/wp-json/djurbant/v1/site-content</code>.</p>
+      <section style="margin: 16px 0 20px; border: 1px solid #ccd0d4; border-radius: 8px; background: #fff; padding: 12px;">
+        <h2 style="margin: 0 0 8px;">Publish confidence panel</h2>
+        <p style="margin: 0 0 10px; max-width: 980px;">
+          Operator flow: save in WordPress, run content sync workflow, then verify on live site.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px;">
+          <span class="button button-secondary" style="pointer-events:none;cursor:default;"><strong>Last WP save:</strong>&nbsp;<?php echo esc_html($last_wp_save_label); ?></span>
+          <span class="button button-secondary" style="pointer-events:none;cursor:default;"><strong>Last sync run:</strong>&nbsp;<?php echo esc_html($sync_run["statusLabel"]); ?></span>
+          <span class="button button-secondary" style="pointer-events:none;cursor:default;"><strong>Sync updated:</strong>&nbsp;<?php echo esc_html($sync_run["updatedLabel"]); ?></span>
+        </div>
+        <p style="margin: 0 0 10px; color: #50575e;">
+          <?php echo esc_html($sync_run["detailLabel"]); ?>
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <a class="button button-primary" href="<?php echo esc_url($sync_workflow_url); ?>" target="_blank" rel="noopener noreferrer">Open Sync Workflow</a>
+          <a class="button button-secondary" href="<?php echo esc_url($sync_runs_url); ?>" target="_blank" rel="noopener noreferrer">View Workflow Runs</a>
+          <a class="button button-secondary" href="<?php echo esc_url(rest_url("djurbant/v1/site-content")); ?>" target="_blank" rel="noopener noreferrer">Open Endpoint JSON</a>
+          <a class="button button-secondary" href="<?php echo esc_url($main_app_base_url . "/cms/"); ?>" target="_blank" rel="noopener noreferrer">Open Main App CMS Hub</a>
+          <?php if (strval($sync_run["htmlUrl"]) !== ""): ?>
+            <a class="button button-secondary" href="<?php echo esc_url($sync_run["htmlUrl"]); ?>" target="_blank" rel="noopener noreferrer">Open Latest Sync Run</a>
+          <?php endif; ?>
+        </div>
+      </section>
       <section style="margin: 16px 0 22px;">
         <h2 style="margin: 0 0 8px;">Live section previews (main app)</h2>
         <p style="max-width: 980px; margin: 0 0 12px;">

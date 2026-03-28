@@ -9,6 +9,7 @@ keeps the same headless endpoint used by the main app sync pipeline:
 
 - Form-based editor in WP Admin (`Site Content CMS`)
 - Live section preview cards in WP admin for each CMS section
+- Publish confidence panel in WP admin (last WP save, last sync run, direct workflow links)
 - Field-level sanitization for text, links, and toggles
 - Legacy migration from the previous raw JSON option key
   (`djurbant_site_content_json`) into structured options
@@ -117,6 +118,31 @@ Config:
   - default:
     `https://wordpress-1344959-6296666.cloudwaysapps.com`
 
+## Editor confidence workflow (Phase 3)
+
+The visual CMS screen now includes an operator-focused confidence panel so content
+editors can run the full publish flow without context switching:
+
+- **Last WP save** timestamp (when the form payload was last saved)
+- **Last sync run** status (success/in progress/failed)
+- **Sync updated** timestamp from the latest workflow run
+- Direct buttons for:
+  - Sync workflow page
+  - Workflow run history
+  - Latest workflow run (when available)
+  - Endpoint JSON
+  - Main app CMS hub (`/cms`)
+
+This uses public GitHub Actions run metadata for:
+
+- repo: `tigges/Fresh-video-wall`
+- workflow: `sync-site-content-from-wp.yml`
+
+Both are filterable in code:
+
+- `djurbant_hvc_github_repo`
+- `djurbant_hvc_sync_workflow_file`
+
 ## Endpoint mapper output schema
 
 The plugin endpoint returns:
@@ -149,5 +175,7 @@ The plugin endpoint returns:
 - If PHP CLI is not available locally, validate by activating in WordPress and
   testing:
   - `/wp-json/djurbant/v1/site-content`
-- After edits in CMS app, run GitHub workflow:
-  - **Sync Site Content from WordPress**
+- Recommended operator flow:
+  1. Save edits in WP visual CMS.
+  2. Run **Sync Site Content from WordPress**.
+  3. Verify `/site-content.json` and live pages.

@@ -364,35 +364,118 @@ function djurbant_hvc_field_id($path) {
     return "djurbant_hvc_" . str_replace(".", "_", $path);
 }
 
+function djurbant_hvc_field_meta($path) {
+    $module = "global";
+    if (strpos($path, "global.socialLinks.") === 0) {
+        $module = "social";
+    } elseif (strpos($path, "pages.home.") === 0) {
+        $module = "home";
+    } elseif (strpos($path, "pages.video.") === 0) {
+        $module = "video";
+    } elseif (strpos($path, "pages.audio.") === 0) {
+        $module = "audio";
+    } elseif (strpos($path, "pages.contact.") === 0) {
+        $module = "contact";
+    }
+
+    $required_paths = [
+        "global.ctaDefaults.bookLabel",
+        "global.ctaDefaults.bookUrl",
+        "pages.home.hero.tagline",
+        "pages.home.bestOf.title",
+        "pages.home.bookingBand.title",
+        "pages.home.bookingBand.buttonLabel",
+        "pages.home.bookingBand.buttonUrl",
+        "pages.video.title",
+        "pages.video.intro",
+        "pages.video.topButton.label",
+        "pages.video.topButton.url",
+        "pages.audio.title",
+        "pages.audio.intro",
+        "pages.audio.topButton.label",
+        "pages.audio.topButton.url",
+        "pages.contact.title",
+        "pages.contact.introText",
+        "pages.contact.formAction",
+    ];
+    $recommended_paths = [
+        "global.meta.replySlaText",
+        "pages.contact.backButtonLabel",
+        "pages.contact.submitButtonLabel",
+    ];
+    $is_social_url = preg_match(
+        "/^global\\.socialLinks\\.[^.]+\\.url$/",
+        $path
+    ) === 1;
+    $validate = "";
+    if (
+        in_array($path, [
+            "global.ctaDefaults.bookUrl",
+            "pages.home.bookingBand.buttonUrl",
+            "pages.video.topButton.url",
+            "pages.audio.topButton.url",
+            "pages.contact.formAction",
+        ], true) ||
+        $is_social_url
+    ) {
+        $validate = "url_or_path";
+    }
+
+    return [
+        "module" => $module,
+        "required" => in_array($path, $required_paths, true),
+        "recommended" => in_array($path, $recommended_paths, true),
+        "validate" => $validate,
+    ];
+}
+
 function djurbant_hvc_render_text_input($path, $value, $type = "text", $placeholder = "") {
+    $meta = djurbant_hvc_field_meta($path);
     printf(
-        '<input class="regular-text" type="%s" id="%s" name="%s" value="%s" placeholder="%s" />',
+        '<input class="regular-text djurbant-hvc-input" type="%s" id="%s" name="%s" value="%s" placeholder="%s" data-field-path="%s" data-module="%s" data-required="%s" data-recommended="%s" data-validate="%s" />',
         esc_attr($type),
         esc_attr(djurbant_hvc_field_id($path)),
         esc_attr(djurbant_hvc_field_name($path)),
         esc_attr($value),
-        esc_attr($placeholder)
+        esc_attr($placeholder),
+        esc_attr($path),
+        esc_attr(strval($meta["module"])),
+        $meta["required"] ? "1" : "0",
+        $meta["recommended"] ? "1" : "0",
+        esc_attr(strval($meta["validate"]))
     );
 }
 
 function djurbant_hvc_render_textarea($path, $value, $rows = 3) {
+    $meta = djurbant_hvc_field_meta($path);
     printf(
-        '<textarea class="large-text" rows="%d" id="%s" name="%s">%s</textarea>',
+        '<textarea class="large-text djurbant-hvc-input" rows="%d" id="%s" name="%s" data-field-path="%s" data-module="%s" data-required="%s" data-recommended="%s" data-validate="%s">%s</textarea>',
         intval($rows),
         esc_attr(djurbant_hvc_field_id($path)),
         esc_attr(djurbant_hvc_field_name($path)),
+        esc_attr($path),
+        esc_attr(strval($meta["module"])),
+        $meta["required"] ? "1" : "0",
+        $meta["recommended"] ? "1" : "0",
+        esc_attr(strval($meta["validate"])),
         esc_textarea($value)
     );
 }
 
 function djurbant_hvc_render_checkbox($path, $value) {
+    $meta = djurbant_hvc_field_meta($path);
     $name = djurbant_hvc_field_name($path);
     $id = djurbant_hvc_field_id($path);
     echo '<input type="hidden" name="' . esc_attr($name) . '" value="0" />';
     printf(
-        '<label><input type="checkbox" id="%s" name="%s" value="1" %s /> Enabled</label>',
+        '<label><input class="djurbant-hvc-input" type="checkbox" id="%s" name="%s" value="1" data-field-path="%s" data-module="%s" data-required="%s" data-recommended="%s" data-validate="%s" %s /> Enabled</label>',
         esc_attr($id),
         esc_attr($name),
+        esc_attr($path),
+        esc_attr(strval($meta["module"])),
+        $meta["required"] ? "1" : "0",
+        $meta["recommended"] ? "1" : "0",
+        esc_attr(strval($meta["validate"])),
         checked(true, (bool) $value, false)
     );
 }
@@ -500,14 +583,73 @@ function djurbant_hvc_get_preview_card_meta($card, $preview_dir) {
     ];
 }
 
-function djurbant_hvc_render_section_with_preview_start($title, $description = "") {
+function djurbant_hvc_get_module_presets($module_key) {
+    $module_key = strtolower(trim(strval($module_key)));
+    $presets = [
+        "global" => [
+            ["value" => "", "label" => "No preset"],
+            ["value" => "global_default", "label" => "Default CTA + reply"],
+        ],
+        "social" => [
+            ["value" => "", "label" => "No preset"],
+            ["value" => "social_enable_all", "label" => "Enable all socials"],
+            ["value" => "social_disable_all", "label" => "Disable all socials"],
+        ],
+        "home" => [
+            ["value" => "", "label" => "No preset"],
+            ["value" => "home_rainbow_default", "label" => "Rainbow home baseline"],
+        ],
+        "video" => [
+            ["value" => "", "label" => "No preset"],
+            ["value" => "video_default", "label" => "Video ranked baseline"],
+        ],
+        "audio" => [
+            ["value" => "", "label" => "No preset"],
+            ["value" => "audio_default", "label" => "Audio ranked baseline"],
+        ],
+        "contact" => [
+            ["value" => "", "label" => "No preset"],
+            ["value" => "contact_default", "label" => "Contact booking baseline"],
+        ],
+    ];
+    return $presets[$module_key] ?? [["value" => "", "label" => "No preset"]];
+}
+
+function djurbant_hvc_render_section_with_preview_start($module_key, $module_index, $title, $description = "") {
+    $presets = djurbant_hvc_get_module_presets($module_key);
     ?>
-    <section class="djurbant-hvc-section">
-      <div class="djurbant-hvc-section-fields">
-        <h2 style="margin-top:0;"><?php echo esc_html($title); ?></h2>
+    <details class="djurbant-hvc-module" open data-module-key="<?php echo esc_attr($module_key); ?>">
+      <summary class="djurbant-hvc-module-summary">
+        <span class="djurbant-hvc-module-index"><?php echo esc_html(strval($module_index)); ?></span>
+        <span class="djurbant-hvc-module-title"><?php echo esc_html($title); ?></span>
+        <span class="djurbant-hvc-module-status is-live" data-module-status>Live</span>
+      </summary>
+      <section class="djurbant-hvc-section">
+        <div class="djurbant-hvc-section-fields">
         <?php if ($description !== ""): ?>
           <p style="max-width:920px;"><?php echo esc_html($description); ?></p>
         <?php endif; ?>
+        <div class="djurbant-hvc-module-tools">
+          <label>
+            <span>Quick preset</span>
+            <select class="djurbant-hvc-preset-select" data-module-key="<?php echo esc_attr($module_key); ?>">
+              <?php foreach ($presets as $preset): ?>
+                <option value="<?php echo esc_attr(strval($preset["value"])); ?>">
+                  <?php echo esc_html(strval($preset["label"])); ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </label>
+          <button
+            type="button"
+            class="button button-secondary djurbant-hvc-apply-preset"
+            data-module-key="<?php echo esc_attr($module_key); ?>"
+          >
+            Apply preset
+          </button>
+        </div>
+        <p class="djurbant-hvc-module-note">Status updates while you edit this section.</p>
+        <div class="djurbant-hvc-validation-summary" data-module-validation-summary>All checks passed</div>
     <?php
 }
 
@@ -552,7 +694,8 @@ function djurbant_hvc_render_section_with_preview_end($card, $preview_dir) {
           </p>
         <?php endif; ?>
       </aside>
-    </section>
+      </section>
+    </details>
     <?php
 }
 
@@ -780,6 +923,178 @@ function djurbant_hvc_admin_page() {
         </div>
       </section>
       <style>
+        .djurbant-hvc-top-actions {
+          position: sticky;
+          top: 32px;
+          z-index: 12;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 8px;
+          margin: 14px 0;
+          border: 1px solid #ccd0d4;
+          border-radius: 8px;
+          background: #fff;
+          padding: 10px;
+        }
+
+        .djurbant-hvc-top-actions-left,
+        .djurbant-hvc-top-actions-right {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+
+        .djurbant-hvc-section-module {
+          margin: 16px 0;
+          border: 1px solid #ccd0d4;
+          border-radius: 10px;
+          background: #fff;
+          overflow: hidden;
+        }
+
+        .djurbant-hvc-section-module > summary {
+          cursor: pointer;
+          list-style: none;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 10px 12px;
+          border-bottom: 1px solid #e5e5e5;
+          font-weight: 600;
+          user-select: none;
+        }
+
+        .djurbant-hvc-section-module > summary::-webkit-details-marker {
+          display: none;
+        }
+
+        .djurbant-hvc-section-module-title {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 14px;
+        }
+
+        .djurbant-hvc-module-index {
+          width: 20px;
+          height: 20px;
+          border-radius: 999px;
+          border: 1px solid #d0d4d8;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 11px;
+          color: #50575e;
+        }
+
+        .djurbant-hvc-module-right {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .djurbant-hvc-status-badge {
+          display: inline-flex;
+          align-items: center;
+          border-radius: 999px;
+          padding: 2px 8px;
+          font-size: 11px;
+          line-height: 1.3;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          border: 1px solid transparent;
+        }
+
+        .djurbant-hvc-status-live {
+          background: #ecf8ee;
+          border-color: #9fd3a7;
+          color: #1e6b2f;
+        }
+
+        .djurbant-hvc-status-warning {
+          background: #fff8e5;
+          border-color: #e6cf7b;
+          color: #7a5500;
+        }
+
+        .djurbant-hvc-status-error {
+          background: #fef0ef;
+          border-color: #e6a39f;
+          color: #8a1f17;
+        }
+
+        .djurbant-hvc-status-auto {
+          background: #edf4ff;
+          border-color: #a8c1f0;
+          color: #1d4f9f;
+        }
+
+        .djurbant-hvc-validation-summary {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin: 10px 0 4px;
+        }
+
+        .djurbant-hvc-module-note {
+          margin: 0 0 8px;
+          color: #50575e;
+          font-size: 12px;
+        }
+
+        .djurbant-hvc-field-error {
+          border-color: #d63638 !important;
+          box-shadow: 0 0 0 1px rgba(214, 54, 56, 0.15) !important;
+        }
+
+        .djurbant-hvc-field-warning {
+          border-color: #b88900 !important;
+          box-shadow: 0 0 0 1px rgba(184, 137, 0, 0.12) !important;
+        }
+
+        .djurbant-hvc-presets-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin: 2px 0 10px;
+        }
+
+        .djurbant-hvc-preset {
+          border: 1px solid #ccd0d4;
+          border-radius: 999px;
+          background: #f6f7f7;
+          padding: 2px 8px;
+          font-size: 11px;
+          line-height: 1.4;
+          cursor: pointer;
+        }
+
+        .djurbant-hvc-preset:hover {
+          background: #eef1f3;
+        }
+
+        .djurbant-hvc-sticky-submit {
+          position: sticky;
+          bottom: 0;
+          z-index: 11;
+          margin-top: 12px;
+          border: 1px solid #ccd0d4;
+          border-radius: 8px;
+          background: #fff;
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 8px;
+        }
+
+        .djurbant-hvc-builder-hidden {
+          display: none !important;
+        }
+
         .djurbant-hvc-section {
           display: grid;
           grid-template-columns: minmax(0, 1fr) 320px;
@@ -876,7 +1191,23 @@ function djurbant_hvc_admin_page() {
       <form method="post" action="options.php">
         <?php settings_fields("djurbant_hvc_group"); ?>
 
-        <?php djurbant_hvc_render_section_with_preview_start("Global", "Shared content used across Layer 1 pages."); ?>
+        <div class="djurbant-hvc-top-actions">
+          <div class="djurbant-hvc-top-actions-left">
+            <button type="button" class="button button-secondary" id="djurbant-hvc-expand-all">Expand all</button>
+            <button type="button" class="button button-secondary" id="djurbant-hvc-collapse-all">Collapse all</button>
+            <div class="djurbant-hvc-validation-summary">
+              <span class="djurbant-hvc-status-badge djurbant-hvc-status-live" id="djurbant-hvc-summary-live">Live: 0</span>
+              <span class="djurbant-hvc-status-badge djurbant-hvc-status-warning" id="djurbant-hvc-summary-warning">Warnings: 0</span>
+              <span class="djurbant-hvc-status-badge djurbant-hvc-status-error" id="djurbant-hvc-summary-error">Errors: 0</span>
+            </div>
+          </div>
+          <div class="djurbant-hvc-top-actions-right">
+            <a class="button button-secondary" href="<?php echo esc_url($main_app_base_url . "/cms/visual.html"); ?>" target="_blank" rel="noopener noreferrer">Preview launcher</a>
+            <a class="button button-primary" href="<?php echo esc_url($main_app_base_url . "/index.html"); ?>" target="_blank" rel="noopener noreferrer">Preview site</a>
+          </div>
+        </div>
+
+        <?php djurbant_hvc_render_section_with_preview_start("global", 1, "Navigation", "Shared nav CTA defaults and global response copy."); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr>
@@ -895,7 +1226,7 @@ function djurbant_hvc_admin_page() {
         </table>
         <?php djurbant_hvc_render_section_with_preview_end($preview_cards["global"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_with_preview_start("Social links", "Edit each network URL, label, open-in-new-tab behavior, and visibility."); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("social", 2, "Hero + Social presence", "Hero-level social visibility and external network links."); ?>
         <?php foreach (djurbant_hvc_get_path($options, "global.socialLinks", []) as $network_key => $network): ?>
           <h3 style="margin-top:20px;"><?php echo esc_html(ucfirst($network_key)); ?></h3>
           <table class="form-table" role="presentation">
@@ -921,7 +1252,7 @@ function djurbant_hvc_admin_page() {
         <?php endforeach; ?>
         <?php djurbant_hvc_render_section_with_preview_end($preview_cards["social"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_with_preview_start("Home page"); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("home", 3, "Video & audio carousel", "Best-of section title and home booking/stats visibility."); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr><th scope="row">Hero tagline</th><td><?php djurbant_hvc_render_text_input("pages.home.hero.tagline", djurbant_hvc_get_path($options, "pages.home.hero.tagline", "")); ?></td></tr>
@@ -936,7 +1267,7 @@ function djurbant_hvc_admin_page() {
         </table>
         <?php djurbant_hvc_render_section_with_preview_end($preview_cards["home"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_with_preview_start("Video page"); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("video", 4, "Stats strip + video page", "Video subpage text, CTA, and social strip behavior."); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr><th scope="row">Title</th><td><?php djurbant_hvc_render_text_input("pages.video.title", djurbant_hvc_get_path($options, "pages.video.title", "")); ?></td></tr>
@@ -948,7 +1279,7 @@ function djurbant_hvc_admin_page() {
         </table>
         <?php djurbant_hvc_render_section_with_preview_end($preview_cards["video"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_with_preview_start("Audio page"); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("audio", 5, "Booking CTA + audio page", "Audio subpage text, CTA, and social strip behavior."); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr><th scope="row">Title</th><td><?php djurbant_hvc_render_text_input("pages.audio.title", djurbant_hvc_get_path($options, "pages.audio.title", "")); ?></td></tr>
@@ -960,7 +1291,7 @@ function djurbant_hvc_admin_page() {
         </table>
         <?php djurbant_hvc_render_section_with_preview_end($preview_cards["audio"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_with_preview_start("Contact page"); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("contact", 6, "Footer + contact", "Contact form labels/action and footer social visibility."); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr><th scope="row">Title</th><td><?php djurbant_hvc_render_text_input("pages.contact.title", djurbant_hvc_get_path($options, "pages.contact.title", "")); ?></td></tr>
@@ -973,7 +1304,9 @@ function djurbant_hvc_admin_page() {
         </table>
         <?php djurbant_hvc_render_section_with_preview_end($preview_cards["contact"], $preview_dir); ?>
 
-        <?php submit_button("Save Content"); ?>
+        <div class="djurbant-hvc-sticky-submit">
+          <?php submit_button("Publish changes", "primary", "submit", false); ?>
+        </div>
       </form>
 
       <h2>Endpoint preview</h2>
@@ -981,6 +1314,175 @@ function djurbant_hvc_admin_page() {
       <pre style="max-height:420px;overflow:auto;background:#fff;border:1px solid #ccd0d4;padding:12px;"><?php echo esc_html(wp_json_encode($preview_payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)); ?></pre>
       <p><strong>Endpoint:</strong> <code><?php echo esc_html(rest_url("djurbant/v1/site-content")); ?></code></p>
       <p><strong>WP route:</strong> <code>/visual-cms</code> (short URL redirect)</p>
+      <script>
+        (() => {
+          const form = document.querySelector('form[action="options.php"]');
+          if (!form) return;
+          const modules = Array.from(document.querySelectorAll(".djurbant-hvc-module"));
+          const inputs = Array.from(form.querySelectorAll(".djurbant-hvc-input"));
+          const expandAllBtn = document.getElementById("djurbant-hvc-expand-all");
+          const collapseAllBtn = document.getElementById("djurbant-hvc-collapse-all");
+          const summaryLive = document.getElementById("djurbant-hvc-summary-live");
+          const summaryWarn = document.getElementById("djurbant-hvc-summary-warning");
+          const summaryErr = document.getElementById("djurbant-hvc-summary-error");
+          const presetButtons = Array.from(document.querySelectorAll(".djurbant-hvc-apply-preset"));
+
+          const URL_OR_PATH_RE = /^(https?:\/\/|mailto:|\.{0,2}\/|#|\/)[^\s]*$/i;
+
+          function getModuleInputs(moduleKey) {
+            return inputs.filter((el) => String(el.dataset.module || "") === moduleKey);
+          }
+
+          function validateInput(el) {
+            if (!(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement)) {
+              return "ok";
+            }
+            el.classList.remove("djurbant-hvc-field-error", "djurbant-hvc-field-warning");
+            const isCheckbox = el instanceof HTMLInputElement && el.type === "checkbox";
+            const rawValue = isCheckbox ? (el.checked ? "1" : "") : String(el.value || "").trim();
+            const required = el.dataset.required === "1";
+            const recommended = el.dataset.recommended === "1";
+            const validate = String(el.dataset.validate || "");
+
+            if (required && rawValue === "") {
+              el.classList.add("djurbant-hvc-field-error");
+              return "error";
+            }
+            if (validate === "url_or_path" && rawValue !== "" && !URL_OR_PATH_RE.test(rawValue)) {
+              el.classList.add("djurbant-hvc-field-error");
+              return "error";
+            }
+            if (recommended && rawValue === "") {
+              el.classList.add("djurbant-hvc-field-warning");
+              return "warning";
+            }
+            return "ok";
+          }
+
+          function moduleStatus(moduleEl) {
+            const key = String(moduleEl.dataset.moduleKey || "");
+            const moduleInputs = getModuleInputs(key);
+            let hasError = false;
+            let hasWarning = false;
+            moduleInputs.forEach((el) => {
+              const state = validateInput(el);
+              if (state === "error") hasError = true;
+              if (state === "warning") hasWarning = true;
+            });
+            return hasError ? "error" : hasWarning ? "warning" : "live";
+          }
+
+          function renderModuleBadge(moduleEl, status) {
+            const badge = moduleEl.querySelector("[data-module-status]");
+            if (!badge) return;
+            badge.classList.remove("is-live", "is-warning", "is-error");
+            if (status === "error") {
+              badge.textContent = "Error";
+              badge.classList.add("is-error");
+            } else if (status === "warning") {
+              badge.textContent = "Warning";
+              badge.classList.add("is-warning");
+            } else {
+              badge.textContent = "Live";
+              badge.classList.add("is-live");
+            }
+          }
+
+          function runValidation() {
+            let liveCount = 0;
+            let warningCount = 0;
+            let errorCount = 0;
+            modules.forEach((moduleEl) => {
+              const status = moduleStatus(moduleEl);
+              renderModuleBadge(moduleEl, status);
+              if (status === "error") errorCount += 1;
+              else if (status === "warning") warningCount += 1;
+              else liveCount += 1;
+            });
+            if (summaryLive) summaryLive.textContent = `Live: ${liveCount}`;
+            if (summaryWarn) summaryWarn.textContent = `Warnings: ${warningCount}`;
+            if (summaryErr) summaryErr.textContent = `Errors: ${errorCount}`;
+          }
+
+          function applyPreset(moduleKey, preset) {
+            const moduleInputs = getModuleInputs(moduleKey);
+            const byPath = (path) => moduleInputs.find((el) => String(el.dataset.fieldPath || "") === path);
+            if (preset === "global_default") {
+              const label = byPath("global.ctaDefaults.bookLabel");
+              const url = byPath("global.ctaDefaults.bookUrl");
+              const reply = byPath("global.meta.replySlaText");
+              if (label) label.value = "Book";
+              if (url) url.value = "./contact.html";
+              if (reply) reply.value = "We usually reply within 24 hours.";
+            } else if (preset === "social_enable_all" || preset === "social_disable_all") {
+              const enabled = preset === "social_enable_all";
+              moduleInputs.forEach((el) => {
+                if (el instanceof HTMLInputElement && el.type === "checkbox") {
+                  el.checked = enabled;
+                }
+              });
+            } else if (preset === "home_rainbow_default") {
+              const title = byPath("pages.home.bestOf.title");
+              const cta = byPath("pages.home.bookingBand.buttonLabel");
+              const ctaUrl = byPath("pages.home.bookingBand.buttonUrl");
+              if (title) title.value = "The Best of Artist";
+              if (cta) cta.value = "Book";
+              if (ctaUrl) ctaUrl.value = "./contact.html";
+            } else if (preset === "video_default") {
+              const title = byPath("pages.video.title");
+              const intro = byPath("pages.video.intro");
+              const top = byPath("pages.video.topButton.label");
+              if (title) title.value = "Video";
+              if (intro) intro.value = "Ranked from fetched video channel stats.";
+              if (top) top.value = "Top Video";
+            } else if (preset === "audio_default") {
+              const title = byPath("pages.audio.title");
+              const intro = byPath("pages.audio.intro");
+              const top = byPath("pages.audio.topButton.label");
+              if (title) title.value = "Audio";
+              if (intro) intro.value = "Ranked from fetched audio channel stats.";
+              if (top) top.value = "Top Audio";
+            } else if (preset === "contact_default") {
+              const title = byPath("pages.contact.title");
+              const intro = byPath("pages.contact.introText");
+              const action = byPath("pages.contact.formAction");
+              if (title) title.value = "Contact DJ UrbanT";
+              if (intro) intro.value = "Use this form for bookings, event inquiries, collaborations, and press.";
+              if (action) action.value = "mailto:booking@djurbant.com";
+            }
+            runValidation();
+          }
+
+          if (expandAllBtn) {
+            expandAllBtn.addEventListener("click", () => {
+              modules.forEach((m) => m.open = true);
+            });
+          }
+          if (collapseAllBtn) {
+            collapseAllBtn.addEventListener("click", () => {
+              modules.forEach((m) => m.open = false);
+            });
+          }
+
+          presetButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const moduleKey = String(btn.dataset.moduleKey || "");
+              if (!moduleKey) return;
+              const select = document.querySelector(`.djurbant-hvc-preset-select[data-module-key="${moduleKey}"]`);
+              if (!(select instanceof HTMLSelectElement)) return;
+              const value = String(select.value || "");
+              if (!value) return;
+              applyPreset(moduleKey, value);
+            });
+          });
+
+          inputs.forEach((el) => {
+            el.addEventListener("input", runValidation);
+            el.addEventListener("change", runValidation);
+          });
+          runValidation();
+        })();
+      </script>
     </div>
     <?php
 }

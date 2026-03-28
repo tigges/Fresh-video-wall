@@ -123,6 +123,33 @@ Fallback behavior:
 - If a screenshot file is missing, the preview column shows a lightweight fallback
   card with guidance to run the screenshot refresh workflow.
 
+## Section builder UX (Phase 1.5)
+
+The visual editor now uses a section-builder interaction model on top of inline
+previews:
+
+- Collapsible modules (6 blocks) with numbered headers
+- Per-module status badge:
+  - `Live`
+  - `Warning`
+  - `Error`
+- Expand-all / collapse-all controls
+- Sticky top action strip with validation summary counts
+- Sticky publish action at the bottom of the form
+- Quick module presets (safe, schema-aligned defaults)
+
+Validation behavior:
+
+- Required fields are highlighted and counted as `Error` when empty
+- Recommended fields are highlighted and counted as `Warning` when empty
+- URL/path fields are validated (`http(s)`, `mailto:`, `/`, `./`, `../`, `#`)
+
+Preset behavior:
+
+- Presets apply to the currently selected module only
+- Presets are intentionally constrained to known-safe values expected by the
+  existing frontend schema
+
 The preview base URL is configurable via:
 
 - `DJURBANT_MAIN_APP_BASE_URL` (define in `wp-config.php`)

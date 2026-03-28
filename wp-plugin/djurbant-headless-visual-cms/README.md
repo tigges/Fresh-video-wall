@@ -8,6 +8,7 @@ keeps the same headless endpoint used by the main app sync pipeline:
 ## What it provides
 
 - Form-based editor in WP Admin (`Site Content CMS`)
+- Live section preview cards in WP admin for each CMS section
 - Field-level sanitization for text, links, and toggles
 - Legacy migration from the previous raw JSON option key
   (`djurbant_site_content_json`) into structured options
@@ -72,6 +73,26 @@ keeps the same headless endpoint used by the main app sync pipeline:
 - Back button label -> `pages.contact.backButtonLabel`
 - Submit button label -> `pages.contact.submitButtonLabel`
 - Show social strip -> `pages.contact.sections.showSocialStrip`
+
+## Live preview cards (Phase 1)
+
+At the top of the WP visual CMS screen, the plugin renders live preview cards with
+embedded mini-screens and direct links:
+
+- Global CTAs + Socials
+- Home — Hero + Best of
+- Home — Stats + Booking
+- Video page
+- Audio page
+- Contact page
+
+The preview base URL is configurable via:
+
+- `DJURBANT_MAIN_APP_BASE_URL` (define in `wp-config.php`)
+
+If not set, plugin defaults to:
+
+- `https://wordpress-1344959-6296666.cloudwaysapps.com`
 
 ## Endpoint mapper output schema
 

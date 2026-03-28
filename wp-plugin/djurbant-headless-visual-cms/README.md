@@ -94,6 +94,29 @@ If not set, plugin defaults to:
 
 - `https://wordpress-1344959-6296666.cloudwaysapps.com`
 
+## Automated preview screenshots (Phase 2)
+
+The repo now includes an automation pipeline that refreshes static preview images
+used by the WP plugin preview cards:
+
+- Script: `scripts/capture_cms_preview_screens.py`
+- Workflow: `.github/workflows/refresh-cms-preview-screens.yml`
+- Output path:
+  `wp-plugin/djurbant-headless-visual-cms/assets/previews/*.png`
+
+Workflow behavior:
+
+1. Runs on schedule and manual dispatch
+2. Captures screenshots from the main app
+3. Rebuilds `wp-plugin/djurbant-headless-visual-cms.zip`
+4. Commits only when preview images changed
+
+Config:
+
+- `MAIN_APP_BASE_URL` repository variable (optional)
+  - default:
+    `https://wordpress-1344959-6296666.cloudwaysapps.com`
+
 ## Endpoint mapper output schema
 
 The plugin endpoint returns:

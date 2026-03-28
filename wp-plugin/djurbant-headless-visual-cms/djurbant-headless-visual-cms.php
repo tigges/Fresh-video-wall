@@ -452,36 +452,43 @@ function djurbant_hvc_admin_page() {
         ),
         "/"
     );
+    $preview_asset_base = plugins_url("assets/previews/", __FILE__);
     $preview_cards = [
         [
             "title" => "Global CTAs + Socials",
             "description" => "Header CTA, footer social strip, and contact SLA copy.",
             "url" => $main_app_base_url . "/index.html",
+            "image" => $preview_asset_base . "global-ctas-socials.png",
         ],
         [
             "title" => "Home — Hero + Best of",
             "description" => "Hero tagline and best-of section title/toggles.",
             "url" => $main_app_base_url . "/index.html#best-of-artist",
+            "image" => $preview_asset_base . "home-hero-bestof.png",
         ],
         [
             "title" => "Home — Stats + Booking",
             "description" => "Stats/booking visibility and booking CTA content.",
             "url" => $main_app_base_url . "/index.html",
+            "image" => $preview_asset_base . "home-stats-booking.png",
         ],
         [
             "title" => "Video page",
             "description" => "Video page title, intro, top button, social visibility.",
             "url" => $main_app_base_url . "/video.html",
+            "image" => $preview_asset_base . "video-page.png",
         ],
         [
             "title" => "Audio page",
             "description" => "Audio page title, intro, top button, social visibility.",
             "url" => $main_app_base_url . "/audio.html",
+            "image" => $preview_asset_base . "audio-page.png",
         ],
         [
             "title" => "Contact page",
             "description" => "Contact title, intro, form action, button labels.",
             "url" => $main_app_base_url . "/contact.html",
+            "image" => $preview_asset_base . "contact-page.png",
         ],
     ];
     ?>
@@ -498,12 +505,19 @@ function djurbant_hvc_admin_page() {
             <article style="border:1px solid #ccd0d4;border-radius:8px;background:#fff;padding:10px;">
               <h3 style="margin:0 0 6px;font-size:14px;"><?php echo esc_html($card["title"]); ?></h3>
               <p style="margin:0 0 8px;color:#50575e;"><?php echo esc_html($card["description"]); ?></p>
-              <div style="height:150px;border:1px solid #ccd0d4;border-radius:6px;overflow:hidden;background:#111;">
+              <div style="height:150px;border:1px solid #ccd0d4;border-radius:6px;overflow:hidden;background:#111;position:relative;">
+                <img
+                  loading="lazy"
+                  src="<?php echo esc_url($card["image"]); ?>"
+                  alt="<?php echo esc_attr($card["title"]); ?> preview"
+                  style="width:100%;height:100%;object-fit:cover;display:block;"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                />
                 <iframe
                   loading="lazy"
                   src="<?php echo esc_url($card["url"]); ?>"
                   title="<?php echo esc_attr($card["title"]); ?>"
-                  style="width:1280px;height:720px;border:0;transform:scale(0.21);transform-origin:top left;"
+                  style="display:none;width:1280px;height:720px;border:0;transform:scale(0.21);transform-origin:top left;"
                 ></iframe>
               </div>
               <p style="margin:8px 0 0;">

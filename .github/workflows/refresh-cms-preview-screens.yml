@@ -1,0 +1,89 @@
+name: Refresh CMS Preview Screens
+
+on:
+  schedule:
+    # Twice daily (UTC) to keep visual references reasonably current.
+    - cron: "13 */12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-cms-preview-screens
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install screenshot dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install playwright==1.55.0
+          python3 -m playwright install --with-deps chromium
+
+      - name: Keep previous previews snapshot
+        run: |
+          mkdir -p .preview-old
+          if [ -d wp-plugin/djurbant-headless-visual-cms/assets/previews ]; then
+            cp -R wp-plugin/djurbant-headless-visual-cms/assets/previews/. .preview-old/
+          fi
+
+      - name: Capture updated preview screenshots
+        env:
+          MAIN_APP_BASE_URL: ${{ vars.MAIN_APP_BASE_URL || 'https://wordpress-1344959-6296666.cloudwaysapps.com' }}
+        run: |
+          python3 scripts/capture_cms_preview_screens.py
+
+      - name: Rebuild visual CMS plugin zip
+        run: |
+          cd wp-plugin
+          zip -r djurbant-headless-visual-cms.zip djurbant-headless-visual-cms
+
+      - name: Detect meaningful preview changes
+        id: detect
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import os
+          from pathlib import Path
+
+          old_dir = Path(".preview-old")
+          new_dir = Path("wp-plugin/djurbant-headless-visual-cms/assets/previews")
+
+          def fingerprint(path: Path):
+            if not path.exists():
+              return {}
+            out = {}
+            for file in sorted(path.rglob("*")):
+              if not file.is_file():
+                continue
+              rel = file.relative_to(path).as_posix()
+              out[rel] = hashlib.sha256(file.read_bytes()).hexdigest()
+            return out
+
+          changed = fingerprint(old_dir) != fingerprint(new_dir)
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
+            fh.write(f"changed={'true' if changed else 'false'}\n")
+          PY
+
+      - name: Commit and push updated previews
+        if: steps.detect.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add wp-plugin/djurbant-headless-visual-cms/assets/previews wp-plugin/djurbant-headless-visual-cms.zip
+          git commit -m "chore(cms): refresh visual CMS preview screenshots"
+          git push origin HEAD:main

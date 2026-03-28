@@ -2,7 +2,7 @@
 /*
 Plugin Name: DJ UrbanT Headless Visual CMS
 Description: Visual editor for DJ UrbanT site content with headless endpoint mapper at /wp-json/djurbant/v1/site-content.
-Version: 1.2.0
+Version: 1.4.0
 */
 
 if (!defined("ABSPATH")) {
@@ -440,6 +440,122 @@ function djurbant_hvc_render_section_header($title, $description = "") {
     }
 }
 
+function djurbant_hvc_get_preview_cards($main_app_base_url, $preview_asset_base) {
+    return [
+        "global" => [
+            "title" => "Global CTAs + Socials",
+            "description" => "Header CTA, footer social strip, and contact SLA copy.",
+            "url" => $main_app_base_url . "/index.html",
+            "image" => $preview_asset_base . "global-ctas-socials.png",
+        ],
+        "social" => [
+            "title" => "Social links",
+            "description" => "Footer social strip labels, URLs, and visibility.",
+            "url" => $main_app_base_url . "/index.html",
+            "image" => $preview_asset_base . "global-ctas-socials.png",
+        ],
+        "home" => [
+            "title" => "Home — Hero + Best of",
+            "description" => "Hero tagline and best-of section title/toggles.",
+            "url" => $main_app_base_url . "/index.html#best-of-artist",
+            "image" => $preview_asset_base . "home-hero-bestof.png",
+        ],
+        "video" => [
+            "title" => "Video page",
+            "description" => "Video page title, intro, top button, social visibility.",
+            "url" => $main_app_base_url . "/video.html",
+            "image" => $preview_asset_base . "video-page.png",
+        ],
+        "audio" => [
+            "title" => "Audio page",
+            "description" => "Audio page title, intro, top button, social visibility.",
+            "url" => $main_app_base_url . "/audio.html",
+            "image" => $preview_asset_base . "audio-page.png",
+        ],
+        "contact" => [
+            "title" => "Contact page",
+            "description" => "Contact title, intro, form action, button labels.",
+            "url" => $main_app_base_url . "/contact.html",
+            "image" => $preview_asset_base . "contact-page.png",
+        ],
+        "home_stats_booking" => [
+            "title" => "Home — Stats + Booking",
+            "description" => "Stats/booking visibility and booking CTA content.",
+            "url" => $main_app_base_url . "/index.html",
+            "image" => $preview_asset_base . "home-stats-booking.png",
+        ],
+    ];
+}
+
+function djurbant_hvc_get_preview_card_meta($card, $preview_dir) {
+    $image_url = is_array($card) ? strval($card["image"] ?? "") : "";
+    $image_file = $image_url !== "" ? basename($image_url) : "";
+    $image_path = $image_file !== "" ? $preview_dir . $image_file : "";
+    $exists = $image_path !== "" && file_exists($image_path);
+    $mtime = $exists ? intval(filemtime($image_path)) : 0;
+    return [
+        "exists" => $exists,
+        "mtime" => $mtime,
+        "label" => $mtime > 0 ? wp_date("Y-m-d H:i T", $mtime) : "n/a",
+    ];
+}
+
+function djurbant_hvc_render_section_with_preview_start($title, $description = "") {
+    ?>
+    <section class="djurbant-hvc-section">
+      <div class="djurbant-hvc-section-fields">
+        <h2 style="margin-top:0;"><?php echo esc_html($title); ?></h2>
+        <?php if ($description !== ""): ?>
+          <p style="max-width:920px;"><?php echo esc_html($description); ?></p>
+        <?php endif; ?>
+    <?php
+}
+
+function djurbant_hvc_render_section_with_preview_end($card, $preview_dir) {
+    $card_title = is_array($card) ? strval($card["title"] ?? "Section preview") : "Section preview";
+    $card_description = is_array($card) ? strval($card["description"] ?? "") : "";
+    $card_url = is_array($card) ? strval($card["url"] ?? "") : "";
+    $card_image = is_array($card) ? strval($card["image"] ?? "") : "";
+    $meta = djurbant_hvc_get_preview_card_meta($card, $preview_dir);
+    ?>
+      </div>
+      <aside class="djurbant-hvc-section-preview">
+        <h3><?php echo esc_html($card_title); ?></h3>
+        <?php if ($card_description !== ""): ?>
+          <p class="djurbant-hvc-section-preview-description"><?php echo esc_html($card_description); ?></p>
+        <?php endif; ?>
+        <div class="djurbant-hvc-section-preview-media">
+          <?php if ($meta["exists"]): ?>
+            <img
+              loading="lazy"
+              src="<?php echo esc_url($card_image); ?>"
+              alt="<?php echo esc_attr($card_title); ?> screenshot"
+            />
+          <?php else: ?>
+            <div class="djurbant-hvc-section-preview-fallback">
+              <p>Screenshot unavailable</p>
+              <span>Run the “Refresh CMS Preview Screens” workflow.</span>
+            </div>
+          <?php endif; ?>
+        </div>
+        <p class="djurbant-hvc-section-preview-meta">
+          <strong>Last screenshot refresh:</strong> <?php echo esc_html($meta["label"]); ?>
+        </p>
+        <?php if ($card_url !== ""): ?>
+          <p style="margin:0;">
+            <a
+              class="button button-secondary"
+              href="<?php echo esc_url($card_url); ?>"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Open live section</a>
+          </p>
+        <?php endif; ?>
+      </aside>
+    </section>
+    <?php
+}
+
 function djurbant_hvc_fetch_last_sync_run() {
     $cached = get_transient("djurbant_hvc_last_sync_run");
     if (is_array($cached) && isset($cached["statusLabel"])) {
@@ -582,44 +698,10 @@ function djurbant_hvc_admin_page() {
         ? wp_date("Y-m-d H:i T", $last_wp_save_ts)
         : "n/a";
     $preview_asset_base = plugins_url("assets/previews/", __FILE__);
-    $preview_cards = [
-        [
-            "title" => "Global CTAs + Socials",
-            "description" => "Header CTA, footer social strip, and contact SLA copy.",
-            "url" => $main_app_base_url . "/index.html",
-            "image" => $preview_asset_base . "global-ctas-socials.png",
-        ],
-        [
-            "title" => "Home — Hero + Best of",
-            "description" => "Hero tagline and best-of section title/toggles.",
-            "url" => $main_app_base_url . "/index.html#best-of-artist",
-            "image" => $preview_asset_base . "home-hero-bestof.png",
-        ],
-        [
-            "title" => "Home — Stats + Booking",
-            "description" => "Stats/booking visibility and booking CTA content.",
-            "url" => $main_app_base_url . "/index.html",
-            "image" => $preview_asset_base . "home-stats-booking.png",
-        ],
-        [
-            "title" => "Video page",
-            "description" => "Video page title, intro, top button, social visibility.",
-            "url" => $main_app_base_url . "/video.html",
-            "image" => $preview_asset_base . "video-page.png",
-        ],
-        [
-            "title" => "Audio page",
-            "description" => "Audio page title, intro, top button, social visibility.",
-            "url" => $main_app_base_url . "/audio.html",
-            "image" => $preview_asset_base . "audio-page.png",
-        ],
-        [
-            "title" => "Contact page",
-            "description" => "Contact title, intro, form action, button labels.",
-            "url" => $main_app_base_url . "/contact.html",
-            "image" => $preview_asset_base . "contact-page.png",
-        ],
-    ];
+    $preview_cards = djurbant_hvc_get_preview_cards(
+        $main_app_base_url,
+        $preview_asset_base
+    );
     $preview_dir = plugin_dir_path(__FILE__) . "assets/previews/";
     $latest_preview_mtime = 0;
     foreach ($preview_cards as $card) {
@@ -697,10 +779,104 @@ function djurbant_hvc_admin_page() {
           <?php endforeach; ?>
         </div>
       </section>
+      <style>
+        .djurbant-hvc-section {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) 320px;
+          gap: 16px;
+          margin: 18px 0;
+          border: 1px solid #ccd0d4;
+          border-radius: 8px;
+          background: #fff;
+          padding: 12px;
+        }
+
+        .djurbant-hvc-section h2 {
+          margin-top: 0;
+        }
+
+        .djurbant-hvc-section-fields .form-table {
+          margin-top: 8px;
+        }
+
+        .djurbant-hvc-section-preview {
+          border-left: 1px solid #e5e5e5;
+          padding-left: 12px;
+        }
+
+        .djurbant-hvc-section-preview h3 {
+          margin: 0 0 6px;
+          font-size: 13px;
+        }
+
+        .djurbant-hvc-section-preview-description {
+          margin: 0 0 8px;
+          color: #50575e;
+          font-size: 12px;
+          line-height: 1.4;
+        }
+
+        .djurbant-hvc-section-preview-media {
+          height: 160px;
+          border: 1px solid #ccd0d4;
+          border-radius: 6px;
+          overflow: hidden;
+          background: #111;
+          margin-bottom: 8px;
+        }
+
+        .djurbant-hvc-section-preview-media img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .djurbant-hvc-section-preview-fallback {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          padding: 8px;
+          text-align: center;
+          color: #dcdcde;
+          background: linear-gradient(140deg, #2c3338, #1d2327);
+        }
+
+        .djurbant-hvc-section-preview-fallback p {
+          margin: 0 0 4px;
+          font-weight: 600;
+        }
+
+        .djurbant-hvc-section-preview-fallback span {
+          font-size: 11px;
+          opacity: 0.9;
+        }
+
+        .djurbant-hvc-section-preview-meta {
+          margin: 0 0 8px;
+          font-size: 12px;
+          color: #50575e;
+        }
+
+        @media (max-width: 1100px) {
+          .djurbant-hvc-section {
+            grid-template-columns: 1fr;
+          }
+
+          .djurbant-hvc-section-preview {
+            border-left: 0;
+            border-top: 1px solid #e5e5e5;
+            padding-left: 0;
+            padding-top: 12px;
+          }
+        }
+      </style>
       <form method="post" action="options.php">
         <?php settings_fields("djurbant_hvc_group"); ?>
 
-        <?php djurbant_hvc_render_section_header("Global", "Shared content used across Layer 1 pages."); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("Global", "Shared content used across Layer 1 pages."); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr>
@@ -717,8 +893,9 @@ function djurbant_hvc_admin_page() {
             </tr>
           </tbody>
         </table>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["global"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_header("Social links", "Edit each network URL, label, open-in-new-tab behavior, and visibility."); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("Social links", "Edit each network URL, label, open-in-new-tab behavior, and visibility."); ?>
         <?php foreach (djurbant_hvc_get_path($options, "global.socialLinks", []) as $network_key => $network): ?>
           <h3 style="margin-top:20px;"><?php echo esc_html(ucfirst($network_key)); ?></h3>
           <table class="form-table" role="presentation">
@@ -742,8 +919,9 @@ function djurbant_hvc_admin_page() {
             </tbody>
           </table>
         <?php endforeach; ?>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["social"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_header("Home page"); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("Home page"); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr><th scope="row">Hero tagline</th><td><?php djurbant_hvc_render_text_input("pages.home.hero.tagline", djurbant_hvc_get_path($options, "pages.home.hero.tagline", "")); ?></td></tr>
@@ -756,8 +934,9 @@ function djurbant_hvc_admin_page() {
             <tr><th scope="row">Booking button URL</th><td><?php djurbant_hvc_render_text_input("pages.home.bookingBand.buttonUrl", djurbant_hvc_get_path($options, "pages.home.bookingBand.buttonUrl", ""), "text", "./contact.html"); ?></td></tr>
           </tbody>
         </table>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["home"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_header("Video page"); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("Video page"); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr><th scope="row">Title</th><td><?php djurbant_hvc_render_text_input("pages.video.title", djurbant_hvc_get_path($options, "pages.video.title", "")); ?></td></tr>
@@ -767,8 +946,9 @@ function djurbant_hvc_admin_page() {
             <tr><th scope="row">Show social strip</th><td><?php djurbant_hvc_render_checkbox("pages.video.sections.showSocialStrip", djurbant_hvc_get_path($options, "pages.video.sections.showSocialStrip", true)); ?></td></tr>
           </tbody>
         </table>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["video"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_header("Audio page"); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("Audio page"); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr><th scope="row">Title</th><td><?php djurbant_hvc_render_text_input("pages.audio.title", djurbant_hvc_get_path($options, "pages.audio.title", "")); ?></td></tr>
@@ -778,8 +958,9 @@ function djurbant_hvc_admin_page() {
             <tr><th scope="row">Show social strip</th><td><?php djurbant_hvc_render_checkbox("pages.audio.sections.showSocialStrip", djurbant_hvc_get_path($options, "pages.audio.sections.showSocialStrip", true)); ?></td></tr>
           </tbody>
         </table>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["audio"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_header("Contact page"); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("Contact page"); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr><th scope="row">Title</th><td><?php djurbant_hvc_render_text_input("pages.contact.title", djurbant_hvc_get_path($options, "pages.contact.title", "")); ?></td></tr>
@@ -790,6 +971,7 @@ function djurbant_hvc_admin_page() {
             <tr><th scope="row">Show social strip</th><td><?php djurbant_hvc_render_checkbox("pages.contact.sections.showSocialStrip", djurbant_hvc_get_path($options, "pages.contact.sections.showSocialStrip", true)); ?></td></tr>
           </tbody>
         </table>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["contact"], $preview_dir); ?>
 
         <?php submit_button("Save Content"); ?>
       </form>
@@ -798,6 +980,7 @@ function djurbant_hvc_admin_page() {
       <p>This preview mirrors what the headless endpoint returns to your sync workflow.</p>
       <pre style="max-height:420px;overflow:auto;background:#fff;border:1px solid #ccd0d4;padding:12px;"><?php echo esc_html(wp_json_encode($preview_payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)); ?></pre>
       <p><strong>Endpoint:</strong> <code><?php echo esc_html(rest_url("djurbant/v1/site-content")); ?></code></p>
+      <p><strong>WP route:</strong> <code>/visual-cms</code> (short URL redirect)</p>
     </div>
     <?php
 }

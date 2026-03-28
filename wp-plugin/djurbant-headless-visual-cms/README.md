@@ -29,7 +29,7 @@ keeps the same headless endpoint used by the main app sync pipeline:
 After plugin activation, editors can use these cleaner URLs:
 
 - Main app hub: `/cms` (e.g. `https://djurbant.com/cms/`)
-- Main app short launch page: `/cms/visual-cms.html`
+- Main app short launch page: `/cms/visual.html`
 - WP app short launch route: `/visual-cms` (redirects to WP admin plugin page)
 
 Notes:
@@ -195,5 +195,5 @@ The plugin endpoint returns:
   2. Run **Sync Site Content from WordPress**.
   3. Verify `/site-content.json` and live pages.
 - Friendly editor URLs:
-  - Main app launcher: `/cms/visual-cms.html`
+  - Main app launcher: `/cms/visual.html`
   - WP app short route: `/visual-cms` (falls back to direct path check even if rewrite rules are stale)

@@ -443,10 +443,76 @@ function djurbant_hvc_admin_page() {
     }
     $options = djurbant_hvc_get_options();
     $preview_payload = djurbant_hvc_build_endpoint_payload($options);
+    $main_app_base_url = rtrim(
+        strval(
+            apply_filters(
+                "djurbant_hvc_preview_base_url",
+                "https://wordpress-1344959-6296666.cloudwaysapps.com"
+            )
+        ),
+        "/"
+    );
+    $preview_cards = [
+        [
+            "title" => "Global CTAs + Socials",
+            "description" => "Header CTA, footer social strip, and contact SLA copy.",
+            "url" => $main_app_base_url . "/index.html",
+        ],
+        [
+            "title" => "Home — Hero + Best of",
+            "description" => "Hero tagline and best-of section title/toggles.",
+            "url" => $main_app_base_url . "/index.html#best-of-artist",
+        ],
+        [
+            "title" => "Home — Stats + Booking",
+            "description" => "Stats/booking visibility and booking CTA content.",
+            "url" => $main_app_base_url . "/index.html",
+        ],
+        [
+            "title" => "Video page",
+            "description" => "Video page title, intro, top button, social visibility.",
+            "url" => $main_app_base_url . "/video.html",
+        ],
+        [
+            "title" => "Audio page",
+            "description" => "Audio page title, intro, top button, social visibility.",
+            "url" => $main_app_base_url . "/audio.html",
+        ],
+        [
+            "title" => "Contact page",
+            "description" => "Contact title, intro, form action, button labels.",
+            "url" => $main_app_base_url . "/contact.html",
+        ],
+    ];
     ?>
     <div class="wrap">
       <h1>DJ UrbanT — Visual Site Content CMS</h1>
       <p>Use this form-based editor for content and links. It powers <code>/wp-json/djurbant/v1/site-content</code>.</p>
+      <section style="margin: 16px 0 22px;">
+        <h2 style="margin: 0 0 8px;">Live section previews (main app)</h2>
+        <p style="max-width: 980px; margin: 0 0 12px;">
+          These previews help you map each CMS section to the live site area before saving.
+        </p>
+        <div style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+          <?php foreach ($preview_cards as $card): ?>
+            <article style="border:1px solid #ccd0d4;border-radius:8px;background:#fff;padding:10px;">
+              <h3 style="margin:0 0 6px;font-size:14px;"><?php echo esc_html($card["title"]); ?></h3>
+              <p style="margin:0 0 8px;color:#50575e;"><?php echo esc_html($card["description"]); ?></p>
+              <div style="height:150px;border:1px solid #ccd0d4;border-radius:6px;overflow:hidden;background:#111;">
+                <iframe
+                  loading="lazy"
+                  src="<?php echo esc_url($card["url"]); ?>"
+                  title="<?php echo esc_attr($card["title"]); ?>"
+                  style="width:1280px;height:720px;border:0;transform:scale(0.21);transform-origin:top left;"
+                ></iframe>
+              </div>
+              <p style="margin:8px 0 0;">
+                <a class="button button-secondary" href="<?php echo esc_url($card["url"]); ?>" target="_blank" rel="noopener noreferrer">Open live section</a>
+              </p>
+            </article>
+          <?php endforeach; ?>
+        </div>
+      </section>
       <form method="post" action="options.php">
         <?php settings_fields("djurbant_hvc_group"); ?>
 

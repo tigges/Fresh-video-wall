@@ -24,6 +24,21 @@ keeps the same headless endpoint used by the main app sync pipeline:
 3. WP Admin -> Plugins -> activate **DJ UrbanT Headless Visual CMS**
 4. WP Admin -> **Site Content CMS** to edit forms/toggles.
 
+## Friendly editor URLs
+
+After plugin activation, editors can use these cleaner URLs:
+
+- Main app hub: `/cms` (e.g. `https://djurbant.com/cms/`)
+- Main app short launch page: `/cms/visual-cms.html`
+- WP app short launch route: `/visual-cms` (redirects to WP admin plugin page)
+
+Notes:
+
+- The WP short route works on the CMS app domain (for example
+  `https://wordpress-1344959-6311701.cloudwaysapps.com/visual-cms`).
+- If your custom DNS (e.g. `cms.djurbant.com`) is not configured yet, use the
+  Cloudways app URL directly for the same short route.
+
 ## Field map (visual editor -> endpoint)
 
 ### Global

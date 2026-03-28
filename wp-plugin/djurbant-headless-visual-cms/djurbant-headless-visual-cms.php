@@ -2,7 +2,7 @@
 /*
 Plugin Name: DJ UrbanT Headless Visual CMS
 Description: Visual editor for DJ UrbanT site content with headless endpoint mapper at /wp-json/djurbant/v1/site-content.
-Version: 1.1.0
+Version: 1.2.0
 */
 
 if (!defined("ABSPATH")) {
@@ -830,3 +830,35 @@ function djurbant_hvc_register_rest_route() {
     );
 }
 add_action("rest_api_init", "djurbant_hvc_register_rest_route");
+
+function djurbant_hvc_add_visual_cms_rewrite_rule() {
+    add_rewrite_rule("^visual-cms/?$", "index.php?djurbant_hvc_visual_cms=1", "top");
+}
+add_action("init", "djurbant_hvc_add_visual_cms_rewrite_rule");
+
+function djurbant_hvc_register_visual_cms_query_var($vars) {
+    $vars[] = "djurbant_hvc_visual_cms";
+    return $vars;
+}
+add_filter("query_vars", "djurbant_hvc_register_visual_cms_query_var");
+
+function djurbant_hvc_visual_cms_template_redirect() {
+    if (intval(get_query_var("djurbant_hvc_visual_cms", 0)) !== 1) {
+        return;
+    }
+    $target = admin_url("admin.php?page=djurbant-headless-visual-cms");
+    wp_safe_redirect($target, 302);
+    exit;
+}
+add_action("template_redirect", "djurbant_hvc_visual_cms_template_redirect");
+
+function djurbant_hvc_activate_plugin() {
+    djurbant_hvc_add_visual_cms_rewrite_rule();
+    flush_rewrite_rules();
+}
+register_activation_hook(__FILE__, "djurbant_hvc_activate_plugin");
+
+function djurbant_hvc_deactivate_plugin() {
+    flush_rewrite_rules();
+}
+register_deactivation_hook(__FILE__, "djurbant_hvc_deactivate_plugin");

@@ -68,6 +68,46 @@
         background: rgba(255, 255, 255, 0.03);
       }
 
+      .ownership {
+        margin-top: 1rem;
+      }
+
+      .ownership-grid {
+        display: grid;
+        gap: 0.85rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .ownership-card {
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 10px;
+        padding: 0.8rem;
+        background: rgba(255, 255, 255, 0.025);
+      }
+
+      .ownership-card h2 {
+        margin: 0 0 0.45rem;
+        font-size: 0.98rem;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+
+      .ownership-card ul {
+        margin: 0;
+        padding-left: 1rem;
+      }
+
+      .ownership-card li {
+        margin: 0.24rem 0;
+        color: rgba(245, 240, 232, 0.84);
+      }
+
+      .ownership-note {
+        margin: 0.8rem 0 0;
+        font-size: 0.82rem;
+        color: rgba(245, 240, 232, 0.64);
+      }
+
       pre {
         margin: 0;
         overflow: auto;
@@ -76,6 +116,12 @@
         font-size: 0.8rem;
         line-height: 1.45;
         color: #d9e5ff;
+      }
+
+      @media (max-width: 840px) {
+        .ownership-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -95,6 +141,35 @@
       </div>
       <section class="panel" aria-label="CMS content preview">
         <pre id="cms-json-preview">Loading /site-content.json …</pre>
+      </section>
+      <section class="panel ownership" aria-label="Content ownership guide">
+        <h2 style="margin: 0 0 0.55rem; font-size: 1rem; letter-spacing: 0.03em; text-transform: uppercase">
+          What to edit where
+        </h2>
+        <div class="ownership-grid">
+          <article class="ownership-card">
+            <h2>CMS App (WordPress)</h2>
+            <ul>
+              <li>Hero tagline and marketing copy</li>
+              <li>Section titles and CTA labels/URLs</li>
+              <li>Social media links and on/off status</li>
+              <li>Contact page intro text and form action target</li>
+            </ul>
+          </article>
+          <article class="ownership-card">
+            <h2>Main App (Code Repo)</h2>
+            <ul>
+              <li>Layout, styling, spacing, and button component design</li>
+              <li>Media feed rendering and playback behavior</li>
+              <li>Automation workflows and deployment logic</li>
+              <li>Page structure and new feature modules</li>
+            </ul>
+          </article>
+        </div>
+        <p class="ownership-note">
+          Rule of thumb: if it is text/link content, edit in CMS app; if it changes behavior or design, edit in
+          the main app codebase.
+        </p>
       </section>
     </main>
     <script>

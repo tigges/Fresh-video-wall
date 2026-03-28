@@ -325,7 +325,8 @@
     <main class="map-wrap">
       <h1>DJ UrbanT — Map</h1>
       <p class="lead">
-        Scoped map for Rainbow Cut. Layer 1 pages are open for work; Layer 2 pages are locked.
+        Scoped map for Rainbow Cut + CMS operations. Layer 1 pages are open; Map and CMS routes are open;
+        Admin remains locked.
       </p>
 
       <h2 class="section-title">Layer 1 — Key Pages</h2>
@@ -373,13 +374,13 @@
 
       <div class="connector"><div class="line"></div></div>
 
-      <h2 class="section-title">Layer 2 — Admin</h2>
+      <h2 class="section-title">Layer 2 — Admin + CMS</h2>
       <section class="map-grid">
-        <div class="map-grid row-2">
+        <div class="map-grid row-3">
           <article class="map-card">
             <h3>
               Map
-              <span class="status status-locked"><span class="status-icon" aria-hidden="true"></span>Locked</span>
+              <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
             </h3>
             <p>
               <a href="./map.html">/map.html</a><br />
@@ -402,10 +403,84 @@
               <iframe loading="lazy" src="./admin.html" title="Admin page preview"></iframe>
             </a>
           </article>
+          <article class="map-card">
+            <h3>
+              CMS Hub
+              <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+            </h3>
+            <p>
+              <a href="./cms/">/cms/</a><br />
+              Main app content management hub.
+            </p>
+            <a class="map-thumb" href="./cms/" aria-label="Preview CMS hub page">
+              <iframe loading="lazy" src="./cms/" title="CMS hub preview"></iframe>
+            </a>
+          </article>
         </div>
       </section>
 
-      <h2 class="section-title">All HTML Pages (Rainbow Cut Scope)</h2>
+      <h2 class="section-title">CMS Tools + Visual Screens</h2>
+      <section class="map-grid">
+        <div class="map-grid row-3">
+          <article class="map-card">
+            <h3>
+              Visual Launcher (Main App)
+              <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+            </h3>
+            <p>
+              <a href="./cms/visual.html">/cms/visual.html</a><br />
+              Friendly launcher to open WP Visual CMS.
+            </p>
+            <a class="map-thumb map-thumb-placeholder" href="./cms/visual.html" aria-label="Open visual launcher">
+              <span>Launcher screen</span>
+            </a>
+          </article>
+          <article class="map-card">
+            <h3>
+              WP Visual CMS (Direct)
+              <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+            </h3>
+            <p>
+              <a href="https://wordpress-1344959-6311701.cloudwaysapps.com/wp-admin/admin.php?page=djurbant-headless-visual-cms" target="_blank" rel="noopener noreferrer"
+                >WP admin visual CMS page</a
+              ><br />
+              Canonical direct editor URL.
+            </p>
+            <a
+              class="map-thumb map-thumb-placeholder"
+              href="https://wordpress-1344959-6311701.cloudwaysapps.com/wp-admin/admin.php?page=djurbant-headless-visual-cms"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open WP Visual CMS direct page"
+            >
+              <span>External WP screen</span>
+            </a>
+          </article>
+          <article class="map-card">
+            <h3>
+              WP Visual CMS (Short)
+              <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+            </h3>
+            <p>
+              <a href="https://wordpress-1344959-6311701.cloudwaysapps.com/visual-cms" target="_blank" rel="noopener noreferrer"
+                >/visual-cms short route</a
+              ><br />
+              WP-side friendly route to visual editor.
+            </p>
+            <a
+              class="map-thumb map-thumb-placeholder"
+              href="https://wordpress-1344959-6311701.cloudwaysapps.com/visual-cms"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open WP short visual CMS route"
+            >
+              <span>External WP route</span>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <h2 class="section-title">All Routes (App + CMS)</h2>
       <section class="map-grid">
         <ul class="all-pages">
           <li>
@@ -426,15 +501,29 @@
           </li>
           <li>
             <code>/map.html</code>
-            <span class="status status-locked"
-              ><span class="status-icon" aria-hidden="true"></span>Locked</span
-            >
+            <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
           </li>
           <li>
             <code>/admin.html</code>
             <span class="status status-locked"
               ><span class="status-icon" aria-hidden="true"></span>Locked</span
             >
+          </li>
+          <li>
+            <code>/cms/</code>
+            <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+          </li>
+          <li>
+            <code>/cms/visual.html</code>
+            <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+          </li>
+          <li>
+            <code>WP /visual-cms</code>
+            <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
+          </li>
+          <li>
+            <code>WP admin Visual CMS</code>
+            <span class="status status-open"><span class="status-icon" aria-hidden="true"></span>Open</span>
           </li>
         </ul>
       </section>
@@ -526,7 +615,7 @@
       </section>
 
       <p class="note">
-        Lock rule: Layer 2 is frozen. New changes are limited to Layer 1 pages unless explicitly unlocked.
+        Lock rule update: <code>map.html</code> is now open for updates. <code>admin.html</code> remains locked.
       </p>
     </main>
   </body>

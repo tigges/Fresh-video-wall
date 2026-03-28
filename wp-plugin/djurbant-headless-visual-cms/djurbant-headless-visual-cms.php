@@ -843,7 +843,15 @@ function djurbant_hvc_register_visual_cms_query_var($vars) {
 add_filter("query_vars", "djurbant_hvc_register_visual_cms_query_var");
 
 function djurbant_hvc_visual_cms_template_redirect() {
-    if (intval(get_query_var("djurbant_hvc_visual_cms", 0)) !== 1) {
+    $request_path = trim(
+        strval(
+            wp_parse_url($_SERVER["REQUEST_URI"] ?? "", PHP_URL_PATH)
+        ),
+        "/"
+    );
+    $is_pretty_path = strtolower($request_path) === "visual-cms";
+    $is_query_var_path = intval(get_query_var("djurbant_hvc_visual_cms", 0)) === 1;
+    if (!$is_pretty_path && !$is_query_var_path) {
         return;
     }
     $target = admin_url("admin.php?page=djurbant-headless-visual-cms");

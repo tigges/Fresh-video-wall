@@ -194,3 +194,6 @@ The plugin endpoint returns:
   1. Save edits in WP visual CMS.
   2. Run **Sync Site Content from WordPress**.
   3. Verify `/site-content.json` and live pages.
+- Friendly editor URLs:
+  - Main app launcher: `/cms/visual-cms.html`
+  - WP app short route: `/visual-cms` (falls back to direct path check even if rewrite rules are stale)

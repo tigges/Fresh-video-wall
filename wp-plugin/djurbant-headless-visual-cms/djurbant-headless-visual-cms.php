@@ -491,6 +491,21 @@ function djurbant_hvc_admin_page() {
             "image" => $preview_asset_base . "contact-page.png",
         ],
     ];
+    $preview_dir = plugin_dir_path(__FILE__) . "assets/previews/";
+    $latest_preview_mtime = 0;
+    foreach ($preview_cards as $card) {
+        $image_file = basename(strval($card["image"]));
+        $image_path = $preview_dir . $image_file;
+        if (file_exists($image_path)) {
+            $mtime = intval(filemtime($image_path));
+            if ($mtime > $latest_preview_mtime) {
+                $latest_preview_mtime = $mtime;
+            }
+        }
+    }
+    $latest_preview_label = $latest_preview_mtime > 0
+        ? wp_date("Y-m-d H:i T", $latest_preview_mtime)
+        : "n/a";
     ?>
     <div class="wrap">
       <h1>DJ UrbanT — Visual Site Content CMS</h1>
@@ -499,6 +514,9 @@ function djurbant_hvc_admin_page() {
         <h2 style="margin: 0 0 8px;">Live section previews (main app)</h2>
         <p style="max-width: 980px; margin: 0 0 12px;">
           These previews help you map each CMS section to the live site area before saving.
+        </p>
+        <p style="margin: 0 0 10px; color: #50575e;">
+          <strong>Last screenshot refresh:</strong> <?php echo esc_html($latest_preview_label); ?>
         </p>
         <div style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
           <?php foreach ($preview_cards as $card): ?>

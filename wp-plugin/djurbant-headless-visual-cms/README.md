@@ -90,7 +90,7 @@ Notes:
 - Submit button label -> `pages.contact.submitButtonLabel`
 - Show social strip -> `pages.contact.sections.showSocialStrip`
 
-## Live preview cards (Phase 1)
+## Live preview cards (Overview)
 
 At the top of the WP visual CMS screen, the plugin renders live preview cards with
 embedded mini-screens and direct links:
@@ -101,6 +101,27 @@ embedded mini-screens and direct links:
 - Video page
 - Audio page
 - Contact page
+
+## Inline section previews (Phase 1)
+
+Each editable section now uses a reusable **two-column wrapper** inside WP admin:
+
+- Left column: editable fields
+- Right column: latest screenshot preview + open-live link + per-section timestamp
+
+Sections covered inline:
+
+- Global
+- Social links
+- Home page
+- Video page
+- Audio page
+- Contact page
+
+Fallback behavior:
+
+- If a screenshot file is missing, the preview column shows a lightweight fallback
+  card with guidance to run the screenshot refresh workflow.
 
 The preview base URL is configurable via:
 

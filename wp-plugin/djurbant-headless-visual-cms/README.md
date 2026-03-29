@@ -128,7 +128,7 @@ Fallback behavior:
 The visual editor now uses a section-builder interaction model on top of inline
 previews:
 
-- Collapsible modules (6 blocks) with numbered headers
+- Collapsible modules (separate section clusters) with numbered headers
 - Per-module status badge:
   - `Live`
   - `Warning`
@@ -143,6 +143,18 @@ Validation behavior:
 - Required fields are highlighted and counted as `Error` when empty
 - Recommended fields are highlighted and counted as `Warning` when empty
 - URL/path fields are validated (`http(s)`, `mailto:`, `/`, `./`, `../`, `#`)
+
+Current module clusters:
+
+- Navigation
+- Hero
+- Best-of carousel
+- Video page
+- Audio page
+- Stats strip
+- Booking CTA banner
+- Footer (including social banner controls)
+- Contact page
 
 Preset behavior:
 

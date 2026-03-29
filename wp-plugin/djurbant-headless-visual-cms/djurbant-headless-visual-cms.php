@@ -2,7 +2,7 @@
 /*
 Plugin Name: DJ UrbanT Headless Visual CMS
 Description: Visual editor for DJ UrbanT site content with headless endpoint mapper at /wp-json/djurbant/v1/site-content.
-Version: 1.4.0
+Version: 1.5.0
 */
 
 if (!defined("ABSPATH")) {
@@ -365,11 +365,28 @@ function djurbant_hvc_field_id($path) {
 }
 
 function djurbant_hvc_field_meta($path) {
-    $module = "global";
+    $module = "navigation";
     if (strpos($path, "global.socialLinks.") === 0) {
-        $module = "social";
-    } elseif (strpos($path, "pages.home.") === 0) {
-        $module = "home";
+        $module = "footer";
+    } elseif (strpos($path, "pages.home.hero.") === 0) {
+        $module = "hero";
+    } elseif (strpos($path, "pages.home.bestOf.") === 0) {
+        $module = "bestof";
+    } elseif (strpos($path, "pages.home.sections.showStatsBand") === 0) {
+        $module = "stats";
+    } elseif (
+        strpos($path, "pages.home.sections.showBookingBand") === 0 ||
+        strpos($path, "pages.home.bookingBand.") === 0
+    ) {
+        $module = "booking";
+    } elseif (
+        strpos($path, "global.meta.replySlaText") === 0 ||
+        strpos($path, "pages.home.sections.showSocialStrip") === 0 ||
+        strpos($path, "pages.video.sections.showSocialStrip") === 0 ||
+        strpos($path, "pages.audio.sections.showSocialStrip") === 0 ||
+        strpos($path, "pages.contact.sections.showSocialStrip") === 0
+    ) {
+        $module = "footer";
     } elseif (strpos($path, "pages.video.") === 0) {
         $module = "video";
     } elseif (strpos($path, "pages.audio.") === 0) {
@@ -525,47 +542,59 @@ function djurbant_hvc_render_section_header($title, $description = "") {
 
 function djurbant_hvc_get_preview_cards($main_app_base_url, $preview_asset_base) {
     return [
-        "global" => [
-            "title" => "Global CTAs + Socials",
-            "description" => "Header CTA, footer social strip, and contact SLA copy.",
+        "navigation" => [
+            "title" => "Navigation",
+            "description" => "Primary CTA and nav-level controls.",
             "url" => $main_app_base_url . "/index.html",
             "image" => $preview_asset_base . "global-ctas-socials.png",
         ],
-        "social" => [
-            "title" => "Social links",
-            "description" => "Footer social strip labels, URLs, and visibility.",
+        "hero" => [
+            "title" => "Hero section",
+            "description" => "Main headline/subline and hero area copy.",
             "url" => $main_app_base_url . "/index.html",
-            "image" => $preview_asset_base . "global-ctas-socials.png",
+            "image" => $preview_asset_base . "home-hero-bestof.png",
         ],
-        "home" => [
-            "title" => "Home — Hero + Best of",
-            "description" => "Hero tagline and best-of section title/toggles.",
+        "bestof" => [
+            "title" => "Best-of carousel",
+            "description" => "Best-of heading and homepage media rail copy.",
             "url" => $main_app_base_url . "/index.html#best-of-artist",
             "image" => $preview_asset_base . "home-hero-bestof.png",
         ],
         "video" => [
             "title" => "Video page",
-            "description" => "Video page title, intro, top button, social visibility.",
+            "description" => "Video page title, intro, and Top Video button.",
             "url" => $main_app_base_url . "/video.html",
             "image" => $preview_asset_base . "video-page.png",
         ],
         "audio" => [
             "title" => "Audio page",
-            "description" => "Audio page title, intro, top button, social visibility.",
+            "description" => "Audio page title, intro, and Top Audio button.",
             "url" => $main_app_base_url . "/audio.html",
             "image" => $preview_asset_base . "audio-page.png",
         ],
-        "contact" => [
-            "title" => "Contact page",
-            "description" => "Contact title, intro, form action, button labels.",
-            "url" => $main_app_base_url . "/contact.html",
-            "image" => $preview_asset_base . "contact-page.png",
-        ],
-        "home_stats_booking" => [
-            "title" => "Home — Stats + Booking",
-            "description" => "Stats/booking visibility and booking CTA content.",
+        "stats" => [
+            "title" => "Stats strip",
+            "description" => "Stats band visibility and supporting copy.",
             "url" => $main_app_base_url . "/index.html",
             "image" => $preview_asset_base . "home-stats-booking.png",
+        ],
+        "booking" => [
+            "title" => "Booking CTA banner",
+            "description" => "Booking CTA title, label, and destination.",
+            "url" => $main_app_base_url . "/index.html",
+            "image" => $preview_asset_base . "home-stats-booking.png",
+        ],
+        "footer" => [
+            "title" => "Footer + social banner",
+            "description" => "Social links and shared footer-level settings.",
+            "url" => $main_app_base_url . "/index.html",
+            "image" => $preview_asset_base . "global-ctas-socials.png",
+        ],
+        "contact" => [
+            "title" => "Contact page",
+            "description" => "Contact copy and form labels/actions.",
+            "url" => $main_app_base_url . "/contact.html",
+            "image" => $preview_asset_base . "contact-page.png",
         ],
     ];
 }
@@ -586,30 +615,45 @@ function djurbant_hvc_get_preview_card_meta($card, $preview_dir) {
 function djurbant_hvc_get_module_presets($module_key) {
     $module_key = strtolower(trim(strval($module_key)));
     $presets = [
-        "global" => [
+        "navigation" => [
             ["value" => "", "label" => "No preset"],
-            ["value" => "global_default", "label" => "Default CTA + reply"],
+            ["value" => "navigation_default", "label" => "Default nav CTA"],
         ],
-        "social" => [
+        "hero" => [
             ["value" => "", "label" => "No preset"],
-            ["value" => "social_enable_all", "label" => "Enable all socials"],
-            ["value" => "social_disable_all", "label" => "Disable all socials"],
+            ["value" => "hero_default", "label" => "Hero baseline"],
         ],
-        "home" => [
+        "bestof" => [
             ["value" => "", "label" => "No preset"],
-            ["value" => "home_rainbow_default", "label" => "Rainbow home baseline"],
+            ["value" => "bestof_default", "label" => "Best-of baseline"],
         ],
         "video" => [
             ["value" => "", "label" => "No preset"],
-            ["value" => "video_default", "label" => "Video ranked baseline"],
+            ["value" => "video_default", "label" => "Video page baseline"],
         ],
         "audio" => [
             ["value" => "", "label" => "No preset"],
-            ["value" => "audio_default", "label" => "Audio ranked baseline"],
+            ["value" => "audio_default", "label" => "Audio page baseline"],
+        ],
+        "stats" => [
+            ["value" => "", "label" => "No preset"],
+            ["value" => "stats_on", "label" => "Show stats strip"],
+            ["value" => "stats_off", "label" => "Hide stats strip"],
+        ],
+        "booking" => [
+            ["value" => "", "label" => "No preset"],
+            ["value" => "booking_on", "label" => "Show booking banner"],
+            ["value" => "booking_off", "label" => "Hide booking banner"],
+        ],
+        "footer" => [
+            ["value" => "", "label" => "No preset"],
+            ["value" => "footer_social_enable_all", "label" => "Enable all socials"],
+            ["value" => "footer_social_disable_all", "label" => "Disable all socials"],
+            ["value" => "footer_default", "label" => "Footer baseline"],
         ],
         "contact" => [
             ["value" => "", "label" => "No preset"],
-            ["value" => "contact_default", "label" => "Contact booking baseline"],
+            ["value" => "contact_default", "label" => "Contact page baseline"],
         ],
     ];
     return $presets[$module_key] ?? [["value" => "", "label" => "No preset"]];
@@ -1207,7 +1251,7 @@ function djurbant_hvc_admin_page() {
           </div>
         </div>
 
-        <?php djurbant_hvc_render_section_with_preview_start("global", 1, "Navigation", "Shared nav CTA defaults and global response copy."); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("navigation", 1, "Navigation", "Shared nav CTA defaults."); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr>
@@ -1218,80 +1262,86 @@ function djurbant_hvc_admin_page() {
               <th scope="row"><label for="<?php echo esc_attr(djurbant_hvc_field_id("global.ctaDefaults.bookUrl")); ?>">Book button URL</label></th>
               <td><?php djurbant_hvc_render_text_input("global.ctaDefaults.bookUrl", djurbant_hvc_get_path($options, "global.ctaDefaults.bookUrl", ""), "text", "./contact.html"); ?></td>
             </tr>
-            <tr>
-              <th scope="row"><label for="<?php echo esc_attr(djurbant_hvc_field_id("global.meta.replySlaText")); ?>">Reply SLA text</label></th>
-              <td><?php djurbant_hvc_render_text_input("global.meta.replySlaText", djurbant_hvc_get_path($options, "global.meta.replySlaText", "")); ?></td>
-            </tr>
           </tbody>
         </table>
-        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["global"], $preview_dir); ?>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["navigation"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_with_preview_start("social", 2, "Hero + Social presence", "Hero-level social visibility and external network links."); ?>
-        <?php foreach (djurbant_hvc_get_path($options, "global.socialLinks", []) as $network_key => $network): ?>
-          <h3 style="margin-top:20px;"><?php echo esc_html(ucfirst($network_key)); ?></h3>
-          <table class="form-table" role="presentation">
-            <tbody>
-              <tr>
-                <th scope="row">Label</th>
-                <td><?php djurbant_hvc_render_text_input("global.socialLinks.{$network_key}.label", djurbant_hvc_get_path($options, "global.socialLinks.{$network_key}.label", "")); ?></td>
-              </tr>
-              <tr>
-                <th scope="row">URL</th>
-                <td><?php djurbant_hvc_render_text_input("global.socialLinks.{$network_key}.url", djurbant_hvc_get_path($options, "global.socialLinks.{$network_key}.url", ""), "text", "https://"); ?></td>
-              </tr>
-              <tr>
-                <th scope="row">Open in new tab</th>
-                <td><?php djurbant_hvc_render_checkbox("global.socialLinks.{$network_key}.openInNewTab", djurbant_hvc_get_path($options, "global.socialLinks.{$network_key}.openInNewTab", true)); ?></td>
-              </tr>
-              <tr>
-                <th scope="row">Visible</th>
-                <td><?php djurbant_hvc_render_checkbox("global.socialLinks.{$network_key}.enabled", djurbant_hvc_get_path($options, "global.socialLinks.{$network_key}.enabled", true)); ?></td>
-              </tr>
-            </tbody>
-          </table>
-        <?php endforeach; ?>
-        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["social"], $preview_dir); ?>
-
-        <?php djurbant_hvc_render_section_with_preview_start("home", 3, "Video & audio carousel", "Best-of section title and home booking/stats visibility."); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("hero", 2, "Hero", "Main hero headline and subline."); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr><th scope="row">Hero tagline</th><td><?php djurbant_hvc_render_text_input("pages.home.hero.tagline", djurbant_hvc_get_path($options, "pages.home.hero.tagline", "")); ?></td></tr>
+          </tbody>
+        </table>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["hero"], $preview_dir); ?>
+
+        <?php djurbant_hvc_render_section_with_preview_start("bestof", 3, "Best-of carousel", "Homepage Best-of title only."); ?>
+        <table class="form-table" role="presentation">
+          <tbody>
             <tr><th scope="row">Best of title</th><td><?php djurbant_hvc_render_text_input("pages.home.bestOf.title", djurbant_hvc_get_path($options, "pages.home.bestOf.title", "")); ?></td></tr>
+          </tbody>
+        </table>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["bestof"], $preview_dir); ?>
+
+        <?php djurbant_hvc_render_section_with_preview_start("video", 4, "Video page", "Video page title, intro, and top button."); ?>
+        <table class="form-table" role="presentation">
+          <tbody>
+            <tr><th scope="row">Video page title</th><td><?php djurbant_hvc_render_text_input("pages.video.title", djurbant_hvc_get_path($options, "pages.video.title", "")); ?></td></tr>
+            <tr><th scope="row">Video page intro</th><td><?php djurbant_hvc_render_textarea("pages.video.intro", djurbant_hvc_get_path($options, "pages.video.intro", ""), 2); ?></td></tr>
+            <tr><th scope="row">Video top button label</th><td><?php djurbant_hvc_render_text_input("pages.video.topButton.label", djurbant_hvc_get_path($options, "pages.video.topButton.label", "")); ?></td></tr>
+            <tr><th scope="row">Video top button URL</th><td><?php djurbant_hvc_render_text_input("pages.video.topButton.url", djurbant_hvc_get_path($options, "pages.video.topButton.url", ""), "text", "./index.html?bestOf=video#best-of-artist"); ?></td></tr>
+          </tbody>
+        </table>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["video"], $preview_dir); ?>
+
+        <?php djurbant_hvc_render_section_with_preview_start("audio", 5, "Audio page", "Audio page title, intro, and top button."); ?>
+        <table class="form-table" role="presentation">
+          <tbody>
+            <tr><th scope="row">Audio page title</th><td><?php djurbant_hvc_render_text_input("pages.audio.title", djurbant_hvc_get_path($options, "pages.audio.title", "")); ?></td></tr>
+            <tr><th scope="row">Audio page intro</th><td><?php djurbant_hvc_render_textarea("pages.audio.intro", djurbant_hvc_get_path($options, "pages.audio.intro", ""), 2); ?></td></tr>
+            <tr><th scope="row">Audio top button label</th><td><?php djurbant_hvc_render_text_input("pages.audio.topButton.label", djurbant_hvc_get_path($options, "pages.audio.topButton.label", "")); ?></td></tr>
+            <tr><th scope="row">Audio top button URL</th><td><?php djurbant_hvc_render_text_input("pages.audio.topButton.url", djurbant_hvc_get_path($options, "pages.audio.topButton.url", ""), "text", "./index.html?bestOf=audio#best-of-artist"); ?></td></tr>
+          </tbody>
+        </table>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["audio"], $preview_dir); ?>
+
+        <?php djurbant_hvc_render_section_with_preview_start("stats", 6, "Stats strip", "Stats-strip visibility on home."); ?>
+        <table class="form-table" role="presentation">
+          <tbody>
             <tr><th scope="row">Show stats band</th><td><?php djurbant_hvc_render_checkbox("pages.home.sections.showStatsBand", djurbant_hvc_get_path($options, "pages.home.sections.showStatsBand", true)); ?></td></tr>
+          </tbody>
+        </table>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["stats"], $preview_dir); ?>
+
+        <?php djurbant_hvc_render_section_with_preview_start("booking", 7, "Booking CTA banner", "Booking banner title/button and visibility."); ?>
+        <table class="form-table" role="presentation">
+          <tbody>
             <tr><th scope="row">Show booking band</th><td><?php djurbant_hvc_render_checkbox("pages.home.sections.showBookingBand", djurbant_hvc_get_path($options, "pages.home.sections.showBookingBand", true)); ?></td></tr>
-            <tr><th scope="row">Show social strip</th><td><?php djurbant_hvc_render_checkbox("pages.home.sections.showSocialStrip", djurbant_hvc_get_path($options, "pages.home.sections.showSocialStrip", true)); ?></td></tr>
             <tr><th scope="row">Booking band title</th><td><?php djurbant_hvc_render_text_input("pages.home.bookingBand.title", djurbant_hvc_get_path($options, "pages.home.bookingBand.title", "")); ?></td></tr>
             <tr><th scope="row">Booking button label</th><td><?php djurbant_hvc_render_text_input("pages.home.bookingBand.buttonLabel", djurbant_hvc_get_path($options, "pages.home.bookingBand.buttonLabel", "")); ?></td></tr>
             <tr><th scope="row">Booking button URL</th><td><?php djurbant_hvc_render_text_input("pages.home.bookingBand.buttonUrl", djurbant_hvc_get_path($options, "pages.home.bookingBand.buttonUrl", ""), "text", "./contact.html"); ?></td></tr>
           </tbody>
         </table>
-        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["home"], $preview_dir); ?>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["booking"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_with_preview_start("video", 4, "Stats strip + video page", "Video subpage text, CTA, and social strip behavior."); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("footer", 8, "Footer", "Social links, reply SLA, and social-strip visibility toggles."); ?>
         <table class="form-table" role="presentation">
           <tbody>
-            <tr><th scope="row">Title</th><td><?php djurbant_hvc_render_text_input("pages.video.title", djurbant_hvc_get_path($options, "pages.video.title", "")); ?></td></tr>
-            <tr><th scope="row">Intro text</th><td><?php djurbant_hvc_render_textarea("pages.video.intro", djurbant_hvc_get_path($options, "pages.video.intro", ""), 3); ?></td></tr>
-            <tr><th scope="row">Top button label</th><td><?php djurbant_hvc_render_text_input("pages.video.topButton.label", djurbant_hvc_get_path($options, "pages.video.topButton.label", "")); ?></td></tr>
-            <tr><th scope="row">Top button URL</th><td><?php djurbant_hvc_render_text_input("pages.video.topButton.url", djurbant_hvc_get_path($options, "pages.video.topButton.url", ""), "text", "./index.html?bestOf=video#best-of-artist"); ?></td></tr>
-            <tr><th scope="row">Show social strip</th><td><?php djurbant_hvc_render_checkbox("pages.video.sections.showSocialStrip", djurbant_hvc_get_path($options, "pages.video.sections.showSocialStrip", true)); ?></td></tr>
+            <?php foreach (djurbant_hvc_get_path($options, "global.socialLinks", []) as $network_key => $network): ?>
+              <tr><th scope="row"><?php echo esc_html(ucfirst($network_key)); ?> label</th><td><?php djurbant_hvc_render_text_input("global.socialLinks.{$network_key}.label", djurbant_hvc_get_path($options, "global.socialLinks.{$network_key}.label", "")); ?></td></tr>
+              <tr><th scope="row"><?php echo esc_html(ucfirst($network_key)); ?> URL</th><td><?php djurbant_hvc_render_text_input("global.socialLinks.{$network_key}.url", djurbant_hvc_get_path($options, "global.socialLinks.{$network_key}.url", ""), "text", "https://"); ?></td></tr>
+              <tr><th scope="row"><?php echo esc_html(ucfirst($network_key)); ?> open in new tab</th><td><?php djurbant_hvc_render_checkbox("global.socialLinks.{$network_key}.openInNewTab", djurbant_hvc_get_path($options, "global.socialLinks.{$network_key}.openInNewTab", true)); ?></td></tr>
+              <tr><th scope="row"><?php echo esc_html(ucfirst($network_key)); ?> visible</th><td><?php djurbant_hvc_render_checkbox("global.socialLinks.{$network_key}.enabled", djurbant_hvc_get_path($options, "global.socialLinks.{$network_key}.enabled", true)); ?></td></tr>
+            <?php endforeach; ?>
+            <tr><th scope="row">Reply SLA text</th><td><?php djurbant_hvc_render_text_input("global.meta.replySlaText", djurbant_hvc_get_path($options, "global.meta.replySlaText", "")); ?></td></tr>
+            <tr><th scope="row">Show social strip (home)</th><td><?php djurbant_hvc_render_checkbox("pages.home.sections.showSocialStrip", djurbant_hvc_get_path($options, "pages.home.sections.showSocialStrip", true)); ?></td></tr>
+            <tr><th scope="row">Show social strip</th><td><?php djurbant_hvc_render_checkbox("pages.contact.sections.showSocialStrip", djurbant_hvc_get_path($options, "pages.contact.sections.showSocialStrip", true)); ?></td></tr>
+            <tr><th scope="row">Show social strip (video)</th><td><?php djurbant_hvc_render_checkbox("pages.video.sections.showSocialStrip", djurbant_hvc_get_path($options, "pages.video.sections.showSocialStrip", true)); ?></td></tr>
+            <tr><th scope="row">Show social strip (audio)</th><td><?php djurbant_hvc_render_checkbox("pages.audio.sections.showSocialStrip", djurbant_hvc_get_path($options, "pages.audio.sections.showSocialStrip", true)); ?></td></tr>
           </tbody>
         </table>
-        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["video"], $preview_dir); ?>
+        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["footer"], $preview_dir); ?>
 
-        <?php djurbant_hvc_render_section_with_preview_start("audio", 5, "Booking CTA + audio page", "Audio subpage text, CTA, and social strip behavior."); ?>
-        <table class="form-table" role="presentation">
-          <tbody>
-            <tr><th scope="row">Title</th><td><?php djurbant_hvc_render_text_input("pages.audio.title", djurbant_hvc_get_path($options, "pages.audio.title", "")); ?></td></tr>
-            <tr><th scope="row">Intro text</th><td><?php djurbant_hvc_render_textarea("pages.audio.intro", djurbant_hvc_get_path($options, "pages.audio.intro", ""), 3); ?></td></tr>
-            <tr><th scope="row">Top button label</th><td><?php djurbant_hvc_render_text_input("pages.audio.topButton.label", djurbant_hvc_get_path($options, "pages.audio.topButton.label", "")); ?></td></tr>
-            <tr><th scope="row">Top button URL</th><td><?php djurbant_hvc_render_text_input("pages.audio.topButton.url", djurbant_hvc_get_path($options, "pages.audio.topButton.url", ""), "text", "./index.html?bestOf=audio#best-of-artist"); ?></td></tr>
-            <tr><th scope="row">Show social strip</th><td><?php djurbant_hvc_render_checkbox("pages.audio.sections.showSocialStrip", djurbant_hvc_get_path($options, "pages.audio.sections.showSocialStrip", true)); ?></td></tr>
-          </tbody>
-        </table>
-        <?php djurbant_hvc_render_section_with_preview_end($preview_cards["audio"], $preview_dir); ?>
-
-        <?php djurbant_hvc_render_section_with_preview_start("contact", 6, "Footer + contact", "Contact form labels/action and footer social visibility."); ?>
+        <?php djurbant_hvc_render_section_with_preview_start("contact", 9, "Contact page", "Contact copy and form actions."); ?>
         <table class="form-table" role="presentation">
           <tbody>
             <tr><th scope="row">Title</th><td><?php djurbant_hvc_render_text_input("pages.contact.title", djurbant_hvc_get_path($options, "pages.contact.title", "")); ?></td></tr>
@@ -1299,7 +1349,6 @@ function djurbant_hvc_admin_page() {
             <tr><th scope="row">Form action</th><td><?php djurbant_hvc_render_text_input("pages.contact.formAction", djurbant_hvc_get_path($options, "pages.contact.formAction", ""), "text", "mailto:booking@djurbant.com"); ?></td></tr>
             <tr><th scope="row">Back button label</th><td><?php djurbant_hvc_render_text_input("pages.contact.backButtonLabel", djurbant_hvc_get_path($options, "pages.contact.backButtonLabel", "")); ?></td></tr>
             <tr><th scope="row">Submit button label</th><td><?php djurbant_hvc_render_text_input("pages.contact.submitButtonLabel", djurbant_hvc_get_path($options, "pages.contact.submitButtonLabel", "")); ?></td></tr>
-            <tr><th scope="row">Show social strip</th><td><?php djurbant_hvc_render_checkbox("pages.contact.sections.showSocialStrip", djurbant_hvc_get_path($options, "pages.contact.sections.showSocialStrip", true)); ?></td></tr>
           </tbody>
         </table>
         <?php djurbant_hvc_render_section_with_preview_end($preview_cards["contact"], $preview_dir); ?>
@@ -1407,48 +1456,80 @@ function djurbant_hvc_admin_page() {
           function applyPreset(moduleKey, preset) {
             const moduleInputs = getModuleInputs(moduleKey);
             const byPath = (path) => moduleInputs.find((el) => String(el.dataset.fieldPath || "") === path);
-            if (preset === "global_default") {
+            if (preset === "navigation_default") {
               const label = byPath("global.ctaDefaults.bookLabel");
               const url = byPath("global.ctaDefaults.bookUrl");
-              const reply = byPath("global.meta.replySlaText");
               if (label) label.value = "Book";
               if (url) url.value = "./contact.html";
-              if (reply) reply.value = "We usually reply within 24 hours.";
-            } else if (preset === "social_enable_all" || preset === "social_disable_all") {
-              const enabled = preset === "social_enable_all";
+            } else if (preset === "hero_default") {
+              const hero = byPath("pages.home.hero.tagline");
+              if (hero) hero.value = "Bass House. Tech House. Live Sets.";
+            } else if (preset === "bestof_default") {
+              const best = byPath("pages.home.bestOf.title");
+              if (best) best.value = "The Best of Artist";
+            } else if (preset === "video_default") {
+              const videoTitle = byPath("pages.video.title");
+              const videoIntro = byPath("pages.video.intro");
+              const videoTopLabel = byPath("pages.video.topButton.label");
+              const videoTopUrl = byPath("pages.video.topButton.url");
+              if (videoTitle) videoTitle.value = "Video";
+              if (videoIntro) videoIntro.value = "Ranked from fetched video channel stats.";
+              if (videoTopLabel) videoTopLabel.value = "Top Video";
+              if (videoTopUrl) videoTopUrl.value = "./index.html?bestOf=video#best-of-artist";
+            } else if (preset === "audio_default") {
+              const audioTitle = byPath("pages.audio.title");
+              const audioIntro = byPath("pages.audio.intro");
+              const audioTopLabel = byPath("pages.audio.topButton.label");
+              const audioTopUrl = byPath("pages.audio.topButton.url");
+              if (audioTitle) audioTitle.value = "Audio";
+              if (audioIntro) audioIntro.value = "Ranked from fetched audio channel stats.";
+              if (audioTopLabel) audioTopLabel.value = "Top Audio";
+              if (audioTopUrl) audioTopUrl.value = "./index.html?bestOf=audio#best-of-artist";
+            } else if (preset === "stats_on" || preset === "stats_off") {
+              const on = preset === "stats_on";
+              const showStats = byPath("pages.home.sections.showStatsBand");
+              if (showStats && showStats instanceof HTMLInputElement) showStats.checked = on;
+            } else if (preset === "booking_on" || preset === "booking_off") {
+              const on = preset === "booking_on";
+              const showBooking = byPath("pages.home.sections.showBookingBand");
+              const title = byPath("pages.home.bookingBand.title");
+              const cta = byPath("pages.home.bookingBand.buttonLabel");
+              const ctaUrl = byPath("pages.home.bookingBand.buttonUrl");
+              if (showBooking && showBooking instanceof HTMLInputElement) showBooking.checked = on;
+              if (on) {
+                if (title) title.value = "Bring the set to you.";
+                if (cta) cta.value = "Book";
+                if (ctaUrl) ctaUrl.value = "./contact.html";
+              }
+            } else if (preset === "footer_social_enable_all" || preset === "footer_social_disable_all") {
+              const enabled = preset === "footer_social_enable_all";
               moduleInputs.forEach((el) => {
                 if (el instanceof HTMLInputElement && el.type === "checkbox") {
                   el.checked = enabled;
                 }
               });
-            } else if (preset === "home_rainbow_default") {
-              const title = byPath("pages.home.bestOf.title");
-              const cta = byPath("pages.home.bookingBand.buttonLabel");
-              const ctaUrl = byPath("pages.home.bookingBand.buttonUrl");
-              if (title) title.value = "The Best of Artist";
-              if (cta) cta.value = "Book";
-              if (ctaUrl) ctaUrl.value = "./contact.html";
-            } else if (preset === "video_default") {
-              const title = byPath("pages.video.title");
-              const intro = byPath("pages.video.intro");
-              const top = byPath("pages.video.topButton.label");
-              if (title) title.value = "Video";
-              if (intro) intro.value = "Ranked from fetched video channel stats.";
-              if (top) top.value = "Top Video";
-            } else if (preset === "audio_default") {
-              const title = byPath("pages.audio.title");
-              const intro = byPath("pages.audio.intro");
-              const top = byPath("pages.audio.topButton.label");
-              if (title) title.value = "Audio";
-              if (intro) intro.value = "Ranked from fetched audio channel stats.";
-              if (top) top.value = "Top Audio";
+            } else if (preset === "footer_default") {
+              const reply = byPath("global.meta.replySlaText");
+              const homeSocial = byPath("pages.home.sections.showSocialStrip");
+              const videoSocial = byPath("pages.video.sections.showSocialStrip");
+              const audioSocial = byPath("pages.audio.sections.showSocialStrip");
+              const contactSocial = byPath("pages.contact.sections.showSocialStrip");
+              if (reply) reply.value = "We usually reply within 24 hours.";
+              if (homeSocial && homeSocial instanceof HTMLInputElement) homeSocial.checked = true;
+              if (videoSocial && videoSocial instanceof HTMLInputElement) videoSocial.checked = true;
+              if (audioSocial && audioSocial instanceof HTMLInputElement) audioSocial.checked = true;
+              if (contactSocial && contactSocial instanceof HTMLInputElement) contactSocial.checked = true;
             } else if (preset === "contact_default") {
               const title = byPath("pages.contact.title");
               const intro = byPath("pages.contact.introText");
               const action = byPath("pages.contact.formAction");
+              const back = byPath("pages.contact.backButtonLabel");
+              const submit = byPath("pages.contact.submitButtonLabel");
               if (title) title.value = "Contact DJ UrbanT";
               if (intro) intro.value = "Use this form for bookings, event inquiries, collaborations, and press.";
               if (action) action.value = "mailto:booking@djurbant.com";
+              if (back) back.value = "Back Home";
+              if (submit) submit.value = "Send Inquiry";
             }
             runValidation();
           }

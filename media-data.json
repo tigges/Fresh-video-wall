@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-30T03:44:36Z",
+  "generatedAt": "2026-03-31T03:31:26Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
     "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
@@ -9,8 +9,8 @@
     "isLive": false,
     "liveVideoId": "",
     "liveUrl": "",
-    "latestVideoId": "uFJzPmG7zS8",
-    "latestUrl": "https://www.youtube.com/watch?v=uFJzPmG7zS8"
+    "latestVideoId": "eBjrvStOMzw",
+    "latestUrl": "https://www.youtube.com/watch?v=eBjrvStOMzw"
   },
   "videos": {
     "top3": [
@@ -23,9 +23,9 @@
         "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
         "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
         "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
-        "viewCount": 200,
+        "viewCount": 201,
         "publishedAt": "2026-03-15",
-        "baseViewCount": 50,
+        "baseViewCount": 51,
         "featuredBonus": 150,
         "isFeaturedRecent": true
       },
@@ -38,7 +38,7 @@
         "url": "https://www.youtube.com/watch?v=8XF8FRusnWc",
         "embedUrl": "https://www.youtube.com/embed/8XF8FRusnWc",
         "thumbnailUrl": "https://i.ytimg.com/vi/8XF8FRusnWc/hqdefault.jpg",
-        "viewCount": 224,
+        "viewCount": 225,
         "publishedAt": "2026-01-07"
       },
       {
@@ -78,6 +78,18 @@
         "thumbnailUrl": "https://i.ytimg.com/vi/odAzUGdV_so/hqdefault.jpg",
         "viewCount": 13,
         "publishedAt": "2025-12-29"
+      },
+      {
+        "id": "eBjrvStOMzw",
+        "title": "Set #457 - Bass House - DJ UrbanT",
+        "genres": [
+          "bass-house"
+        ],
+        "url": "https://www.youtube.com/watch?v=eBjrvStOMzw",
+        "embedUrl": "https://www.youtube.com/embed/eBjrvStOMzw",
+        "thumbnailUrl": "https://i.ytimg.com/vi/eBjrvStOMzw/hqdefault.jpg",
+        "viewCount": 0,
+        "publishedAt": "Started streaming 5 hours ago"
       }
     ]
   },
@@ -91,10 +103,10 @@
         ],
         "url": "https://www.mixcloud.com/urbant/urbant-live-209-new-bass-house-tech-set-20250523-082021/",
         "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-209-new-bass-house-tech-set-20250523-082021%2F",
-        "playCount": 216,
+        "playCount": 218,
         "favoriteCount": 1,
         "publishedAt": "2025-05-23T15:27:35Z",
-        "basePlayCount": 66,
+        "basePlayCount": 68,
         "featuredBonus": 150,
         "isFeaturedRecent": true
       },
@@ -106,7 +118,7 @@
         ],
         "url": "https://www.mixcloud.com/urbant/urbant-live-20210731-181823/",
         "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210731-181823%2F",
-        "playCount": 152,
+        "playCount": 154,
         "favoriteCount": 11,
         "publishedAt": "2021-08-01T08:35:50Z"
       },

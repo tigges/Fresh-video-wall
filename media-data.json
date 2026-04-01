@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-31T19:30:56Z",
+  "generatedAt": "2026-04-01T03:47:15Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
     "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
@@ -15,17 +15,17 @@
   "videos": {
     "top3": [
       {
-        "id": "uFJzPmG7zS8",
-        "title": "Set #434 - Bass House - DJ UrbanT",
+        "id": "eBjrvStOMzw",
+        "title": "Set #457 - Bass House - DJ UrbanT",
         "genres": [
           "bass-house"
         ],
-        "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
-        "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
-        "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
-        "viewCount": 201,
-        "publishedAt": "2026-03-15",
-        "baseViewCount": 51,
+        "url": "https://www.youtube.com/watch?v=eBjrvStOMzw",
+        "embedUrl": "https://www.youtube.com/embed/eBjrvStOMzw",
+        "thumbnailUrl": "https://i.ytimg.com/vi/eBjrvStOMzw/hqdefault.jpg",
+        "viewCount": 153,
+        "publishedAt": "2026-03-30",
+        "baseViewCount": 3,
         "featuredBonus": 150,
         "isFeaturedRecent": true
       },
@@ -68,6 +68,18 @@
         "publishedAt": "2026-01-07"
       },
       {
+        "id": "uFJzPmG7zS8",
+        "title": "Set #434 - Bass House - DJ UrbanT",
+        "genres": [
+          "bass-house"
+        ],
+        "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
+        "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
+        "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
+        "viewCount": 51,
+        "publishedAt": "2026-03-15"
+      },
+      {
         "id": "odAzUGdV_so",
         "title": "DJ UrbanT Live - Set #429 - Bass House - December 2025",
         "genres": [
@@ -78,18 +90,6 @@
         "thumbnailUrl": "https://i.ytimg.com/vi/odAzUGdV_so/hqdefault.jpg",
         "viewCount": 13,
         "publishedAt": "2025-12-29"
-      },
-      {
-        "id": "eBjrvStOMzw",
-        "title": "Set #457 - Bass House - DJ UrbanT",
-        "genres": [
-          "bass-house"
-        ],
-        "url": "https://www.youtube.com/watch?v=eBjrvStOMzw",
-        "embedUrl": "https://www.youtube.com/embed/eBjrvStOMzw",
-        "thumbnailUrl": "https://i.ytimg.com/vi/eBjrvStOMzw/hqdefault.jpg",
-        "viewCount": 3,
-        "publishedAt": "Streamed live 21 hours ago"
       }
     ]
   },

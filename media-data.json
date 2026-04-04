@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-01T03:47:15Z",
+  "generatedAt": "2026-04-04T19:03:44Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
     "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
@@ -15,17 +15,17 @@
   "videos": {
     "top3": [
       {
-        "id": "eBjrvStOMzw",
-        "title": "Set #457 - Bass House - DJ UrbanT",
+        "id": "Jf7nPjlK2Bo",
+        "title": "DJ UrbanT Live - Set #225 - Bass House - June 2023",
         "genres": [
           "bass-house"
         ],
-        "url": "https://www.youtube.com/watch?v=eBjrvStOMzw",
-        "embedUrl": "https://www.youtube.com/embed/eBjrvStOMzw",
-        "thumbnailUrl": "https://i.ytimg.com/vi/eBjrvStOMzw/hqdefault.jpg",
-        "viewCount": 153,
-        "publishedAt": "2026-03-30",
-        "baseViewCount": 3,
+        "url": "https://www.youtube.com/watch?v=Jf7nPjlK2Bo",
+        "embedUrl": "https://www.youtube.com/embed/Jf7nPjlK2Bo",
+        "thumbnailUrl": "https://i.ytimg.com/vi/Jf7nPjlK2Bo/hqdefault.jpg",
+        "viewCount": 150,
+        "publishedAt": "",
+        "baseViewCount": 0,
         "featuredBonus": 150,
         "isFeaturedRecent": true
       },
@@ -38,8 +38,8 @@
         "url": "https://www.youtube.com/watch?v=8XF8FRusnWc",
         "embedUrl": "https://www.youtube.com/embed/8XF8FRusnWc",
         "thumbnailUrl": "https://i.ytimg.com/vi/8XF8FRusnWc/hqdefault.jpg",
-        "viewCount": 225,
-        "publishedAt": "2026-01-07"
+        "viewCount": 0,
+        "publishedAt": ""
       },
       {
         "id": "PPUISj_W6Kw",
@@ -50,22 +50,22 @@
         "url": "https://www.youtube.com/watch?v=PPUISj_W6Kw",
         "embedUrl": "https://www.youtube.com/embed/PPUISj_W6Kw",
         "thumbnailUrl": "https://i.ytimg.com/vi/PPUISj_W6Kw/hqdefault.jpg",
-        "viewCount": 151,
-        "publishedAt": "2026-01-07"
+        "viewCount": 0,
+        "publishedAt": ""
       }
     ],
     "rest": [
       {
-        "id": "Jf7nPjlK2Bo",
-        "title": "DJ UrbanT Live - Set #225 - Bass House - June 2023",
+        "id": "eBjrvStOMzw",
+        "title": "Set #457 - Bass House - DJ UrbanT",
         "genres": [
           "bass-house"
         ],
-        "url": "https://www.youtube.com/watch?v=Jf7nPjlK2Bo",
-        "embedUrl": "https://www.youtube.com/embed/Jf7nPjlK2Bo",
-        "thumbnailUrl": "https://i.ytimg.com/vi/Jf7nPjlK2Bo/hqdefault.jpg",
-        "viewCount": 101,
-        "publishedAt": "2026-01-07"
+        "url": "https://www.youtube.com/watch?v=eBjrvStOMzw",
+        "embedUrl": "https://www.youtube.com/embed/eBjrvStOMzw",
+        "thumbnailUrl": "https://i.ytimg.com/vi/eBjrvStOMzw/hqdefault.jpg",
+        "viewCount": 0,
+        "publishedAt": ""
       },
       {
         "id": "uFJzPmG7zS8",
@@ -76,8 +76,8 @@
         "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
         "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
         "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
-        "viewCount": 51,
-        "publishedAt": "2026-03-15"
+        "viewCount": 0,
+        "publishedAt": ""
       },
       {
         "id": "odAzUGdV_so",
@@ -88,8 +88,8 @@
         "url": "https://www.youtube.com/watch?v=odAzUGdV_so",
         "embedUrl": "https://www.youtube.com/embed/odAzUGdV_so",
         "thumbnailUrl": "https://i.ytimg.com/vi/odAzUGdV_so/hqdefault.jpg",
-        "viewCount": 13,
-        "publishedAt": "2025-12-29"
+        "viewCount": 0,
+        "publishedAt": ""
       }
     ]
   },

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-28T04:08:40Z",
+  "generatedAt": "2026-04-28T19:58:05Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
     "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
@@ -38,7 +38,7 @@
         "url": "https://www.youtube.com/watch?v=8XF8FRusnWc",
         "embedUrl": "https://www.youtube.com/embed/8XF8FRusnWc",
         "thumbnailUrl": "https://i.ytimg.com/vi/8XF8FRusnWc/hqdefault.jpg",
-        "viewCount": 227,
+        "viewCount": 228,
         "publishedAt": "2026-01-07"
       },
       {
@@ -64,7 +64,7 @@
         "url": "https://www.youtube.com/watch?v=Jf7nPjlK2Bo",
         "embedUrl": "https://www.youtube.com/embed/Jf7nPjlK2Bo",
         "thumbnailUrl": "https://i.ytimg.com/vi/Jf7nPjlK2Bo/hqdefault.jpg",
-        "viewCount": 101,
+        "viewCount": 102,
         "publishedAt": "2026-01-07"
       },
       {
@@ -76,7 +76,7 @@
         "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
         "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
         "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
-        "viewCount": 51,
+        "viewCount": 55,
         "publishedAt": "2026-03-15"
       },
       {
@@ -88,7 +88,7 @@
         "url": "https://www.youtube.com/watch?v=odAzUGdV_so",
         "embedUrl": "https://www.youtube.com/embed/odAzUGdV_so",
         "thumbnailUrl": "https://i.ytimg.com/vi/odAzUGdV_so/hqdefault.jpg",
-        "viewCount": 13,
+        "viewCount": 15,
         "publishedAt": "2025-12-29"
       }
     ]

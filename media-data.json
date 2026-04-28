@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-26T03:57:47Z",
+  "generatedAt": "2026-04-28T04:08:40Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
     "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
@@ -149,18 +149,6 @@
         "publishedAt": "2022-04-24T17:10:11Z"
       },
       {
-        "key": "/urbant/urbant-live-20210629-184652/",
-        "title": "UrbanT Live! #198 - Bass House Set",
-        "genres": [
-          "bass-house"
-        ],
-        "url": "https://www.mixcloud.com/urbant/urbant-live-20210629-184652/",
-        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210629-184652%2F",
-        "playCount": 44,
-        "favoriteCount": 15,
-        "publishedAt": "2021-06-30T09:53:45Z"
-      },
-      {
         "key": "/urbant/urbant-live-20210720-125734/",
         "title": "UrbanT Live! #206 - New Hot Bass House Set",
         "genres": [
@@ -209,18 +197,6 @@
         "publishedAt": "2021-07-12T07:56:56Z"
       },
       {
-        "key": "/urbant/urbant-live-20210628-192950/",
-        "title": "UrbanT Live! #197 - Monday Bass House Set",
-        "genres": [
-          "bass-house"
-        ],
-        "url": "https://www.mixcloud.com/urbant/urbant-live-20210628-192950/",
-        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210628-192950%2F",
-        "playCount": 10,
-        "favoriteCount": 9,
-        "publishedAt": "2021-06-28T22:42:50Z"
-      },
-      {
         "key": "/urbant/urbant-live-20210712-204019/",
         "title": "UrbanT Live! #205 - New Bass House Mix Set",
         "genres": [
@@ -243,90 +219,6 @@
         "playCount": 6,
         "favoriteCount": 5,
         "publishedAt": "2021-07-10T16:02:40Z"
-      },
-      {
-        "key": "/urbant/urbant-live-20210702-140827/",
-        "title": "UrbanT Live! #200 - New Friday Bass House Set",
-        "genres": [
-          "bass-house"
-        ],
-        "url": "https://www.mixcloud.com/urbant/urbant-live-20210702-140827/",
-        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210702-140827%2F",
-        "playCount": 6,
-        "favoriteCount": 0,
-        "publishedAt": "2021-07-03T08:14:01Z"
-      },
-      {
-        "key": "/urbant/urbant-live-20210707-205505/",
-        "title": "UrbanT Live! #202 - Bass House Set",
-        "genres": [
-          "bass-house"
-        ],
-        "url": "https://www.mixcloud.com/urbant/urbant-live-20210707-205505/",
-        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210707-205505%2F",
-        "playCount": 5,
-        "favoriteCount": 2,
-        "publishedAt": "2021-07-09T17:41:02Z"
-      },
-      {
-        "key": "/urbant/urban-spring-jump-vol2-haven-london/",
-        "title": "UrbanT Live! #150 - Urban Spring Bass House Jump vol2 @Haven - London",
-        "genres": [
-          "bass-house"
-        ],
-        "url": "https://www.mixcloud.com/urbant/urban-spring-jump-vol2-haven-london/",
-        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furban-spring-jump-vol2-haven-london%2F",
-        "playCount": 5,
-        "favoriteCount": 1,
-        "publishedAt": "2021-04-11T11:11:27Z"
-      },
-      {
-        "key": "/urbant/easter-egg-monday-2021-haven-london/",
-        "title": "UrbanT Live! #149 - Easter Egg Bass House Monday 2021 @Haven - London",
-        "genres": [
-          "bass-house"
-        ],
-        "url": "https://www.mixcloud.com/urbant/easter-egg-monday-2021-haven-london/",
-        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Feaster-egg-monday-2021-haven-london%2F",
-        "playCount": 4,
-        "favoriteCount": 1,
-        "publishedAt": "2021-04-05T15:36:57Z"
-      },
-      {
-        "key": "/urbant/urbant-live-20210630-220620/",
-        "title": "UrbanT Live! #199 - New Raw Bass House Set",
-        "genres": [
-          "bass-house"
-        ],
-        "url": "https://www.mixcloud.com/urbant/urbant-live-20210630-220620/",
-        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210630-220620%2F",
-        "playCount": 3,
-        "favoriteCount": 1,
-        "publishedAt": "2021-07-01T10:06:38Z"
-      },
-      {
-        "key": "/urbant/urbant-live-20210627-155014/",
-        "title": "UrbanT Live! #196 - Sunday Bass House Set",
-        "genres": [
-          "bass-house"
-        ],
-        "url": "https://www.mixcloud.com/urbant/urbant-live-20210627-155014/",
-        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210627-155014%2F",
-        "playCount": 2,
-        "favoriteCount": 2,
-        "publishedAt": "2021-06-28T19:29:26Z"
-      },
-      {
-        "key": "/urbant/urbant-live-20210704-182110/",
-        "title": "UrbanT Live! #201 - New Mainstage House Set",
-        "genres": [
-          "house"
-        ],
-        "url": "https://www.mixcloud.com/urbant/urbant-live-20210704-182110/",
-        "embedUrl": "https://www.mixcloud.com/widget/iframe/?hide_cover=0&mini=0&light=0&feed=%2Furbant%2Furbant-live-20210704-182110%2F",
-        "playCount": 1,
-        "favoriteCount": 3,
-        "publishedAt": "2021-07-04T19:44:14Z"
       }
     ]
   }

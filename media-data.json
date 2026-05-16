@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-11T04:38:45Z",
+  "generatedAt": "2026-05-16T19:35:30Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
     "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
@@ -23,9 +23,9 @@
         "url": "https://www.youtube.com/watch?v=eBjrvStOMzw",
         "embedUrl": "https://www.youtube.com/embed/eBjrvStOMzw",
         "thumbnailUrl": "https://i.ytimg.com/vi/eBjrvStOMzw/hqdefault.jpg",
-        "viewCount": 153,
+        "viewCount": 154,
         "publishedAt": "2026-03-30",
-        "baseViewCount": 3,
+        "baseViewCount": 4,
         "featuredBonus": 150,
         "isFeaturedRecent": true
       },
@@ -64,7 +64,7 @@
         "url": "https://www.youtube.com/watch?v=Jf7nPjlK2Bo",
         "embedUrl": "https://www.youtube.com/embed/Jf7nPjlK2Bo",
         "thumbnailUrl": "https://i.ytimg.com/vi/Jf7nPjlK2Bo/hqdefault.jpg",
-        "viewCount": 102,
+        "viewCount": 103,
         "publishedAt": "2026-01-07"
       },
       {

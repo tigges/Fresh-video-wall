@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-09T04:15:46Z",
+  "generatedAt": "2026-07-10T04:17:57Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
     "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
@@ -9,8 +9,8 @@
     "isLive": false,
     "liveVideoId": "",
     "liveUrl": "",
-    "latestVideoId": "eBjrvStOMzw",
-    "latestUrl": "https://www.youtube.com/watch?v=eBjrvStOMzw"
+    "latestVideoId": "",
+    "latestUrl": ""
   },
   "videos": {
     "top3": [

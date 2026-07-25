@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-25T14:04:15Z",
+  "generatedAt": "2026-07-25T19:36:42Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
     "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
@@ -23,9 +23,9 @@
         "url": "https://www.youtube.com/watch?v=eBjrvStOMzw",
         "embedUrl": "https://www.youtube.com/embed/eBjrvStOMzw",
         "thumbnailUrl": "https://i.ytimg.com/vi/eBjrvStOMzw/hqdefault.jpg",
-        "viewCount": 158,
+        "viewCount": 160,
         "publishedAt": "2026-03-30",
-        "baseViewCount": 8,
+        "baseViewCount": 10,
         "featuredBonus": 150,
         "isFeaturedRecent": true
       },

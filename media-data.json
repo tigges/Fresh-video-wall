@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T00:31:11Z",
+  "generatedAt": "2026-08-21T06:30:18Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
     "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
@@ -23,35 +23,35 @@
         "url": "https://www.youtube.com/watch?v=eBjrvStOMzw",
         "embedUrl": "https://www.youtube.com/embed/eBjrvStOMzw",
         "thumbnailUrl": "https://i.ytimg.com/vi/eBjrvStOMzw/hqdefault.jpg",
-        "viewCount": 150,
-        "publishedAt": "Se transmiti\u00f3 en vivo el 30 mar 2026",
-        "baseViewCount": 0,
+        "viewCount": 161,
+        "publishedAt": "2026-03-30",
+        "baseViewCount": 11,
         "featuredBonus": 150,
         "isFeaturedRecent": true
       },
       {
-        "id": "odAzUGdV_so",
-        "title": "DJ UrbanT Live - Set #429 - Bass House - December 2025",
+        "id": "8XF8FRusnWc",
+        "title": "DJ UrbanT Live - Set #241 - Bass House - April 2024",
         "genres": [
           "bass-house"
         ],
-        "url": "https://www.youtube.com/watch?v=odAzUGdV_so",
-        "embedUrl": "https://www.youtube.com/embed/odAzUGdV_so",
-        "thumbnailUrl": "https://i.ytimg.com/vi/odAzUGdV_so/hqdefault.jpg",
-        "viewCount": 0,
-        "publishedAt": "Se transmiti\u00f3 en vivo el 29 dic 2025"
+        "url": "https://www.youtube.com/watch?v=8XF8FRusnWc",
+        "embedUrl": "https://www.youtube.com/embed/8XF8FRusnWc",
+        "thumbnailUrl": "https://i.ytimg.com/vi/8XF8FRusnWc/hqdefault.jpg",
+        "viewCount": 236,
+        "publishedAt": "2026-01-07"
       },
       {
-        "id": "uFJzPmG7zS8",
-        "title": "Set #434 - Bass House - DJ UrbanT",
+        "id": "PPUISj_W6Kw",
+        "title": "DJ UrbanT Live - Set #243 - Bass House - April 2024",
         "genres": [
           "bass-house"
         ],
-        "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
-        "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
-        "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
-        "viewCount": 0,
-        "publishedAt": "Se transmiti\u00f3 en vivo el 15 mar 2026"
+        "url": "https://www.youtube.com/watch?v=PPUISj_W6Kw",
+        "embedUrl": "https://www.youtube.com/embed/PPUISj_W6Kw",
+        "thumbnailUrl": "https://i.ytimg.com/vi/PPUISj_W6Kw/hqdefault.jpg",
+        "viewCount": 156,
+        "publishedAt": "2026-01-07"
       }
     ],
     "rest": [
@@ -64,32 +64,32 @@
         "url": "https://www.youtube.com/watch?v=Jf7nPjlK2Bo",
         "embedUrl": "https://www.youtube.com/embed/Jf7nPjlK2Bo",
         "thumbnailUrl": "https://i.ytimg.com/vi/Jf7nPjlK2Bo/hqdefault.jpg",
-        "viewCount": 0,
-        "publishedAt": "7 ene 2026"
+        "viewCount": 106,
+        "publishedAt": "2026-01-07"
       },
       {
-        "id": "8XF8FRusnWc",
-        "title": "DJ UrbanT Live - Set #241 - Bass House - April 2024",
+        "id": "uFJzPmG7zS8",
+        "title": "Set #434 - Bass House - DJ UrbanT",
         "genres": [
           "bass-house"
         ],
-        "url": "https://www.youtube.com/watch?v=8XF8FRusnWc",
-        "embedUrl": "https://www.youtube.com/embed/8XF8FRusnWc",
-        "thumbnailUrl": "https://i.ytimg.com/vi/8XF8FRusnWc/hqdefault.jpg",
-        "viewCount": 0,
-        "publishedAt": "7 ene 2026"
+        "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
+        "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
+        "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
+        "viewCount": 68,
+        "publishedAt": "2026-03-15"
       },
       {
-        "id": "PPUISj_W6Kw",
-        "title": "DJ UrbanT Live - Set #243 - Bass House - April 2024",
+        "id": "odAzUGdV_so",
+        "title": "DJ UrbanT Live - Set #429 - Bass House - December 2025",
         "genres": [
           "bass-house"
         ],
-        "url": "https://www.youtube.com/watch?v=PPUISj_W6Kw",
-        "embedUrl": "https://www.youtube.com/embed/PPUISj_W6Kw",
-        "thumbnailUrl": "https://i.ytimg.com/vi/PPUISj_W6Kw/hqdefault.jpg",
-        "viewCount": 0,
-        "publishedAt": "7 ene 2026"
+        "url": "https://www.youtube.com/watch?v=odAzUGdV_so",
+        "embedUrl": "https://www.youtube.com/embed/odAzUGdV_so",
+        "thumbnailUrl": "https://i.ytimg.com/vi/odAzUGdV_so/hqdefault.jpg",
+        "viewCount": 15,
+        "publishedAt": "2025-12-29"
       }
     ]
   },

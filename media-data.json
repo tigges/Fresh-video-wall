@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-28T00:47:25Z",
+  "generatedAt": "2026-10-28T06:34:29Z",
   "strategy": {
     "videos": "Base sort by YouTube viewCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
     "audio": "Base sort by Mixcloud playCount desc, then publishedAt desc; most recent item pinned to slot #1 with +150 bonus",
@@ -15,47 +15,6 @@
   "videos": {
     "top3": [
       {
-        "id": "eBjrvStOMzw",
-        "title": "Set #457 - Bass House - DJ UrbanT",
-        "genres": [
-          "bass-house"
-        ],
-        "url": "https://www.youtube.com/watch?v=eBjrvStOMzw",
-        "embedUrl": "https://www.youtube.com/embed/eBjrvStOMzw",
-        "thumbnailUrl": "https://i.ytimg.com/vi/eBjrvStOMzw/hqdefault.jpg",
-        "viewCount": 150,
-        "publishedAt": "Se transmiti\u00f3 en vivo el 30 mar 2026",
-        "baseViewCount": 0,
-        "featuredBonus": 150,
-        "isFeaturedRecent": true
-      },
-      {
-        "id": "odAzUGdV_so",
-        "title": "DJ UrbanT Live - Set #429 - Bass House - December 2025",
-        "genres": [
-          "bass-house"
-        ],
-        "url": "https://www.youtube.com/watch?v=odAzUGdV_so",
-        "embedUrl": "https://www.youtube.com/embed/odAzUGdV_so",
-        "thumbnailUrl": "https://i.ytimg.com/vi/odAzUGdV_so/hqdefault.jpg",
-        "viewCount": 0,
-        "publishedAt": "Se transmiti\u00f3 en vivo el 29 dic 2025"
-      },
-      {
-        "id": "uFJzPmG7zS8",
-        "title": "Set #434 - Bass House - DJ UrbanT",
-        "genres": [
-          "bass-house"
-        ],
-        "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
-        "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
-        "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
-        "viewCount": 0,
-        "publishedAt": "Se transmiti\u00f3 en vivo el 15 mar 2026"
-      }
-    ],
-    "rest": [
-      {
         "id": "Jf7nPjlK2Bo",
         "title": "DJ UrbanT Live - Set #225 - Bass House - June 2023",
         "genres": [
@@ -64,8 +23,11 @@
         "url": "https://www.youtube.com/watch?v=Jf7nPjlK2Bo",
         "embedUrl": "https://www.youtube.com/embed/Jf7nPjlK2Bo",
         "thumbnailUrl": "https://i.ytimg.com/vi/Jf7nPjlK2Bo/hqdefault.jpg",
-        "viewCount": 0,
-        "publishedAt": "7 ene 2026"
+        "viewCount": 150,
+        "publishedAt": "",
+        "baseViewCount": 0,
+        "featuredBonus": 150,
+        "isFeaturedRecent": true
       },
       {
         "id": "8XF8FRusnWc",
@@ -77,7 +39,7 @@
         "embedUrl": "https://www.youtube.com/embed/8XF8FRusnWc",
         "thumbnailUrl": "https://i.ytimg.com/vi/8XF8FRusnWc/hqdefault.jpg",
         "viewCount": 0,
-        "publishedAt": "7 ene 2026"
+        "publishedAt": ""
       },
       {
         "id": "PPUISj_W6Kw",
@@ -89,7 +51,45 @@
         "embedUrl": "https://www.youtube.com/embed/PPUISj_W6Kw",
         "thumbnailUrl": "https://i.ytimg.com/vi/PPUISj_W6Kw/hqdefault.jpg",
         "viewCount": 0,
-        "publishedAt": "7 ene 2026"
+        "publishedAt": ""
+      }
+    ],
+    "rest": [
+      {
+        "id": "eBjrvStOMzw",
+        "title": "Set #457 - Bass House - DJ UrbanT",
+        "genres": [
+          "bass-house"
+        ],
+        "url": "https://www.youtube.com/watch?v=eBjrvStOMzw",
+        "embedUrl": "https://www.youtube.com/embed/eBjrvStOMzw",
+        "thumbnailUrl": "https://i.ytimg.com/vi/eBjrvStOMzw/hqdefault.jpg",
+        "viewCount": 0,
+        "publishedAt": ""
+      },
+      {
+        "id": "uFJzPmG7zS8",
+        "title": "Set #434 - Bass House - DJ UrbanT",
+        "genres": [
+          "bass-house"
+        ],
+        "url": "https://www.youtube.com/watch?v=uFJzPmG7zS8",
+        "embedUrl": "https://www.youtube.com/embed/uFJzPmG7zS8",
+        "thumbnailUrl": "https://i.ytimg.com/vi/uFJzPmG7zS8/hqdefault.jpg",
+        "viewCount": 0,
+        "publishedAt": ""
+      },
+      {
+        "id": "odAzUGdV_so",
+        "title": "DJ UrbanT Live - Set #429 - Bass House - December 2025",
+        "genres": [
+          "bass-house"
+        ],
+        "url": "https://www.youtube.com/watch?v=odAzUGdV_so",
+        "embedUrl": "https://www.youtube.com/embed/odAzUGdV_so",
+        "thumbnailUrl": "https://i.ytimg.com/vi/odAzUGdV_so/hqdefault.jpg",
+        "viewCount": 0,
+        "publishedAt": ""
       }
     ]
   },
